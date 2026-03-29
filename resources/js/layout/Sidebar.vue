@@ -21,19 +21,19 @@
 
         <div>
           <button
-            @click="isMasterOpen = !isMasterOpen"
+            @click="activeMenu = activeMenu === 'master' ? '' : 'master'"
             class="w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-200 hover:bg-white/5 border border-transparent hover:border-gray-700 group"
-            :class="{ 'bg-white/5 border-gray-700': isMasterOpen }"
+            :class="{ 'bg-white/5 border-gray-700': activeMenu === 'master' }"
           >
             <div class="flex items-center gap-3">
               <svg class="w-5 h-5 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
               <span class="font-medium text-gray-200 group-hover:text-white">Master</span>
             </div>
-            <svg class="w-4 h-4 text-gray-400 group-hover:text-white transition-transform duration-300 transform" :class="{'rotate-180': isMasterOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            <svg class="w-4 h-4 text-gray-400 group-hover:text-white transition-transform duration-300 transform" :class="{'rotate-180': activeMenu === 'master'}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
           </button>
 
           <div
-            v-show="isMasterOpen"
+            v-show="activeMenu === 'master'"
             class="mt-3 space-y-1 overflow-hidden relative"
           >
             <!-- Vertical decorative line for nested items -->
@@ -66,19 +66,19 @@
         <!-- Blogs Accordion -->
         <div>
           <button
-            @click="isBlogsOpen = !isBlogsOpen"
+            @click="activeMenu = activeMenu === 'blogs' ? '' : 'blogs'"
             class="w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-200 hover:bg-white/5 border border-transparent hover:border-gray-700 group"
-            :class="{ 'bg-white/5 border-gray-700': isBlogsOpen }"
+            :class="{ 'bg-white/5 border-gray-700': activeMenu === 'blogs' }"
           >
             <div class="flex items-center gap-3">
               <svg class="w-5 h-5 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2"></path></svg>
               <span class="font-medium text-gray-200 group-hover:text-white">Blogs</span>
             </div>
-            <svg class="w-4 h-4 text-gray-400 group-hover:text-white transition-transform duration-300 transform" :class="{'rotate-180': isBlogsOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            <svg class="w-4 h-4 text-gray-400 group-hover:text-white transition-transform duration-300 transform" :class="{'rotate-180': activeMenu === 'blogs'}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
           </button>
 
           <div
-            v-show="isBlogsOpen"
+            v-show="activeMenu === 'blogs'"
             class="mt-3 space-y-1 overflow-hidden relative"
           >
             <div class="absolute left-6 top-0 bottom-0 w-px bg-gray-700"></div>
@@ -103,19 +103,19 @@
         <!-- Contact Accordion -->
         <div>
           <button
-            @click="isContactOpen = !isContactOpen"
+            @click="activeMenu = activeMenu === 'contact' ? '' : 'contact'"
             class="w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-200 hover:bg-white/5 border border-transparent hover:border-gray-700 group"
-            :class="{ 'bg-white/5 border-gray-700': isContactOpen }"
+            :class="{ 'bg-white/5 border-gray-700': activeMenu === 'contact' }"
           >
             <div class="flex items-center gap-3">
               <svg class="w-5 h-5 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
               <span class="font-medium text-gray-200 group-hover:text-white">Contact</span>
             </div>
-            <svg class="w-4 h-4 text-gray-400 group-hover:text-white transition-transform duration-300 transform" :class="{'rotate-180': isContactOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            <svg class="w-4 h-4 text-gray-400 group-hover:text-white transition-transform duration-300 transform" :class="{'rotate-180': activeMenu === 'contact'}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
           </button>
 
           <div
-            v-show="isContactOpen"
+            v-show="activeMenu === 'contact'"
             class="mt-3 space-y-1 overflow-hidden relative"
           >
             <div class="absolute left-6 top-0 bottom-0 w-px bg-gray-700"></div>
@@ -197,9 +197,7 @@
 
 <script setup>
 import { ref } from 'vue'
-const isMasterOpen = ref(true) // Open by default for better visibility
-const isBlogsOpen = ref(false)
-const isContactOpen = ref(false)
+const activeMenu = ref('master') // Master is open by default
 </script>
 
 <style scoped>
