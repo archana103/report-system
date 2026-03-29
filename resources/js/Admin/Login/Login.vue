@@ -1,44 +1,62 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-100">
-    <div class="w-full max-w-md bg-white p-6 rounded-xl shadow-md">
+  <div class="min-h-screen flex items-center justify-center bg-[#0b1121] text-white font-sans relative overflow-hidden selection:bg-indigo-500 selection:text-white">
+    <!-- Decorative Gradients -->
+    <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-indigo-600/20 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/20 rounded-full blur-[120px] pointer-events-none"></div>
 
-      <h2 class="text-2xl font-bold text-center mb-6">Admin Login</h2>
+    <div class="w-full max-w-md bg-gray-800/40 p-8 rounded-3xl shadow-2xl border border-gray-700/50 backdrop-blur-sm relative z-10 w-[90%] mx-auto">
+      <div class="text-center mb-8">
+        <h2 class="text-3xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-500 tracking-wide uppercase">
+          Admin Login
+        </h2>
+        <p class="text-gray-400 mt-2 text-sm">Sign in to access the control panel</p>
+      </div>
 
-      <form @submit.prevent="login">
-
+      <form @submit.prevent="login" class="space-y-5">
         <!-- Email -->
-        <div class="mb-4">
-          <label class="block mb-1">Email</label>
-          <input
-            v-model="form.email"
-            type="email"
-            class="w-full border p-2 rounded"
-          />
-          <p v-if="errors.email" class="text-red-500 text-sm">
+        <div>
+          <label class="block mb-2 text-sm font-medium text-gray-300 text-left">Email Address</label>
+          <div class="relative">
+            <input
+              v-model="form.email"
+              type="email"
+              placeholder="admin@example.com"
+              class="w-full bg-gray-900/50 border border-gray-700 text-white px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all placeholder-gray-600"
+            />
+          </div>
+          <p v-if="errors.email" class="text-rose-400 text-xs mt-1.5 font-medium text-left">
             {{ errors.email }}
           </p>
         </div>
 
         <!-- Password -->
-        <div class="mb-4">
-          <label class="block mb-1">Password</label>
-          <input
-            v-model="form.password"
-            type="password"
-            class="w-full border p-2 rounded"
-          />
-          <p v-if="errors.password" class="text-red-500 text-sm">
+        <div>
+          <label class="block mb-2 text-sm font-medium text-gray-300 text-left">Password</label>
+          <div class="relative">
+            <input
+              v-model="form.password"
+              type="password"
+              placeholder="••••••••"
+              class="w-full bg-gray-900/50 border border-gray-700 text-white px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all placeholder-gray-600"
+            />
+          </div>
+          <p v-if="errors.password" class="text-rose-400 text-xs mt-1.5 font-medium text-left">
             {{ errors.password }}
           </p>
         </div>
 
-        <button class="w-full bg-blue-500 text-white py-2 rounded">
-          Login
+        <button 
+          type="submit"
+          class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-semibold py-3 px-4 rounded-xl shadow-lg hover:shadow-indigo-500/25 transition-all duration-200 mt-6 active:scale-[0.98]"
+        >
+          Sign In
         </button>
 
-        <p v-if="serverError" class="text-red-500 mt-3 text-center">
-          {{ serverError }}
-        </p>
+        <div v-if="serverError" class="p-3 bg-rose-500/10 border border-rose-500/20 rounded-xl mt-4">
+          <p class="text-rose-400 text-sm text-center font-medium">
+            {{ serverError }}
+          </p>
+        </div>
 
       </form>
     </div>

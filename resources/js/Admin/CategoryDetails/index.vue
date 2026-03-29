@@ -4,7 +4,7 @@
     <div class="absolute -top-10 -right-10 w-40 h-40 bg-purple-500/20 rounded-full blur-3xl pointer-events-none"></div>
 
     <div class="relative z-10">
-      <h1 class="text-4xl font-extrabold pb-2 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-500 mb-6 tracking-tight drop-shadow-sm">
+      <h1 class="text-4xl font-medium pb-2 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-500 mb-6 tracking-tight drop-shadow-sm">
         Report Details
       </h1>
 
