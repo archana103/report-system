@@ -1,14 +1,31 @@
 <script setup>
+import { watch } from 'vue';
 import { Ckeditor } from '@ckeditor/ckeditor5-vue';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import BaseFileInput from '../../components/BaseFileInput.vue';
-import { formData, errors, isSubmitting, successMessage, resetForm } from './variable';
-import { storeReportCategory } from './api';
+import { formData, errors, isSubmitting, successMessage, resetForm, setFormData } from './variable';
+import { storeReportCategory, updateReportCategory } from './api';
+
+const props = defineProps({
+  category: { type: Object, default: null },
+  mode: { type: String, default: 'add' }
+});
+
+const emit = defineEmits(['saved']);
 
 const editor = ClassicEditor;
 const editorConfig = {
     toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', '|', 'undo', 'redo' ]
 };
+
+// Populate form when switching to edit mode
+watch(() => props.category, (newVal) => {
+  if (newVal && props.mode === 'edit') {
+    setFormData(newVal);
+  } else {
+    resetForm();
+  }
+}, { immediate: true });
 
 const submitForm = async () => {
     isSubmitting.value = true;
@@ -16,9 +33,15 @@ const submitForm = async () => {
     successMessage.value = '';
 
     try {
-        await storeReportCategory(formData);
-        successMessage.value = 'Report Category saved successfully!';
-        resetForm();
+        if (props.mode === 'edit' && props.category) {
+            await updateReportCategory(props.category.id, formData);
+            successMessage.value = 'Report Category updated successfully!';
+            emit('saved');
+        } else {
+            await storeReportCategory(formData);
+            successMessage.value = 'Report Category saved successfully!';
+            resetForm();
+        }
     } catch (error) {
         if (error.response && error.response.status === 422) {
             Object.assign(errors, error.response.data.errors);
@@ -33,12 +56,13 @@ const submitForm = async () => {
 const cancelForm = () => {
     resetForm();
     successMessage.value = '';
+    emit('saved');
 };
 </script>
 
 <template>
   <div class="animate-in fade-in duration-300">
-    <h2 class="text-xl text-gray-200 font-medium mb-6">Add Report Category</h2>
+    <h2 class="text-xl text-gray-200 font-medium mb-6">{{ mode === 'edit' ? 'Edit Report Category' : 'Add Report Category' }}</h2>
     
     <div v-if="successMessage" class="mb-4 p-4 rounded-xl text-sm font-medium" :class="successMessage.includes('successfully') ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-red-500/10 text-red-400 border border-red-500/20'">
        {{ successMessage }}
@@ -103,7 +127,7 @@ const cancelForm = () => {
             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
           </svg>
           <span v-if="isSubmitting">Saving...</span>
-          <span v-else>Save Category</span>
+          <span v-else>{{ mode === 'edit' ? 'Update Category' : 'Save Category' }}</span>
         </button>
         <button type="button" @click="cancelForm" class="ml-4 text-gray-400 hover:text-gray-200 font-medium py-2.5 px-6 rounded-xl hover:bg-gray-800 transition-all">
           Cancel

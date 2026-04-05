@@ -180,11 +180,11 @@
        <!-- Subtle Background Glow -->
        <div class="fixed top-0 left-64 right-0 h-96 bg-indigo-900/10 blur-[120px] pointer-events-none rounded-full"></div>
 
-       <header class="h-16 border-b border-gray-800 bg-[#0f172a]/80 backdrop-blur-md sticky top-0 z-10 flex items-center px-8 shadow-sm">
+       <header class="h-16 border-b border-gray-800 bg-[#0f172a]/80 backdrop-blur-md sticky top-0 z-10 flex items-center px-6 shadow-sm">
          <h1 class="text-lg text-gray-300 font-medium">Dashboard Overview</h1>
        </header>
 
-       <div class="flex-1 p-8 relative z-10 w-full max-w-7xl mx-auto">
+       <div class="flex-1 p-5 relative z-10 w-full max-w-full mx-auto">
          <router-view v-slot="{ Component }">
            <transition name="fade" mode="out-in">
              <component :is="Component" />

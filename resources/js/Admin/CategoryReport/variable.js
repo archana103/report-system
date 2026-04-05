@@ -13,15 +13,24 @@ export const errors = reactive({});
 export const isSubmitting = ref(false);
 export const successMessage = ref('');
 
-export const resetForm = () => {
-    formData.name = '';
-    formData.status = '';
-    formData.main_heading = '';
-    formData.main_subheading = '';
-    formData.category_image = null;
-    formData.category_icon = null;
-    
-    for (let key in errors) {
-        delete errors[key];
-    }
+export const setFormData = (data) => {
+  formData.name = data.name || '';
+  formData.status = data.status || '';
+  formData.main_heading = data.main_heading || '';
+  formData.main_subheading = data.main_subheading || '';
+  formData.category_image = null;
+  formData.category_icon = null;
 };
+
+export const resetForm = () => {
+  formData.name = '';
+  formData.status = '';
+  formData.main_heading = '';
+  formData.main_subheading = '';
+  formData.category_image = null;
+  formData.category_icon = null;
+  for (let key in errors) {
+    delete errors[key];
+  }
+};
+

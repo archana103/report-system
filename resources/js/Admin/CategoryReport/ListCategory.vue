@@ -1,73 +1,141 @@
 <template>
-  <div class="animate-in fade-in duration-300">
-    <div class="flex justify-between items-center mb-6">
-      <h2 class="text-xl text-gray-200 font-medium">Category List</h2>
-      <div class="relative">
-        <input type="text" placeholder="Search categories..." class="bg-gray-800/80 border border-gray-700 rounded-xl pl-10 pr-4 py-2 text-sm text-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-500/50 focus:border-teal-500/50 transition-all w-64" />
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400 absolute left-3.5 top-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-        </svg>
+  <DataTable 
+    title="Category List"
+    :headers="headers"
+    :items="categories"
+    :loading="loading"
+    :pagination="pagination"
+    @page-change="fetchCategories"
+    @edit="handleEdit"
+    @delete="handleDelete"
+    @search="handleSearch"
+  >
+    <!-- Custom slot for Description (stripping HTML) -->
+    <template #item-main_subheading="{ item }">
+      <div class="text-gray-400 line-clamp-1" :title="stripHtml(item.main_subheading)">
+        {{ stripHtml(item.main_subheading) }}
       </div>
-    </div>
+    </template>
 
-    <div class="overflow-hidden rounded-xl border border-gray-700/50 shadow-sm">
-      <table class="w-full text-left text-sm text-gray-400">
-        <thead class="text-xs text-gray-300 uppercase bg-gray-800/80 border-b border-gray-700/50">
-          <tr>
-            <th scope="col" class="px-6 py-4 font-semibold">Category Name</th>
-            <th scope="col" class="px-6 py-4 font-semibold">Description</th>
-            <th scope="col" class="px-6 py-4 font-semibold">Status</th>
-            <th scope="col" class="px-6 py-4 text-right font-semibold">Actions</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-700/50 bg-gray-800/30">
-          <tr class="hover:bg-gray-800/60 transition-colors">
-            <td class="px-6 py-4">
-              <div class="font-medium text-gray-200">Financial Reports</div>
-            </td>
-            <td class="px-6 py-4">Monthly and annual financial statements</td>
-            <td class="px-6 py-4">
-              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full mr-1.5"></span>
-                Active
-              </span>
-            </td>
-            <td class="px-6 py-4 text-right">
-              <button class="text-teal-400 hover:text-teal-300 transition-colors p-1.5 rounded hover:bg-teal-400/10">Edit</button>
-            </td>
-          </tr>
-          <tr class="hover:bg-gray-800/60 transition-colors">
-            <td class="px-6 py-4">
-              <div class="font-medium text-gray-200">User Activity</div>
-            </td>
-            <td class="px-6 py-4">Logs and analytics of user sessions</td>
-            <td class="px-6 py-4">
-              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full mr-1.5"></span>
-                Active
-              </span>
-            </td>
-            <td class="px-6 py-4 text-right">
-              <button class="text-teal-400 hover:text-teal-300 transition-colors p-1.5 rounded hover:bg-teal-400/10">Edit</button>
-            </td>
-          </tr>
-          <tr class="hover:bg-gray-800/60 transition-colors">
-            <td class="px-6 py-4">
-              <div class="font-medium text-gray-200">System Logs</div>
-            </td>
-            <td class="px-6 py-4">Administrative actions and errors</td>
-            <td class="px-6 py-4">
-              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-500/10 text-gray-400 border border-gray-500/20">
-                <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mr-1.5"></span>
-                Inactive
-              </span>
-            </td>
-            <td class="px-6 py-4 text-right">
-              <button class="text-teal-400 hover:text-teal-300 transition-colors p-1.5 rounded hover:bg-teal-400/10">Edit</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+    <!-- Custom slot for Status -->
+    <template #item-status="{ item }">
+      <span 
+        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border"
+        :class="item.status === 'active' || item.status === 1 ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-gray-500/10 text-gray-400 border-gray-500/20'"
+      >
+        <span 
+          class="w-1.5 h-1.5 rounded-full mr-1.5"
+          :class="item.status === 'active' || item.status === 1 ? 'bg-emerald-400' : 'bg-gray-400'"
+        ></span>
+        {{ (item.status === 'active' || item.status === 1) ? 'Active' : 'Inactive' }}
+      </span>
+    </template>
+  </DataTable>
+
+  <!-- Delete Confirmation Modal -->
+  <ConfirmationModal 
+    :show="showDeleteModal"
+    title="Delete Category"
+    :message="`Are you sure you want to delete '${selectedCategory?.name}'? This action cannot be undone.`"
+    @confirm="confirmDelete"
+    @cancel="showDeleteModal = false"
+  />
+
+  <!-- Edit Category Modal -->
+
 </template>
+
+<script setup>
+import { ref, onMounted } from 'vue'
+import DataTable from '@/components/DataTable.vue'
+import ConfirmationModal from '@/components/ConfirmationModal.vue'
+import { getReportCategories, deleteReportCategory } from './api.js'
+
+const emit = defineEmits(['edit'])
+
+const categories = ref([])
+const loading = ref(false)
+const selectedCategory = ref(null)
+const showDeleteModal = ref(false)
+
+
+const pagination = ref({
+  current_page: 1,
+  last_page: 1,
+  per_page: 20,
+  total: 0,
+  from: 0,
+  to: 0
+})
+
+const headers = [
+  { key: 'name', label: 'Category Name' },
+  { key: 'main_subheading', label: 'Description' },
+  { key: 'status', label: 'Status' },
+]
+
+const searchQuery = ref('')
+const stripHtml = (html) => {
+    if (!html) return '';
+    const temp = document.createElement('div');
+    temp.innerHTML = html;
+    return temp.textContent || temp.innerText || "";
+}
+
+const fetchCategories = async (page = 1) => {
+  loading.value = true
+  try {
+    const params = {
+      page,
+      limit: 20,
+      search: searchQuery.value
+    }
+    const response = await getReportCategories(params)
+    
+    // Adjust mapping based on actual API response structure (usually Laravel Pagination)
+    categories.value = response.data || []
+    pagination.value = {
+      current_page: response.current_page || 1,
+      last_page: response.last_page || 1,
+      per_page: response.per_page || 20,
+      total: response.total || 0,
+      from: response.from || 0,
+      to: response.to || 0
+    }
+  } catch (error) {
+    console.error('Error fetching categories:', error)
+  } finally {
+    loading.value = false
+  }
+}
+
+const handleSearch = (query) => {
+  searchQuery.value = query
+  fetchCategories(1)
+}
+
+const handleEdit = (item) => {
+  emit('edit', item)
+}
+
+const handleDelete = (item) => {
+  selectedCategory.value = item
+  showDeleteModal.value = true
+}
+
+const confirmDelete = async () => {
+  if (!selectedCategory.value) return
+  
+  try {
+    await deleteReportCategory(selectedCategory.value.id)
+    showDeleteModal.value = false
+    fetchCategories(pagination.value.current_page)
+  } catch (error) {
+    console.error('Error deleting category:', error)
+  }
+}
+
+onMounted(() => {
+  fetchCategories()
+})
+</script>
