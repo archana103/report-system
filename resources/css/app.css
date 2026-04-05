@@ -9,3 +9,71 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+.base-file-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.5rem;
+  padding: 0.625rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid #374151;
+  background-color: #1f2937;
+  color: #e5e7eb;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.base-file-button:hover {
+  background-color: #374151;
+}
+
+.base-file-button:focus-visible {
+  outline: 2px solid #14b8a6;
+  outline-offset: 2px;
+}
+
+.ck-editor-custom {
+  --ck-color-base-background: rgba(31, 41, 55, 0.8);
+  --ck-color-toolbar-background: #1f2937;
+  --ck-color-base-border: #374151;
+  --ck-color-text: #e5e7eb;
+  --ck-color-button-default-hover-background: #374151;
+  --ck-color-button-default-active-background: #4b5563;
+  --ck-color-button-on-background: #374151;
+  --ck-color-button-on-color: #14b8a6;
+  --ck-color-button-on-color-hover: #14b8a6;
+  --ck-color-switch-fill: #14b8a6;
+  --ck-color-list-background: #1f2937;
+  --ck-color-list-button-hover-background: #374151;
+  --ck-color-input-background: #1f2937;
+  --ck-color-input-border: #374151;
+  --ck-color-panel-background: #1f2937;
+  --ck-color-panel-border: #374151;
+}
+
+.ck-editor-custom .ck-editor__editable_inline {
+  min-height: 160px;
+  background-color: var(--ck-color-base-background) !important;
+  color: var(--ck-color-text) !important;
+}
+
+.ck.ck-editor__main > .ck-editor__editable:not(.ck-focused) {
+  border-color: transparent !important;
+}
+
+.ck.ck-toolbar {
+  border-bottom: 1px solid var(--ck-color-base-border) !important;
+  background: var(--ck-color-toolbar-background) !important;
+}
+
+.ck.ck-dropdown__panel {
+  background: var(--ck-color-panel-background) !important;
+  border-color: var(--ck-color-panel-border) !important;
+}
+
+.ck.ck-list {
+  background: var(--ck-color-list-background) !important;
+}
