@@ -5,14 +5,15 @@ import AdminLogin from './Admin/Login/Login.vue'
 import SidebarLayout from './Layout/Sidebar.vue'
 import Dashboard from './Admin/Dashboard/index.vue'
 import CategoryReport from './Admin/CategoryReport/index.vue'
-import CategoryList from './Admin/CategoryList/index.vue'
-import CategoryDetails from './Admin/CategoryDetails/index.vue'
+import ReportList from './Admin/ReportList/index.vue'
+import ReportDetails from './Admin/ReportDetails/index.vue'
 import ContactUs from './Admin/ContactUs/index.vue'
 import PressRelease from './Admin/PressRelease/index.vue'
 import PressReleaseDetails from './Admin/PressReleaseDetails/index.vue'
 import RequestForm from './Admin/RequestForm/index.vue'
 import Blogs from './Admin/Blogs/index.vue'
 import BlogDetails from './Admin/BlogDetails/index.vue'
+import TopSellingReports from './Admin/TopSellingReports/index.vue'
 
 const routes = [
   { path: '/', component: UserIndex },
@@ -23,8 +24,9 @@ const routes = [
     children: [
       { path: 'dashboard', component: Dashboard },
       { path: 'category-report', component: CategoryReport },
-      { path: 'category-list', component: CategoryList },
-      { path: 'category-details', component: CategoryDetails },
+      { path: 'category-list', component: ReportList },
+      { path: 'category-details', component: ReportDetails },
+      { path: 'top-selling-reports', component: TopSellingReports },
       { path: 'contact-us', component: ContactUs },
       { path: 'press-release', component: PressRelease },
       { path: 'press-release-details', component: PressReleaseDetails },

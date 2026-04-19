@@ -66,7 +66,7 @@
             <div>
               <label class="block text-sm font-medium text-gray-400 mb-1.5 ml-1">Main Subheading</label>
               <div class="rounded-xl overflow-hidden shadow-sm border border-gray-700 focus-within:ring-2 focus-within:ring-teal-500/50 focus-within:border-teal-500/50 transition-all ck-editor-custom">
-                <Ckeditor :editor="editor" v-model="form.main_subheading" :config="editorConfig"></Ckeditor>
+                <CkEditor4 v-model="form.main_subheading" :config="editorConfig" />
               </div>
               <p v-if="errors.main_subheading" class="text-red-400 text-xs mt-1 ml-1">{{ errors.main_subheading[0] }}</p>
             </div>
@@ -89,8 +89,7 @@
 
 <script setup>
 import { reactive, ref, watch } from 'vue'
-import { Ckeditor } from '@ckeditor/ckeditor5-vue'
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+import CkEditor4 from '../../components/CkEditor4.vue'
 import BaseFileInput from '../../components/BaseFileInput.vue'
 import { updateReportCategory } from './api.js'
 
@@ -101,9 +100,8 @@ const props = defineProps({
 
 const emit = defineEmits(['updated', 'cancel'])
 
-const editor = ClassicEditor
 const editorConfig = {
-    toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', '|', 'undo', 'redo' ]
+    extraPlugins: 'colorbutton,font,justify'
 }
 
 const form = reactive({

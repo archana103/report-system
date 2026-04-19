@@ -21,9 +21,18 @@ class ReportCategoryController extends Controller
             $query->where('name', 'like', '%' . $request->search . '%');
         }
 
+        // Sorting
+        $sortBy = $request->get('sort_by', 'created_at');
+        $sortDir = $request->get('sort_dir', 'desc');
+        $query->orderBy($sortBy, $sortDir);
+
+        if ($request->has('export') && $request->export == 'true') {
+            return response()->json($query->get());
+        }
+
         // Default pagination 20 per page
         $limit = $request->get('limit', 20);
-        $categories = $query->latest()->paginate($limit);
+        $categories = $query->paginate($limit);
 
         return response()->json($categories);
     }
