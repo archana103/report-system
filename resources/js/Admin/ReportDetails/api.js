@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-export const getReportListsDropdown = async () => {
+export const getReportListsDropdown = async (params = {}) => {
     try {
-        const response = await axios.get('/admin/report-lists-dropdown');
+        const response = await axios.get('/admin/report-lists-dropdown', { params });
         return response.data;
     } catch (error) {
         throw error;

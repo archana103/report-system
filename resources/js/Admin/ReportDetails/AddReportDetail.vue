@@ -22,7 +22,11 @@ const reportLists = ref([]);
 
 const loadReportLists = async () => {
   try {
-    reportLists.value = await getReportListsDropdown();
+    const params = { exclude_details: 1 };
+    if (props.mode === 'edit' && props.report?.report_list_id) {
+        params.include_id = props.report.report_list_id;
+    }
+    reportLists.value = await getReportListsDropdown(params);
   } catch (e) {
     console.error('Failed to load report lists', e);
   }

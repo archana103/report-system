@@ -34,3 +34,10 @@ Route::get('/admin/blogs', [App\Http\Controllers\Admin\BlogController::class, 'i
 Route::post('/admin/blogs', [App\Http\Controllers\Admin\BlogController::class, 'store']);
 Route::put('/admin/blogs/{id}', [App\Http\Controllers\Admin\BlogController::class, 'update']);
 Route::delete('/admin/blogs/{id}', [App\Http\Controllers\Admin\BlogController::class, 'destroy']);
+
+// Blog Details
+Route::get('/admin/blog-details/blogs-list', [App\Http\Controllers\Admin\BlogDetailController::class, 'getBlogsList']);
+Route::get('/admin/blog-details', [App\Http\Controllers\Admin\BlogDetailController::class, 'index']);
+Route::post('/admin/blog-details', [App\Http\Controllers\Admin\BlogDetailController::class, 'store']);
+Route::put('/admin/blog-details/{id}', [App\Http\Controllers\Admin\BlogDetailController::class, 'update']);
+Route::delete('/admin/blog-details/{id}', [App\Http\Controllers\Admin\BlogDetailController::class, 'destroy']);

@@ -25,12 +25,21 @@ class ReportListController extends Controller
     /**
      * Get all active report lists for dropdown.
      */
-    public function dropdown()
+    public function dropdown(Request $request)
     {
-        $lists = ReportList::select('id', 'name')
-            ->where('status', 'Active')
-            ->orderBy('name')
-            ->get();
+        $query = ReportList::select('id', 'name')
+            ->where('status', 'Active');
+
+        if ($request->has('exclude_details')) {
+            $query->where(function ($q) use ($request) {
+                $q->whereDoesntHave('reportDetail');
+                if ($request->has('include_id')) {
+                    $q->orWhere('id', $request->include_id);
+                }
+            });
+        }
+
+        $lists = $query->orderBy('name')->get();
 
         return response()->json($lists);
     }

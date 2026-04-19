@@ -3,7 +3,7 @@
     <div class="flex justify-between items-center mb-6">
       <h2 class="text-2xl font-medium text-white tracking-tight">Top Selling Reports</h2>
       <button 
-        @click="showAddModal = true"
+        @click="openAddModal"
         class="bg-blue-600 hover:bg-blue-500 text-white px-5 py-2.5 rounded-xl flex items-center shadow-lg transition-all active:scale-95 text-sm font-medium"
       >
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
@@ -74,8 +74,11 @@
             <div v-if="searchResults.length === 0 && searchQuery" class="p-8 text-center text-gray-500 italic">
                No reports found matching your search.
             </div>
+            <div v-else-if="searchResults.length === 0 && searching" class="p-8 text-center text-gray-500">
+               Searching reports...
+            </div>
             <div v-else-if="searchResults.length === 0" class="p-8 text-center text-gray-500">
-               Start typing to search for reports published in 'Report Details'.
+               No reports available to add.
             </div>
             <div 
               v-for="res in searchResults" 
@@ -175,12 +178,20 @@ const fetchReports = async (page = 1) => {
 }
 
 let searchTimeout = null
+const closeModal = () => {
+  showAddModal.value = false
+  searchQuery.value = ''
+  searchResults.value = []
+  selectedReport.value = null
+}
+
+const openAddModal = () => {
+    showAddModal.value = true
+    handleSearch() // Fetch all reports initially
+}
+
 const handleSearch = () => {
     if (searchTimeout) clearTimeout(searchTimeout)
-    if (!searchQuery.value) {
-        searchResults.value = []
-        return
-    }
     
     searching.value = true
     searchTimeout = setTimeout(async () => {
@@ -192,33 +203,26 @@ const handleSearch = () => {
         } finally {
             searching.value = false
         }
-    }, 500)
+    }, 300)
 }
 
 const addReport = async () => {
-  if (!selectedReport.value) return
-  
-  adding.value = true
-  try {
-    const response = await axios.post('/admin/top-selling-reports', {
-      report_detail_id: selectedReport.value.id
-    })
-    // Add to list and close
-    fetchReports()
-    closeModal()
-    alert(response.data.message)
-  } catch (error) {
-    alert(error.response?.data?.message || 'Failed to add report.')
-  } finally {
-    adding.value = false
-  }
-}
-
-const closeModal = () => {
-  showAddModal.value = false
-  searchQuery.value = ''
-  searchResults.value = []
-  selectedReport.value = null
+    if (!selectedReport.value) return
+    
+    adding.value = true
+    try {
+      const response = await axios.post('/admin/top-selling-reports', {
+        report_detail_id: selectedReport.value.id
+      })
+      // Add to list and close
+      fetchReports()
+      closeModal()
+      alert(response.data.message)
+    } catch (error) {
+      alert(error.response?.data?.message || 'Failed to add report.')
+    } finally {
+      adding.value = false
+    }
 }
 
 const openDeleteModal = (item) => {

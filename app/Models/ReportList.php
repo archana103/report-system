@@ -19,4 +19,9 @@ class ReportList extends Model
     {
         return $this->belongsTo(ReportCategory::class, 'report_category_id');
     }
+
+    public function reportDetail()
+    {
+        return $this->hasOne(ReportDetail::class, 'report_list_id');
+    }
 }

@@ -47,12 +47,13 @@ class TopSellingReportController extends Controller
     {
         $query = $request->get('q', '');
         
-        $reports = ReportDetail::where('title', 'like', "%{$query}%")
-            ->whereNotIn('id', TopSellingReport::pluck('report_detail_id'))
-            ->limit(15)
-            ->get(['id', 'title']);
+        $reports = ReportDetail::whereNotIn('id', TopSellingReport::pluck('report_detail_id'));
 
-        return response()->json($reports);
+        if (!empty($query)) {
+            $reports->where('title', 'like', "%{$query}%");
+        }
+            
+        return response()->json($reports->get(['id', 'title']));
     }
 
     /**
