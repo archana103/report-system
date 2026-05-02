@@ -34,4 +34,20 @@ class AdminAuthController extends Controller
             'user'    => $user,
         ]);
     }
+
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required',
+            'new_password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user = User::findOrFail($request->user_id);
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return response()->json([
+            'message' => 'Password updated successfully!',
+        ]);
+    }
 }

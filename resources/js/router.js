@@ -15,6 +15,8 @@ import Blogs from './Admin/Blogs/index.vue'
 import BlogDetails from './Admin/BlogDetails/index.vue'
 import TopSellingReports from './Admin/TopSellingReports/index.vue'
 
+import ChangePassword from './Admin/ChangePassword/index.vue'
+
 const routes = [
   { path: '/', component: UserIndex },
   { path: '/admin/login', component: AdminLogin },
@@ -33,6 +35,7 @@ const routes = [
       { path: 'request-form', component: RequestForm },
       { path: 'blogs', component: Blogs },
       { path: 'blog-details', component: BlogDetails },
+      { path: 'change-password', component: ChangePassword },
     ]
   },
 ]

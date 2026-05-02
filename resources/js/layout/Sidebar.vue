@@ -164,6 +164,17 @@
           <span class="font-medium relative z-10 text-gray-200 group-[.router-link-active]:text-white">Press Release Details</span>
         </router-link>
 
+        <router-link
+          to="/admin/change-password"
+          class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 hover:bg-white/5 border border-transparent hover:border-gray-700 relative overflow-hidden group"
+          active-class="bg-gradient-to-r from-indigo-600 to-purple-600 shadow-lg border-transparent hover:border-transparent text-white ring-1 ring-white/20"
+        >
+          <div class="absolute inset-0 bg-gradient-to-r from-white/0 via-white/5 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+          <svg class="w-5 h-5 text-indigo-300 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg>
+          <span class="font-medium relative z-10 text-gray-200 group-[.router-link-active]:text-white">Change Password</span>
+        </router-link>
+
+
 
 
 

@@ -41,3 +41,28 @@ Route::get('/admin/blog-details', [App\Http\Controllers\Admin\BlogDetailControll
 Route::post('/admin/blog-details', [App\Http\Controllers\Admin\BlogDetailController::class, 'store']);
 Route::put('/admin/blog-details/{id}', [App\Http\Controllers\Admin\BlogDetailController::class, 'update']);
 Route::delete('/admin/blog-details/{id}', [App\Http\Controllers\Admin\BlogDetailController::class, 'destroy']);
+
+// Contact Us
+Route::get('/admin/contact-us-data', [App\Http\Controllers\Admin\ContactUsController::class, 'index']);
+
+// Request Forms
+Route::get('/admin/request-forms', [App\Http\Controllers\Admin\RequestFormController::class, 'index']);
+Route::delete('/admin/request-forms/{id}', [App\Http\Controllers\Admin\RequestFormController::class, 'destroy']);
+
+// Press Release
+Route::get('/admin/press-releases', [App\Http\Controllers\Admin\PressReleaseController::class, 'index']);
+Route::post('/admin/press-releases', [App\Http\Controllers\Admin\PressReleaseController::class, 'store']);
+Route::post('/admin/press-releases/{id}', [App\Http\Controllers\Admin\PressReleaseController::class, 'update']); // using POST to handle form data with file uploads
+Route::delete('/admin/press-releases/{id}', [App\Http\Controllers\Admin\PressReleaseController::class, 'destroy']);
+
+// Press Release Details
+Route::get('/admin/press-release-details', [App\Http\Controllers\Admin\PressReleaseDetailController::class, 'index']);
+Route::post('/admin/press-release-details', [App\Http\Controllers\Admin\PressReleaseDetailController::class, 'store']);
+Route::put('/admin/press-release-details/{id}', [App\Http\Controllers\Admin\PressReleaseDetailController::class, 'update']);
+Route::delete('/admin/press-release-details/{id}', [App\Http\Controllers\Admin\PressReleaseDetailController::class, 'destroy']);
+Route::get('/admin/press-releases-dropdown', [App\Http\Controllers\Admin\PressReleaseDetailController::class, 'getPressReleasesList']);
+
+// Change password
+Route::post('/admin/change-password', [AdminAuthController::class, 'changePassword']);
+
+
