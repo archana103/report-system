@@ -164,15 +164,6 @@
           <span class="font-medium relative z-10 text-gray-200 group-[.router-link-active]:text-white">Press Release Details</span>
         </router-link>
 
-        <router-link
-          to="/admin/change-password"
-          class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 hover:bg-white/5 border border-transparent hover:border-gray-700 relative overflow-hidden group"
-          active-class="bg-gradient-to-r from-indigo-600 to-purple-600 shadow-lg border-transparent hover:border-transparent text-white ring-1 ring-white/20"
-        >
-          <div class="absolute inset-0 bg-gradient-to-r from-white/0 via-white/5 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
-          <svg class="w-5 h-5 text-indigo-300 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg>
-          <span class="font-medium relative z-10 text-gray-200 group-[.router-link-active]:text-white">Change Password</span>
-        </router-link>
 
 
 
@@ -198,9 +189,57 @@
        <!-- Subtle Background Glow -->
        <div class="fixed top-0 left-64 right-0 h-96 bg-indigo-900/10 blur-[120px] pointer-events-none rounded-full"></div>
 
-       <header class="h-16 border-b border-gray-800 bg-[#0f172a]/80 backdrop-blur-md sticky top-0 z-10 flex items-center px-6 shadow-sm">
+       <header class="h-16 border-b border-gray-800 bg-[#0f172a]/80 backdrop-blur-md sticky top-0 z-[60] flex items-center justify-between px-6 shadow-sm">
          <h1 class="text-lg text-gray-300 font-medium">Dashboard Overview</h1>
+
+         <!-- Profile dropdown -->
+         <div class="relative">
+           <button 
+             @click="toggleProfileDropdown"
+             class="flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 rounded-xl p-1 transition-all"
+           >
+             <div class="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center font-bold text-white shadow ring-2 ring-gray-800">
+               A
+             </div>
+             <span class="text-sm font-medium text-gray-300 hover:text-white hidden sm:inline">Administrator</span>
+             <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+             </svg>
+           </button>
+
+           <div 
+             v-if="profileDropdownOpen" 
+             class="absolute right-0 mt-3 w-72 bg-gray-900 border border-gray-800 rounded-2xl shadow-2xl p-5 z-[100] text-left backdrop-blur-sm transform transition-all flex flex-col gap-4 animate-in fade-in duration-200"
+           >
+             <div class="flex items-center gap-4">
+               <div class="w-14 h-14 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center font-bold text-xl text-white shadow-lg ring-2 ring-gray-800">
+                 A
+               </div>
+               <div>
+                 <p class="text-base font-semibold text-gray-200">Administrator</p>
+                 <p class="text-xs text-gray-500">Member since May 2026</p>
+               </div>
+             </div>
+
+             <div class="flex justify-between items-center border-t border-gray-800 pt-3">
+               <router-link 
+                 to="/admin/change-password" 
+                 @click="profileDropdownOpen = false"
+                 class="px-4 py-2 text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-500 rounded-xl shadow-lg shadow-indigo-500/20 transition-all focus:outline-none"
+               >
+                 Change Password
+               </router-link>
+               <button 
+                 @click="handleSignOut"
+                 class="px-4 py-2 text-xs font-medium text-white bg-rose-600 hover:bg-rose-500 rounded-xl shadow-lg shadow-rose-500/20 transition-all focus:outline-none"
+               >
+                 Sign out
+               </button>
+             </div>
+           </div>
+         </div>
        </header>
+
 
        <div class="flex-1 p-5 relative z-10 w-full max-w-full mx-auto">
          <router-view v-slot="{ Component }">
@@ -215,7 +254,22 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
 const activeMenu = ref('master') // Master is open by default
+const profileDropdownOpen = ref(false)
+const router = useRouter()
+
+const toggleProfileDropdown = () => {
+  profileDropdownOpen.value = !profileDropdownOpen.value
+}
+
+const handleSignOut = () => {
+  localStorage.removeItem('user')
+  sessionStorage.removeItem('user')
+  profileDropdownOpen.value = false
+  router.push('/admin/login')
+}
 </script>
 
 <style scoped>

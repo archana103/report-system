@@ -45,4 +45,17 @@ const router = createRouter({
   routes
 })
 
+router.beforeEach((to, from, next) => {
+  const isAuth = localStorage.getItem('user') || sessionStorage.getItem('user')
+
+  if (to.path.startsWith('/admin') && to.path !== '/admin/login' && !isAuth) {
+    next('/admin/login')
+  } else if (to.path === '/admin') {
+    next('/admin/dashboard')
+  } else {
+    next()
+  }
+})
+
 export default router
+
