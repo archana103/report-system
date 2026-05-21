@@ -13,11 +13,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $password = \Illuminate\Support\Str::password(12);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        User::updateOrCreate(
+            ['email' => 'admin@example.com'],
+            [
+                'name' => 'Admin',
+                'password' => \Illuminate\Support\Facades\Hash::make($password),
+            ]
+        );
+
+        $this->command->info('Admin email: admin@example.com');
+        $this->command->info('Admin password: ' . $password);
     }
 }
