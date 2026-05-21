@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserviewController;
 
 Route::get('/api/categories-with-reports', [UserviewController::class, 'categoriesWithReports']);
+Route::get('/api/reports-by-category', [UserviewController::class, 'reportsByCategory']);
 Route::get('/api/press-releases-public', [UserviewController::class, 'pressReleases']);
+Route::get('/api/blogs-public', [UserviewController::class, 'blogs']);
 
 Route::get('/', function () {
     return view('welcome');

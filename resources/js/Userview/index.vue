@@ -100,9 +100,9 @@
         </div>
 
         <div class="report-list">
-          <article v-for="report in filteredReports" :key="report.title" class="report-card">
+          <article v-for="report in reports" :key="report.title" class="report-card">
             <h3>{{ report.title }}</h3>
-            <p>{{ report.description }}</p>
+            <p v-html="report.description"></p>
             <div class="report-meta">
               <span>Category: <strong>{{ report.category }}</strong></span>
               <span>Publish Date: <strong>{{ report.date }}</strong></span>
@@ -123,12 +123,12 @@
             <p>Latest announcements, research highlights, and industry updates from our analysts.</p>
           </div>
           <div class="slider-controls">
-            <button aria-label="Previous"><ArrowLeft /></button>
-            <button class="active" aria-label="Next"><ArrowRight /></button>
+            <button aria-label="Previous" @click="prevPressRelease"><ArrowLeft /></button>
+            <button class="active" aria-label="Next" @click="nextPressRelease"><ArrowRight /></button>
           </div>
         </div>
         <div class="story-grid">
-          <article v-for="item in pressReleases" :key="item.title" class="story-card">
+          <article v-for="item in visiblePressReleases" :key="item.title" class="story-card">
             <img :src="item.image" :alt="item.title" />
             <p class="story-date">{{ item.date }}</p>
             <h3>{{ item.title }}</h3>
@@ -147,12 +147,12 @@
             <p>Explore expert perspectives, industry trends, and data-driven stories shaping global markets.</p>
           </div>
           <div class="slider-controls">
-            <button aria-label="Previous"><ArrowLeft /></button>
-            <button class="active" aria-label="Next"><ArrowRight /></button>
+            <button aria-label="Previous" @click="prevInsight"><ArrowLeft /></button>
+            <button class="active" aria-label="Next" @click="nextInsight"><ArrowRight /></button>
           </div>
         </div>
         <div class="insight-strip">
-          <article v-for="item in insights" :key="item.title" class="insight-card">
+          <article v-for="item in visibleInsights" :key="item.title" class="insight-card">
             <img :src="item.image" :alt="item.title" />
             <h3>{{ item.title }}</h3>
             <p>{{ item.description }}</p>
@@ -194,7 +194,7 @@
           <p>Our research combines advanced analytics, industry expertise, and reliable data sources to provide actionable intelligence that drives growth and innovation. From comprehensive market reports to fully customized research solutions, we ensure every insight is tailored to meet specific business objectives.</p>
           <p>With a strong focus on quality, transparency, and precision, our team of experienced analysts works closely with clients to uncover opportunities, mitigate risks, and support long-term strategic planning.</p>
         </div>
-        <img class="about-image" :src="'/assets/images/loginpageimage.jpg'" alt="Analysts reviewing a market report" />
+        <img class="about-image" :src="'/assets/images/aboutus.png'" alt="Analysts reviewing a market report" />
         <div class="about-stats">
           <div v-for="stat in aboutStats" :key="stat.label">
             <span><component :is="stat.icon" /></span>
@@ -257,7 +257,8 @@
 </template>
 
 <script setup>
-import { computed, h, ref } from 'vue'
+import { computed, h, ref, onMounted, watch } from 'vue'
+import axios from 'axios'
 
 const iconBase = { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', 'stroke-width': '1.8' }
 const icon = (paths, className = 'icon') => () => h('svg', { ...iconBase, class: className, 'aria-hidden': 'true' }, paths.map((d) => h('path', { d, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' })))
@@ -277,78 +278,83 @@ const IconMail = icon(['M4 6h16v12H4z', 'm4 7 8 6 8-6'])
 const PhoneMini = icon(['M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.35 1.9.66 2.8a2 2 0 0 1-.45 2.11L8.05 9.9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.31 1.84.53 2.8.66A2 2 0 0 1 22 16.92Z'])
 
 const activeCategory = ref('All')
-const categories = ['All', 'Healthcare', 'Automotive', 'Energy & Power', 'Finance', 'Chemicals & Materials', 'Food & Beverages', 'Semiconductors & Electronics', 'Consumer Goods', 'Technology']
+const categories = ref(['All'])
 
-const reports = [
-  {
-    title: 'Global Artificial Intelligence Market Size, Share & Growth Forecast (2025-2030)',
-    description: 'Comprehensive analysis of AI adoption, key industry players, emerging technologies, and revenue projections across global markets.',
-    category: 'Technology',
-    date: 'March 2025'
-  },
-  {
-    title: 'Electric Vehicle (EV) Market Growth Analysis, Industry Trends & Forecast (2025-2032)',
-    description: 'Detailed insights into EV adoption rates, battery innovations, regional demand, and government policies shaping the global automotive transition.',
-    category: 'Automotive',
-    date: 'February 2025'
-  },
-  {
-    title: 'Healthcare Analytics Market Size, Share, Trends & Forecast (2025-2030)',
-    description: 'Explore the rise of data-driven healthcare, including predictive analytics, digital health solutions, and investment opportunities across global markets.',
-    category: 'Healthcare',
-    date: 'January 2025'
-  },
-  {
-    title: 'Renewable Energy Market Outlook, Growth Trends & Forecast (2025-2035)',
-    description: 'In-depth coverage of solar, wind, and clean energy sectors, including market expansion, technological advancements, and sustainability initiatives.',
-    category: 'Energy & Power',
-    date: 'January 2025'
+onMounted(async () => {
+  try {
+    const response = await axios.get('/admin/report-categories-dropdown')
+    if (response.data && response.data.length > 0) {
+      categories.value = ['All', ...response.data.map(cat => cat.name)]
+    }
+  } catch (error) {
+    console.error('Failed to fetch categories', error)
   }
-]
-
-const filteredReports = computed(() => {
-  if (activeCategory.value === 'All') return reports
-  return reports.filter((report) => report.category === activeCategory.value)
 })
 
-const pressReleases = [
-  {
-    image: '/storage/press_releases/k9YeGo5kQe8fYVZ6tK3BlNrDnfNXkpobWw6Uxtq4.jpg',
-    date: 'April 12, 2025',
-    title: 'AI Market Expected to Reach $1.5 Trillion by 2030, Driven by Rapid Enterprise Adoption',
-    description: 'Our latest research highlights the accelerating demand for AI technologies across healthcare, finance, and retail.'
-  },
-  {
-    image: '/storage/press_releases/thumbnails/J43LNa5gBkMUkdviHVzMMkVSJR4FpRCtbSLpbeDF.png',
-    date: 'March 28, 2025',
-    title: 'Electric Vehicle Market Sees Surge as Global Adoption Accelerates',
-    description: 'New report reveals strong growth in EV sales, supported by government policies and advancements in charging infrastructure.'
-  },
-  {
-    image: '/assets/images/login_bg.png',
-    date: 'March 10, 2025',
-    title: 'Renewable Energy Sector Set for Significant Expansion Over the Next Decade',
-    description: 'Growing investments in solar and wind energy are expected to drive long-term market growth.'
-  }
-]
+const reports = ref([])
 
-const insights = [
-  {
-    image: '/storage/blogs/0qhm29zHSnmTyb3p4UQV94208ZMIaFlQIxpbhlFS.jpg',
-    title: 'Top 5 Emerging Technologies Transforming Global Industries in 2025',
-    description: 'From AI to IoT, discover the key technologies reshaping industries and creating new growth opportunities worldwide.'
-  },
-  {
-    image: '/storage/blogs/8dEQl3R9ch6s8meuEwhmGaYYzZQEcm8TWj7jlx7A.png',
-    title: 'How Data Analytics is Revolutionizing the Healthcare Industry',
-    description: 'Learn how predictive analytics and digital tools are improving patient outcomes and operational efficiency in healthcare.'
-  },
-  {
-    image: '/storage/blogs/kYy73D8dI2YLKua3WzggkK5qiYY3pwevRgknxUZu.png',
-    title: 'The Rise of Smart Infrastructure and the Future of Connected Cities',
-    description: 'Explore the trends and market forces shaping intelligent transportation, energy, and urban systems.'
+const fetchReports = async (category) => {
+  try {
+    const response = await axios.get('/api/reports-by-category', { params: { category } })
+    reports.value = response.data
+  } catch (error) {
+    console.error('Failed to fetch reports', error)
   }
-]
+
+  try {
+    const prRes = await axios.get('/api/press-releases-public')
+    pressReleases.value = prRes.data
+  } catch (error) {
+    console.error('Failed to fetch press releases', error)
+  }
+
+  try {
+    const blogRes = await axios.get('/api/blogs-public')
+    insights.value = blogRes.data
+  } catch (error) {
+    console.error('Failed to fetch blogs', error)
+  }
+}
+
+watch(activeCategory, (newVal) => {
+  fetchReports(newVal)
+}, { immediate: true })
+
+const pressReleases = ref([])
+
+const visiblePressReleases = computed(() => pressReleases.value.slice(0, 3))
+
+const nextPressRelease = () => {
+  if (pressReleases.value.length > 0) {
+    const first = pressReleases.value.shift()
+    pressReleases.value.push(first)
+  }
+}
+
+const prevPressRelease = () => {
+  if (pressReleases.value.length > 0) {
+    const last = pressReleases.value.pop()
+    pressReleases.value.unshift(last)
+  }
+}
+
+const insights = ref([])
+
+const visibleInsights = computed(() => insights.value.slice(0, 3))
+
+const nextInsight = () => {
+  if (insights.value.length > 0) {
+    const first = insights.value.shift()
+    insights.value.push(first)
+  }
+}
+
+const prevInsight = () => {
+  if (insights.value.length > 0) {
+    const last = insights.value.pop()
+    insights.value.unshift(last)
+  }
+}
 
 const services = [
   { title: 'Market Research Reports', description: 'Comprehensive reports covering market size, key trends, and future forecasts.', icon: IconBrief, position: 'top-left' },
@@ -429,9 +435,11 @@ input {
 }
 
 .brand-logo {
-  height: 36px;
-  width: auto;
+  height: 55px; /* Increased height for better visibility */
+  width: 280px;
+  max-width:430px; /* Prevent it from blowing up, but give it space */
   object-fit: contain;
+  flex-shrink: 0; /* Prevent it from being squished by the flex/grid layout */
 }
 
 .main-nav {
@@ -940,6 +948,10 @@ input {
   font-size: 21px;
   font-weight: 800;
   line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .story-card p:last-child,
@@ -947,6 +959,11 @@ input {
   color: #4f535b;
   font-size: 14px;
   line-height: 1.35;
+  margin-top: 10px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .insights-section {
