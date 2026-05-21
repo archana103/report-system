@@ -1,0 +1,18 @@
+import { h } from 'vue'
+
+export const iconBase = { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', 'stroke-width': '1.8' }
+export const icon = (paths, className = 'icon') => () => h('svg', { ...iconBase, class: className, 'aria-hidden': 'true' }, paths.map((d) => h('path', { d, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' })))
+
+export const ArrowRight = icon(['m9 18 6-6-6-6'])
+export const ArrowLeft = icon(['m15 18-6-6 6-6'])
+export const CircleArrow = icon(['M5 12h14', 'm13 6 6-6-6-6'], 'icon small-icon')
+export const IconChart = icon(['M4 19V5', 'M8 17v-5', 'M12 17V8', 'M16 17v-7', 'M20 17v-3'])
+export const IconUsers = icon(['M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2', 'M9.5 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8', 'M22 21v-2a4 4 0 0 0-3-3.87', 'M16 3.13a4 4 0 0 1 0 7.75'])
+export const IconSliders = icon(['M4 21v-7', 'M4 10V3', 'M12 21v-9', 'M12 8V3', 'M20 21v-5', 'M20 12V3', 'M2 14h4', 'M10 8h4', 'M18 16h4'])
+export const IconTarget = icon(['M12 21a9 9 0 1 0-9-9 9 9 0 0 0 9 9Z', 'M12 17a5 5 0 1 0-5-5 5 5 0 0 0 5 5Z', 'M12 13a1 1 0 1 0-1-1 1 1 0 0 0 1 1Z', 'M20 4l-5.5 5.5'])
+export const IconBrief = icon(['M10 6V5a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v1', 'M4 7h16v13H4z', 'M9 12h6'])
+export const IconTrend = icon(['M4 17 10 11l4 4 6-8', 'M14 7h6v6'])
+export const IconBulb = icon(['M9 18h6', 'M10 22h4', 'M8 14a6 6 0 1 1 8 0c-.9.8-1.3 1.7-1.4 3H9.4c-.1-1.3-.5-2.2-1.4-3Z'])
+export const IconPin = icon(['M12 21s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11Z', 'M12 10.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z'])
+export const IconMail = icon(['M4 6h16v12H4z', 'm4 7 8 6 8-6'])
+export const PhoneMini = icon(['M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.35 1.9.66 2.8a2 2 0 0 1-.45 2.11L8.05 9.9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.31 1.84.53 2.8.66A2 2 0 0 1 22 16.92Z'])

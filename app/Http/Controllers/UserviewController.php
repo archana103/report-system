@@ -21,6 +21,7 @@ class UserviewController extends Controller
 
         foreach ($categories as $category) {
             $category->reports = ReportList::where('report_category_id', $category->id)
+                ->has('reportDetail')
                 ->where('status', 'Active')
                 ->orderBy('created_at', 'desc')
                 ->take(3)
@@ -58,6 +59,7 @@ class UserviewController extends Controller
         $categoryName = $request->query('category', 'All');
 
         $query = ReportList::with(['reportCategory', 'reportDetail'])
+            ->has('reportDetail')
             ->where('status', 'Active');
 
         if ($categoryName !== 'All') {
@@ -74,14 +76,67 @@ class UserviewController extends Controller
                 $description = \Illuminate\Support\Str::limit(html_entity_decode($description), 150);
 
                 return [
+                    'id' => $report->id,
                     'title' => ($report->reportDetail && $report->reportDetail->title) ? $report->reportDetail->title : $report->name,
                     'description' => $description,
                     'category' => $report->reportCategory ? $report->reportCategory->name : 'Unknown',
-                    'date' => $report->created_at->format('F Y')
+                    'date' => $report->created_at->format('F Y'),
+                    'image' => '/assets/images/default-report.png',
+                    'slug' => ($report->reportDetail && $report->reportDetail->slug_url) ? $report->reportDetail->slug_url : '#'
                 ];
             });
 
         return response()->json($reports);
+    }
+
+    /**
+     * Get all reports paginated with filters.
+     */
+    public function getAllReports(Request $request)
+    {
+        $search = $request->query('search');
+        $categoryName = $request->query('category', 'All');
+
+        $query = ReportList::with(['reportCategory', 'reportDetail'])
+            ->has('reportDetail')
+            ->where('status', 'Active');
+
+        if ($categoryName !== 'All') {
+            $query->whereHas('reportCategory', function ($q) use ($categoryName) {
+                $q->where('name', $categoryName);
+            });
+        }
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                  ->orWhereHas('reportDetail', function ($q2) use ($search) {
+                      $q2->where('title', 'like', '%' . $search . '%')
+                         ->orWhere('description', 'like', '%' . $search . '%');
+                  });
+            });
+        }
+
+        $paginator = $query->orderBy('created_at', 'desc')->paginate(10);
+        
+        $paginator->getCollection()->transform(function ($report) {
+            $description = $report->reportDetail ? strip_tags($report->reportDetail->description) : 'No description available.';
+            $description = \Illuminate\Support\Str::limit(html_entity_decode($description), 250);
+
+            return [
+                'id' => $report->id,
+                'title' => ($report->reportDetail && $report->reportDetail->title) ? $report->reportDetail->title : $report->name,
+                'description' => $description,
+                'category' => $report->reportCategory ? $report->reportCategory->name : 'Unknown',
+                'date' => $report->created_at->format('M-Y'),
+                'image' => '/assets/images/default-report.png',
+                'pages' => 120, // Placeholder
+                'format' => 'PDF, Excel', // Placeholder
+                'slug' => ($report->reportDetail && $report->reportDetail->slug_url) ? $report->reportDetail->slug_url : '#'
+            ];
+        });
+
+        return response()->json($paginator);
     }
 
     /**
@@ -102,5 +157,78 @@ class UserviewController extends Controller
             });
 
         return response()->json($blogs);
+    }
+
+    /**
+     * Get a single report by slug.
+     */
+    public function getReportDetail($slug)
+    {
+        $query = \App\Models\ReportDetail::with(['reportList.reportCategory']);
+        if (is_numeric($slug)) {
+            $query->where(function ($q) use ($slug) {
+                $q->where('id', $slug)
+                  ->orWhere('report_list_id', $slug);
+            });
+        } else {
+            $query->where('slug_url', $slug);
+        }
+        $reportDetail = $query->first();
+
+        if (!$reportDetail) {
+            return response()->json(['message' => 'Report not found'], 404);
+        }
+
+        // Fetch related reports in same category
+        $relatedReports = [];
+        if ($reportDetail->reportList && $reportDetail->reportList->reportCategory) {
+            $catId = $reportDetail->reportList->report_category_id;
+            $relatedReports = \App\Models\ReportList::with(['reportCategory', 'reportDetail'])
+                ->where('report_category_id', $catId)
+                ->where('id', '!=', $reportDetail->report_list_id)
+                ->where('status', 'Active')
+                ->orderBy('created_at', 'desc')
+                ->take(5)
+                ->get()
+                ->map(function ($r) {
+                    return [
+                        'id' => $r->id,
+                        'title' => ($r->reportDetail && $r->reportDetail->title) ? $r->reportDetail->title : $r->name,
+                        'slug' => ($r->reportDetail && $r->reportDetail->slug_url) ? $r->reportDetail->slug_url : '#'
+                    ];
+                });
+        }
+
+        // Fetch related categories / industries
+        $relatedCategories = \App\Models\ReportCategory::where('status', 'Active')
+            ->orderBy('created_at', 'desc')
+            ->take(8)
+            ->get()
+            ->map(function ($cat) {
+                return $cat->name;
+            });
+
+        return response()->json([
+            'id' => $reportDetail->id,
+            'title' => $reportDetail->title ?: ($reportDetail->reportList ? $reportDetail->reportList->name : 'No Title'),
+            'description' => $reportDetail->description,
+            'table_of_contents' => $reportDetail->table_of_contents,
+            'single_user_license_cost' => $reportDetail->single_user_license_cost ?: '3500',
+            'team_user_license_cost' => $reportDetail->team_user_license_cost ?: '5500',
+            'enterprise_user_license_cost' => $reportDetail->enterprise_user_license_cost ?: '7500',
+            'download_text' => $reportDetail->download_text,
+            'image' => '/assets/images/default-report.png',
+            'slug_url' => $reportDetail->slug_url,
+            'breadcrumb_title' => $reportDetail->breadcrumb_title ?: ($reportDetail->reportList ? $reportDetail->reportList->name : ''),
+            'page_main_title' => $reportDetail->page_main_title ?: $reportDetail->title,
+            'report_sku' => $reportDetail->report_sku ?: ('REP-' . str_pad($reportDetail->id, 5, '0', STR_PAD_LEFT)),
+            'faqs' => $reportDetail->faqs ?: [],
+            'category' => ($reportDetail->reportList && $reportDetail->reportList->reportCategory) ? $reportDetail->reportList->reportCategory->name : 'Unknown',
+            'date' => $reportDetail->created_at ? $reportDetail->created_at->format('F Y') : date('F Y'),
+            'pages' => 120, // default pages
+            'format' => 'PDF, Excel', // default format
+            'related_reports' => $relatedReports,
+            'related_industries' => $relatedCategories
+        ]);
     }
 }
