@@ -23,7 +23,7 @@
         </div>
         <div class="report-actions">
           <router-link :to="`/report/${report.slug && report.slug !== '#' ? report.slug : report.id}?tab=overview`" class="secondary-button outlined" style="padding: 10px 24px; min-height: auto; line-height: 1.2;">View Details</router-link>
-          <router-link :to="`/report/${report.slug && report.slug !== '#' ? report.slug : report.id}?tab=faq`" class="secondary-button outlined" style="padding: 10px 24px; min-height: auto; line-height: 1.2;">Request Sample</router-link>
+          <a href="#" class="secondary-button outlined" style="padding: 10px 24px; min-height: auto; line-height: 1.2;" @click.prevent="$emit('trigger-request', { report: report, subject: 'Request Sample' })">Request Sample</a>
           <router-link :to="`/report/${report.slug && report.slug !== '#' ? report.slug : report.id}?tab=toc`" class="primary-button small" style="padding: 10px 24px; min-height: auto; line-height: 1.2;">Buy Now</router-link>
         </div>
       </div>
@@ -40,6 +40,7 @@ defineProps({
   reports: Array,
   loading: Boolean
 })
+defineEmits(['trigger-request'])
 </script>
 
 <style scoped>

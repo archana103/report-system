@@ -78,3 +78,48 @@
 .ck.ck-list {
   background: var(--ck-color-list-background) !important;
 }
+
+/* intl-tel-input global overrides */
+.iti__dropdown-content {
+  z-index: 10002 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15) !important;
+  border: 1px solid #e2e8f0 !important;
+  overflow: hidden;
+}
+
+.iti__search-input {
+  border-radius: 8px !important;
+  border: 1.5px solid #e2e8f0 !important;
+  font-size: 13px !important;
+  padding: 8px 12px !important;
+  margin: 8px !important;
+}
+
+.iti__search-input:focus {
+  border-color: #0783df !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(7, 131, 223, 0.08) !important;
+}
+
+.iti__country-list {
+  scrollbar-width: thin;
+}
+
+.iti__country {
+  padding: 8px 12px !important;
+  font-size: 13.5px !important;
+  transition: background 0.15s ease !important;
+}
+
+.iti__country:hover {
+  background: #f4f9ff !important;
+}
+
+.iti__country.iti__active {
+  background: #eef6ff !important;
+}
+
+.iti__dial-code {
+  color: #6b7280 !important;
+}

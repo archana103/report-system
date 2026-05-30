@@ -10,6 +10,8 @@ Route::get('/api/report/{slug}', [UserviewController::class, 'getReportDetail'])
 Route::get('/api/press-releases-public', [UserviewController::class, 'pressReleases']);
 Route::get('/api/blogs-public', [UserviewController::class, 'blogs']);
 Route::get('/api/category/{name}', [UserviewController::class, 'getCategoryDetail']);
+Route::get('/api/categories-dropdown', [UserviewController::class, 'categoriesDropdown']);
+Route::post('/api/request-form', [UserviewController::class, 'storeRequestForm']);
 
 Route::get('/', function () {
     return view('welcome');

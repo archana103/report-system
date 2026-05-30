@@ -254,4 +254,41 @@ class UserviewController extends Controller
             'category_icon' => $category->category_icon ? asset('storage/' . $category->category_icon) : null,
         ]);
     }
+
+    /**
+     * Get all active categories for public dropdown (header, sidebar, etc.).
+     */
+    public function categoriesDropdown()
+    {
+        $categories = ReportCategory::select('id', 'name')
+            ->where('status', 'Active')
+            ->orderBy('name')
+            ->get();
+
+        return response()->json($categories);
+    }
+
+    /**
+     * Store a public request form submission.
+     */
+    public function storeRequestForm(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:45',
+            'country' => 'required|string|max:255',
+            'subject' => 'required|string|max:255',
+            'job_title' => 'required|string|max:255',
+            'company_name' => 'required|string|max:255',
+            'specific_research_requirement' => 'required|string',
+        ]);
+
+        $requestForm = \App\Models\RequestForm::create($validated);
+
+        return response()->json([
+            'message' => 'Request submitted successfully!',
+            'data' => $requestForm
+        ], 201);
+    }
 }

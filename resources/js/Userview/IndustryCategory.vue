@@ -87,8 +87,9 @@
                   </div>
 
                   <div class="report-actions">
-                    <router-link :to="`/report/${report.slug && report.slug !== '#' ? report.slug : report.id}?tab=overview`" class="secondary-button outlined">Request Sample</router-link>
-                    <router-link :to="`/report/${report.slug && report.slug !== '#' ? report.slug : report.id}?tab=toc`" class="primary-button small">Buy Now</router-link>
+                    <button class="secondary-button outlined" @click="openRequestModal('Request Sample')">Request Sample</button>
+                    <button class="secondary-button outlined" @click="openRequestModal('Download Free Sample')">Download Sample</button>
+                    <router-link :to="`/report/${report.slug && report.slug !== '#' ? report.slug : report.id}`" class="primary-button small">Buy Now</router-link>
                   </div>
                 </div>
               </article>
@@ -133,6 +134,9 @@
       </div>
     </main>
 
+    <!-- Request Form Modal Popup -->
+    <RequestFormModal :isOpen="isRequestModalOpen" :subject="requestSubject" @close="isRequestModalOpen = false" />
+
     <!-- Custom Analyst Research CTA Component -->
     <CustomResearchCTA />
 
@@ -147,6 +151,7 @@ import axios from 'axios'
 import SiteHeader from './components/SiteHeader.vue'
 import SiteFooter from './components/SiteFooter.vue'
 import CustomResearchCTA from './components/CustomResearchCTA.vue'
+import RequestFormModal from '../components/RequestFormModal.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -159,10 +164,19 @@ const loadingReports = ref(false)
 const currentPage = ref(1)
 const totalPages = ref(1)
 
+// Request Form Modal state
+const isRequestModalOpen = ref(false)
+const requestSubject = ref('Request Sample')
+
+const openRequestModal = (subject = 'Request Sample') => {
+  requestSubject.value = subject
+  isRequestModalOpen.value = true
+}
+
 // Fetch all active categories for the left sidebar navigation
 const fetchSidebarCategories = async () => {
   try {
-    const response = await axios.get('/admin/report-categories-dropdown')
+    const response = await axios.get('/api/categories-dropdown')
     if (response.data && response.data.length > 0) {
       sidebarCategories.value = response.data.map(cat => cat.name)
     }

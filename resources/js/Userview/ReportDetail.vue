@@ -35,8 +35,10 @@
             <span>Pages: <strong>{{ report.pages }}</strong></span>
           </div>
           
-          <div class="hero-actions-row">
-            <button class="secondary-button outlined" @click="triggerAction('sample')">Request Sample</button>
+          <div class="hero-actions-row" style="flex-wrap: wrap; gap: 12px;">
+            <button class="secondary-button outlined" @click="openRequestModal('Request Sample')">Request Sample</button>
+            <button class="secondary-button outlined" @click="openRequestModal('Ask for discount')">Ask for Discount</button>
+            <button class="secondary-button outlined" @click="openRequestModal('Request customized report')">Request Customized Report</button>
             <button class="primary-button" @click="triggerAction('buy')">Buy Now</button>
           </div>
         </div>
@@ -73,7 +75,7 @@
             </button>
           </div>
           <div class="tabs-right-action">
-            <button class="download-sample-btn" @click="triggerAction('sample')">
+            <button class="download-sample-btn" @click="openRequestModal('Download Free Sample')">
               <IconSliders style="width:16px; height:16px;" /> Download Sample
             </button>
           </div>
@@ -265,7 +267,9 @@
 
           <div style="display: flex; flex-direction: column; gap: 12px;">
             <button class="contact-btn-white" @click="triggerAction('buy')">Buy Now (${{ getSelectedPrice() }})</button>
-            <button class="contact-btn-white" style="background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); color: #ffffff;" @click="triggerAction('sample')">Request Sample</button>
+            <button class="contact-btn-white" style="background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); color: #ffffff;" @click="openRequestModal('Request Sample')">Request Sample</button>
+            <button class="contact-btn-white" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: #ffffff;" @click="openRequestModal('Ask for discount')">Ask for Discount</button>
+            <button class="contact-btn-white" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: #ffffff;" @click="openRequestModal('Request customized report')">Request Customized Report</button>
           </div>
 
           <div class="sidebar-analyst-call-box">
@@ -319,6 +323,7 @@
     </div>
   </div>
 
+  <RequestFormModal :isOpen="isRequestModalOpen" :subject="requestSubject" @close="isRequestModalOpen = false" />
   <SiteFooter />
 </div>
 </template>
@@ -329,6 +334,7 @@ import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 import SiteHeader from './components/SiteHeader.vue'
 import SiteFooter from './components/SiteFooter.vue'
+import RequestFormModal from '../components/RequestFormModal.vue'
 import { ArrowRight, PhoneMini, IconSliders } from './icons'
 
 const route = useRoute()
@@ -339,6 +345,15 @@ const loading = ref(true)
 const activeTab = ref('overview')
 const activeFaqIndex = ref(0)
 const selectedLicense = ref('single')
+
+// Modal Trigger state
+const isRequestModalOpen = ref(false)
+const requestSubject = ref('Request Sample')
+
+const openRequestModal = (subject = 'Request Sample') => {
+  requestSubject.value = subject
+  isRequestModalOpen.value = true
+}
 
 // Helper to determine the active tab from query parameters
 const setTabFromQuery = () => {

@@ -85,7 +85,7 @@ const industryCategories = ref([
 
 onMounted(async () => {
   try {
-    const response = await axios.get('/admin/report-categories-dropdown')
+    const response = await axios.get('/api/categories-dropdown')
     if (response.data && response.data.length > 0) {
       industryCategories.value = response.data.map(cat => cat.name)
     }
