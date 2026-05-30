@@ -664,6 +664,7 @@
   padding: 6px 12px;
   border-radius: 30px;
   border: 1px solid #e5e7eb;
+  text-transform: capitalize;
   cursor: pointer;
   transition: all 0.2s;
 }

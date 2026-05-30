@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import UserIndex from './Userview/index.vue'
 import UserReports from './Userview/Reports.vue'
 import UserReportDetail from './Userview/ReportDetail.vue'
+import UserIndustryCategory from './Userview/IndustryCategory.vue'
 import AdminLogin from './Admin/Login/Login.vue'
 import SidebarLayout from './Layout/Sidebar.vue'
 import Dashboard from './Admin/Dashboard/index.vue'
@@ -22,6 +23,7 @@ import ChangePassword from './Admin/ChangePassword/index.vue'
 const routes = [
   { path: '/', component: UserIndex },
   { path: '/reports', component: UserReports },
+  { path: '/industry/:name', component: UserIndustryCategory },
   { path: '/report/:slug', component: UserReportDetail },
   { path: '/report', redirect: '/reports' },
   { path: '/admin/login', component: AdminLogin },

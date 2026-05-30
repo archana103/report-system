@@ -13,7 +13,7 @@
         </div>
         <div class="footer-contact">
           <p><span><IconPin /></span>123 Maple Street, Pune, India</p>
-          <p><span><IconMail /></span>info@epignosisinsides.com</p>
+          <p><span><IconMail /></span>sale@Epignosisinsights.com</p>
           <p><span><PhoneMini /></span>+91 6292226351</p>
         </div>
       </div>
@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>© 2025 epignosisinsides. All rights reserved.</p>
+        <p>© 2025 epignosisinsights. All rights reserved.</p>
         <div>
           <a href="#">Teams & Conditions</a>
           <a href="#">Privacy Policy</a>

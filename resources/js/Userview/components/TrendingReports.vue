@@ -1,5 +1,6 @@
 <template>
-<section id="reports" class="reports-section section-shell">
+<section id="reports" class="reports-section">
+      <div class="section-shell">
         <div class="section-heading centered">
           <h2>Top Trending Market Reports</h2>
           <p>Explore our most in-demand reports featuring the latest industry trends, forecasts, and data-driven insights.</p>
@@ -30,7 +31,8 @@
         <div class="center-action">
           <router-link to="/reports" class="primary-button small">View All Reports <CircleArrow /></router-link>
         </div>
-      </section>
+      </div>
+    </section>
 </template>
 
 <script setup>

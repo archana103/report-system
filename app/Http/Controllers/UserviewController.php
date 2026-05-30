@@ -231,4 +231,27 @@ class UserviewController extends Controller
             'related_industries' => $relatedCategories
         ]);
     }
+
+    /**
+     * Get a single category by name.
+     */
+    public function getCategoryDetail($name)
+    {
+        $category = \App\Models\ReportCategory::where('name', $name)
+            ->where('status', 'Active')
+            ->first();
+
+        if (!$category) {
+            return response()->json(['message' => 'Category not found'], 404);
+        }
+
+        return response()->json([
+            'id' => $category->id,
+            'name' => $category->name,
+            'main_heading' => $category->main_heading,
+            'main_subheading' => $category->main_subheading,
+            'category_image' => $category->category_image ? asset('storage/' . $category->category_image) : null,
+            'category_icon' => $category->category_icon ? asset('storage/' . $category->category_icon) : null,
+        ]);
+    }
 }

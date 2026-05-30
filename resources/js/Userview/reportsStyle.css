@@ -79,6 +79,7 @@
 .category-select-group select {
   padding-left: 20px;
   appearance: none;
+  text-transform: capitalize;
 }
 
 /* Vertical Report List */

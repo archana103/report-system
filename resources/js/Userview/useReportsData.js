@@ -1,7 +1,9 @@
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import axios from 'axios'
 
 export function useReportsData() {
+  const route = useRoute()
   const categories = ref(['All'])
   const selectedCategory = ref('All')
   const searchQuery = ref('')
@@ -43,7 +45,15 @@ export function useReportsData() {
   }
 
   onMounted(() => {
+    if (route && route.query && route.query.category) {
+      selectedCategory.value = route.query.category
+    }
     fetchCategories()
+    fetchReports(1)
+  })
+
+  watch(() => route && route.query ? route.query.category : null, (newCat) => {
+    selectedCategory.value = newCat || 'All'
     fetchReports(1)
   })
 

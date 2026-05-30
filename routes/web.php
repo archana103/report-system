@@ -9,6 +9,7 @@ Route::get('/api/reports-list', [UserviewController::class, 'getAllReports']);
 Route::get('/api/report/{slug}', [UserviewController::class, 'getReportDetail']);
 Route::get('/api/press-releases-public', [UserviewController::class, 'pressReleases']);
 Route::get('/api/blogs-public', [UserviewController::class, 'blogs']);
+Route::get('/api/category/{name}', [UserviewController::class, 'getCategoryDetail']);
 
 Route::get('/', function () {
     return view('welcome');
