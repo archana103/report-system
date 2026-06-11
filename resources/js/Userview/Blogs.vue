@@ -27,7 +27,7 @@
 
         <div v-else class="blogs-container">
           <div class="blogs-grid">
-            <article v-for="blog in blogs" :key="blog.id" class="blog-card">
+            <router-link v-for="blog in blogs" :key="blog.id" :to="'/blog/' + blog.url" class="blog-card">
               <div class="blog-image-wrapper">
                 <img :src="blog.image || '/assets/images/default-report.png'" :alt="blog.title" class="blog-image" />
               </div>
@@ -35,7 +35,7 @@
                 <h3>{{ blog.title }}</h3>
                 <p>{{ blog.description }}</p>
               </div>
-            </article>
+            </router-link>
           </div>
 
           <!-- Pagination -->

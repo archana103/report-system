@@ -16,4 +16,14 @@ class Blog extends Model
         'author_name',
         'image',
     ];
+
+    public function blogDetail()
+    {
+        return $this->hasOne(BlogDetail::class);
+    }
+
+    public function blogRequests()
+    {
+        return $this->hasMany(BlogRequest::class);
+    }
 }

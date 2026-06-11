@@ -49,6 +49,10 @@ Route::get('/admin/contact-us-data', [App\Http\Controllers\Admin\ContactUsContro
 Route::get('/admin/request-forms', [App\Http\Controllers\Admin\RequestFormController::class, 'index']);
 Route::delete('/admin/request-forms/{id}', [App\Http\Controllers\Admin\RequestFormController::class, 'destroy']);
 
+// Blog Requests
+Route::get('/admin/blog-requests', [App\Http\Controllers\Admin\BlogRequestController::class, 'index']);
+Route::delete('/admin/blog-requests/{id}', [App\Http\Controllers\Admin\BlogRequestController::class, 'destroy']);
+
 // Press Release
 Route::get('/admin/press-releases', [App\Http\Controllers\Admin\PressReleaseController::class, 'index']);
 Route::post('/admin/press-releases', [App\Http\Controllers\Admin\PressReleaseController::class, 'store']);

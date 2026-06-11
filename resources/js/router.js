@@ -9,8 +9,11 @@ import UserBlogs from './Userview/Blogs.vue'
 import UserPressReleases from './Userview/PressReleases.vue'
 import UserContact from './Userview/Contact.vue'
 import UserThankYou from './Userview/ThankYou.vue'
+import UserBlogDetail from './Userview/BlogDetail.vue'
+import UserPressReleaseDetail from './Userview/PressReleaseDetail.vue'
 import AdminLogin from './Admin/Login/Login.vue'
 import SidebarLayout from './Layout/Sidebar.vue'
+import BlogRequests from './Admin/BlogRequests/index.vue'
 import Dashboard from './Admin/Dashboard/index.vue'
 import CategoryReport from './Admin/CategoryReport/index.vue'
 import ReportList from './Admin/ReportList/index.vue'
@@ -35,6 +38,8 @@ const routes = [
   { path: '/thank-you', component: UserThankYou },
   { path: '/industry/:name', component: UserIndustryCategory },
   { path: '/report/:slug', component: UserReportDetail },
+  { path: '/blog/:slug', component: UserBlogDetail },
+  { path: '/press-release/:slug', component: UserPressReleaseDetail },
   { path: '/report', redirect: '/reports' },
   { path: '/admin/login', component: AdminLogin },
   { 
@@ -52,6 +57,7 @@ const routes = [
       { path: 'request-form', component: RequestForm },
       { path: 'blogs', component: Blogs },
       { path: 'blog-details', component: BlogDetails },
+      { path: 'blog-requests', component: BlogRequests },
       { path: 'change-password', component: ChangePassword },
     ]
   },

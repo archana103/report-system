@@ -43,7 +43,7 @@
 
         <div v-else class="press-container">
           <div class="press-grid">
-            <article v-for="pr in pressReleases" :key="pr.id" class="press-card">
+            <router-link v-for="pr in pressReleases" :key="pr.id" :to="'/press-release/' + pr.url" class="press-card">
               <div class="press-image-wrapper">
                 <img :src="pr.image || '/assets/images/default-report.png'" :alt="pr.title" class="press-image" />
               </div>
@@ -55,7 +55,7 @@
                 <h3>{{ pr.title }}</h3>
                 <p>{{ pr.description }}</p>
               </div>
-            </article>
+            </router-link>
           </div>
 
           <!-- Pagination -->

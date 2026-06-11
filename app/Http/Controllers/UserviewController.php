@@ -46,6 +46,7 @@ class UserviewController extends Controller
                     'description' => \Illuminate\Support\Str::limit(strip_tags(html_entity_decode($pr->description)), 120),
                     'date' => $pr->created_at->format('F d, Y'),
                     'image' => $pr->thumbnail_image ? asset('storage/' . $pr->thumbnail_image) : ($pr->main_image ? asset('storage/' . $pr->main_image) : '/assets/images/default.jpg'),
+                    'url' => $pr->url,
                 ];
             });
 
@@ -153,6 +154,7 @@ class UserviewController extends Controller
                     'description' => \Illuminate\Support\Str::limit(strip_tags(html_entity_decode($blog->description)), 120),
                     'date' => $blog->created_at->format('F d, Y'),
                     'image' => $blog->image ? asset('storage/' . $blog->image) : '/assets/images/default.jpg',
+                    'url' => $blog->url,
                 ];
             });
 
@@ -173,6 +175,7 @@ class UserviewController extends Controller
                 'description' => \Illuminate\Support\Str::limit(strip_tags(html_entity_decode($blog->description)), 150),
                 'date' => $blog->created_at->format('F d, Y'),
                 'image' => $blog->image ? asset('storage/' . $blog->image) : '/assets/images/default-report.png',
+                'url' => $blog->url,
             ];
         });
 
@@ -312,6 +315,7 @@ class UserviewController extends Controller
                 'description' => \Illuminate\Support\Str::limit(strip_tags(html_entity_decode($pr->description)), 150),
                 'date' => $pr->created_at->format('F d, Y'),
                 'image' => $pr->thumbnail_image ? asset('storage/' . $pr->thumbnail_image) : ($pr->main_image ? asset('storage/' . $pr->main_image) : '/assets/images/default-report.png'),
+                'url' => $pr->url,
             ];
         });
 
@@ -389,5 +393,111 @@ class UserviewController extends Controller
             'message' => 'Request submitted successfully!',
             'data' => $requestForm
         ], 201);
+    }
+
+    /**
+     * Get a single blog by slug (url).
+     */
+    public function getBlogDetail($slug)
+    {
+        $blog = \App\Models\Blog::with('blogDetail')
+            ->where('url', $slug)
+            ->first();
+
+        if (!$blog) {
+            return response()->json(['message' => 'Blog not found'], 404);
+        }
+
+        // Fetch related articles (excluding this one)
+        $relatedArticles = \App\Models\Blog::where('id', '!=', $blog->id)
+            ->orderBy('created_at', 'desc')
+            ->take(3)
+            ->get()
+            ->map(function ($b) {
+                return [
+                    'id' => $b->id,
+                    'title' => $b->title,
+                    'description' => \Illuminate\Support\Str::limit(strip_tags(html_entity_decode($b->description)), 80),
+                    'url' => $b->url,
+                ];
+            });
+
+        return response()->json([
+            'id' => $blog->id,
+            'title' => $blog->title,
+            'author_name' => $blog->author_name,
+            'image' => $blog->image ? asset('storage/' . $blog->image) : '/assets/images/default-report.png',
+            'date' => $blog->created_at->format('F d, Y'),
+            'url' => $blog->url,
+            'detail' => $blog->blogDetail ? [
+                'title' => $blog->blogDetail->title,
+                'description' => $blog->blogDetail->description,
+                'faqs' => $blog->blogDetail->faqs ?: [],
+            ] : null,
+            'related_articles' => $relatedArticles,
+        ]);
+    }
+
+    /**
+     * Store a blog sample request.
+     */
+    public function storeBlogRequest(Request $request)
+    {
+        $validated = $request->validate([
+            'blog_id' => 'required|integer|exists:blogs,id',
+            'full_name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:45',
+            'company_name' => 'required|string|max:255',
+            'country' => 'required|string|max:255',
+        ]);
+
+        $blogRequest = \App\Models\BlogRequest::create($validated);
+
+        return response()->json([
+            'message' => 'Your request has been submitted successfully!',
+            'data' => $blogRequest
+        ], 201);
+    }
+
+    /**
+     * Get a single press release by slug (url).
+     */
+    public function getPressReleaseDetail($slug)
+    {
+        $pr = \App\Models\PressRelease::with('pressReleaseDetail')
+            ->where('url', $slug)
+            ->first();
+
+        if (!$pr) {
+            return response()->json(['message' => 'Press release not found'], 404);
+        }
+
+        // Fetch related reports
+        $relatedReports = \App\Models\ReportList::with(['reportCategory', 'reportDetail'])
+            ->has('reportDetail')
+            ->where('status', 'Active')
+            ->orderBy('created_at', 'desc')
+            ->take(6)
+            ->get()
+            ->map(function ($r) {
+                return [
+                    'id' => $r->id,
+                    'title' => ($r->reportDetail && $r->reportDetail->title) ? $r->reportDetail->title : $r->name,
+                    'slug' => ($r->reportDetail && $r->reportDetail->slug_url) ? $r->reportDetail->slug_url : '#'
+                ];
+            });
+
+        return response()->json([
+            'id' => $pr->id,
+            'title' => $pr->title,
+            'image' => $pr->thumbnail_image ? asset('storage/' . $pr->thumbnail_image) : ($pr->main_image ? asset('storage/' . $pr->main_image) : '/assets/images/default-report.png'),
+            'date' => $pr->created_at->format('F d, Y'),
+            'url' => $pr->url,
+            'detail' => $pr->pressReleaseDetail ? [
+                'content' => $pr->pressReleaseDetail->content,
+            ] : null,
+            'related_reports' => $relatedReports,
+        ]);
     }
 }

@@ -104,6 +104,13 @@
             >
               Blog Details
             </router-link>
+            <router-link
+              to="/admin/blog-requests"
+              class="relative flex items-center px-12 py-2.5 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-white/5 transition-all duration-200"
+              active-class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 font-medium !text-indigo-400 router-active-item"
+            >
+              Blog Requests
+            </router-link>
           </div>
         </div>
 

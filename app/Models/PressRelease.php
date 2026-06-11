@@ -14,4 +14,9 @@ class PressRelease extends Model
         'main_image',
         'thumbnail_image'
     ];
+
+    public function pressReleaseDetail()
+    {
+        return $this->hasOne(PressReleaseDetail::class, 'press_release_id');
+    }
 }
