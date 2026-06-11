@@ -24,8 +24,8 @@
             </router-link>
           </div>
         </div>
-        <a href="#">Blog</a>
-        <a href="#">Press Release</a>
+        <router-link to="/blogs">Blog</router-link>
+        <router-link to="/press-releases">Press Release</router-link>
       </nav>
 
       <div class="header-actions">

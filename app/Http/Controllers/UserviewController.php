@@ -160,6 +160,26 @@ class UserviewController extends Controller
     }
 
     /**
+     * Get all blogs paginated for the public blogs page.
+     */
+    public function getAllBlogs(Request $request)
+    {
+        $blogs = \App\Models\Blog::orderBy('created_at', 'desc')->paginate(12);
+
+        $blogs->getCollection()->transform(function ($blog) {
+            return [
+                'id' => $blog->id,
+                'title' => $blog->title,
+                'description' => \Illuminate\Support\Str::limit(strip_tags(html_entity_decode($blog->description)), 150),
+                'date' => $blog->created_at->format('F d, Y'),
+                'image' => $blog->image ? asset('storage/' . $blog->image) : '/assets/images/default-report.png',
+            ];
+        });
+
+        return response()->json($blogs);
+    }
+
+    /**
      * Get a single report by slug.
      */
     public function getReportDetail($slug)
@@ -266,6 +286,36 @@ class UserviewController extends Controller
             ->get();
 
         return response()->json($categories);
+    }
+
+    /**
+     * Get all active press releases paginated with search filter.
+     */
+    public function getAllPressReleases(Request $request)
+    {
+        $search = $request->query('search');
+        $query = PressRelease::where('status', 'Active')->orderBy('created_at', 'desc');
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', '%' . $search . '%')
+                  ->orWhere('description', 'like', '%' . $search . '%');
+            });
+        }
+
+        $pressReleases = $query->paginate(12);
+
+        $pressReleases->getCollection()->transform(function ($pr) {
+            return [
+                'id' => $pr->id,
+                'title' => $pr->title,
+                'description' => \Illuminate\Support\Str::limit(strip_tags(html_entity_decode($pr->description)), 150),
+                'date' => $pr->created_at->format('F d, Y'),
+                'image' => $pr->thumbnail_image ? asset('storage/' . $pr->thumbnail_image) : ($pr->main_image ? asset('storage/' . $pr->main_image) : '/assets/images/default-report.png'),
+            ];
+        });
+
+        return response()->json($pressReleases);
     }
 
     /**

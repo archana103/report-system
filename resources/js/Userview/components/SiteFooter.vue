@@ -19,11 +19,11 @@
       </div>
       <div class="footer-links">
         <nav>
-          <a href="#">Home</a>
-          <a href="#">About Us</a>
-          <a href="#">Reports</a>
-          <a href="#">Blogs</a>
-          <a href="#">Press Release</a>
+          <router-link to="/">Home</router-link>
+          <router-link to="/about">About Us</router-link>
+          <router-link to="/reports">Reports</router-link>
+          <router-link to="/blogs">Blogs</router-link>
+          <router-link to="/press-releases">Press Release</router-link>
           <a href="#">Contact</a>
         </nav>
         <div class="social-links">
