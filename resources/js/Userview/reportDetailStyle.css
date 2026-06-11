@@ -618,17 +618,72 @@
   background-color: #ffffff;
   color: #0783df;
   border: none;
-  padding: 12px;
-  border-radius: 30px;
+  padding: 12px 20px;
+  border-radius: 50px;
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-  transition: transform 0.1s;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.sidebar-get-report-card .contact-btn-white:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  background-color: #f8fafc;
 }
 
 .sidebar-get-report-card .contact-btn-white:active {
   transform: scale(0.98);
+}
+
+.sidebar-get-report-card .call-now-btn {
+  justify-content: center;
+}
+
+.sidebar-get-report-card .btn-circle-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: 1.5px solid #0783df;
+  border-radius: 50%;
+  color: #0783df;
+  transition: all 0.2s ease;
+}
+
+.sidebar-get-report-card .chevron-svg {
+  width: 10px;
+  height: 10px;
+}
+
+.sidebar-get-report-card .contact-btn-white:hover .btn-circle-arrow {
+  background-color: #0783df;
+  color: #ffffff;
+}
+
+.sidebar-get-report-card .card-divider {
+  border: none;
+  border-top: 1.5px solid rgba(255, 255, 255, 0.3);
+  margin: 12px 0;
+  width: 100%;
+}
+
+.sidebar-get-report-card .talk-analyst-title {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #ffffff;
+  text-align: center;
+  text-transform: capitalize;
+  margin: 4px 0;
+  opacity: 0.9;
 }
 
 /* Sidebar Standard White Card */

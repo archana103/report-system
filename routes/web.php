@@ -23,4 +23,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 include 'Admin/index.php';
+include 'Paypal/index.php';
 Route::view('/{any}', 'welcome')->where('any', '.*');

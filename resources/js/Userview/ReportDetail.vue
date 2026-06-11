@@ -39,7 +39,7 @@
             <button class="secondary-button outlined" @click="openRequestModal('Request Sample')">Request Sample</button>
             <button class="secondary-button outlined" @click="openRequestModal('Ask for discount')">Ask for Discount</button>
             <button class="secondary-button outlined" @click="openRequestModal('Request customized report')">Request Customized Report</button>
-            <button class="primary-button" @click="triggerAction('buy')">Buy Now</button>
+            <router-link :to="`/checkout/${report.slug_url}`" class="primary-button">Buy Now</router-link>
           </div>
         </div>
       </div>
@@ -236,45 +236,32 @@
         <div class="sidebar-get-report-card">
           <h3>Get This Report</h3>
           
-          <div class="license-options-container">
-            <div 
-              class="license-option-item" 
-              :class="{ 'selected-license': selectedLicense === 'single' }"
-              @click="selectedLicense = 'single'"
-            >
-              <span class="license-label-text">Single User</span>
-              <span class="license-price-text">${{ report.single_user_license_cost }}</span>
-            </div>
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <router-link :to="`/checkout/${report.slug_url}`" class="contact-btn-white buy-now-btn">
+              Buy Now
+              <span class="btn-circle-arrow">
+                <svg class="chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                  <polyline points="9 18 15 12 9 6"/>
+                </svg>
+              </span>
+            </router-link>
             
-            <div 
-              class="license-option-item" 
-              :class="{ 'selected-license': selectedLicense === 'team' }"
-              @click="selectedLicense = 'team'"
-            >
-              <span class="license-label-text">Team User</span>
-              <span class="license-price-text">${{ report.team_user_license_cost }}</span>
-            </div>
+            <button class="contact-btn-white request-sample-btn" @click="openRequestModal('Request Sample')">
+              Request Sample
+              <span class="btn-circle-arrow">
+                <svg class="chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                  <polyline points="9 18 15 12 9 6"/>
+                </svg>
+              </span>
+            </button>
             
-            <div 
-              class="license-option-item" 
-              :class="{ 'selected-license': selectedLicense === 'enterprise' }"
-              @click="selectedLicense = 'enterprise'"
-            >
-              <span class="license-label-text">Enterprise</span>
-              <span class="license-price-text">${{ report.enterprise_user_license_cost }}</span>
-            </div>
-          </div>
-
-          <div style="display: flex; flex-direction: column; gap: 12px;">
-            <button class="contact-btn-white" @click="triggerAction('buy')">Buy Now (${{ getSelectedPrice() }})</button>
-            <button class="contact-btn-white" style="background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); color: #ffffff;" @click="openRequestModal('Request Sample')">Request Sample</button>
-            <button class="contact-btn-white" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: #ffffff;" @click="openRequestModal('Ask for discount')">Ask for Discount</button>
-            <button class="contact-btn-white" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: #ffffff;" @click="openRequestModal('Request customized report')">Request Customized Report</button>
-          </div>
-
-          <div class="sidebar-analyst-call-box">
-            <span class="analyst-call-subtitle">Talk to Analyst</span>
-            <button class="contact-btn-white" @click="triggerAction('contact')">Contact Us</button>
+            <hr class="card-divider" />
+            
+            <span class="talk-analyst-title">Talk to Analyst</span>
+            
+            <a href="tel:+916292226351" class="contact-btn-white call-now-btn">
+              Call Now
+            </a>
           </div>
         </div>
 

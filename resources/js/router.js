@@ -11,6 +11,7 @@ import UserContact from './Userview/Contact.vue'
 import UserThankYou from './Userview/ThankYou.vue'
 import UserBlogDetail from './Userview/BlogDetail.vue'
 import UserPressReleaseDetail from './Userview/PressReleaseDetail.vue'
+import UserCheckout from './Userview/Checkout.vue'
 import AdminLogin from './Admin/Login/Login.vue'
 import SidebarLayout from './Layout/Sidebar.vue'
 import BlogRequests from './Admin/BlogRequests/index.vue'
@@ -40,6 +41,7 @@ const routes = [
   { path: '/report/:slug', component: UserReportDetail },
   { path: '/blog/:slug', component: UserBlogDetail },
   { path: '/press-release/:slug', component: UserPressReleaseDetail },
+  { path: '/checkout/:slug', component: UserCheckout },
   { path: '/report', redirect: '/reports' },
   { path: '/admin/login', component: AdminLogin },
   { 
