@@ -7,6 +7,8 @@ import UserIndustryCategory from './Userview/IndustryCategory.vue'
 import UserAbout from './Userview/AboutUs.vue'
 import UserBlogs from './Userview/Blogs.vue'
 import UserPressReleases from './Userview/PressReleases.vue'
+import UserContact from './Userview/Contact.vue'
+import UserThankYou from './Userview/ThankYou.vue'
 import AdminLogin from './Admin/Login/Login.vue'
 import SidebarLayout from './Layout/Sidebar.vue'
 import Dashboard from './Admin/Dashboard/index.vue'
@@ -29,6 +31,8 @@ const routes = [
   { path: '/about', component: UserAbout },
   { path: '/blogs', component: UserBlogs },
   { path: '/press-releases', component: UserPressReleases },
+  { path: '/contact', component: UserContact },
+  { path: '/thank-you', component: UserThankYou },
   { path: '/industry/:name', component: UserIndustryCategory },
   { path: '/report/:slug', component: UserReportDetail },
   { path: '/report', redirect: '/reports' },

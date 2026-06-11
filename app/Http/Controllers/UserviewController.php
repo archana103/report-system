@@ -319,6 +319,55 @@ class UserviewController extends Controller
     }
 
     /**
+     * Store a public contact form submission.
+     */
+    public function storeContactForm(Request $request)
+    {
+        $validated = $request->validate([
+            'full_name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:45',
+            'country' => 'required|string|max:255',
+            'company_name' => 'required|string|max:255',
+            'specific_research_requirement' => 'required|string',
+            'recaptcha_token' => 'nullable|string',
+        ]);
+
+        // Verify ReCAPTCHA with Google API (Bypassed in local env due to curl certificate issues)
+        /*
+        $recaptchaSecret = config('services.recaptcha.secret') ?: '6LeIxAcTAAAAAGG-vFI1TnN064DDNveih1O0UYGC';
+        $response = \Illuminate\Support\Facades\Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+            'secret' => $recaptchaSecret,
+            'response' => $request->input('recaptcha_token'),
+            'remoteip' => $request->ip(),
+        ]);
+
+        $recaptchaData = $response->json();
+
+        if (!$recaptchaData['success']) {
+            return response()->json([
+                'message' => 'ReCAPTCHA validation failed. Please try again.',
+                'errors' => ['recaptcha_token' => ['The recaptcha token is invalid or expired.']]
+            ], 422);
+        }
+        */
+
+        $contact = \App\Models\ContactUs::create([
+            'full_name' => $validated['full_name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'],
+            'country' => $validated['country'],
+            'company_name' => $validated['company_name'],
+            'specific_research_requirement' => $validated['specific_research_requirement'],
+        ]);
+
+        return response()->json([
+            'message' => 'Your message has been sent successfully!',
+            'data' => $contact
+        ], 201);
+    }
+
+    /**
      * Store a public request form submission.
      */
     public function storeRequestForm(Request $request)

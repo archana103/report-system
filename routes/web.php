@@ -14,6 +14,7 @@ Route::get('/api/press-releases-list', [UserviewController::class, 'getAllPressR
 Route::get('/api/category/{name}', [UserviewController::class, 'getCategoryDetail']);
 Route::get('/api/categories-dropdown', [UserviewController::class, 'categoriesDropdown']);
 Route::post('/api/request-form', [UserviewController::class, 'storeRequestForm']);
+Route::post('/api/contact-us', [UserviewController::class, 'storeContactForm']);
 
 Route::get('/', function () {
     return view('welcome');

@@ -1,0 +1,76 @@
+/* Thank You Page Stylesheet */
+
+.thankyou-page {
+  background-color: #ffffff;
+  color: #1f2937;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.thankyou-main {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 24px;
+  position: relative;
+  background: radial-gradient(circle at center, rgba(7, 131, 223, 0.05) 0%, rgba(255, 255, 255, 0) 70%);
+}
+
+.thankyou-container {
+  max-width: 680px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.thankyou-title {
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 800;
+  color: #0783df;
+  line-height: 1.2;
+  margin: 0 0 24px 0;
+  font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+.thankyou-message {
+  font-size: 17px;
+  line-height: 1.6;
+  color: #4b5563;
+  margin: 0 auto 40px auto;
+  max-width: 580px;
+}
+
+.thankyou-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.thankyou-actions .primary-button,
+.thankyou-actions .secondary-button {
+  min-width: 170px;
+  text-align: center;
+}
+
+.thankyou-actions .secondary-button {
+  background: transparent;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.thankyou-container {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
