@@ -365,28 +365,38 @@
   line-height: 1.55;
 }
 
-.proof-stat {
+.proof-stats-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
   margin-top: 28px;
   border-top: 1px solid #e2e8f0;
   padding-top: 26px;
 }
 
+.proof-stats-row .proof-stat {
+  margin-top: 0;
+  border-top: none;
+  padding-top: 0;
+}
+
 .proof-stat strong {
   display: block;
   color: #0783df;
-  font-size: 42px;
+  font-size: clamp(26px, 3vw, 36px);
   font-weight: 800;
-  line-height: 1;
+  line-height: 1.1;
 }
 
 .proof-stat span {
   display: block;
-  margin-top: 10px;
+  margin-top: 8px;
   color: #6b7280;
-  font-size: 13px;
-  font-weight: 800;
+  font-size: 12px;
+  font-weight: 700;
   letter-spacing: 0.5px;
   text-transform: uppercase;
+  line-height: 1.35;
 }
 
 .services-process {
