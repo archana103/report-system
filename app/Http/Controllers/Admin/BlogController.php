@@ -14,6 +14,10 @@ class BlogController extends Controller
      */
     public function index(Request $request)
     {
+        if (!$request->expectsJson()) {
+            return view('welcome');
+        }
+
         $query = Blog::query();
 
         if ($request->has('search') && $request->search != '') {
@@ -42,7 +46,7 @@ class BlogController extends Controller
         $data = $request->except(['image']);
 
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('blogs', 'public');
+            $imagePath = $request->file('image')->store('blogs', 's3');
             $data['image'] = $imagePath;
         }
 
@@ -72,10 +76,10 @@ class BlogController extends Controller
         $data = $request->except(['image', '_method']);
 
         if ($request->hasFile('image')) {
-            if ($blog->image) {
-                Storage::disk('public')->delete($blog->image);
+            if ($blog->getRawOriginal('image')) {
+                Storage::disk('s3')->delete($blog->getRawOriginal('image'));
             }
-            $imagePath = $request->file('image')->store('blogs', 'public');
+            $imagePath = $request->file('image')->store('blogs', 's3');
             $data['image'] = $imagePath;
         }
 
@@ -94,8 +98,8 @@ class BlogController extends Controller
     {
         $blog = Blog::findOrFail($id);
 
-        if ($blog->image) {
-            Storage::disk('public')->delete($blog->image);
+        if ($blog->getRawOriginal('image')) {
+            Storage::disk('s3')->delete($blog->getRawOriginal('image'));
         }
 
         $blog->delete();

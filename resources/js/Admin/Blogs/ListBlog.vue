@@ -124,7 +124,7 @@ onMounted(() => {
         <div class="flex items-center justify-center py-1">
           <img 
             v-if="item.image" 
-            :src="'/storage/' + item.image" 
+            :src="item.image" 
             class="h-10 w-16 object-cover rounded-lg border border-gray-700 shadow-md hover:scale-110 transition-transform duration-200" 
             alt="Blog"
           />

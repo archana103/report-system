@@ -45,7 +45,7 @@ class UserviewController extends Controller
                     'title' => $pr->title,
                     'description' => \Illuminate\Support\Str::limit(strip_tags(html_entity_decode($pr->description)), 120),
                     'date' => $pr->created_at->format('F d, Y'),
-                    'image' => $pr->thumbnail_image ? asset('storage/' . $pr->thumbnail_image) : ($pr->main_image ? asset('storage/' . $pr->main_image) : '/assets/images/default.jpg'),
+                    'image' => $pr->thumbnail_image ?: ($pr->main_image ?: '/assets/images/default.jpg'),
                     'url' => $pr->url,
                 ];
             });
@@ -153,7 +153,7 @@ class UserviewController extends Controller
                     'title' => $blog->title,
                     'description' => \Illuminate\Support\Str::limit(strip_tags(html_entity_decode($blog->description)), 120),
                     'date' => $blog->created_at->format('F d, Y'),
-                    'image' => $blog->image ? asset('storage/' . $blog->image) : '/assets/images/default.jpg',
+                    'image' => $blog->image ?: '/assets/images/default.jpg',
                     'url' => $blog->url,
                 ];
             });
@@ -174,7 +174,7 @@ class UserviewController extends Controller
                 'title' => $blog->title,
                 'description' => \Illuminate\Support\Str::limit(strip_tags(html_entity_decode($blog->description)), 150),
                 'date' => $blog->created_at->format('F d, Y'),
-                'image' => $blog->image ? asset('storage/' . $blog->image) : '/assets/images/default-report.png',
+                'image' => $blog->image ?: '/assets/images/default-report.png',
                 'url' => $blog->url,
             ];
         });
@@ -273,8 +273,8 @@ class UserviewController extends Controller
             'name' => $category->name,
             'main_heading' => $category->main_heading,
             'main_subheading' => $category->main_subheading,
-            'category_image' => $category->category_image ? asset('storage/' . $category->category_image) : null,
-            'category_icon' => $category->category_icon ? asset('storage/' . $category->category_icon) : null,
+            'category_image' => $category->category_image,
+            'category_icon' => $category->category_icon,
         ]);
     }
 
@@ -314,7 +314,7 @@ class UserviewController extends Controller
                 'title' => $pr->title,
                 'description' => \Illuminate\Support\Str::limit(strip_tags(html_entity_decode($pr->description)), 150),
                 'date' => $pr->created_at->format('F d, Y'),
-                'image' => $pr->thumbnail_image ? asset('storage/' . $pr->thumbnail_image) : ($pr->main_image ? asset('storage/' . $pr->main_image) : '/assets/images/default-report.png'),
+                'image' => $pr->thumbnail_image ?: ($pr->main_image ?: '/assets/images/default-report.png'),
                 'url' => $pr->url,
             ];
         });
@@ -426,7 +426,7 @@ class UserviewController extends Controller
             'id' => $blog->id,
             'title' => $blog->title,
             'author_name' => $blog->author_name,
-            'image' => $blog->image ? asset('storage/' . $blog->image) : '/assets/images/default-report.png',
+            'image' => $blog->image ?: '/assets/images/default-report.png',
             'date' => $blog->created_at->format('F d, Y'),
             'url' => $blog->url,
             'detail' => $blog->blogDetail ? [
@@ -491,7 +491,7 @@ class UserviewController extends Controller
         return response()->json([
             'id' => $pr->id,
             'title' => $pr->title,
-            'image' => $pr->thumbnail_image ? asset('storage/' . $pr->thumbnail_image) : ($pr->main_image ? asset('storage/' . $pr->main_image) : '/assets/images/default-report.png'),
+            'image' => $pr->thumbnail_image ?: ($pr->main_image ?: '/assets/images/default-report.png'),
             'date' => $pr->created_at->format('F d, Y'),
             'url' => $pr->url,
             'detail' => $pr->pressReleaseDetail ? [

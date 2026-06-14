@@ -44,7 +44,7 @@
 
     <template #item-image="{ item }">
       <div v-if="item.image" class="h-12 w-12 rounded overflow-hidden border border-gray-700">
-        <img :src="`/storage/${item.image}`" alt="Report Image" class="w-full h-full object-cover" />
+        <img :src="item.image" alt="Report Image" class="w-full h-full object-cover" />
       </div>
       <span v-else class="text-gray-500">—</span>
     </template>

@@ -54,12 +54,12 @@ class ReportCategoryController extends Controller
         $data = $request->except(['category_image', 'category_icon']);
 
         if ($request->hasFile('category_image')) {
-            $imagePath = $request->file('category_image')->store('report_categories', 'public');
+            $imagePath = $request->file('category_image')->store('report_categories', 's3');
             $data['category_image'] = $imagePath;
         }
 
         if ($request->hasFile('category_icon')) {
-            $iconPath = $request->file('category_icon')->store('report_categories', 'public');
+            $iconPath = $request->file('category_icon')->store('report_categories', 's3');
             $data['category_icon'] = $iconPath;
         }
 
@@ -90,18 +90,18 @@ class ReportCategoryController extends Controller
         $data = $request->except(['category_image', 'category_icon', '_method']);
 
         if ($request->hasFile('category_image')) {
-            if ($category->category_image) {
-                Storage::disk('public')->delete($category->category_image);
+            if ($category->getRawOriginal('category_image')) {
+                Storage::disk('s3')->delete($category->getRawOriginal('category_image'));
             }
-            $imagePath = $request->file('category_image')->store('report_categories', 'public');
+            $imagePath = $request->file('category_image')->store('report_categories', 's3');
             $data['category_image'] = $imagePath;
         }
 
         if ($request->hasFile('category_icon')) {
-            if ($category->category_icon) {
-                Storage::disk('public')->delete($category->category_icon);
+            if ($category->getRawOriginal('category_icon')) {
+                Storage::disk('s3')->delete($category->getRawOriginal('category_icon'));
             }
-            $iconPath = $request->file('category_icon')->store('report_categories', 'public');
+            $iconPath = $request->file('category_icon')->store('report_categories', 's3');
             $data['category_icon'] = $iconPath;
         }
 
@@ -120,12 +120,12 @@ class ReportCategoryController extends Controller
     {
         $category = ReportCategory::findOrFail($id);
 
-        if ($category->category_image) {
-            Storage::disk('public')->delete($category->category_image);
+        if ($category->getRawOriginal('category_image')) {
+            Storage::disk('s3')->delete($category->getRawOriginal('category_image'));
         }
 
-        if ($category->category_icon) {
-            Storage::disk('public')->delete($category->category_icon);
+        if ($category->getRawOriginal('category_icon')) {
+            Storage::disk('s3')->delete($category->getRawOriginal('category_icon'));
         }
 
         $category->delete();

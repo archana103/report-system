@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\UserviewController;
 
 Route::get('/api/categories-with-reports', [UserviewController::class, 'categoriesWithReports']);
@@ -24,4 +25,8 @@ Route::get('/', function () {
 });
 include 'Admin/index.php';
 include 'Paypal/index.php';
+Route::get('storage/{path}', function ($path) {
+    return redirect()->away(Storage::disk('s3')->url($path));
+})->where('path', '.*');
+
 Route::view('/{any}', 'welcome')->where('any', '.*');

@@ -12,8 +12,12 @@ class TopSellingReportController extends Controller
     /**
      * Display a listing of the top selling reports.
      */
-    public function index()
+    public function index(Request $request)
     {
+        if (!$request->expectsJson()) {
+            return view('welcome');
+        }
+
         $reports = TopSellingReport::with('reportDetail:id,title')
             ->orderBy('created_at', 'desc')
             ->paginate(20);

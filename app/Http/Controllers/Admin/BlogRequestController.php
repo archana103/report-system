@@ -10,6 +10,10 @@ class BlogRequestController extends Controller
 {
     public function index(Request $request)
     {
+        if (!$request->expectsJson()) {
+            return view('welcome');
+        }
+
         $query = BlogRequest::with('blog');
 
         if ($request->has('search') && $request->search != '') {

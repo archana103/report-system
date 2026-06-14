@@ -19,4 +19,14 @@ class PressRelease extends Model
     {
         return $this->hasOne(PressReleaseDetail::class, 'press_release_id');
     }
+
+    public function getMainImageAttribute($value)
+    {
+        return $value ? \Illuminate\Support\Facades\Storage::disk('s3')->url($value) : null;
+    }
+
+    public function getThumbnailImageAttribute($value)
+    {
+        return $value ? \Illuminate\Support\Facades\Storage::disk('s3')->url($value) : null;
+    }
 }

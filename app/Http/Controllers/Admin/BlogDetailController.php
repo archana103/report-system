@@ -14,6 +14,10 @@ class BlogDetailController extends Controller
      */
     public function index(Request $request)
     {
+        if (!$request->expectsJson()) {
+            return view('welcome');
+        }
+
         $query = BlogDetail::with('blog:id,title');
 
         if ($request->has('search') && $request->search != '') {

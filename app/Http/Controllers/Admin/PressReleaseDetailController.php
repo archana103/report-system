@@ -12,6 +12,10 @@ class PressReleaseDetailController extends Controller
 {
     public function index(Request $request)
     {
+        if (!$request->expectsJson()) {
+            return view('welcome');
+        }
+
         $query = PressReleaseDetail::with('pressRelease:id,title');
 
         if ($request->has('search') && $request->search != '') {

@@ -87,7 +87,7 @@ class ReportDetailController extends Controller
         }
 
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('report_details', 'public');
+            $imagePath = $request->file('image')->store('report_details', 's3');
             $data['image'] = $imagePath;
         }
 
@@ -159,10 +159,10 @@ class ReportDetailController extends Controller
         }
 
         if ($request->hasFile('image')) {
-            if ($detail->image) {
-                Storage::disk('public')->delete($detail->image);
+            if ($detail->getRawOriginal('image')) {
+                Storage::disk('s3')->delete($detail->getRawOriginal('image'));
             }
-            $imagePath = $request->file('image')->store('report_details', 'public');
+            $imagePath = $request->file('image')->store('report_details', 's3');
             $data['image'] = $imagePath;
         }
 
@@ -194,8 +194,8 @@ class ReportDetailController extends Controller
     {
         $detail = ReportDetail::findOrFail($id);
 
-        if ($detail->image) {
-            Storage::disk('public')->delete($detail->image);
+        if ($detail->getRawOriginal('image')) {
+            Storage::disk('s3')->delete($detail->getRawOriginal('image'));
         }
 
         $detail->delete();

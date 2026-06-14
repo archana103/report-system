@@ -80,7 +80,7 @@
             <div v-if="mode === 'edit' && release?.main_image && !form.main_image" class="mt-3">
               <p class="text-xs text-gray-500 mb-1">Current Image:</p>
               <div class="w-24 h-16 rounded overflow-hidden border border-gray-700 bg-gray-900">
-                <img :src="`/storage/${release.main_image}`" class="object-cover w-full h-full" />
+                <img :src="release.main_image" class="object-cover w-full h-full" />
               </div>
             </div>
           </div>
@@ -102,7 +102,7 @@
             <div v-if="mode === 'edit' && release?.thumbnail_image && !form.thumbnail_image" class="mt-3">
               <p class="text-xs text-gray-500 mb-1">Current Thumbnail:</p>
               <div class="w-24 h-16 rounded overflow-hidden border border-gray-700 bg-gray-900">
-                <img :src="`/storage/${release.thumbnail_image}`" class="object-cover w-full h-full" />
+                <img :src="release.thumbnail_image" class="object-cover w-full h-full" />
               </div>
             </div>
           </div>

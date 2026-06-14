@@ -51,4 +51,9 @@ class ReportDetail extends Model
     {
         return $this->belongsTo(ReportList::class, 'report_list_id');
     }
+
+    public function getImageAttribute($value)
+    {
+        return $value ? \Illuminate\Support\Facades\Storage::disk('s3')->url($value) : null;
+    }
 }

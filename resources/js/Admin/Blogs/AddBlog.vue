@@ -129,7 +129,7 @@ const submitForm = async () => {
             <BaseFileInput id="blogImage" label="Cover Image" v-model="formData.image" />
             <div v-if="mode === 'edit' && blog?.image && !formData.image" class="mt-4 p-2 bg-gray-800 rounded-lg border border-gray-700 w-fit">
               <p class="text-[10px] text-gray-500 mb-2 uppercase tracking-wider font-bold">Current Image</p>
-              <img :src="'/storage/' + blog.image" class="h-20 w-32 object-cover rounded-md shadow-lg" />
+              <img :src="blog.image" class="h-20 w-32 object-cover rounded-md shadow-lg" />
             </div>
             <p class="text-[11px] text-gray-500 mt-2 ml-1">Recommended: JPG or PNG. Max 2MB.</p>
           </div>

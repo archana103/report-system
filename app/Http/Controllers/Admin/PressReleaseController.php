@@ -52,11 +52,11 @@ class PressReleaseController extends Controller
         $data = $request->only(['title', 'description', 'url', 'status']);
 
         if ($request->hasFile('main_image')) {
-            $data['main_image'] = $request->file('main_image')->store('press_releases', 'public');
+            $data['main_image'] = $request->file('main_image')->store('press_releases', 's3');
         }
 
         if ($request->hasFile('thumbnail_image')) {
-            $data['thumbnail_image'] = $request->file('thumbnail_image')->store('press_releases/thumbnails', 'public');
+            $data['thumbnail_image'] = $request->file('thumbnail_image')->store('press_releases/thumbnails', 's3');
         }
 
         $pressRelease = PressRelease::create($data);
@@ -80,17 +80,17 @@ class PressReleaseController extends Controller
         $data = $request->only(['title', 'description', 'url', 'status']);
 
         if ($request->hasFile('main_image')) {
-            if ($pressRelease->main_image) {
-                Storage::disk('public')->delete($pressRelease->main_image);
+            if ($pressRelease->getRawOriginal('main_image')) {
+                Storage::disk('s3')->delete($pressRelease->getRawOriginal('main_image'));
             }
-            $data['main_image'] = $request->file('main_image')->store('press_releases', 'public');
+            $data['main_image'] = $request->file('main_image')->store('press_releases', 's3');
         }
 
         if ($request->hasFile('thumbnail_image')) {
-            if ($pressRelease->thumbnail_image) {
-                Storage::disk('public')->delete($pressRelease->thumbnail_image);
+            if ($pressRelease->getRawOriginal('thumbnail_image')) {
+                Storage::disk('s3')->delete($pressRelease->getRawOriginal('thumbnail_image'));
             }
-            $data['thumbnail_image'] = $request->file('thumbnail_image')->store('press_releases/thumbnails', 'public');
+            $data['thumbnail_image'] = $request->file('thumbnail_image')->store('press_releases/thumbnails', 's3');
         }
 
         $pressRelease->update($data);
@@ -102,11 +102,11 @@ class PressReleaseController extends Controller
     {
         $pressRelease = PressRelease::findOrFail($id);
 
-        if ($pressRelease->main_image) {
-            Storage::disk('public')->delete($pressRelease->main_image);
+        if ($pressRelease->getRawOriginal('main_image')) {
+            Storage::disk('s3')->delete($pressRelease->getRawOriginal('main_image'));
         }
-        if ($pressRelease->thumbnail_image) {
-            Storage::disk('public')->delete($pressRelease->thumbnail_image);
+        if ($pressRelease->getRawOriginal('thumbnail_image')) {
+            Storage::disk('s3')->delete($pressRelease->getRawOriginal('thumbnail_image'));
         }
 
         $pressRelease->delete();

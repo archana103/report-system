@@ -14,7 +14,7 @@
   >
     <template #item-main_image="{ item }">
       <div v-if="item.main_image" class="w-16 h-12 rounded overflow-hidden border border-gray-700/50 bg-gray-800 flex items-center justify-center">
-        <img :src="`/storage/${item.main_image}`" class="object-cover w-full h-full" alt="Main Image" />
+        <img :src="item.main_image" class="object-cover w-full h-full" alt="Main Image" />
       </div>
       <div v-else class="text-gray-500 text-xs italic">No Image</div>
     </template>
