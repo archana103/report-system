@@ -32,18 +32,11 @@
         <div class="top-banner">
           <router-link to="/about">About Us</router-link>
           <div class="dropdown-menu-container">
-            <a href="#" class="dropdown-trigger" @click.prevent>
+            <router-link to="/services" class="dropdown-trigger">
               Service
-              <svg class="chevron-icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="m6 9 6 6 6-6"></path>
-              </svg>
-            </a>
-            <div class="dropdown-menu">
-              <router-link to="/reports">Market Research Reports</router-link>
-              <a href="#">Consulting Model</a>
-              <a href="#">Syndicate & Client Model</a>
-              <a href="#">Branding and Consumer Perception Analysis</a>
-            </div>
+              
+            </router-link>
+          
           </div>
           <router-link to="/contact">Contact</router-link>
         </div>
@@ -71,17 +64,7 @@
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
 
-const industryCategories = ref([
-  'technology',
-  'consumer goods',
-  'semiconductor and electronics',
-  'Healthcare',
-  'Automotive',
-  'Energy and power',
-  'Finance',
-  'chemical and material',
-  'Food and beverage'
-])
+const industryCategories = ref([])
 
 onMounted(async () => {
   try {

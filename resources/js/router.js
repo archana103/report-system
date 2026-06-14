@@ -12,6 +12,7 @@ import UserThankYou from './Userview/ThankYou.vue'
 import UserBlogDetail from './Userview/BlogDetail.vue'
 import UserPressReleaseDetail from './Userview/PressReleaseDetail.vue'
 import UserCheckout from './Userview/Checkout.vue'
+import UserServices from './Userview/Services.vue'
 import AdminLogin from './Admin/Login/Login.vue'
 import SidebarLayout from './Layout/Sidebar.vue'
 import BlogRequests from './Admin/BlogRequests/index.vue'
@@ -36,6 +37,7 @@ const routes = [
   { path: '/blogs', component: UserBlogs },
   { path: '/press-releases', component: UserPressReleases },
   { path: '/contact', component: UserContact },
+  { path: '/services', component: UserServices },
   { path: '/thank-you', component: UserThankYou },
   { path: '/industry/:name', component: UserIndustryCategory },
   { path: '/report/:slug', component: UserReportDetail },
