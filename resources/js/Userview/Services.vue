@@ -69,7 +69,7 @@
 
       <section class="services-detail-section section-shell">
         <div class="services-section-header centered">
-          <span class="eyebrow">Engagement detail</span>
+          <!-- <span class="eyebrow">Engagement detail</span> -->
           <h2>How Each Service Creates Value</h2>
           <p>Clear scope, senior ownership, and deliverables built for executive decisions.</p>
         </div>

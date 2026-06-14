@@ -25,17 +25,23 @@
         <div class="who-copy">
           <h2>Who We Are</h2>
           <p>
-            We are a leading market research and consulting firm dedicated to delivering accurate, data-driven insights that empower businesses to make informed decisions. Our expertise spans across multiple industries, helping organizations understand evolving market dynamics, emerging trends, and competitive landscapes.
+            Epignosis Insights is a next-generation market research and intelligence firm founded on a singular belief: that the best business decisions are built on the deepest understanding. The name Epignosis drawn from the Greek for precise, full knowledge reflects the intellectual standard we hold ourselves to in every research engagement we undertake.
           </p>
-          <p>
-            Our research combines advanced analytics, industry expertise, and reliable data sources to provide actionable intelligence that drives growth and innovation. From comprehensive market reports to fully customized research solutions, we ensure every insight is tailored to meet specific business objectives.
-          </p>
-          <p>
-            With a strong focus on quality, transparency, and precision, our team of experienced analysts works closely with clients to uncover opportunities, mitigate risks, and support long-term strategic planning.
-          </p>
+
+            <p>
+              Operating across 13 high-growth global industry verticals, we serve a diverse client base spanning Fortune 500 corporations, growth-stage businesses, private equity firms, and government bodies seeking reliable intelligence to guide critical investment and strategic decisions. Our team of domain specialists combines rigorous primary and secondary research methodologies with cutting-edge analytical tools to produce insights that are not only data-rich, but genuinely actionable.
+            </p>          <div class="expandable-text" :class="{ expanded: showFullWhoWeAre }">
+            <p>
+              At Epignosis Insights, we understand that in today's volatile, data-saturated markets, the challenge is rarely a shortage of information it is the ability to extract signal from noise. Our research frameworks are built around your strategic questions, not generic templates, ensuring every deliverable directly informs the decisions that matter most to your organization. We are not just a data provider  we are your strategic intelligence partner, committed to translating knowledge into measurable competitive advantage.
+            </p>
+          </div>
+          <button @click="showFullWhoWeAre = !showFullWhoWeAre" class="read-more-btn">
+            {{ showFullWhoWeAre ? 'Read Less' : 'Read More' }}
+            <span class="arrow-icon" :class="{ rotated: showFullWhoWeAre }">↓</span>
+          </button>
         </div>
         <div class="who-image-container">
-          <img class="who-image" :src="'/assets/images/aboutus.png'" alt="Analysts reviewing a market report" />
+          <img class="who-image" :src="'/assets/images/Business.png'" alt="Epignosis Insights Business Overview" />
         </div>
       </section>
 
@@ -43,40 +49,66 @@
       <section class="about-mission-vision section-shell">
         <!-- Mission Section -->
         <div class="mission-section">
-          <div class="mission-list-card">
-            <ul class="checkmark-list">
-              <li>
-                <span class="check-icon">✓</span>
-                Quality Reports
-              </li>
-              <li>
-                <span class="check-icon">✓</span>
-                Custom Research
-              </li>
-              <li>
-                <span class="check-icon">✓</span>
-                24/7 Support
-              </li>
-              <li>
-                <span class="check-icon">✓</span>
-                Global Insights
-              </li>
-              <li>
-                <span class="check-icon">✓</span>
-                Experienced Analysts
-              </li>
-              <li>
-                <span class="check-icon">✓</span>
-                Client Satisfaction
-              </li>
-            </ul>
+          <div class="mission-image-container">
+            <img class="mission-image" :src="'/assets/images/Client.png'" alt="Client collaboration and mission commitment" />
           </div>
           <div class="mission-copy">
             <h3>Our Mission</h3>
+            <p class="mission-tagline">Empowering decisions that shape industries and create lasting growth.</p>
+            <blockquote class="mission-quote">
+              "To deliver precise, timely, and actionable market intelligence that transforms how organizations understand, compete, and grow."
+            </blockquote>
             <p>
-              To empower organizations worldwide with high-quality, actionable market intelligence that facilitates growth, fosters innovation, and supports strategic decision-making. We strive to be the trusted partner that businesses rely on to navigate complex market environments and achieve sustainable success.
+              The mission of Epignosis Insights is to democratize access to institutional-quality market intelligence by delivering research that is accurate, timely, and above all, genuinely useful. We exist to serve one purpose: to ensure that the organizations we partner with never have to make a critical strategic decision in the dark. Whether it is entering a new market, launching a product, evaluating an acquisition, or defending a competitive position, our mission is to give our clients the clearest possible picture of the terrain before they commit.
             </p>
-            <div class="watermark">MISSION</div>
+            <div class="expandable-text" :class="{ expanded: showFullMission }">
+              <p>
+                We pursue this mission by maintaining an uncompromising commitment to research integrity at every stage of the research process. In an industry where speed often comes at the expense of rigor, we refuse to accept that trade-off. Our methodology combines the precision of academic research with the commercial relevance of management consulting delivering findings that are not just technically sound, but strategically meaningful. We invest deeply in primary data collection, ensuring our reports reflect the real-world dynamics of markets rather than recycled secondary data dressed in new packaging.
+              </p>
+              <p>
+                Our mission extends beyond the report. We are committed to building long-term intelligence partnerships with every client we serve relationships where our analysts become extensions of your strategy team, anticipating your information needs before you know you have them. We believe that the true value of market research is not the document delivered at project close, but the organizational confidence it creates the ability to move faster, invest smarter, and compete with conviction in markets that reward the well-informed and punish the complacent.
+              </p>
+              <p>
+                Ultimately, our mission is measured not by the number of reports we publish, but by the quality of outcomes our clients achieve. Every study we undertake, every insight we surface, and every recommendation we make is held to a single standard: does this make our client meaningfully better positioned to win? That is the Epignosis Insights mission and it is the standard we apply, without exception, to every engagement we accept.
+              </p>
+            </div>
+            <button @click="showFullMission = !showFullMission" class="read-more-btn">
+              {{ showFullMission ? 'Read Less' : 'Read More' }}
+              <span class="arrow-icon" :class="{ rotated: showFullMission }">↓</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Mission Commitments -->
+        <div class="mission-commitments-container">
+          <div class="about-section-header centered">
+            <h2>Our Four Mission Commitments</h2>
+          </div>
+          <div class="commitments-grid">
+            <div class="commitment-card">
+              <div class="commitment-num">01</div>
+              <h4>Research integrity</h4>
+              <span class="commitment-sub">(Multi-source validation on every study)</span>
+              <p>We never publish a single-source finding. Every claim is cross-validated across primary research, verified secondary data, and expert review so you can cite our work with complete confidence.</p>
+            </div>
+            <div class="commitment-card">
+              <div class="commitment-num">02</div>
+              <h4>Timely delivery</h4>
+              <span class="commitment-sub">(Intelligence that arrives when it matters)</span>
+              <p>Market windows open and close fast. Our streamlined operations and pre-built industry data infrastructure mean you receive high-quality intelligence on timelines calibrated to your decision cycles not ours.</p>
+            </div>
+            <div class="commitment-card">
+              <div class="commitment-num">03</div>
+              <h4>Strategic relevance</h4>
+              <span class="commitment-sub">(Every insight tied to a decision)</span>
+              <p>We design every research engagement around your specific strategic questions not generic market templates. If a data point doesn't inform a decision you need to make, it doesn't belong in your report.</p>
+            </div>
+            <div class="commitment-card">
+              <div class="commitment-num">04</div>
+              <h4>Client-first partnership</h4>
+              <span class="commitment-sub">(Your goals drive everything we do)</span>
+              <p>From scoping to delivery, our analysts remain engaged and accountable to your outcomes. We measure our success by the quality of the decisions our clients make not the volume of reports we ship.</p>
+            </div>
           </div>
         </div>
 
@@ -84,18 +116,31 @@
         <div class="vision-section">
           <div class="vision-copy">
             <h3>Our Vision</h3>
+            <p class="vision-tagline">A world where every business decision is grounded in truth.</p>
+            <blockquote class="vision-quote">
+              "To be the world's most trusted intelligence partner for knowledge-driven growth."
+            </blockquote>
             <p>
-              To be a global leader in market research and advisory services, recognized for our commitment to excellence, integrity, and client success. We aim to shape the future of market intelligence by leveraging advanced technology and human expertise to deliver unparalleled value to our clients.
+              At Epignosis Insights, our vision is to fundamentally reshape how organizations across the globe engage with market intelligence. We envision a future where access to deep, reliable, and actionable research is not a privilege reserved for the largest corporations with the deepest pockets, but a standard capability available to every ambitious organization regardless of size, geography, or industry.
             </p>
-            <ul class="bullet-list">
-              <li>Cutting-edge Analytics</li>
-              <li>Innovative Methods</li>
-              <li>Client-Centric Approach</li>
-              <li>Integrity & Excellence</li>
-            </ul>
+            <div class="expandable-text" :class="{ expanded: showFullVision }">
+              <p>
+                We see a global marketplace that is growing more complex by the day. Geopolitical realignments, technological disruptions, shifting consumer values, and climate-driven regulatory pressures are creating a business environment where the cost of a misinformed decision has never been higher. In this environment, market intelligence is no longer a support function it is the core of competitive strategy. Our vision is to lead that shift: to move market research from a periodic, reactive exercise to a continuous, embedded intelligence capability woven into the strategic DNA of the organizations we serve.
+              </p>
+              <p>
+                Epignosis Insights aspires to be the firm that bridges the gap between data and direction where our reports do not merely describe markets but illuminate the paths through them. We are building toward a world where our clients enter every boardroom conversation, every investment committee, and every product launch with the confidence that comes from knowing their decisions rest on rigorously validated intelligence. Not assumptions. Not gut feel. Not yesterday's data repackaged with a new cover.
+              </p>
+              <p>
+                Looking ahead, we envision Epignosis Insights as a globally recognized center of research excellence a firm whose name, when attached to a market study, is synonymous with credibility, depth, and strategic relevance. We will achieve this not by growing for growth's sake, but by deepening our expertise, expanding our methodological capabilities, and staying relentlessly focused on the outcome that matters most: helping our clients grow with confidence in a world that never stops changing.
+              </p>
+            </div>
+            <button @click="showFullVision = !showFullVision" class="read-more-btn">
+              {{ showFullVision ? 'Read Less' : 'Read More' }}
+              <span class="arrow-icon" :class="{ rotated: showFullVision }">↓</span>
+            </button>
           </div>
           <div class="vision-image-container">
-            <img class="vision-image" :src="'/assets/images/vision_map.png'" alt="Digital World Map and Analyst silhouette" />
+            <img class="vision-image" :src="'/assets/images/Growth.png'" alt="Epignosis Insights Vision and Growth" />
           </div>
         </div>
       </section>
@@ -270,6 +315,9 @@ import SiteHeader from './components/SiteHeader.vue'
 import SiteFooter from './components/SiteFooter.vue'
 
 const insights = ref([])
+const showFullWhoWeAre = ref(false)
+const showFullMission = ref(false)
+const showFullVision = ref(false)
 
 onMounted(async () => {
   try {

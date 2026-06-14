@@ -638,6 +638,233 @@
   font-size: 20px;
 }
 
+/* Mission Section Custom Layout Styling */
+.mission-image-container {
+  display: flex;
+  justify-content: center;
+}
+
+.mission-image {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08);
+  object-fit: cover;
+}
+
+.mission-tagline {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0783df;
+  margin-bottom: 20px;
+}
+
+.mission-quote {
+  font-size: 17px;
+  font-style: italic;
+  color: #1f2937;
+  border-left: 4px solid #0783df;
+  padding-left: 20px;
+  margin: 24px 0;
+  line-height: 1.6;
+}
+
+.vision-tagline {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0783df;
+  margin-bottom: 20px;
+}
+
+.vision-quote {
+  font-size: 17px;
+  font-style: italic;
+  color: #1f2937;
+  border-left: 4px solid #0783df;
+  padding-left: 20px;
+  margin: 24px 0;
+  line-height: 1.6;
+}
+
+/* Read More / Expandable Text Styling */
+.expandable-text {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.4s cubic-bezier(0, 1, 0, 1), opacity 0.4s ease;
+}
+
+.expandable-text.expanded {
+  max-height: 1200px;
+  opacity: 1;
+  transition: max-height 0.6s cubic-bezier(0.85, 0, 0.15, 1), opacity 0.6s ease;
+}
+
+.read-more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: #0783df;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  padding: 0;
+  margin-top: 16px;
+  transition: color 0.2s ease;
+}
+
+.read-more-btn:hover {
+  color: #005bb5;
+}
+
+.read-more-btn .arrow-icon {
+  font-size: 12px;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.read-more-btn .arrow-icon.rotated {
+  transform: rotate(180deg);
+}
+
+.mission-commitments-container {
+  padding: 60px 0 20px;
+  border-top: 1px solid #eef2f7;
+  margin-top: 60px;
+}
+
+.commitments-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.commitment-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 36px 30px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.015);
+  position: relative;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.commitment-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(7, 131, 223, 0.25);
+  box-shadow: 0 16px 35px rgba(7, 131, 223, 0.05);
+}
+
+.commitment-num {
+  font-size: 48px;
+  font-weight: 900;
+  color: rgba(7, 131, 223, 0.12);
+  line-height: 1;
+  position: absolute;
+  top: 30px;
+  right: 30px;
+}
+
+.commitment-card h4 {
+  font-size: 19px;
+  font-weight: 800;
+  color: #111827;
+  margin: 0 0 4px;
+}
+
+.commitment-sub {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0783df;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 16px;
+}
+
+.commitment-card p {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: #4b5563;
+  margin: 0;
+}
+
+/* Pillars Section */
+.about-pillars {
+  padding: 60px 0 100px;
+}
+
+.about-pillars h3 {
+  font-size: clamp(24px, 3.5vw, 30px);
+  font-weight: 800;
+  color: #111827;
+  margin: 0 0 40px;
+  text-align: center;
+}
+
+.pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.pillar-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 36px 30px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.02);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.pillar-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #0783df, #00d2ff);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.pillar-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(7, 131, 223, 0.25);
+  box-shadow: 0 20px 40px rgba(7, 131, 223, 0.06);
+}
+
+.pillar-card:hover::after {
+  opacity: 1;
+}
+
+.pillar-icon {
+  font-size: 32px;
+  margin-bottom: 22px;
+  display: inline-block;
+}
+
+.pillar-card h4 {
+  font-size: 20px;
+  font-weight: 800;
+  color: #111827;
+  margin: 0 0 14px;
+}
+
+.pillar-card p {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: #4b5563;
+  margin: 0;
+}
+
 /* Responsive Styles */
 @media (max-width: 1024px) {
   .about-who-we-are,
@@ -648,8 +875,14 @@
     gap: 48px;
   }
 
-  .mission-section .mission-list-card {
-    order: 2;
+  .pillars-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .commitments-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
   }
 
   .vision-section .vision-image-container {
@@ -717,5 +950,365 @@
   .insight-image-wrapper {
     width: 100%;
     height: 180px;
+  }
+}
+
+/* Professional layout refinements */
+.about-main .section-shell {
+  width: min(1180px, calc(100% - 48px));
+}
+
+.about-hero {
+  padding: 170px 24px 118px;
+}
+
+.about-hero::before {
+  content: "";
+  position: absolute;
+  inset: 92px auto auto 50%;
+  width: 720px;
+  height: 720px;
+  border: 88px solid rgba(224, 242, 254, 0.56);
+  border-radius: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.about-hero-content {
+  max-width: 900px;
+}
+
+.about-hero-content h1 {
+  letter-spacing: -0.02em;
+}
+
+.about-hero-content p {
+  max-width: 700px;
+  font-size: 18px;
+}
+
+.about-who-we-are {
+  grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
+  gap: 72px;
+  align-items: stretch;
+  padding: 112px 0 96px;
+}
+
+.who-copy,
+.mission-copy,
+.vision-copy {
+  max-width: 680px;
+}
+
+.who-copy h2,
+.mission-copy h3,
+.vision-copy h3 {
+  letter-spacing: -0.015em;
+}
+
+.who-copy p,
+.mission-copy p,
+.vision-copy p {
+  color: #455061;
+  font-size: 16px;
+  line-height: 1.72;
+  margin-bottom: 18px;
+}
+
+.who-image-container,
+.mission-image-container,
+.vision-image-container {
+  align-items: stretch;
+}
+
+.who-image,
+.mission-image,
+.vision-image {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  min-height: 420px;
+  max-height: 560px;
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  border-radius: 24px;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.1);
+  object-fit: cover;
+  object-position: center;
+}
+
+.about-mission-vision {
+  gap: 112px;
+  padding: 86px 0 94px;
+}
+
+.mission-section,
+.vision-section {
+  grid-template-columns: minmax(360px, 0.92fr) minmax(0, 1.08fr);
+  gap: 76px;
+  align-items: stretch;
+}
+
+.vision-section {
+  grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.92fr);
+}
+
+.mission-copy,
+.vision-copy {
+  align-self: center;
+}
+
+.mission-tagline,
+.vision-tagline {
+  color: #0783df;
+  font-size: 18px;
+  line-height: 1.45;
+}
+
+.mission-quote,
+.vision-quote {
+  border-radius: 0 16px 16px 0;
+  background: #f5fbff;
+  padding: 20px 24px;
+  box-shadow: inset 4px 0 0 #0783df;
+  border-left: 0;
+}
+
+.mission-commitments-container {
+  padding: 72px 0 24px;
+  margin-top: 18px;
+}
+
+.commitments-grid {
+  gap: 24px;
+}
+
+.commitment-card,
+.why-card,
+.impact-card,
+.step-content,
+.insight-article-card {
+  border-color: rgba(226, 232, 240, 0.95);
+  box-shadow: 0 12px 36px rgba(15, 23, 42, 0.035);
+}
+
+.commitment-card {
+  min-height: 230px;
+  padding: 34px 32px;
+}
+
+.commitment-card p,
+.why-card p,
+.step-content p {
+  color: #4b5563;
+  line-height: 1.62;
+}
+
+.about-impact {
+  padding: 96px 0;
+  background:
+    radial-gradient(circle at 12% 12%, rgba(224, 242, 254, 0.72), transparent 24%),
+    #f8fafc;
+}
+
+.about-section-header h2 {
+  letter-spacing: -0.015em;
+}
+
+.about-section-header p {
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.55;
+}
+
+.about-methodology {
+  padding: 108px 0;
+}
+
+.about-why-choose {
+  padding: 88px 0 108px;
+}
+
+.why-card {
+  min-height: 190px;
+}
+
+.about-insights {
+  padding: 88px 0 108px;
+}
+
+.insight-image-wrapper {
+  width: 180px;
+  height: 150px;
+}
+
+.about-bottom-cta {
+  padding: 92px 0;
+  background:
+    radial-gradient(circle at 8% 100%, rgba(255, 255, 255, 0.12), transparent 28%),
+    linear-gradient(135deg, #0783df 0%, #0056a0 100%);
+}
+
+@media (max-width: 1024px) {
+  .about-who-we-are,
+  .mission-section,
+  .vision-section {
+    grid-template-columns: 1fr;
+    gap: 42px;
+  }
+
+  .who-copy,
+  .mission-copy,
+  .vision-copy {
+    max-width: none;
+  }
+
+  .who-image,
+  .mission-image,
+  .vision-image {
+    height: 420px;
+    min-height: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-main .section-shell {
+    width: min(100% - 32px, 1180px);
+  }
+
+  .about-hero {
+    padding: 132px 18px 84px;
+  }
+
+  .about-who-we-are,
+  .about-mission-vision,
+  .about-methodology,
+  .about-why-choose,
+  .about-insights {
+    padding-top: 72px;
+    padding-bottom: 72px;
+  }
+
+  .who-image,
+  .mission-image,
+  .vision-image {
+    height: 300px;
+    border-radius: 18px;
+  }
+
+  .mission-quote,
+  .vision-quote {
+    padding: 18px;
+  }
+
+  .commitment-card,
+  .why-card,
+  .step-content,
+  .insight-article-card {
+    padding: 24px;
+  }
+}
+
+/* Alignment fixes for chart-style About images */
+.about-who-we-are,
+.mission-section,
+.vision-section {
+  align-items: flex-start;
+}
+
+.who-image-container,
+.mission-image-container,
+.vision-image-container {
+  align-self: flex-start;
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.1);
+}
+
+.who-image-container {
+  aspect-ratio: 1.04 / 1;
+  max-height: 520px;
+}
+
+.mission-image-container,
+.vision-image-container {
+  aspect-ratio: 1.12 / 1;
+  max-height: 560px;
+}
+
+.who-image,
+.mission-image,
+.vision-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  max-height: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  object-fit: contain;
+  object-position: center;
+}
+
+.who-copy,
+.mission-copy,
+.vision-copy {
+  padding-top: 8px;
+}
+
+.who-copy p,
+.mission-copy p,
+.vision-copy p {
+  max-width: 760px;
+}
+
+.mission-section,
+.vision-section {
+  gap: 64px;
+}
+
+.mission-copy,
+.vision-copy {
+  align-self: flex-start;
+}
+
+@media (max-width: 1024px) {
+  .who-image-container,
+  .mission-image-container,
+  .vision-image-container {
+    max-height: none;
+  }
+
+  .who-image-container,
+  .mission-image-container,
+  .vision-image-container {
+    aspect-ratio: 16 / 10;
+  }
+
+  .who-image,
+  .mission-image,
+  .vision-image {
+    height: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .who-image-container,
+  .mission-image-container,
+  .vision-image-container {
+    border-radius: 18px;
+    aspect-ratio: 16 / 11;
+  }
+
+  .who-image,
+  .mission-image,
+  .vision-image {
+    height: 100%;
+    border-radius: 0;
   }
 }
