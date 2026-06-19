@@ -231,35 +231,26 @@
           <p>Why leading organizations trust us for their market research needs.</p>
         </div>
         <div class="why-grid">
-          <div class="why-card">
-            <h4>Deep Domain Expertise</h4>
-            <p>Our analysts possess deep domain knowledge across multiple industry verticals.</p>
+          <div v-for="item in whyChooseUsItems" :key="item.id" class="why-card">
+            <h4>{{ item.title }}</h4>
+            <p>{{ item.summary }}</p>
+            <div class="expandable-text" :class="{ expanded: expandedWhyChooseUs[item.id] }" v-html="item.details"></div>
+            <button @click="toggleWhyChooseUs(item.id)" class="read-more-btn">
+              {{ expandedWhyChooseUs[item.id] ? 'Read Less' : 'Read More' }}
+              <span class="arrow-icon" :class="{ rotated: expandedWhyChooseUs[item.id] }">↓</span>
+            </button>
           </div>
-          <div class="why-card">
-            <h4>Custom Research Solutions</h4>
-            <p>Tailored research designed specifically for your organization's unique needs.</p>
-          </div>
-          <div class="why-card">
-            <h4>Robust Methodology</h4>
-            <p>Rigorous data gathering and validation methods ensuring highly reliable data points.</p>
-          </div>
-          <div class="why-card">
-            <h4>Actionable Insights</h4>
-            <p>We go beyond just raw data to provide actionable intelligence that drives results.</p>
-          </div>
-          <div class="why-card">
-            <h4>24/7 Customer Support</h4>
-            <p>Continuous post-purchase support and quick turnaround time for query resolutions.</p>
-          </div>
-          <div class="why-card why-cta-card">
-            <h4>Looking for Dynamic Market Insights?</h4>
-            <router-link to="/contact" class="why-cta-btn">
-              Contact Us
-              <span class="arrow">→</span>
-            </router-link>
-          </div>
+         
         </div>
       </section>
+
+      <!-- Performance Banner Section -->
+      <section class="about-performance section-shell">
+        <div class="main-image-container shadow-premium">
+          <img class="performance-image" :src="'/assets/images/Performance.png'" alt="Epignosis Insights Performance Metrics" />
+        </div>
+      </section>
+
 
       <!-- Latest Insights -->
       <section class="about-insights section-shell" v-if="insights && insights.length > 0">
@@ -319,6 +310,43 @@ const showFullWhoWeAre = ref(false)
 const showFullMission = ref(false)
 const showFullVision = ref(false)
 
+const expandedWhyChooseUs = ref({})
+const toggleWhyChooseUs = (itemId) => {
+  expandedWhyChooseUs.value[itemId] = !expandedWhyChooseUs.value[itemId]
+}
+
+const whyChooseUsItems = ref([
+  {
+    id: 'team',
+    title: 'Experienced team',
+    summary: `Behind every successful project is a team that has seen it all before. Our professionals bring an average of 12+ years of hands-on industry experience, having collectively delivered over 850 projects across diverse sectors including technology, healthcare, retail, and finance. That depth of exposure means we've navigated complex requirements, tight timelines, shifting client expectations, and unexpected technical hurdles and come out the other side with solutions that hold up.`,
+    details: `<p>Our team includes certified specialists, seasoned project managers, and creative problem-solvers who collaborate closely rather than working in silos. Clients frequently tell us that working with us feels different: conversations move faster, fewer things get lost in translation, and the final output reflects genuine understanding rather than a surface-level interpretation of the brief. We also invest in continuous learning team members regularly attend workshops, industry conferences, and certification programs to stay current.</p><p>You're not just hiring a service provider; you're partnering with a team that treats your goals as their own, backed by the kind of experience that only comes from years of real-world delivery.</p>`
+  },
+  {
+    id: 'turnaround',
+    title: 'Fast turnaround time',
+    summary: `In today's market, speed is a strategic advantage and we're built for it. Our average project delivery time is 40% faster than industry benchmarks, thanks to streamlined workflows, agile sprint methodologies, and a dedicated project coordination layer that eliminates the bottlenecks most teams don't even realize they have. From the moment a project is scoped, parallel workstreams are initiated so that research, design, and execution happen simultaneously rather than sequentially.`,
+    details: `<p>Our internal SLA framework guarantees 24-hour responses to all client communications and 48-hour turnarounds on revision requests. For urgent engagements, we offer a dedicated fast-track service that mobilizes a senior team within 6 hours of sign-off. Speed, however, never comes at the cost of quality our QA process runs concurrently with production so nothing slips through.</p><p>Over the past two years, 94% of our projects were delivered on or ahead of schedule. When your deadline is non-negotiable, you need a partner whose entire operating model is designed around delivering and delivering fast.</p>`
+  },
+  {
+    id: 'customization',
+    title: 'Customized solutions',
+    summary: `No two businesses are alike, and we refuse to treat them as if they are. Rather than offering a menu of fixed packages, we begin every engagement with a deep-discovery phase: understanding your industry context, operational constraints, target audience, competitive landscape, and long-term vision. From that foundation, we architect a solution that fits your situation precisely not a template with your logo dropped in. This approach has led to a 37% higher satisfaction rate on post-project surveys compared to clients who received standardized offerings from other providers.`,
+    details: `<p>Whether you're a startup needing to move fast with limited budget, an enterprise navigating legacy system integration, or a mid-sized company scaling rapidly, our methodology adapts. We also build flexibility into deliverables themselves, so as your needs evolve, the solution can grow with you rather than requiring a costly rebuild. Every recommendation we make is grounded in your specific data, goals, and constraints not in what worked for someone else. Customization isn't a premium add-on for us; it's simply the only way we know how to work.</p>`
+  },
+  {
+    id: 'pricing',
+    title: 'Competitive pricing',
+    summary: `Exceptional quality shouldn't require an exceptional budget. Our pricing model is engineered to deliver maximum value at every tier whether you're engaging us for a focused one-week sprint or a 12-month strategic partnership. We operate lean by design: minimal overhead, no unnecessary layers of account management, and a project resourcing model that scales precisely to scope rather than padding hours. Independent benchmarking has shown our rates sit 18–25% below comparable agencies without any reduction in output quality or senior-level involvement.`,
+    details: `<p>We also offer transparent, fixed-fee proposals for clearly scoped work, so there are no surprise invoices mid-project. For ongoing retainers, clients receive priority scheduling, accumulated project history, and loyalty rate adjustments after six months. We're happy to work within budget constraints tell us what you have and we'll tell you honestly what's achievable. Our goal is a long-term relationship, not a single transaction, which means pricing you fairly is in our own interest too. Value isn't about the cheapest price; it's about the best outcome per pound spent.</p>`
+  },
+  {
+    id: 'support',
+    title: 'Dedicated support',
+    summary: `A project doesn't end at delivery and neither does our commitment. Every client is assigned a named account manager who remains your single point of contact from kickoff through post-launch, ensuring continuity of context and eliminating the frustration of re-explaining your situation every time you reach out. Our support desk operates across three time zones, providing effective coverage from 07:00 to 23:00 GMT, with a guaranteed first-response time of under 2 hours for active clients.`,
+    details: `<p>Post-delivery, we offer a 90-day warranty period during which issues are resolved at no additional cost because we stand behind our work. Beyond reactive support, your account manager proactively schedules monthly check-ins to review performance metrics, flag emerging opportunities, and align on evolving priorities. Our client retention rate of 88% over three consecutive years speaks to the quality of these ongoing relationships. Support, for us, means being genuinely accessible, deeply familiar with your setup, and invested in your continued success not just available to log a ticket.</p>`
+  }
+])
 onMounted(async () => {
   try {
     const response = await axios.get('/api/blogs-public')
