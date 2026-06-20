@@ -1,6 +1,6 @@
 {
   "node_modules/canvg/lib/index.es.js": {
-    "file": "assets/index.es-C8Q4PNqH.js",
+    "file": "assets/index.es-BjFQYNlg.js",
     "name": "index.es",
     "src": "node_modules/canvg/lib/index.es.js",
     "isDynamicEntry": true,
@@ -29,12 +29,12 @@
     "src": "node_modules/intl-tel-input/dist/img/flags@2x.webp"
   },
   "resources/css/app.css": {
-    "file": "assets/app-BC-thYCS.css",
+    "file": "assets/app-f5nZ3g4J.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-BerI2MQP.js",
+    "file": "assets/app-BX40SdAR.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -44,7 +44,7 @@
       "node_modules/canvg/lib/index.es.js"
     ],
     "css": [
-      "assets/app-BhAS5g9p.css"
+      "assets/app-CQIfvE9v.css"
     ],
     "assets": [
       "assets/flags-DjVgN9ag.webp",
