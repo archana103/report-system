@@ -251,8 +251,22 @@ class UserviewController extends Controller
             'pages' => 120, // default pages
             'format' => 'PDF, Excel', // default format
             'related_reports' => $relatedReports,
-            'related_industries' => $relatedCategories
+            'related_industries' => $relatedCategories,
+
+            // ── SEO / Meta fields ────────────────────────────────────────────
+            'meta_title'         => $reportDetail->meta_title,
+            'meta_description'   => $reportDetail->meta_description,
+            'meta_keywords'      => $reportDetail->meta_keywords,
+            'canonical_tag'      => $reportDetail->canonical_tag,
+            'meta_robots'        => $reportDetail->meta_robots,
+            'hreflang_tags'      => $reportDetail->hreflang_tags      ?: [],
+            'open_graph_tags'    => $reportDetail->open_graph_tags    ?: [],
+            'twitter_card_tags'  => $reportDetail->twitter_card_tags  ?: [],
+            'schema_tag'         => $reportDetail->schema_tag,
+            'schema_tag_2'       => $reportDetail->schema_tag_2,
+            'custom_schema_tags' => $reportDetail->custom_schema_tags ?: [],
         ]);
+
     }
 
     /**
@@ -430,13 +444,27 @@ class UserviewController extends Controller
             'date' => $blog->created_at->format('F d, Y'),
             'url' => $blog->url,
             'detail' => $blog->blogDetail ? [
-                'title' => $blog->blogDetail->title,
+                'title'       => $blog->blogDetail->title,
                 'description' => $blog->blogDetail->description,
-                'faqs' => $blog->blogDetail->faqs ?: [],
+                'faqs'        => $blog->blogDetail->faqs ?: [],
             ] : null,
             'related_articles' => $relatedArticles,
+
+            // ── SEO / Meta fields (from blogDetail) ──────────────────────────
+            'meta_title'         => $blog->blogDetail?->meta_title,
+            'meta_description'   => $blog->blogDetail?->meta_description,
+            'meta_keywords'      => $blog->blogDetail?->meta_keywords,
+            'canonical_tag'      => $blog->blogDetail?->canonical_tag,
+            'meta_robots'        => $blog->blogDetail?->meta_robots,
+            'hreflang_tags'      => $blog->blogDetail?->hreflang_tags      ?: [],
+            'open_graph_tags'    => $blog->blogDetail?->open_graph_tags    ?: [],
+            'twitter_card_tags'  => $blog->blogDetail?->twitter_card_tags  ?: [],
+            'schema_tag'         => $blog->blogDetail?->schema_tag,
+            'schema_tag_2'       => $blog->blogDetail?->schema_tag_2,
+            'schema_tag_3'       => $blog->blogDetail?->schema_tag_3,
         ]);
     }
+
 
     /**
      * Store a blog sample request.
@@ -498,6 +526,19 @@ class UserviewController extends Controller
                 'content' => $pr->pressReleaseDetail->content,
             ] : null,
             'related_reports' => $relatedReports,
+
+            // ── SEO / Meta fields (from pressReleaseDetail) ──────────────────
+            'meta_title'         => $pr->pressReleaseDetail?->meta_title,
+            'meta_description'   => $pr->pressReleaseDetail?->meta_description,
+            'meta_keywords'      => $pr->pressReleaseDetail?->meta_keywords,
+            'canonical_tag'      => $pr->pressReleaseDetail?->canonical_tag,
+            'meta_robots'        => $pr->pressReleaseDetail?->meta_robots,
+            'hreflang_tags'      => $pr->pressReleaseDetail?->hreflang_tags      ?: [],
+            'open_graph_tags'    => $pr->pressReleaseDetail?->open_graph_tags    ?: [],
+            'twitter_card_tags'  => $pr->pressReleaseDetail?->twitter_card_tags  ?: [],
+            'schema_tag'         => $pr->pressReleaseDetail?->schema_tag,
+            'schema_tag_2'       => $pr->pressReleaseDetail?->schema_tag_2,
         ]);
     }
+
 }

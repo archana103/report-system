@@ -151,7 +151,7 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from 'vue'
+import { ref, watch, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 import SiteHeader from './components/SiteHeader.vue'
@@ -195,12 +195,150 @@ const toggleFaq = (index) => {
   faqs.value[index].isOpen = !faqs.value[index].isOpen
 }
 
+// ── Meta Tag Injection ───────────────────────────────────────────────────────
+const META_ATTR = 'data-blog-meta'
+
+const cleanBlogMeta = () => {
+  document.querySelectorAll(`[${META_ATTR}]`).forEach(el => el.remove())
+}
+
+const injectMetaTags = (b) => {
+  cleanBlogMeta()
+  const head = document.head
+
+  const tag = (type, attrs = {}) => {
+    const el = document.createElement(type)
+    Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, v))
+    el.setAttribute(META_ATTR, '1')
+    head.appendChild(el)
+  }
+
+  // Title
+  const titleVal = b.meta_title || b.title || ''
+  if (titleVal) document.title = titleVal
+
+  // Basic meta
+  if (b.meta_description) tag('meta', { name: 'description', content: b.meta_description })
+  if (b.meta_keywords)    tag('meta', { name: 'keywords',    content: b.meta_keywords })
+  if (b.meta_robots)      tag('meta', { name: 'robots',      content: b.meta_robots })
+
+  // Canonical
+  if (b.canonical_tag) tag('link', { rel: 'canonical', href: b.canonical_tag })
+
+  // OG tags — stored as object {tag_1..tag_6} or array
+  const ogValues = Array.isArray(b.open_graph_tags)
+    ? b.open_graph_tags
+    : Object.values(b.open_graph_tags || {})
+  ogValues.forEach(raw => {
+    if (!raw || !raw.trim()) return
+    const tmp = document.createElement('div')
+    tmp.innerHTML = raw.trim()
+    tmp.querySelectorAll('meta').forEach(m => {
+      const el = m.cloneNode(true)
+      el.setAttribute(META_ATTR, '1')
+      head.appendChild(el)
+    })
+  })
+
+  // Twitter tags — same format
+  const twValues = Array.isArray(b.twitter_card_tags)
+    ? b.twitter_card_tags
+    : Object.values(b.twitter_card_tags || {})
+  twValues.forEach(raw => {
+    if (!raw || !raw.trim()) return
+    const tmp = document.createElement('div')
+    tmp.innerHTML = raw.trim()
+    tmp.querySelectorAll('meta').forEach(m => {
+      const el = m.cloneNode(true)
+      el.setAttribute(META_ATTR, '1')
+      head.appendChild(el)
+    })
+  })
+
+  // Hreflang links
+  const hrefs = Array.isArray(b.hreflang_tags) ? b.hreflang_tags : []
+  hrefs.forEach(raw => {
+    if (!raw || !raw.trim()) return
+    const tmp = document.createElement('div')
+    tmp.innerHTML = raw.trim()
+    tmp.querySelectorAll('link').forEach(l => {
+      const el = l.cloneNode(true)
+      el.setAttribute(META_ATTR, '1')
+      head.appendChild(el)
+    })
+  })
+
+  // Schema / JSON-LD scripts
+  const schemas = [b.schema_tag, b.schema_tag_2, b.schema_tag_3]
+  const hasCustomSchema = schemas.some(s => s && s.trim())
+
+  schemas.forEach(raw => {
+    if (!raw || !raw.trim()) return
+    const tmp = document.createElement('div')
+    tmp.innerHTML = raw.trim()
+    tmp.querySelectorAll('script').forEach(s => {
+      const el = document.createElement('script')
+      el.type = s.type || 'application/ld+json'
+      el.textContent = s.textContent
+      el.setAttribute(META_ATTR, '1')
+      head.appendChild(el)
+    })
+  })
+
+  // ── Auto-generated BlogPosting schema (injected when no custom schema set) ─────
+  if (!hasCustomSchema) {
+    const pageUrl = b.canonical_tag || window.location.href
+    let dateIso = ''
+    try {
+      if (b.date) {
+        const d = new Date(b.date)
+        if (!isNaN(d.getTime())) {
+          dateIso = d.toISOString().split('T')[0]
+        }
+      }
+    } catch (e) {}
+    if (!dateIso) {
+      dateIso = new Date().toISOString().split('T')[0]
+    }
+
+    const blogSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      'headline': b.title || '',
+      'description': b.meta_description || '',
+      'url': pageUrl,
+      'image': b.image ? [window.location.origin + b.image] : [],
+      'datePublished': dateIso,
+      'author': {
+        '@type': 'Person',
+        'name': b.author_name || 'Admin'
+      },
+      'publisher': {
+        '@type': 'Organization',
+        'name': 'Report System',
+        'logo': {
+          '@type': 'ImageObject',
+          'url': window.location.origin + '/favicon.png'
+        }
+      }
+    }
+    const autoEl = document.createElement('script')
+    autoEl.type = 'application/ld+json'
+    autoEl.textContent = JSON.stringify(blogSchema)
+    autoEl.setAttribute(META_ATTR, '1')
+    head.appendChild(autoEl)
+  }
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
 const fetchBlogDetails = async (slug) => {
   loading.value = true
   try {
     const response = await axios.get(`/api/blog/${slug}`)
     if (response.data) {
       blog.value = response.data
+      // Inject all SEO meta tags
+      injectMetaTags(response.data)
       if (response.data.detail && response.data.detail.faqs) {
         faqs.value = response.data.detail.faqs.map(item => ({
           ...item,
@@ -252,6 +390,10 @@ onMounted(() => {
   if (route.params.slug) {
     fetchBlogDetails(route.params.slug)
   }
+})
+
+onUnmounted(() => {
+  cleanBlogMeta()
 })
 
 // Comprehensive Country List

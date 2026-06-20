@@ -230,16 +230,17 @@
           <h2>Why Choose Us</h2>
           <p>Why leading organizations trust us for their market research needs.</p>
         </div>
-        <div class="why-grid">
-          <div v-for="item in whyChooseUsItems" :key="item.id" class="why-card">
-            <h4>{{ item.title }}</h4>
-            <p>{{ item.summary }}</p>
-            <div class="expandable-text" :class="{ expanded: expandedWhyChooseUs[item.id] }" v-html="item.details"></div>
-            <button @click="toggleWhyChooseUs(item.id)" class="read-more-btn">
-              {{ expandedWhyChooseUs[item.id] ? 'Read Less' : 'Read More' }}
-              <span class="arrow-icon" :class="{ rotated: expandedWhyChooseUs[item.id] }">↓</span>
-            </button>
-          </div>
+        <div class="why-list">
+          <article v-for="(item, index) in whyChooseUsItems" :key="item.id" class="why-feature">
+            <div class="why-feature-marker">
+              <span>{{ String(index + 1).padStart(2, '0') }}</span>
+            </div>
+            <div class="why-feature-copy">
+              <h4>{{ item.title }}</h4>
+              <p class="why-summary">{{ item.summary }}</p>
+              <div class="why-details" v-html="item.details"></div>
+            </div>
+          </article>
          
         </div>
       </section>
@@ -309,11 +310,6 @@ const insights = ref([])
 const showFullWhoWeAre = ref(false)
 const showFullMission = ref(false)
 const showFullVision = ref(false)
-
-const expandedWhyChooseUs = ref({})
-const toggleWhyChooseUs = (itemId) => {
-  expandedWhyChooseUs.value[itemId] = !expandedWhyChooseUs.value[itemId]
-}
 
 const whyChooseUsItems = ref([
   {

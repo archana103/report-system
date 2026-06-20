@@ -316,7 +316,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, onUnmounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 import SiteHeader from './components/SiteHeader.vue'
@@ -360,6 +360,145 @@ const setActiveTab = (tab) => {
   router.replace({ query: { ...route.query, tab } })
 }
 
+// ── Meta Tag Injection ──────────────────────────────────────────────────────
+const META_ATTR = 'data-report-meta'
+
+const cleanReportMeta = () => {
+  document.querySelectorAll(`[${META_ATTR}]`).forEach(el => el.remove())
+}
+
+const injectMetaTags = (r) => {
+  cleanReportMeta()
+
+  const head = document.head
+  const tag = (type, attrs = {}) => {
+    const el = document.createElement(type)
+    Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, v))
+    el.setAttribute(META_ATTR, '1')
+    head.appendChild(el)
+    return el
+  }
+
+  // ── Title ──────────────────────────────────────────────────────────────────
+  const titleVal = r.meta_title || r.title || ''
+  if (titleVal) document.title = titleVal
+
+  // ── Basic meta ─────────────────────────────────────────────────────────────
+  if (r.meta_description) tag('meta', { name: 'description', content: r.meta_description })
+  if (r.meta_keywords)    tag('meta', { name: 'keywords',    content: r.meta_keywords })
+  if (r.meta_robots)      tag('meta', { name: 'robots',      content: r.meta_robots })
+
+  // ── Canonical ──────────────────────────────────────────────────────────────
+  if (r.canonical_tag) tag('link', { rel: 'canonical', href: r.canonical_tag })
+
+  // ── Open Graph tags (6 raw strings stored as full <meta …> markup) ─────────
+  const ogTags = Array.isArray(r.open_graph_tags) ? r.open_graph_tags : []
+  ogTags.forEach(raw => {
+    if (!raw || !raw.trim()) return
+    const tmp = document.createElement('div')
+    tmp.innerHTML = raw.trim()
+    tmp.querySelectorAll('meta').forEach(m => {
+      const el = m.cloneNode(true)
+      el.setAttribute(META_ATTR, '1')
+      head.appendChild(el)
+    })
+  })
+
+  // ── Twitter Card tags (same format) ───────────────────────────────────────
+  const twTags = Array.isArray(r.twitter_card_tags) ? r.twitter_card_tags : []
+  twTags.forEach(raw => {
+    if (!raw || !raw.trim()) return
+    const tmp = document.createElement('div')
+    tmp.innerHTML = raw.trim()
+    tmp.querySelectorAll('meta').forEach(m => {
+      const el = m.cloneNode(true)
+      el.setAttribute(META_ATTR, '1')
+      head.appendChild(el)
+    })
+  })
+
+  // ── Hreflang links ────────────────────────────────────────────────────────
+  const hrefs = Array.isArray(r.hreflang_tags) ? r.hreflang_tags : []
+  hrefs.forEach(raw => {
+    if (!raw || !raw.trim()) return
+    const tmp = document.createElement('div')
+    tmp.innerHTML = raw.trim()
+    tmp.querySelectorAll('link').forEach(l => {
+      const el = l.cloneNode(true)
+      el.setAttribute(META_ATTR, '1')
+      head.appendChild(el)
+    })
+  })
+
+  // ── Schema / JSON-LD scripts (custom from admin) ─────────────────────────
+  const schemas = [
+    r.schema_tag,
+    r.schema_tag_2,
+    ...(Array.isArray(r.custom_schema_tags) ? r.custom_schema_tags : [])
+  ]
+  const hasCustomSchema = schemas.some(s => s && s.trim())
+
+  schemas.forEach(raw => {
+    if (!raw || !raw.trim()) return
+    const tmp = document.createElement('div')
+    tmp.innerHTML = raw.trim()
+    tmp.querySelectorAll('script').forEach(s => {
+      const el = document.createElement('script')
+      el.type = s.type || 'application/ld+json'
+      el.textContent = s.textContent
+      el.setAttribute(META_ATTR, '1')
+      head.appendChild(el)
+    })
+  })
+
+  // ── Auto-generated Product schema (injected when no custom schema set) ─────
+  if (!hasCustomSchema) {
+    const pageUrl = r.canonical_tag || window.location.href
+    const productSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      'name': r.title || '',
+      'description': r.meta_description || '',
+      'url': pageUrl,
+      'image': r.image ? [window.location.origin + r.image] : [],
+      'sku': r.report_sku || '',
+      'category': r.category || '',
+      'offers': [
+        {
+          '@type': 'Offer',
+          'name': 'Single User License',
+          'price': r.single_user_license_cost || '3500',
+          'priceCurrency': 'USD',
+          'availability': 'https://schema.org/InStock',
+          'url': pageUrl
+        },
+        {
+          '@type': 'Offer',
+          'name': 'Team User License',
+          'price': r.team_user_license_cost || '5500',
+          'priceCurrency': 'USD',
+          'availability': 'https://schema.org/InStock',
+          'url': pageUrl
+        },
+        {
+          '@type': 'Offer',
+          'name': 'Enterprise User License',
+          'price': r.enterprise_user_license_cost || '7500',
+          'priceCurrency': 'USD',
+          'availability': 'https://schema.org/InStock',
+          'url': pageUrl
+        }
+      ]
+    }
+    const autoEl = document.createElement('script')
+    autoEl.type = 'application/ld+json'
+    autoEl.textContent = JSON.stringify(productSchema)
+    autoEl.setAttribute(META_ATTR, '1')
+    head.appendChild(autoEl)
+  }
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
 const loadReportDetails = async (slug) => {
   loading.value = true
   activeFaqIndex.value = 0
@@ -368,6 +507,8 @@ const loadReportDetails = async (slug) => {
   try {
     const response = await axios.get(`/api/report/${slug}`)
     report.value = response.data
+    // Inject all SEO meta tags from report data
+    injectMetaTags(response.data)
     // Set tab correctly once report data is successfully fetched
     setTabFromQuery()
   } catch (error) {
@@ -435,6 +576,10 @@ const goToCategory = (categoryName) => {
 
 onMounted(() => {
   loadReportDetails(route.params.slug)
+})
+
+onUnmounted(() => {
+  cleanReportMeta()
 })
 
 // Watch for changes in the slug parameters to reload the page data
