@@ -30,24 +30,7 @@
       </span>
     </template>
 
-    <template #item-category_list_download="{ item }">
-      <span class="text-gray-400 text-xs" :title="stripHtml(item.category_list_download)">
-        {{ truncate(item.category_list_download) }}
-      </span>
-    </template>
 
-    <template #item-download_text="{ item }">
-      <span class="text-gray-400 text-xs" :title="stripHtml(item.download_text)">
-        {{ truncate(item.download_text) }}
-      </span>
-    </template>
-
-    <template #item-image="{ item }">
-      <div v-if="item.image" class="h-12 w-12 rounded overflow-hidden border border-gray-700">
-        <img :src="item.image" alt="Report Image" class="w-full h-full object-cover" />
-      </div>
-      <span v-else class="text-gray-500">—</span>
-    </template>
 
     <template #item-status="{ item }">
       <span
@@ -107,9 +90,6 @@ const headers = [
   { key: 'report_list', label: 'Report Category List Name' },
   { key: 'title', label: 'Report Details title' },
   { key: 'description', label: 'Report Details description' },
-  { key: 'category_list_download', label: 'Report Details Download' },
-  { key: 'image', label: 'Report Details Image', sortable: false },
-  { key: 'download_text', label: 'Report Details Text' },
   { key: 'status', label: 'Status' },
   { key: 'created_at', label: 'Date' },
 ]

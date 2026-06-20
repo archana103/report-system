@@ -2,8 +2,18 @@
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\ReportCategoryController;
 use App\Http\Controllers\Admin\ReportListController;
+use App\Http\Controllers\Admin\DashboardController;
 
 Route::post('/admin/login', [AdminAuthController::class, 'login']);
+
+// Dashboard & Profile
+Route::get('/admin/dashboard-stats', [DashboardController::class, 'stats']);
+Route::post('/admin/update-username', [DashboardController::class, 'updateUsername']);
+
+// Sessions Management
+Route::get('/admin/sessions', [DashboardController::class, 'getSessions']);
+Route::delete('/admin/sessions/{id}', [DashboardController::class, 'logoutSession']);
+Route::delete('/admin/sessions', [DashboardController::class, 'logoutOtherSessions']);
 
 // Report Categories
 Route::get('/admin/report-categories', [ReportCategoryController::class, 'index']);
@@ -68,5 +78,3 @@ Route::get('/admin/press-releases-dropdown', [App\Http\Controllers\Admin\PressRe
 
 // Change password
 Route::post('/admin/change-password', [AdminAuthController::class, 'changePassword']);
-
-

@@ -29,7 +29,12 @@ class AdminAuthController extends Controller
                 'message' => 'Invalid credentials',
             ], 401);
         }
-    return response()->json([
+
+        // Log the user into the server session securely
+        \Illuminate\Support\Facades\Auth::login($user);
+        $request->session()->regenerate();
+
+        return response()->json([
             'message' => 'Login successful',
             'user'    => $user,
         ]);
