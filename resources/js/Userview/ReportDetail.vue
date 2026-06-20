@@ -310,7 +310,7 @@
     </div>
   </div>
 
-  <RequestFormModal :isOpen="isRequestModalOpen" :subject="requestSubject" @close="isRequestModalOpen = false" />
+  <RequestFormModal :isOpen="isRequestModalOpen" :subject="requestSubject" :reportName="report ? report.title : ''" @close="isRequestModalOpen = false" />
   <SiteFooter />
 </div>
 </template>

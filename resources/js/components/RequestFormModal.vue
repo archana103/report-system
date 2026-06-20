@@ -169,7 +169,8 @@ import 'intl-tel-input/styles'
 
 const props = defineProps({
   isOpen: Boolean,
-  subject: String
+  subject: String,
+  reportName: String
 })
 
 const emit = defineEmits(['close'])
@@ -188,7 +189,8 @@ const formData = ref({
   subject: 'Request Sample',
   job_title: '',
   company_name: '',
-  specific_research_requirement: ''
+  specific_research_requirement: '',
+  report_name: ''
 })
 
 // Sync subject parameter when modal opens
@@ -196,6 +198,11 @@ watch(() => props.subject, (newSubject) => {
   if (newSubject) {
     formData.value.subject = newSubject
   }
+})
+
+// Sync report name when prop updates
+watch(() => props.reportName, (newReport) => {
+  formData.value.report_name = newReport || ''
 })
 
 // Initialize/destroy intl-tel-input when modal opens/closes
@@ -210,6 +217,7 @@ watch(() => props.isOpen, async (newVal) => {
     formData.value.company_name = ''
     formData.value.specific_research_requirement = ''
     formData.value.subject = props.subject || 'Request Sample'
+    formData.value.report_name = props.reportName || ''
     recaptchaChecked.value = false
     submitSuccess.value = false
 

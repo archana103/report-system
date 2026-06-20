@@ -87,8 +87,8 @@
                   </div>
 
                   <div class="report-actions">
-                    <button class="secondary-button outlined" @click="openRequestModal('Request Sample')">Request Sample</button>
-                    <button class="secondary-button outlined" @click="openRequestModal('Download Free Sample')">Download Sample</button>
+                    <button class="secondary-button outlined" @click="openRequestModal('Request Sample', report.title)">Request Sample</button>
+                    <button class="secondary-button outlined" @click="openRequestModal('Download Free Sample', report.title)">Download Sample</button>
                     <router-link :to="`/report/${report.slug && report.slug !== '#' ? report.slug : report.id}`" class="primary-button small">Buy Now</router-link>
                   </div>
                 </div>
@@ -135,7 +135,7 @@
     </main>
 
     <!-- Request Form Modal Popup -->
-    <RequestFormModal :isOpen="isRequestModalOpen" :subject="requestSubject" @close="isRequestModalOpen = false" />
+    <RequestFormModal :isOpen="isRequestModalOpen" :subject="requestSubject" :reportName="requestReportName" @close="isRequestModalOpen = false" />
 
     <!-- Custom Analyst Research CTA Component -->
     <CustomResearchCTA />
@@ -167,9 +167,11 @@ const totalPages = ref(1)
 // Request Form Modal state
 const isRequestModalOpen = ref(false)
 const requestSubject = ref('Request Sample')
+const requestReportName = ref('')
 
-const openRequestModal = (subject = 'Request Sample') => {
+const openRequestModal = (subject = 'Request Sample', reportTitle = '') => {
   requestSubject.value = subject
+  requestReportName.value = reportTitle
   isRequestModalOpen.value = true
 }
 

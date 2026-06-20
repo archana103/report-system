@@ -379,6 +379,29 @@ class UserviewController extends Controller
             'specific_research_requirement' => $validated['specific_research_requirement'],
         ]);
 
+        try {
+            $data = [
+                'siteName'     => 'Markspark Solutions',
+                'siteUrl'      => url('/'),
+                'inquiryType'  => 'New Inquiry Received on Markspark Solutions',
+                'name'         => $validated['full_name'],
+                'email'        => $validated['email'],
+                'phone'        => $validated['phone'],
+                'companyName'  => $validated['company_name'],
+                'country'      => $validated['country'],
+                'messageText'  => $validated['specific_research_requirement'],
+                'reportName'   => '',
+                'jobTitle'     => '',
+            ];
+
+            \Illuminate\Support\Facades\Mail::send('emails.inquiry', $data, function ($message) {
+                $message->to('archanaguthale103@gmail.com')
+                        ->subject('New Inquiry Received on Markspark Solutions');
+            });
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Mail sending failed in storeContactForm: ' . $e->getMessage());
+        }
+
         return response()->json([
             'message' => 'Your message has been sent successfully!',
             'data' => $contact
@@ -399,9 +422,45 @@ class UserviewController extends Controller
             'job_title' => 'required|string|max:255',
             'company_name' => 'required|string|max:255',
             'specific_research_requirement' => 'required|string',
+            'report_name' => 'nullable|string|max:255',
         ]);
 
         $requestForm = \App\Models\RequestForm::create($validated);
+
+        try {
+            $subjectVal = $validated['subject'] ?: 'Request Sample';
+            $reportNameVal = $validated['report_name'] ?: '';
+            
+            $inquiryTypeLabel = $subjectVal;
+            if ($reportNameVal) {
+                $inquiryTypeLabel .= ' - ' . $reportNameVal;
+            }
+
+            $data = [
+                'siteName'     => 'Markspark Solutions',
+                'siteUrl'      => url('/'),
+                'inquiryType'  => $inquiryTypeLabel,
+                'name'         => $validated['name'],
+                'email'        => $validated['email'],
+                'phone'        => $validated['phone'],
+                'companyName'  => $validated['company_name'],
+                'country'      => $validated['country'],
+                'messageText'  => $validated['specific_research_requirement'],
+                'reportName'   => $reportNameVal,
+                'jobTitle'     => $validated['job_title'],
+            ];
+
+            \Illuminate\Support\Facades\Mail::send('emails.inquiry', $data, function ($message) use ($subjectVal, $reportNameVal) {
+                $mailSubject = $subjectVal;
+                if ($reportNameVal) {
+                    $mailSubject .= ' - ' . $reportNameVal;
+                }
+                $message->to('archanaguthale103@gmail.com')
+                        ->subject('New Inquiry Received: ' . $mailSubject);
+            });
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Mail sending failed in storeRequestForm: ' . $e->getMessage());
+        }
 
         return response()->json([
             'message' => 'Request submitted successfully!',
@@ -481,6 +540,32 @@ class UserviewController extends Controller
         ]);
 
         $blogRequest = \App\Models\BlogRequest::create($validated);
+
+        try {
+            $blog = \App\Models\Blog::find($validated['blog_id']);
+            $blogTitle = $blog ? $blog->title : 'Blog ID ' . $validated['blog_id'];
+
+            $data = [
+                'siteName'     => 'Markspark Solutions',
+                'siteUrl'      => url('/'),
+                'inquiryType'  => 'Blog Request - ' . $blogTitle,
+                'name'         => $validated['full_name'],
+                'email'        => $validated['email'],
+                'phone'        => $validated['phone'],
+                'companyName'  => $validated['company_name'],
+                'country'      => $validated['country'],
+                'messageText'  => 'Requested blog/sample for blog ID: ' . $validated['blog_id'],
+                'reportName'   => $blogTitle,
+                'jobTitle'     => '',
+            ];
+
+            \Illuminate\Support\Facades\Mail::send('emails.inquiry', $data, function ($message) use ($blogTitle) {
+                $message->to('archanaguthale103@gmail.com')
+                        ->subject('New Inquiry Received: Blog Request - ' . $blogTitle);
+            });
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Mail sending failed in storeBlogRequest: ' . $e->getMessage());
+        }
 
         return response()->json([
             'message' => 'Your request has been submitted successfully!',

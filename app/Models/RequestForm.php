@@ -14,6 +14,7 @@ class RequestForm extends Model
         'subject',
         'job_title',
         'company_name',
-        'specific_research_requirement'
+        'specific_research_requirement',
+        'report_name'
     ];
 }
