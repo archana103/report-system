@@ -351,24 +351,24 @@ class UserviewController extends Controller
             'recaptcha_token' => 'nullable|string',
         ]);
 
-        // Verify ReCAPTCHA with Google API (Bypassed in local env due to curl certificate issues)
-        /*
-        $recaptchaSecret = config('services.recaptcha.secret') ?: '6LeIxAcTAAAAAGG-vFI1TnN064DDNveih1O0UYGC';
-        $response = \Illuminate\Support\Facades\Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
-            'secret' => $recaptchaSecret,
-            'response' => $request->input('recaptcha_token'),
-            'remoteip' => $request->ip(),
-        ]);
+        // Verify ReCAPTCHA with Google API
+        $recaptchaSecret = config('services.recaptcha.secret');
+        if ($recaptchaSecret && $recaptchaSecret !== 'your_secret_key') {
+            $response = \Illuminate\Support\Facades\Http::withoutVerifying()->asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+                'secret' => $recaptchaSecret,
+                'response' => $request->input('recaptcha_token'),
+                'remoteip' => $request->ip(),
+            ]);
 
-        $recaptchaData = $response->json();
+            $recaptchaData = $response->json();
 
-        if (!$recaptchaData['success']) {
-            return response()->json([
-                'message' => 'ReCAPTCHA validation failed. Please try again.',
-                'errors' => ['recaptcha_token' => ['The recaptcha token is invalid or expired.']]
-            ], 422);
+            if (!$recaptchaData['success']) {
+                return response()->json([
+                    'message' => 'ReCAPTCHA validation failed. Please try again.',
+                    'errors' => ['recaptcha_token' => ['The recaptcha token is invalid or expired.']]
+                ], 422);
+            }
         }
-        */
 
         $contact = \App\Models\ContactUs::create([
             'full_name' => $validated['full_name'],
@@ -423,9 +423,31 @@ class UserviewController extends Controller
             'company_name' => 'required|string|max:255',
             'specific_research_requirement' => 'required|string',
             'report_name' => 'nullable|string|max:255',
+            'recaptcha_token' => 'nullable|string',
         ]);
 
-        $requestForm = \App\Models\RequestForm::create($validated);
+        // Verify ReCAPTCHA with Google API
+        $recaptchaSecret = config('services.recaptcha.secret');
+        if ($recaptchaSecret && $recaptchaSecret !== 'your_secret_key') {
+            $response = \Illuminate\Support\Facades\Http::withoutVerifying()->asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+                'secret' => $recaptchaSecret,
+                'response' => $request->input('recaptcha_token'),
+                'remoteip' => $request->ip(),
+            ]);
+
+            $recaptchaData = $response->json();
+
+            if (!$recaptchaData['success']) {
+                return response()->json([
+                    'message' => 'ReCAPTCHA validation failed. Please try again.',
+                    'errors' => ['recaptcha_token' => ['The recaptcha token is invalid or expired.']]
+                ], 422);
+            }
+        }
+
+        // We create RequestForm from $validated but remove recaptcha_token to avoid SQL error (not in table)
+        $dbData = collect($validated)->except('recaptcha_token')->toArray();
+        $requestForm = \App\Models\RequestForm::create($dbData);
 
         try {
             $subjectVal = $validated['subject'] ?: 'Request Sample';

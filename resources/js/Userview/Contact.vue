@@ -99,13 +99,11 @@
                   ></textarea>
                 </div>
 
-                <!-- Real Google reCAPTCHA Container (Disabled for now) -->
-                <!--
-                <div class="recaptcha-group">
+                <!-- Real Google reCAPTCHA Container -->
+                <div class="recaptcha-group" style="margin-top: 15px;">
                   <div id="recaptcha-container"></div>
-                  <span v-if="recaptchaError" class="recaptcha-error-text">{{ recaptchaError }}</span>
+                  <span v-if="recaptchaError" class="recaptcha-error-text" style="color: #dc2626; font-size: 13.5px; margin-top: 5px; display: block;">{{ recaptchaError }}</span>
                 </div>
-                -->
 
                 <!-- Submit Button -->
                 <div class="form-submit-row">
@@ -310,38 +308,26 @@ const countriesList = [
 ]
 
 // Render the captcha explicitly in the target div container
-const renderRecaptcha = () => {
-  if (window.grecaptcha && recaptchaWidgetId.value === null) {
-    try {
-      recaptchaWidgetId.value = window.grecaptcha.render('recaptcha-container', {
-        sitekey: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI', // official test sitekey
-        callback: (token) => {
-          recaptchaToken.value = token
-          recaptchaError.value = ''
-        },
-        'expired-callback': () => {
-          recaptchaToken.value = ''
-        }
-      })
-    } catch (e) {
-      console.error('reCAPTCHA rendering error:', e)
+const initRecaptcha = () => {
+  if (window.grecaptcha && window.grecaptcha.render) {
+    if (recaptchaWidgetId.value === null) {
+      try {
+        recaptchaWidgetId.value = window.grecaptcha.render('recaptcha-container', {
+          sitekey: window.RECAPTCHA_SITE_KEY || '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI',
+          callback: (token) => {
+            recaptchaToken.value = token
+            recaptchaError.value = ''
+          },
+          'expired-callback': () => {
+            recaptchaToken.value = ''
+          }
+        })
+      } catch (e) {
+        console.error('reCAPTCHA rendering error:', e)
+      }
     }
-  }
-}
-
-const loadRecaptchaScript = () => {
-  if (!document.getElementById('recaptcha-api-script')) {
-    window.onloadRecaptchaCallback = () => {
-      renderRecaptcha()
-    }
-    const script = document.createElement('script')
-    script.id = 'recaptcha-api-script'
-    script.src = 'https://www.google.com/recaptcha/api.js?onload=onloadRecaptchaCallback&render=explicit'
-    script.async = true
-    script.defer = true
-    document.head.appendChild(script)
-  } else if (window.grecaptcha) {
-    renderRecaptcha()
+  } else {
+    setTimeout(initRecaptcha, 100)
   }
 }
 
@@ -357,8 +343,8 @@ onMounted(() => {
     })
   }
 
-  // Load Google ReCAPTCHA v2 Script (Disabled for now)
-  // loadRecaptchaScript()
+  // Initialize Google ReCAPTCHA v2
+  initRecaptcha()
 })
 
 onUnmounted(() => {
@@ -380,10 +366,16 @@ const handleSubmit = async () => {
     formData.value.phone = itiInstance.getNumber()
   }
 
+  if (!recaptchaToken.value) {
+    recaptchaError.value = 'Please verify that you are not a robot.'
+    submitting.value = false
+    return
+  }
+
   try {
     const response = await axios.post('/api/contact-us', {
       ...formData.value,
-      recaptcha_token: null
+      recaptcha_token: recaptchaToken.value
     })
     
     if (response.data) {

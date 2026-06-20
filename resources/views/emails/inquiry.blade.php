@@ -79,7 +79,8 @@
 </head>
 <body>
     <div class="email-container">
-        <div class="email-header">
+        <div class="email-header" style="text-align: center;">
+            <img src="{{ $siteUrl }}/assets/images/logo.png" alt="{{ $siteName }}" style="max-height: 60px; max-width: 100%; background-color: #ffffff; padding: 10px; border-radius: 8px; display: inline-block; margin-bottom: 10px;">
             <h1>{{ $siteName }}</h1>
         </div>
         <div class="email-body">

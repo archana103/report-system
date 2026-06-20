@@ -124,23 +124,10 @@
             </div>
           </div>
 
-          <!-- Mockup Google reCAPTCHA Box -->
-          <div class="recaptcha-wrapper">
-            <div class="recaptcha-box" @click="toggleRecaptcha">
-              <div class="recaptcha-left">
-                <div class="recaptcha-checkbox" :class="{ checked: recaptchaChecked }">
-                  <svg v-if="recaptchaChecked" viewBox="0 0 24 24" fill="none" stroke="#00b050" stroke-width="4">
-                    <polyline points="20 6 9 17 4 12"></polyline>
-                  </svg>
-                </div>
-                <span class="recaptcha-label">I'm not a robot</span>
-              </div>
-              <div class="recaptcha-right">
-                <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" alt="reCAPTCHA logo" class="recaptcha-logo" />
-                <span class="recaptcha-text">reCAPTCHA</span>
-                <span class="recaptcha-terms">Privacy - Terms</span>
-              </div>
-            </div>
+          <!-- Real Google reCAPTCHA Container -->
+          <div class="recaptcha-wrapper" style="margin-top: 10px;">
+            <div id="modal-recaptcha-container"></div>
+            <span v-if="recaptchaError" class="recaptcha-error-text" style="color: #dc2626; font-size: 13.5px; margin-top: 5px; display: block;">{{ recaptchaError }}</span>
           </div>
 
           <!-- Modal Action Buttons -->
@@ -148,7 +135,7 @@
             <button 
               type="submit" 
               class="primary-button submit-btn" 
-              :disabled="submitting || !recaptchaChecked"
+              :disabled="submitting"
             >
               <span v-if="submitting">Submitting...</span>
               <span v-else>Request Sample <span class="btn-arrow">→</span></span>
@@ -177,7 +164,9 @@ const emit = defineEmits(['close'])
 
 const submitting = ref(false)
 const submitSuccess = ref(false)
-const recaptchaChecked = ref(false)
+const recaptchaToken = ref('')
+const recaptchaError = ref('')
+const recaptchaWidgetId = ref(null)
 const phoneInputRef = ref(null)
 let itiInstance = null
 
@@ -218,7 +207,8 @@ watch(() => props.isOpen, async (newVal) => {
     formData.value.specific_research_requirement = ''
     formData.value.subject = props.subject || 'Request Sample'
     formData.value.report_name = props.reportName || ''
-    recaptchaChecked.value = false
+    recaptchaToken.value = ''
+    recaptchaError.value = ''
     submitSuccess.value = false
 
     // Wait for DOM to render the phone input
@@ -234,6 +224,17 @@ watch(() => props.isOpen, async (newVal) => {
         autoPlaceholder: 'aggressive',
       })
     }
+    
+    // Initialize or reset reCAPTCHA
+    if (window.grecaptcha && window.grecaptcha.render) {
+      if (recaptchaWidgetId.value === null) {
+        initRecaptcha()
+      } else {
+        window.grecaptcha.reset(recaptchaWidgetId.value)
+      }
+    } else {
+      setTimeout(initRecaptcha, 300)
+    }
   } else {
     // Destroy instance when closing
     if (itiInstance) {
@@ -243,6 +244,29 @@ watch(() => props.isOpen, async (newVal) => {
   }
 })
 
+const initRecaptcha = () => {
+  if (window.grecaptcha && window.grecaptcha.render && document.getElementById('modal-recaptcha-container')) {
+    if (recaptchaWidgetId.value === null) {
+      try {
+        recaptchaWidgetId.value = window.grecaptcha.render('modal-recaptcha-container', {
+          sitekey: window.RECAPTCHA_SITE_KEY || '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI',
+          callback: (token) => {
+            recaptchaToken.value = token
+            recaptchaError.value = ''
+          },
+          'expired-callback': () => {
+            recaptchaToken.value = ''
+          }
+        })
+      } catch (e) {
+        console.error('Modal reCAPTCHA rendering error:', e)
+      }
+    }
+  } else if (props.isOpen) {
+    setTimeout(initRecaptcha, 100)
+  }
+}
+
 onUnmounted(() => {
   if (itiInstance) {
     itiInstance.destroy()
@@ -250,9 +274,7 @@ onUnmounted(() => {
   }
 })
 
-const toggleRecaptcha = () => {
-  recaptchaChecked.value = !recaptchaChecked.value
-}
+
 
 // Comprehensive Countries List
 const countriesList = [
@@ -294,7 +316,11 @@ const countriesList = [
 ]
 
 const handleSubmit = async () => {
-  if (!recaptchaChecked.value) return
+  if (!recaptchaToken.value) {
+    recaptchaError.value = 'Please verify that you are not a robot.'
+    return
+  }
+  
   submitting.value = true
   
   // Get the full phone number with dial code from intl-tel-input
@@ -303,7 +329,10 @@ const handleSubmit = async () => {
   }
 
   try {
-    const response = await axios.post('/api/request-form', formData.value)
+    const response = await axios.post('/api/request-form', {
+      ...formData.value,
+      recaptcha_token: recaptchaToken.value
+    })
     if (response.data) {
       submitSuccess.value = true
       // Auto close modal after success
