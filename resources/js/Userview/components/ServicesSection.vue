@@ -10,13 +10,25 @@
             <h3>{{ service.title }}</h3>
             <p>{{ service.description }}</p>
           </article>
-          <div class="service-center">
-            <span class="brand-mark large">e</span>
+          <div class="services-center-overlay">
+            <svg class="service-connectors" viewBox="0 0 1140 535" preserveAspectRatio="none" aria-hidden="true">
+              <defs>
+                <marker id="service-arrow-left" viewBox="0 0 10 10" refX="1.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+                  <path d="M9 1 L1 5 L9 9" />
+                </marker>
+                <marker id="service-arrow-right" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+                  <path d="M1 1 L9 5 L1 9" />
+                </marker>
+              </defs>
+              <path class="connector-path" marker-end="url(#service-arrow-left)" d="M 482 206 H 396 V 98 H 336" />
+              <path class="connector-path" marker-end="url(#service-arrow-right)" d="M 658 206 H 744 V 98 H 804" />
+              <path class="connector-path" marker-end="url(#service-arrow-left)" d="M 482 330 H 420 V 382 H 336" />
+              <path class="connector-path" marker-end="url(#service-arrow-right)" d="M 658 330 H 720 V 382 H 804" />
+            </svg>
+            <div class="service-center">
+              <span class="brand-mark large">e</span>
+            </div>
           </div>
-          <span class="connector c1"></span>
-          <span class="connector c2"></span>
-          <span class="connector c3"></span>
-          <span class="connector c4"></span>
         </div>
         <div class="center-action">
           <a href="#" class="primary-button small">Learn More</a>
@@ -34,4 +46,3 @@ const services = [
   { title: 'Consulting Services', description: 'Expert guidance to help you interpret data and make strategic decisions.', icon: IconBulb, position: 'bottom-right' }
 ]
 </script>
-
