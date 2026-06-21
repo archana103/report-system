@@ -52,6 +52,7 @@ onMounted(() => {
         ],
         contentsCss: [ 'https://cdn.ckeditor.com/4.22.1/full-all/contents.css' ],
         extraPlugins: 'colorbutton,font,justify,colordialog,showblocks',
+        removePlugins: 'exportpdf',
         removeButtons: '',
         height: 350
       });
