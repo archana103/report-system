@@ -6,7 +6,7 @@
           <p>Our research combines advanced analytics, industry expertise, and reliable data sources to provide actionable intelligence that drives growth and innovation. From comprehensive market reports to fully customized research solutions, we ensure every insight is tailored to meet specific business objectives.</p>
           <p>With a strong focus on quality, transparency, and precision, our team of experienced analysts works closely with clients to uncover opportunities, mitigate risks, and support long-term strategic planning.</p>
         </div>
-        <img class="about-image" :src="'/assets/images/aboutus.png'" alt="Analysts reviewing a market report" />
+        <img class="about-image" :src="$assetUrl + '/assets/images/aboutus.png'" alt="Analysts reviewing a market report" />
         <div class="about-stats">
           <div v-for="stat in aboutStats" :key="stat.label">
             <span><component :is="stat.icon" /></span>

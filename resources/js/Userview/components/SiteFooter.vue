@@ -3,7 +3,7 @@
       <div class="footer-top">
         <div>
           <a class="brand footer-brand" href="#">
-            <img :src="'/assets/images/logo.png'" alt="Epignosis Insights Logo" class="brand-logo" />
+            <img :src="$assetUrl + '/assets/images/logo.png'" alt="Epignosis Insights Logo" class="brand-logo" />
           </a>
           <p>Delivering data-driven insights to support smarter business decisions.</p>
           <form class="footer-form">

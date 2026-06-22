@@ -4,7 +4,7 @@
     <!-- Background Image with Opacity -->
     <div
       class="absolute inset-0 bg-cover bg-center opacity-30 pointer-events-none"
-      :style="{ backgroundImage: 'url(\'/assets/images/loginpageimage.jpg?v=1.1\')' }">
+      :style="{ backgroundImage: `url('${$assetUrl}/assets/images/loginpageimage.jpg?v=1.1')` }">
     </div>
 
     <!-- Decorative Gradients -->

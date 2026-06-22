@@ -1,7 +1,7 @@
 <template>
 <header class="site-header">
       <a class="brand" href="#" aria-label="Epignosis Insights home">
-        <img :src="'/assets/images/logo.png'" alt="Epignosis Insights Logo" class="brand-logo" />
+        <img :src="$assetUrl + '/assets/images/logo.png'" alt="Epignosis Insights Logo" class="brand-logo" />
       </a>
 
       <nav class="main-nav" aria-label="Main navigation">

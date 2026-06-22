@@ -45,7 +45,7 @@
           <div class="press-grid">
             <router-link v-for="pr in pressReleases" :key="pr.id" :to="'/press-release/' + pr.url" class="press-card">
               <div class="press-image-wrapper">
-                <img :src="pr.image || '/assets/images/default-report.png'" :alt="pr.title" class="press-image" />
+                <img :src="pr.image || $assetUrl + '/assets/images/default-report.png'" :alt="pr.title" class="press-image" />
               </div>
               <div class="press-info">
                 <span class="press-date">

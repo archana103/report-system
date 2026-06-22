@@ -31,7 +31,7 @@
         <div class="services-metrics-grid">
           <div class="main-image-container">
             <img
-              :src="'/assets/images/services_chart.png'"
+              :src="$assetUrl + '/assets/images/services_chart.png'"
               alt="Services performance metrics chart"
               class="main-charts-image"
             />

@@ -6,7 +6,7 @@
 /* Hero Section */
 .reports-hero {
   position: relative;
-  background: url('/assets/images/reports-hero-bg.png') no-repeat center center;
+  background: url('https://epignosisinsights-images.s3.ap-south-1.amazonaws.com/assets/images/reports-hero-bg.png') no-repeat center center;
   background-size: cover;
   color: #fff;
   padding: 80px 20px 100px;

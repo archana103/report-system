@@ -29,7 +29,7 @@
           <div class="blogs-grid">
             <router-link v-for="blog in blogs" :key="blog.id" :to="'/blog/' + blog.url" class="blog-card">
               <div class="blog-image-wrapper">
-                <img :src="blog.image || '/assets/images/default-report.png'" :alt="blog.title" class="blog-image" />
+                <img :src="blog.image || $assetUrl + '/assets/images/default-report.png'" :alt="blog.title" class="blog-image" />
               </div>
               <div class="blog-info">
                 <h3>{{ blog.title }}</h3>

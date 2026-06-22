@@ -41,7 +41,7 @@
           </button>
         </div>
         <div class="who-image-container">
-          <img class="who-image" :src="'/assets/images/Business.png'" alt="Epignosis Insights Business Overview" />
+          <img class="who-image" :src="$assetUrl + '/assets/images/Business.png'" alt="Epignosis Insights Business Overview" />
         </div>
       </section>
 
@@ -50,7 +50,7 @@
         <!-- Mission Section -->
         <div class="mission-section">
           <div class="mission-image-container">
-            <img class="mission-image" :src="'/assets/images/Client.png'" alt="Client collaboration and mission commitment" />
+            <img class="mission-image" :src="$assetUrl + '/assets/images/Client.png'" alt="Client collaboration and mission commitment" />
           </div>
           <div class="mission-copy">
             <h3>Our Mission</h3>
@@ -140,7 +140,7 @@
             </button>
           </div>
           <div class="vision-image-container">
-            <img class="vision-image" :src="'/assets/images/Growth.png'" alt="Epignosis Insights Vision and Growth" />
+            <img class="vision-image" :src="$assetUrl + '/assets/images/Growth.png'" alt="Epignosis Insights Vision and Growth" />
           </div>
         </div>
       </section>
@@ -248,7 +248,7 @@
       <!-- Performance Banner Section -->
       <section class="about-performance section-shell">
         <div class="main-image-container shadow-premium">
-          <img class="performance-image" :src="'/assets/images/Performance.png'" alt="Epignosis Insights Performance Metrics" />
+          <img class="performance-image" :src="$assetUrl + '/assets/images/Performance.png'" alt="Epignosis Insights Performance Metrics" />
         </div>
       </section>
 
@@ -262,7 +262,7 @@
         <div class="insights-grid">
           <article v-for="item in insights.slice(0, 2)" :key="item.title" class="insight-article-card">
             <div class="insight-image-wrapper">
-              <img :src="item.image || '/assets/images/default-report.png'" :alt="item.title" />
+              <img :src="item.image || $assetUrl + '/assets/images/default-report.png'" :alt="item.title" />
             </div>
             <div class="insight-info">
               <h3>{{ item.title }}</h3>

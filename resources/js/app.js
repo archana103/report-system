@@ -3,6 +3,9 @@ import router from './router'
 
 import App from './App.vue' // optional wrapper (recommended)
 
-createApp(App)
-  .use(router)
-  .mount('#app')
+const app = createApp(App)
+
+app.config.globalProperties.$assetUrl = import.meta.env.VITE_AWS_URL || ''
+
+app.use(router)
+app.mount('#app')
