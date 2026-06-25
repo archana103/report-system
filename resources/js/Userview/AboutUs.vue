@@ -26,22 +26,16 @@
           <h2>Who We Are</h2>
           <p>
             Epignosis Insights is a next-generation market research and intelligence firm founded on a singular belief: that the best business decisions are built on the deepest understanding. The name Epignosis drawn from the Greek for precise, full knowledge reflects the intellectual standard we hold ourselves to in every research engagement we undertake.
-          </p>
-
-            <p>
+         
               Operating across 13 high-growth global industry verticals, we serve a diverse client base spanning Fortune 500 corporations, growth-stage businesses, private equity firms, and government bodies seeking reliable intelligence to guide critical investment and strategic decisions. Our team of domain specialists combines rigorous primary and secondary research methodologies with cutting-edge analytical tools to produce insights that are not only data-rich, but genuinely actionable.
-            </p>          <div class="expandable-text" :class="{ expanded: showFullWhoWeAre }">
-            <p>
+           
               At Epignosis Insights, we understand that in today's volatile, data-saturated markets, the challenge is rarely a shortage of information it is the ability to extract signal from noise. Our research frameworks are built around your strategic questions, not generic templates, ensuring every deliverable directly informs the decisions that matter most to your organization. We are not just a data provider  we are your strategic intelligence partner, committed to translating knowledge into measurable competitive advantage.
             </p>
-          </div>
-          <button @click="showFullWhoWeAre = !showFullWhoWeAre" class="read-more-btn">
-            {{ showFullWhoWeAre ? 'Read Less' : 'Read More' }}
-            <span class="arrow-icon" :class="{ rotated: showFullWhoWeAre }">↓</span>
-          </button>
+          
+          
         </div>
         <div class="who-image-container">
-          <img class="who-image" :src="$assetUrl + '/assets/images/Business.png'" alt="Epignosis Insights Business Overview" />
+          <img class="who-image" :src="$assetUrl + '/assets/images/business_model_infographic.gif'" alt="Epignosis Insights Business Overview" />
         </div>
       </section>
 
@@ -50,32 +44,19 @@
         <!-- Mission Section -->
         <div class="mission-section">
           <div class="mission-image-container">
-            <img class="mission-image" :src="$assetUrl + '/assets/images/Client.png'" alt="Client collaboration and mission commitment" />
+            <img class="mission-image" :src="$assetUrl + '/assets/images/client_value_journey_animation.gif'" alt="Client collaboration and mission commitment" />
           </div>
           <div class="mission-copy">
             <h3>Our Mission</h3>
-            <p class="mission-tagline">Empowering decisions that shape industries and create lasting growth.</p>
+    
             <blockquote class="mission-quote">
-              "To deliver precise, timely, and actionable market intelligence that transforms how organizations understand, compete, and grow."
+             Empowering decisions that shape industries and create lasting growth.
             </blockquote>
             <p>
-              The mission of Epignosis Insights is to democratize access to institutional-quality market intelligence by delivering research that is accurate, timely, and above all, genuinely useful. We exist to serve one purpose: to ensure that the organizations we partner with never have to make a critical strategic decision in the dark. Whether it is entering a new market, launching a product, evaluating an acquisition, or defending a competitive position, our mission is to give our clients the clearest possible picture of the terrain before they commit.
+                At Epignosis Insights, our mission is to democratize access to institutional-quality market intelligence by delivering research that is accurate, timely, and genuinely useful. We exist to ensure that the organizations we partner with never have to make a critical strategic decision in the dark, whether entering a new market, launching a product, or defending a competitive position. We pursue this with an uncompromising commitment to research integrity, blending the precision of academic research with the commercial relevance of management consulting. Beyond the report, we build long-term intelligence partnerships where our analysts become extensions of your strategy team, helping clients move faster, invest smarter, and compete with conviction in a world that rewards the well-informed.
             </p>
-            <div class="expandable-text" :class="{ expanded: showFullMission }">
-              <p>
-                We pursue this mission by maintaining an uncompromising commitment to research integrity at every stage of the research process. In an industry where speed often comes at the expense of rigor, we refuse to accept that trade-off. Our methodology combines the precision of academic research with the commercial relevance of management consulting delivering findings that are not just technically sound, but strategically meaningful. We invest deeply in primary data collection, ensuring our reports reflect the real-world dynamics of markets rather than recycled secondary data dressed in new packaging.
-              </p>
-              <p>
-                Our mission extends beyond the report. We are committed to building long-term intelligence partnerships with every client we serve relationships where our analysts become extensions of your strategy team, anticipating your information needs before you know you have them. We believe that the true value of market research is not the document delivered at project close, but the organizational confidence it creates the ability to move faster, invest smarter, and compete with conviction in markets that reward the well-informed and punish the complacent.
-              </p>
-              <p>
-                Ultimately, our mission is measured not by the number of reports we publish, but by the quality of outcomes our clients achieve. Every study we undertake, every insight we surface, and every recommendation we make is held to a single standard: does this make our client meaningfully better positioned to win? That is the Epignosis Insights mission and it is the standard we apply, without exception, to every engagement we accept.
-              </p>
-            </div>
-            <button @click="showFullMission = !showFullMission" class="read-more-btn">
-              {{ showFullMission ? 'Read Less' : 'Read More' }}
-              <span class="arrow-icon" :class="{ rotated: showFullMission }">↓</span>
-            </button>
+           
+            
           </div>
         </div>
 
@@ -116,31 +97,23 @@
         <div class="vision-section">
           <div class="vision-copy">
             <h3>Our Vision</h3>
-            <p class="vision-tagline">A world where every business decision is grounded in truth.</p>
+           
             <blockquote class="vision-quote">
               "To be the world's most trusted intelligence partner for knowledge-driven growth."
             </blockquote>
             <p>
-              At Epignosis Insights, our vision is to fundamentally reshape how organizations across the globe engage with market intelligence. We envision a future where access to deep, reliable, and actionable research is not a privilege reserved for the largest corporations with the deepest pockets, but a standard capability available to every ambitious organization regardless of size, geography, or industry.
+              At Epignosis Insights, we envision a future where deep, reliable, and actionable market intelligence is available to every ambitious organization, not just the largest corporations with the deepest pockets. In a world shaped by rapid change, rising complexity, and higher decision-making risks, we aim to move market research from a periodic, reactive exercise to a continuous intelligence capability embedded in our clients' strategy.
             </p>
-            <div class="expandable-text" :class="{ expanded: showFullVision }">
+           
               <p>
-                We see a global marketplace that is growing more complex by the day. Geopolitical realignments, technological disruptions, shifting consumer values, and climate-driven regulatory pressures are creating a business environment where the cost of a misinformed decision has never been higher. In this environment, market intelligence is no longer a support function it is the core of competitive strategy. Our vision is to lead that shift: to move market research from a periodic, reactive exercise to a continuous, embedded intelligence capability woven into the strategic DNA of the organizations we serve.
+               We strive to bridge the gap between data and direction, ensuring every boardroom conversation, investment decision, and product launch is built on rigorously validated intelligence rather than assumptions or gut feel. Our goal is to be a globally trusted name synonymous with credibility, depth, and strategic relevance, helping clients grow with confidence in a world that never stops changing.
               </p>
-              <p>
-                Epignosis Insights aspires to be the firm that bridges the gap between data and direction where our reports do not merely describe markets but illuminate the paths through them. We are building toward a world where our clients enter every boardroom conversation, every investment committee, and every product launch with the confidence that comes from knowing their decisions rest on rigorously validated intelligence. Not assumptions. Not gut feel. Not yesterday's data repackaged with a new cover.
-              </p>
-              <p>
-                Looking ahead, we envision Epignosis Insights as a globally recognized center of research excellence a firm whose name, when attached to a market study, is synonymous with credibility, depth, and strategic relevance. We will achieve this not by growing for growth's sake, but by deepening our expertise, expanding our methodological capabilities, and staying relentlessly focused on the outcome that matters most: helping our clients grow with confidence in a world that never stops changing.
-              </p>
-            </div>
-            <button @click="showFullVision = !showFullVision" class="read-more-btn">
-              {{ showFullVision ? 'Read Less' : 'Read More' }}
-              <span class="arrow-icon" :class="{ rotated: showFullVision }">↓</span>
-            </button>
+             
+           
+          
           </div>
           <div class="vision-image-container">
-            <img class="vision-image" :src="$assetUrl + '/assets/images/Growth.png'" alt="Epignosis Insights Vision and Growth" />
+            <img class="vision-image" :src="$assetUrl + '/assets/images/growth_horizon_animation.gif'" alt="Epignosis Insights Vision and Growth" />
           </div>
         </div>
       </section>
@@ -179,46 +152,49 @@
           <h2>Our Research Methodology</h2>
           <p>A robust, data-backed and multi-step research framework ensuring the highest standard of accuracy and reliable insights.</p>
         </div>
-        <div class="methodology-timeline">
-          <div class="timeline-line"></div>
-          
-          <div class="timeline-step step-1">
-            <div class="step-num">01</div>
-            <div class="step-content">
-              <h4>Primary Research</h4>
-              <p>Conducting interviews with industry experts, key opinion leaders, and key stakeholders.</p>
+        
+        <div class="methodology-waterfall">
+          <div class="waterfall-step step-right">
+            <div class="step-icon-wrapper"><IconDatabase /></div>
+            <div class="step-copy">
+              <h4>Data Collection</h4>
+              <p>Gathering verified information from trusted primary and secondary research sources.</p>
             </div>
+            <div class="path-r-to-l"></div>
           </div>
 
-          <div class="timeline-step step-2">
-            <div class="step-num">02</div>
-            <div class="step-content">
-              <h4>Secondary Research</h4>
-              <p>Analyzing industry publications, annual reports, paid databases, and government stats.</p>
+          <div class="waterfall-step step-left">
+            <div class="step-icon-wrapper"><IconSearch /></div>
+            <div class="step-copy">
+              <h4>Market Analysis</h4>
+              <p>Examining market trends, competitive landscapes, and overall industry performance.</p>
             </div>
+            <div class="path-l-to-r"></div>
           </div>
 
-          <div class="timeline-step step-3">
-            <div class="step-num">03</div>
-            <div class="step-content">
-              <h4>Data Synthesis</h4>
-              <p>Aggregating the findings, identifying patterns, and validating data accuracy.</p>
+          <div class="waterfall-step step-right">
+            <div class="step-icon-wrapper"><IconShieldCheck /></div>
+            <div class="step-copy">
+              <h4>Data Validation</h4>
+              <p>Cross-checking and refining data to ensure accuracy, reliability, and consistency.</p>
             </div>
+            <div class="path-r-to-l"></div>
           </div>
 
-          <div class="timeline-step step-4">
-            <div class="step-num">04</div>
-            <div class="step-content">
-              <h4>Data Analysis & Insights</h4>
-              <p>Analyzing trends, building forecasting models, and deriving actionable insights.</p>
+          <div class="waterfall-step step-left">
+            <div class="step-icon-wrapper"><IconChartUp /></div>
+            <div class="step-copy">
+              <h4>Forecasting & Insights</h4>
+              <p>Building growth forecasts, identifying future trends, and uncovering strategic Insights.</p>
             </div>
+            <div class="path-l-to-r"></div>
           </div>
 
-          <div class="timeline-step step-5">
-            <div class="step-num">05</div>
-            <div class="step-content">
-              <h4>Report Formulation</h4>
-              <p>Compiling the report, thorough quality checks, and delivering final recommendations.</p>
+          <div class="waterfall-step step-right">
+            <div class="step-icon-wrapper"><IconFileText /></div>
+            <div class="step-copy">
+              <h4>Final Reporting</h4>
+              <p>Delivering comprehensive reports with clear findings and actionable recommendations.</p>
             </div>
           </div>
         </div>
@@ -226,29 +202,40 @@
 
       <!-- Why Choose Us -->
       <section class="about-why-choose section-shell">
-        <div class="about-section-header centered">
+        <div class="about-section-header">
           <h2>Why Choose Us</h2>
-          <p>Why leading organizations trust us for their market research needs.</p>
+          <p>Delivering reliable market intelligence and strategic insights tailored to evolving business needs.</p>
         </div>
-        <div class="why-list">
-          <article v-for="(item, index) in whyChooseUsItems" :key="item.id" class="why-feature">
-            <div class="why-feature-marker">
-              <span>{{ String(index + 1).padStart(2, '0') }}</span>
-            </div>
-            <div class="why-feature-copy">
-              <h4>{{ item.title }}</h4>
-              <p class="why-summary">{{ item.summary }}</p>
-              <div class="why-details" v-html="item.details"></div>
-            </div>
-          </article>
-         
-        </div>
-      </section>
+        
+        <div class="why-choose-grid">
+          <div class="why-choose-card">
+            <h4>Data-Driven<br>Insights</h4>
+            <p>Every finding is built on verified data, multi-source validation, and rigorous analysis you can act on with confidence.</p>
+          </div>
+          
+          <div class="why-choose-image-container">
+            <img class="performance-image" :src="$assetUrl + '/assets/images/performance_metrics_animation.gif'" alt="Performance Metrics Chart" />
+          </div>
 
-      <!-- Performance Banner Section -->
-      <section class="about-performance section-shell">
-        <div class="main-image-container shadow-premium">
-          <img class="performance-image" :src="$assetUrl + '/assets/images/Performance.png'" alt="Epignosis Insights Performance Metrics" />
+          <div class="why-choose-card">
+            <h4>Global Market<br>Coverage</h4>
+            <p>Research spanning 20+ industries and 50+ countries gives you a clear view of regional, global, and emerging markets.</p>
+          </div>
+
+          <div class="why-choose-card">
+            <h4>Customized<br>Solutions</h4>
+            <p>We design every engagement around your strategic questions no templates, no generic deliverables.</p>
+          </div>
+
+          <div class="why-choose-card">
+            <h4>Experienced<br>Analysts</h4>
+            <p>Our specialists bring 12+ years of average industry experience and 850+ delivered projects across diverse sectors.</p>
+          </div>
+
+          <div class="why-choose-card">
+            <h4>Reliable Research<br>Methodology</h4>
+            <p>A structured five-step process built on primary research, validation, and quality control at every stage.</p>
+          </div>
         </div>
       </section>
 
@@ -266,17 +253,43 @@
         <div class="section-shell cta-container">
           <div class="cta-left">
             <h2>Ready to Unlock Market Insights?</h2>
-            <p>Get access to our premium reports and advisory services.</p>
-            <router-link to="/reports" class="white-button">Get Started</router-link>
+            <p>Get reliable research and data-driven insights tailored to your business goals.</p>
+            <router-link to="/reports" class="white-button">
+              Get Research 
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="arrow-icon"><circle cx="12" cy="12" r="10"/><path d="M12 16l4-4-4-4M8 12h8"/></svg>
+            </router-link>
           </div>
           <div class="cta-right">
-            <div class="bullet-box">
-              <ul>
-                <li><span class="dot">•</span> 500+ Reports</li>
-                <li><span class="dot">•</span> 100+ Clients</li>
-                <li><span class="dot">•</span> 20+ Industries</li>
-                <li><span class="dot">•</span> 50+ Countries</li>
-                <li><span class="dot">•</span> 24/7 Support</li>
+            <div class="industry-card">
+              <ul class="industry-list">
+                <li class="ind-item healthcare">
+                  <div class="ind-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.3 6.3a4.5 4.5 0 016.4 0L12 7.6l1.3-1.3a4.5 4.5 0 116.4 6.4L12 20.4l-7.7-7.7a4.5 4.5 0 010-6.4z"/></svg></div>
+                  Healthcare
+                </li>
+                <li class="ind-item technology">
+                  <div class="ind-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+                  Technology
+                </li>
+                <li class="ind-item energy">
+                  <div class="ind-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+                  Energy
+                </li>
+                <li class="ind-item semiconductors active">
+                  <div class="ind-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg></div>
+                  Semiconductors
+                </li>
+                <li class="ind-item retail">
+                  <div class="ind-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></div>
+                  Retail & E-commerce
+                </li>
+                <li class="ind-item bfsi">
+                  <div class="ind-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10"/><polygon points="12 2 20 6 4 6 12 2"/><line x1="8" y1="10" x2="8" y2="20"/><line x1="16" y1="10" x2="16" y2="20"/></svg></div>
+                  BFSI
+                </li>
+                <li class="ind-item automotive">
+                  <div class="ind-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 16H9m10 0h3v-3.15a1 1 0 00-.84-.99L16 11l-2.7-3.6a2 2 0 00-1.6-.8H8.3a2 2 0 00-1.6.8L4 11l-5.16.86a1 1 0 00-.84.99V16h3"/><circle cx="6.5" cy="16.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg></div>
+                  Automotive
+                </li>
               </ul>
             </div>
           </div>
@@ -294,44 +307,14 @@ import axios from 'axios'
 import SiteHeader from './components/SiteHeader.vue'
 import SiteFooter from './components/SiteFooter.vue'
 import LatestInsights from './components/LatestInsights.vue'
+import { IconDatabase, IconSearch, IconShieldCheck, IconChartUp, IconFileText } from './icons'
 
 const insights = ref([])
 const showFullWhoWeAre = ref(false)
 const showFullMission = ref(false)
 const showFullVision = ref(false)
 
-const whyChooseUsItems = ref([
-  {
-    id: 'team',
-    title: 'Experienced team',
-    summary: `Behind every successful project is a team that has seen it all before. Our professionals bring an average of 12+ years of hands-on industry experience, having collectively delivered over 850 projects across diverse sectors including technology, healthcare, retail, and finance. That depth of exposure means we've navigated complex requirements, tight timelines, shifting client expectations, and unexpected technical hurdles and come out the other side with solutions that hold up.`,
-    details: `<p>Our team includes certified specialists, seasoned project managers, and creative problem-solvers who collaborate closely rather than working in silos. Clients frequently tell us that working with us feels different: conversations move faster, fewer things get lost in translation, and the final output reflects genuine understanding rather than a surface-level interpretation of the brief. We also invest in continuous learning team members regularly attend workshops, industry conferences, and certification programs to stay current.</p><p>You're not just hiring a service provider; you're partnering with a team that treats your goals as their own, backed by the kind of experience that only comes from years of real-world delivery.</p>`
-  },
-  {
-    id: 'turnaround',
-    title: 'Fast turnaround time',
-    summary: `In today's market, speed is a strategic advantage and we're built for it. Our average project delivery time is 40% faster than industry benchmarks, thanks to streamlined workflows, agile sprint methodologies, and a dedicated project coordination layer that eliminates the bottlenecks most teams don't even realize they have. From the moment a project is scoped, parallel workstreams are initiated so that research, design, and execution happen simultaneously rather than sequentially.`,
-    details: `<p>Our internal SLA framework guarantees 24-hour responses to all client communications and 48-hour turnarounds on revision requests. For urgent engagements, we offer a dedicated fast-track service that mobilizes a senior team within 6 hours of sign-off. Speed, however, never comes at the cost of quality our QA process runs concurrently with production so nothing slips through.</p><p>Over the past two years, 94% of our projects were delivered on or ahead of schedule. When your deadline is non-negotiable, you need a partner whose entire operating model is designed around delivering and delivering fast.</p>`
-  },
-  {
-    id: 'customization',
-    title: 'Customized solutions',
-    summary: `No two businesses are alike, and we refuse to treat them as if they are. Rather than offering a menu of fixed packages, we begin every engagement with a deep-discovery phase: understanding your industry context, operational constraints, target audience, competitive landscape, and long-term vision. From that foundation, we architect a solution that fits your situation precisely not a template with your logo dropped in. This approach has led to a 37% higher satisfaction rate on post-project surveys compared to clients who received standardized offerings from other providers.`,
-    details: `<p>Whether you're a startup needing to move fast with limited budget, an enterprise navigating legacy system integration, or a mid-sized company scaling rapidly, our methodology adapts. We also build flexibility into deliverables themselves, so as your needs evolve, the solution can grow with you rather than requiring a costly rebuild. Every recommendation we make is grounded in your specific data, goals, and constraints not in what worked for someone else. Customization isn't a premium add-on for us; it's simply the only way we know how to work.</p>`
-  },
-  {
-    id: 'pricing',
-    title: 'Competitive pricing',
-    summary: `Exceptional quality shouldn't require an exceptional budget. Our pricing model is engineered to deliver maximum value at every tier whether you're engaging us for a focused one-week sprint or a 12-month strategic partnership. We operate lean by design: minimal overhead, no unnecessary layers of account management, and a project resourcing model that scales precisely to scope rather than padding hours. Independent benchmarking has shown our rates sit 18–25% below comparable agencies without any reduction in output quality or senior-level involvement.`,
-    details: `<p>We also offer transparent, fixed-fee proposals for clearly scoped work, so there are no surprise invoices mid-project. For ongoing retainers, clients receive priority scheduling, accumulated project history, and loyalty rate adjustments after six months. We're happy to work within budget constraints tell us what you have and we'll tell you honestly what's achievable. Our goal is a long-term relationship, not a single transaction, which means pricing you fairly is in our own interest too. Value isn't about the cheapest price; it's about the best outcome per pound spent.</p>`
-  },
-  {
-    id: 'support',
-    title: 'Dedicated support',
-    summary: `A project doesn't end at delivery and neither does our commitment. Every client is assigned a named account manager who remains your single point of contact from kickoff through post-launch, ensuring continuity of context and eliminating the frustration of re-explaining your situation every time you reach out. Our support desk operates across three time zones, providing effective coverage from 07:00 to 23:00 GMT, with a guaranteed first-response time of under 2 hours for active clients.`,
-    details: `<p>Post-delivery, we offer a 90-day warranty period during which issues are resolved at no additional cost because we stand behind our work. Beyond reactive support, your account manager proactively schedules monthly check-ins to review performance metrics, flag emerging opportunities, and align on evolving priorities. Our client retention rate of 88% over three consecutive years speaks to the quality of these ongoing relationships. Support, for us, means being genuinely accessible, deeply familiar with your setup, and invested in your continued success not just available to log a ticket.</p>`
-  }
-])
+
 onMounted(async () => {
   try {
     const response = await axios.get('/api/blogs-public')
