@@ -23,7 +23,7 @@
 
       <section class="services-overview section-shell">
         <div class="services-section-header centered">
-          <span class="eyebrow">Performance snapshot</span>
+      
           <h2>Proven Research Capability</h2>
           <p>Our operating model is built around speed, rigor, and measurable impact.</p>
         </div>
@@ -31,18 +31,13 @@
         <div class="services-metrics-grid">
           <div class="main-image-container">
             <img
-              :src="$assetUrl + '/assets/images/services_chart.png'"
+              :src="$assetUrl + '/assets/images/performance_metrics.gif'"
               alt="Services performance metrics chart"
               class="main-charts-image"
             />
           </div>
 
-          <div class="impact-grid services-impact">
-            <div v-for="metric in metrics" :key="metric.label" class="impact-card">
-              <h3>{{ metric.value }}</h3>
-              <p>{{ metric.label }}</p>
-            </div>
-          </div>
+         
         </div>
       </section>
 
@@ -76,20 +71,22 @@
 
         <div class="service-detail-row">
           <div class="service-detail-info">
-            <div class="service-badge">Service 01</div>
-            <h2>Custom Research Solutions</h2>
-            <p class="service-description">
-              In a world flooded with generic data, what businesses truly need is intelligence built around their specific questions. Our Custom Research Solutions service is designed precisely for that delivering bespoke research engagements tailored to the unique strategic, operational, or market challenges your organisations faces. Whether you need consumer behaviour analysis, market sizing, competitive landscape mapping, new product concept testing, or category deep-dives, we design the methodology from scratch to match your objectives rather than shoehorning your needs into a pre-set framework.
-            </p>
-            <p class="service-description">
-              Our approach blends quantitative and qualitative techniques online surveys, in-depth interviews, focus groups, ethnographic studies, and secondary research calibrated to the audience and the depth of insight required. Every study is handled by a senior research lead who stays accountable from brief to final presentation, ensuring nothing gets lost in handoffs.
-            </p>
-             <p class="service-description">
-              Deliverables are crafted for decision-makers: clear, actionable, and structured around the business question rather than the data collection mechanics. We work with clients across FMCG, financial services, healthcare, retail, and technology sectors, covering both urban and emerging markets. With an average study completion time of 3–6 weeks and a track record of over 400 custom studies delivered, we bring rigour, speed, and genuine insight to every research challenge.
-            </p>
-            <!-- <p class="service-description service-note">
-              
-            </p> -->
+            <div class="service-header-inline">
+              <div class="service-number-circle">1</div>
+              <h2>Custom Research Solutions</h2>
+            </div>
+            <div class="service-feature-list">
+              <div class="service-feature-item">
+                <h4>Tailored to Your Questions</h4>
+                <p>Custom built research designed around your strategic and market challenges, covering consumer behaviour, market sizing, competitive mapping, and concept testing.</p>
+              </div>
+              <div class="service-feature-item">
+                <h4>Blended Methods, Senior Led</h4>
+              </div>
+              <div class="service-feature-item">
+                <h4>Decision Ready Insights</h4>
+              </div>
+            </div>
           </div>
           <div class="service-proof-card">
             <h3>Best for</h3>
@@ -97,11 +94,11 @@
             <div class="proof-stats-row">
               <div class="proof-stat">
                 <strong>400+</strong>
-                <span>Custom studies delivered</span>
+                <span>Custom Studies Delivered</span>
               </div>
               <div class="proof-stat">
                 <strong>3-6 Wks</strong>
-                <span>Average turnaround</span>
+                <span>Average Turnaround</span>
               </div>
             </div>
           </div>
@@ -109,17 +106,22 @@
 
         <div class="service-detail-row reverse">
           <div class="service-detail-info">
-            <div class="service-badge">Service 02</div>
-            <h2>Brand Track Reports</h2>
-            <p class="service-description">
-              Your brand is one of your most valuable assets but without consistent, reliable measurement, you're flying blind. Our Brand Track Reports provide a continuous pulse on how your brand is performing in the minds of consumers, tracking the metrics that matter most: awareness (both spontaneous and prompted), consideration, preference, and purchase intent, usage, and brand imagery associations. Fieldwork is conducted at regular intervals monthly, quarterly, or bi-annually depending on your market dynamics ensuring you always have a current, comparable view of your brand's health relative to key competitors.
-            </p>
-            <p class="service-description">
-              The tracker is built on a robust, statistically reliable sample drawn from your defined target audience, with consistent methodology across waves to ensure true trend measurement rather than noise. Our reporting suite goes beyond standard dashboards: each wave culminates in a strategic narrative that contextualizes shifts in metrics against market events, competitive activity, and campaign timing, so you understand not just what changed but why. Alerts are issued when metrics move outside expected ranges, enabling rapid response before small dips become significant problems.
-            </p>
-            <p class="service-description">
-              Clients using our brand trackers report a 30% improvement in marketing decision confidence and significantly faster identification of brand health risks. Whether you're managing an established market leader or building a challenger brand, continuous tracking turns brand management from intuition into evidence.
-            </p>
+            <div class="service-header-inline">
+              <div class="service-number-circle">2</div>
+              <h2>Brand Track Reports</h2>
+            </div>
+            <div class="service-feature-list">
+              <div class="service-feature-item">
+                <h4>Continuous Pulse on Brand Health</h4>
+                <p>Track the metrics that matter most awareness, consideration, preference, purchase intent, usage, and brand imagery with regular monthly, quarterly, or bi annual fieldwork.</p>
+              </div>
+              <div class="service-feature-item">
+                <h4>Reliable Data, Strategic Narrative</h4>
+              </div>
+              <div class="service-feature-item">
+                <h4>Confident, Evidence Based Decisions</h4>
+              </div>
+            </div>
           </div>
           <div class="service-proof-card">
             <h3>Best for</h3>
@@ -127,7 +129,7 @@
             <div class="proof-stats-row">
               <div class="proof-stat">
                 <strong>+30%</strong>
-                <span>Decision confidence lift</span>
+                <span>Decision Confidence Lift</span>
               </div>
               <div class="proof-stat">
                 <strong>Real-Time</strong>
@@ -139,17 +141,22 @@
 
         <div class="service-detail-row">
           <div class="service-detail-info">
-            <div class="service-badge">Service 03</div>
-            <h2>Consulting Services</h2>
-            <p class="service-description">
-              Data without direction is just numbers. Our Consulting Services bridge the gap between research findings and real business action, working alongside leadership teams to translate insights into strategy, sharpen go-to-market plans, and make better-informed decisions under uncertainty. We offer consulting across four core areas: market entry strategy, portfolio and segmentation strategy, brand positioning, and customer experience optimization. Engagements are structured flexibly from focused two-week sprints addressing a specific decision to longer-term advisory partnerships spanning multiple months and business functions.
-            </p>
-            <p class="service-description">
-              Our consultants bring a rare combination of deep research expertise and commercial acumen, having previously worked across both agency and client-side environments in India and internationally. We don't deliver reports and walk away. Instead, we embed ourselves in the problem, facilitate workshops with your internal teams, pressure-test assumptions, and build frameworks your organizations can continue to use independently.
-            </p>
-            <p class="service-description">
-              Our consulting work is always evidence-led grounded in robust data, whether sourced from our own primary research, your internal analytics, or third-party sources. To date, our consulting engagements have supported over 60 strategic decisions across pricing, launch, repositioning, and expansion with 82% of clients rating the commercial impact as significant or transformative. When the stakes are high, you need more than data you need a thinking partner.
-            </p>
+            <div class="service-header-inline">
+              <div class="service-number-circle">3</div>
+              <h2>Consulting Services</h2>
+            </div>
+            <div class="service-feature-list">
+              <div class="service-feature-item">
+                <h4>From Insights to Action</h4>
+                <p>We bridge the gap between research and strategy across market entry, portfolio and segmentation, brand positioning, and customer experience, with flexible engagements from two week sprints to long term advisory.</p>
+              </div>
+              <div class="service-feature-item">
+                <h4>Embedded Thinking Partners</h4>
+              </div>
+              <div class="service-feature-item">
+                <h4>Evidence Led, Impact Driven</h4>
+              </div>
+            </div>
           </div>
           <div class="service-proof-card">
             <h3>Best for</h3>
@@ -157,11 +164,11 @@
             <div class="proof-stats-row">
               <div class="proof-stat">
                 <strong>82%</strong>
-                <span>Transformative impact</span>
+                <span>Transformative Impact</span>
               </div>
               <div class="proof-stat">
-                <strong>60+</strong>
-                <span>Strategic decisions</span>
+                <strong>Real-Time</strong>
+                <span>Strategic Decisions</span>
               </div>
             </div>
           </div>
@@ -170,18 +177,25 @@
 
     
 
-      <section class="services-bottom-cta">
-        <div class="section-shell cta-container">
+      <LatestInsights 
+        v-if="insights && insights.length > 0"
+        :insights="visibleInsights" 
+        @next="nextInsight" 
+        @prev="prevInsight" 
+      />
+
+      <section class="services-bottom-cta section-shell">
+        <div class="custom-cta-card">
           <div class="cta-left">
-            <h2>Ready to Commission a Custom Study?</h2>
+            <h2>Ready to<br />Commission a<br />Custom Study?</h2>
             <p>Speak to one of our lead analysts to structure a research proposal matched to your objectives.</p>
-            <router-link to="/contact" class="white-button">Get in Touch</router-link>
+            <router-link to="/contact" class="cta-button-blue">
+              Get in Touch <span class="arrow-circle">→</span>
+            </router-link>
           </div>
           <div class="cta-right">
-            <div class="bullet-box">
-              <ul>
-                <li v-for="item in ctaPoints" :key="item"><span class="dot">•</span> {{ item }}</li>
-              </ul>
+            <div class="pill-box">
+              <div v-for="item in ctaPoints" :key="item" class="cta-pill">{{ item }}</div>
             </div>
           </div>
         </div>
@@ -193,8 +207,38 @@
 </template>
 
 <script setup>
+import { ref, onMounted, computed } from 'vue'
+import axios from 'axios'
 import SiteHeader from './components/SiteHeader.vue'
 import SiteFooter from './components/SiteFooter.vue'
+import LatestInsights from './components/LatestInsights.vue'
+
+const insights = ref([])
+
+onMounted(async () => {
+  try {
+    const response = await axios.get('/api/blogs-public')
+    if (response.data) {
+      insights.value = response.data
+    }
+  } catch (error) {
+    console.error('Failed to fetch blogs', error)
+  }
+})
+
+const visibleInsights = computed(() => insights.value.slice(0, 3))
+const nextInsight = () => {
+  if (insights.value.length > 0) {
+    const first = insights.value.shift()
+    insights.value.push(first)
+  }
+}
+const prevInsight = () => {
+  if (insights.value.length > 0) {
+    const last = insights.value.pop()
+    insights.value.unshift(last)
+  }
+}
 
 const metrics = [
   { value: '400+', label: 'Custom Studies Delivered' },

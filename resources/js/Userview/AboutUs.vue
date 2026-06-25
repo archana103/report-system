@@ -254,24 +254,12 @@
 
 
       <!-- Latest Insights -->
-      <section class="about-insights section-shell" v-if="insights && insights.length > 0">
-        <div class="about-section-header">
-          <h2>Latest Insights</h2>
-          <p>Explore expert perspectives, industry trends, and data-driven stories shaping global markets.</p>
-        </div>
-        <div class="insights-grid">
-          <article v-for="item in insights.slice(0, 2)" :key="item.title" class="insight-article-card">
-            <div class="insight-image-wrapper">
-              <img :src="item.image || $assetUrl + '/assets/images/default-report.png'" :alt="item.title" />
-            </div>
-            <div class="insight-info">
-              <h3>{{ item.title }}</h3>
-              <p>{{ item.description }}</p>
-              <router-link :to="`/blog/${item.slug || ''}`" class="read-more-link">Read More →</router-link>
-            </div>
-          </article>
-        </div>
-      </section>
+      <LatestInsights 
+        v-if="insights && insights.length > 0"
+        :insights="visibleInsights" 
+        @next="nextInsight" 
+        @prev="prevInsight" 
+      />
 
       <!-- Footer CTA Section -->
       <section class="about-bottom-cta">
@@ -301,10 +289,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import axios from 'axios'
 import SiteHeader from './components/SiteHeader.vue'
 import SiteFooter from './components/SiteFooter.vue'
+import LatestInsights from './components/LatestInsights.vue'
 
 const insights = ref([])
 const showFullWhoWeAre = ref(false)
@@ -353,6 +342,20 @@ onMounted(async () => {
     console.error('Failed to fetch blogs for About page', error)
   }
 })
+
+const visibleInsights = computed(() => insights.value.slice(0, 3))
+const nextInsight = () => {
+  if (insights.value.length > 0) {
+    const first = insights.value.shift()
+    insights.value.push(first)
+  }
+}
+const prevInsight = () => {
+  if (insights.value.length > 0) {
+    const last = insights.value.pop()
+    insights.value.unshift(last)
+  }
+}
 </script>
 
 <style src="./style.css"></style>
