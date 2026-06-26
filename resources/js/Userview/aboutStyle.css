@@ -332,8 +332,9 @@
   width: 416px;
   max-width: 90vw;
   background: #ffffff;
-  border-right: 2px solid rgba(71, 151, 255, 0.72);
+  border-right: 3px solid rgba(71, 151, 255, 0.72);
   border-top: 1.4px solid rgba(71, 151, 255, 0.72);
+    border-bottom: 1.4px solid rgba(71, 151, 255, 0.72);
   border-radius: 17px;
   padding: 28px 31px;
   box-shadow: 10px 12px 28px rgba(15, 23, 42, 0.015);

@@ -16,15 +16,15 @@
       <div class="detail-hero-shell">
         <div class="book-cover-container">
           <div class="report-book-cover-image-wrapper">
-            <div class="spine-crease"></div>
+            <!-- <div class="spine-crease"></div> -->
             <img :src="report.image" :alt="report.title" class="report-book-cover-img" />
           </div>
         </div>
-        
+
         <div class="hero-text-content">
           <h1>{{ report.title }}</h1>
           <p class="hero-description-snippet">{{ getHeroSnippet(report.description) }}</p>
-          
+
           <div class="hero-meta-items">
             <span>Report ID: <strong>{{ report.report_sku }}</strong></span>
             <span>|</span>
@@ -34,7 +34,7 @@
             <span>|</span>
             <span>Pages: <strong>{{ report.pages }}</strong></span>
           </div>
-          
+
           <div class="hero-actions-row" style="flex-wrap: wrap; gap: 12px;">
             <button class="secondary-button outlined" @click="openRequestModal('Request Sample')">Request Sample</button>
             <button class="secondary-button outlined" @click="openRequestModal('Ask for discount')">Ask for Discount</button>
@@ -52,22 +52,22 @@
         <!-- Tabs Nav -->
         <div class="tabs-navigation-wrapper">
           <div class="tabs-btn-group">
-            <button 
-              class="tab-nav-btn" 
+            <button
+              class="tab-nav-btn"
               :class="{ 'active-tab': activeTab === 'overview' }"
               @click="setActiveTab('overview')"
             >
               Overview
             </button>
-            <button 
-              class="tab-nav-btn" 
+            <button
+              class="tab-nav-btn"
               :class="{ 'active-tab': activeTab === 'toc' }"
               @click="setActiveTab('toc')"
             >
               Table of Contents
             </button>
-            <button 
-              class="tab-nav-btn" 
+            <button
+              class="tab-nav-btn"
               :class="{ 'active-tab': activeTab === 'faq' }"
               @click="setActiveTab('faq')"
             >
@@ -199,9 +199,9 @@
           <div v-else-if="activeTab === 'faq'" class="faq-pane">
             <h2 class="section-title">Frequently Asked Questions</h2>
             <div v-if="getFaqs() && getFaqs().length > 0" class="faq-accordion-group">
-              <div 
-                v-for="(faq, index) in getFaqs()" 
-                :key="index" 
+              <div
+                v-for="(faq, index) in getFaqs()"
+                :key="index"
                 class="faq-accordion-item"
                 :class="{ 'faq-open': activeFaqIndex === index }"
               >
@@ -235,7 +235,7 @@
         <!-- Get This Report Card -->
         <div class="sidebar-get-report-card">
           <h3>Get This Report</h3>
-          
+
           <div style="display: flex; flex-direction: column; gap: 16px;">
             <router-link :to="`/checkout/${report.slug_url}`" class="contact-btn-white buy-now-btn">
               Buy Now
@@ -245,7 +245,7 @@
                 </svg>
               </span>
             </router-link>
-            
+
             <button class="contact-btn-white request-sample-btn" @click="openRequestModal('Request Sample')">
               Request Sample
               <span class="btn-circle-arrow">
@@ -254,11 +254,11 @@
                 </svg>
               </span>
             </button>
-            
+
             <hr class="card-divider" />
-            
+
             <span class="talk-analyst-title">Talk to Analyst</span>
-            
+
             <a href="tel:+916292226351" class="contact-btn-white call-now-btn">
               Call Now
             </a>
@@ -269,9 +269,9 @@
         <div class="sidebar-white-info-card">
           <h4>Related Industries</h4>
           <div class="industry-tags-list">
-            <span 
-              v-for="ind in report.related_industries" 
-              :key="ind" 
+            <span
+              v-for="ind in report.related_industries"
+              :key="ind"
               class="industry-tag-pill"
               @click="goToCategory(ind)"
             >
@@ -284,9 +284,9 @@
         <div class="sidebar-white-info-card">
           <h4>Related Reports</h4>
           <div class="related-reports-list">
-            <div 
-              v-for="(rel, idx) in report.related_reports" 
-              :key="idx" 
+            <div
+              v-for="(rel, idx) in report.related_reports"
+              :key="idx"
               class="related-report-item"
             >
               <h5>{{ rel.title }}</h5>
@@ -503,7 +503,7 @@ const loadReportDetails = async (slug) => {
   loading.value = true
   activeFaqIndex.value = 0
   selectedLicense.value = 'single'
-  
+
   try {
     const response = await axios.get(`/api/report/${slug}`)
     report.value = response.data
@@ -557,7 +557,7 @@ const triggerAction = (action) => {
   if (action === 'buy' || action === 'sample' || action === 'toc' || action === 'faq') {
     const targetTab = (action === 'buy' || action === 'toc') ? 'toc' : 'faq'
     setActiveTab(targetTab)
-    
+
     // Smoothly scroll down to the tabs navigation wrapper
     setTimeout(() => {
       const tabsWrapper = document.querySelector('.tabs-navigation-wrapper')

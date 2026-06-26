@@ -2,15 +2,15 @@
   <div class="industry-category-page">
     <SiteHeader />
     <!-- Dynamic Category Cover Image Banner -->
-    <section 
-      class="category-hero-banner" 
+    <section
+      class="category-hero-banner"
       :style="categoryInfo && categoryInfo.category_image ? { backgroundImage: `url(${categoryInfo.category_image})` } : {}"
     >
       <div class="banner-overlay"></div>
       <div class="banner-content">
         <div class="breadcrumbs">
-          <router-link to="/">Home</router-link> 
-          <span class="separator">/</span> 
+          <router-link to="/">Home</router-link>
+          <span class="separator">/</span>
           <span class="current-crumb">{{ categoryInfo && categoryInfo.name ? categoryInfo.name : categoryName }}</span>
         </div>
         <h1 class="category-banner-title">{{ categoryInfo && categoryInfo.name ? categoryInfo.name : categoryName }}</h1>
@@ -23,7 +23,7 @@
       <section class="category-intro-section" v-if="categoryInfo">
         <h2 class="category-main-heading">{{ categoryInfo.main_heading }}</h2>
         <div class="category-subheading-desc" v-if="categoryInfo.main_subheading" v-html="categoryInfo.main_subheading"></div>
-       
+
       </section>
 
       <!-- Two-Column Layout (Sidebar & Reports) -->
@@ -33,9 +33,9 @@
           <div class="sidebar-card">
             <h3 class="sidebar-title">Reports by Industry</h3>
             <nav class="sidebar-nav">
-              <router-link 
-                v-for="cat in sidebarCategories" 
-                :key="cat" 
+              <router-link
+                v-for="cat in sidebarCategories"
+                :key="cat"
                 :to="`/industry/${cat}`"
                 class="sidebar-nav-item"
                 :class="{ 'active-sidebar-item': isCurrentCategory(cat) }"
@@ -61,7 +61,7 @@
                 <div class="report-image-wrap">
                   <router-link :to="`/report/${report.slug && report.slug !== '#' ? report.slug : report.id}`" class="cover-link">
                     <div class="mockup-book-cover">
-                      <div class="spine-crease"></div>
+                      <!-- <div class="spine-crease"></div> -->
                       <div class="cover-content">
                         <span class="cover-super-title">MARKET RESEARCH</span>
                         <h4 class="cover-main-title">{{ report.category }}</h4>
@@ -77,7 +77,7 @@
                     <h3 class="hover-primary-title">{{ report.title }}</h3>
                   </router-link>
                   <p class="report-description" v-html="report.description"></p>
-                  
+
                   <div class="report-metadata">
                     <span>Pages: <strong>{{ report.pages }}</strong></span>
                     <span class="divider">|</span>
@@ -101,19 +101,19 @@
 
             <!-- Category Report Pagination -->
             <div class="pagination-wrapper" v-if="totalPages > 1">
-              <button 
-                class="nav-btn prev-btn" 
-                :disabled="currentPage === 1" 
+              <button
+                class="nav-btn prev-btn"
+                :disabled="currentPage === 1"
                 @click="changePage(currentPage - 1)"
               >
                 ‹ Previous
               </button>
-              
+
               <div class="page-numbers">
-                <button 
-                  v-for="page in paginationRange" 
-                  :key="page" 
-                  class="num-btn" 
+                <button
+                  v-for="page in paginationRange"
+                  :key="page"
+                  class="num-btn"
                   :class="{ active: page === currentPage }"
                   @click="changePage(page)"
                 >
@@ -121,9 +121,9 @@
                 </button>
               </div>
 
-              <button 
-                class="nav-btn next-btn" 
-                :disabled="currentPage === totalPages" 
+              <button
+                class="nav-btn next-btn"
+                :disabled="currentPage === totalPages"
                 @click="changePage(currentPage + 1)"
               >
                 Next ›
@@ -243,7 +243,7 @@ const paginationRange = computed(() => {
 
   let start = Math.max(1, current - 1)
   let end = Math.min(last, start + 2)
-  
+
   if (end - start < 2 && start > 1) {
     start = Math.max(1, end - 2)
   }
@@ -529,7 +529,7 @@ watch(categoryName, () => {
   height: 100%;
   background: linear-gradient(135deg, #077cd1 0%, #004d9c 100%);
   border-radius: 3px 10px 10px 3px;
-  box-shadow: 
+  box-shadow:
     -5px 8px 18px rgba(0, 77, 156, 0.22),
     -1px 0 3px rgba(255, 255, 255, 0.3) inset,
     2px 0 5px rgba(0, 0, 0, 0.15);
@@ -553,7 +553,7 @@ watch(categoryName, () => {
   left: 6px;
   width: 1.5px;
   height: 100%;
-  background: rgba(255, 255, 255, 0.15);
+  /* background: rgba(255, 255, 255, 0.15); */
   box-shadow: 1px 0 2px rgba(0, 0, 0, 0.25);
 }
 
@@ -787,7 +787,7 @@ watch(categoryName, () => {
     grid-template-columns: 1fr;
     gap: 30px;
   }
-  
+
   .category-sidebar {
     position: static;
   }
