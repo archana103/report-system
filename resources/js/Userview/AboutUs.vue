@@ -26,15 +26,15 @@
           <h2>Who We Are</h2>
           <p>
             Epignosis Insights is a next-generation market research and intelligence firm founded on a singular belief: that the best business decisions are built on the deepest understanding. The name Epignosis drawn from the Greek for precise, full knowledge reflects the intellectual standard we hold ourselves to in every research engagement we undertake.
-         
+
               Operating across 13 high-growth global industry verticals, we serve a diverse client base spanning Fortune 500 corporations, growth-stage businesses, private equity firms, and government bodies seeking reliable intelligence to guide critical investment and strategic decisions. Our team of domain specialists combines rigorous primary and secondary research methodologies with cutting-edge analytical tools to produce insights that are not only data-rich, but genuinely actionable.
-           
+
               At Epignosis Insights, we understand that in today's volatile, data-saturated markets, the challenge is rarely a shortage of information it is the ability to extract signal from noise. Our research frameworks are built around your strategic questions, not generic templates, ensuring every deliverable directly informs the decisions that matter most to your organization. We are not just a data provider  we are your strategic intelligence partner, committed to translating knowledge into measurable competitive advantage.
             </p>
-          
-          
+
+
         </div>
-        <div class="who-image-container">
+        <div class="why-choose-image-container">
           <img class="who-image" :src="$assetUrl + '/assets/images/business_model_infographic.gif'" alt="Epignosis Insights Business Overview" />
         </div>
       </section>
@@ -43,20 +43,20 @@
       <section class="about-mission-vision section-shell">
         <!-- Mission Section -->
         <div class="mission-section">
-          <div class="mission-image-container">
+          <div class="why-choose-image-container">
             <img class="mission-image" :src="$assetUrl + '/assets/images/client_value_journey_animation.gif'" alt="Client collaboration and mission commitment" />
           </div>
           <div class="mission-copy">
             <h3>Our Mission</h3>
-    
+
             <blockquote class="mission-quote">
              Empowering decisions that shape industries and create lasting growth.
             </blockquote>
             <p>
                 At Epignosis Insights, our mission is to democratize access to institutional-quality market intelligence by delivering research that is accurate, timely, and genuinely useful. We exist to ensure that the organizations we partner with never have to make a critical strategic decision in the dark, whether entering a new market, launching a product, or defending a competitive position. We pursue this with an uncompromising commitment to research integrity, blending the precision of academic research with the commercial relevance of management consulting. Beyond the report, we build long-term intelligence partnerships where our analysts become extensions of your strategy team, helping clients move faster, invest smarter, and compete with conviction in a world that rewards the well-informed.
             </p>
-           
-            
+
+
           </div>
         </div>
 
@@ -97,22 +97,22 @@
         <div class="vision-section">
           <div class="vision-copy">
             <h3>Our Vision</h3>
-           
+
             <blockquote class="vision-quote">
               "To be the world's most trusted intelligence partner for knowledge-driven growth."
             </blockquote>
             <p>
               At Epignosis Insights, we envision a future where deep, reliable, and actionable market intelligence is available to every ambitious organization, not just the largest corporations with the deepest pockets. In a world shaped by rapid change, rising complexity, and higher decision-making risks, we aim to move market research from a periodic, reactive exercise to a continuous intelligence capability embedded in our clients' strategy.
             </p>
-           
+
               <p>
                We strive to bridge the gap between data and direction, ensuring every boardroom conversation, investment decision, and product launch is built on rigorously validated intelligence rather than assumptions or gut feel. Our goal is to be a globally trusted name synonymous with credibility, depth, and strategic relevance, helping clients grow with confidence in a world that never stops changing.
               </p>
-             
-           
-          
+
+
+
           </div>
-          <div class="vision-image-container">
+          <div class="why-choose-image-container">
             <img class="vision-image" :src="$assetUrl + '/assets/images/growth_horizon_animation.gif'" alt="Epignosis Insights Vision and Growth" />
           </div>
         </div>
@@ -152,7 +152,7 @@
           <h2>Our Research Methodology</h2>
           <p>A robust, data-backed and multi-step research framework ensuring the highest standard of accuracy and reliable insights.</p>
         </div>
-        
+
         <div class="methodology-waterfall">
           <div class="waterfall-step step-right">
             <div class="step-icon-wrapper"><IconDatabase /></div>
@@ -206,13 +206,13 @@
           <h2>Why Choose Us</h2>
           <p>Delivering reliable market intelligence and strategic insights tailored to evolving business needs.</p>
         </div>
-        
+
         <div class="why-choose-grid">
           <div class="why-choose-card">
             <h4>Data-Driven<br>Insights</h4>
             <p>Every finding is built on verified data, multi-source validation, and rigorous analysis you can act on with confidence.</p>
           </div>
-          
+
           <div class="why-choose-image-container">
             <img class="performance-image" :src="$assetUrl + '/assets/images/performance_metrics_animation.gif'" alt="Performance Metrics Chart" />
           </div>
@@ -241,11 +241,11 @@
 
 
       <!-- Latest Insights -->
-      <LatestInsights 
+      <LatestInsights
         v-if="insights && insights.length > 0"
-        :insights="visibleInsights" 
-        @next="nextInsight" 
-        @prev="prevInsight" 
+        :insights="visibleInsights"
+        @next="nextInsight"
+        @prev="prevInsight"
       />
 
       <!-- Footer CTA Section -->
@@ -255,7 +255,7 @@
             <h2>Ready to Unlock Market Insights?</h2>
             <p>Get reliable research and data-driven insights tailored to your business goals.</p>
             <router-link to="/reports" class="white-button">
-              Get Research 
+              Get Research
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="arrow-icon"><circle cx="12" cy="12" r="10"/><path d="M12 16l4-4-4-4M8 12h8"/></svg>
             </router-link>
           </div>

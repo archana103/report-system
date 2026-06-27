@@ -1286,3 +1286,36 @@ input {
     padding: 90px 0;
   }
 }
+
+.upscroll-button {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 50%;
+  background-color: #0783df;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  z-index: 9999;
+  transition: transform 0.2s ease, background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.upscroll-button:hover {
+  background-color: #0566b0;
+  transform: translateY(-3px);
+}
+
+@media (max-width: 560px) {
+  .upscroll-button {
+    bottom: 20px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
+  }
+}

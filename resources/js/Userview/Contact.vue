@@ -9,7 +9,8 @@
         <div class="contact-banner-content section-shell">
           <h1>Get in Touch with Our Research Experts</h1>
           <p>
-            Connect with our team for market research inquiries, custom reports, business insights, and strategic consulting solutions.
+            Connect with our team for market research inquiries, custom reports, business insights, and strategic
+            consulting solutions.
           </p>
         </div>
       </section>
@@ -23,7 +24,8 @@
               <!-- Success Alert -->
               <Transition name="fade">
                 <div v-if="submitSuccess" class="contact-success-alert">
-                  <svg class="success-alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                  <svg class="success-alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="3">
                     <polyline points="20 6 9 17 4 12"></polyline>
                   </svg>
                   <span>Your message has been sent successfully! We will get back to you shortly.</span>
@@ -34,36 +36,21 @@
                 <!-- Full Name -->
                 <div class="form-group">
                   <label for="contact_fullName">Full Name <span class="required">*</span></label>
-                  <input 
-                    type="text" 
-                    id="contact_fullName" 
-                    v-model="formData.full_name" 
-                    placeholder="Enter Your Full Name" 
-                    required 
-                  />
+                  <input type="text" id="contact_fullName" v-model="formData.full_name"
+                    placeholder="Enter Your Full Name" required />
                 </div>
 
                 <!-- Email -->
                 <div class="form-group">
                   <label for="contact_email">Email <span class="required">*</span></label>
-                  <input 
-                    type="email" 
-                    id="contact_email" 
-                    v-model="formData.email" 
-                    placeholder="Enter Your Email" 
-                    required 
-                  />
+                  <input type="email" id="contact_email" v-model="formData.email" placeholder="Enter Your Email"
+                    required />
                 </div>
 
                 <!-- Phone Number -->
                 <div class="form-group">
                   <label for="contact_phone">Phone Number <span class="required">*</span></label>
-                  <input 
-                    type="tel" 
-                    id="contact_phone" 
-                    ref="phoneInputRef" 
-                    required 
-                  />
+                  <input type="tel" id="contact_phone" ref="phoneInputRef" required />
                 </div>
 
                 <!-- Select Country -->
@@ -78,40 +65,28 @@
                 <!-- Company Name -->
                 <div class="form-group">
                   <label for="contact_companyName">Company Name <span class="required">*</span></label>
-                  <input 
-                    type="text" 
-                    id="contact_companyName" 
-                    v-model="formData.company_name" 
-                    placeholder="Enter Company Name" 
-                    required 
-                  />
+                  <input type="text" id="contact_companyName" v-model="formData.company_name"
+                    placeholder="Enter Company Name" required />
                 </div>
 
                 <!-- Specific Research Requirement -->
                 <div class="form-group">
                   <label for="contact_requirement">Specific Research Requirement <span class="required">*</span></label>
-                  <textarea 
-                    id="contact_requirement" 
-                    v-model="formData.specific_research_requirement" 
-                    placeholder="How can we help you?" 
-                    rows="4" 
-                    required
-                  ></textarea>
+                  <textarea id="contact_requirement" v-model="formData.specific_research_requirement"
+                    placeholder="How can we help you?" rows="4" required></textarea>
                 </div>
 
                 <!-- Real Google reCAPTCHA Container -->
                 <div class="recaptcha-group" style="margin-top: 15px;">
                   <div id="recaptcha-container"></div>
-                  <span v-if="recaptchaError" class="recaptcha-error-text" style="color: #dc2626; font-size: 13.5px; margin-top: 5px; display: block;">{{ recaptchaError }}</span>
+                  <span v-if="recaptchaError" class="recaptcha-error-text"
+                    style="color: #dc2626; font-size: 13.5px; margin-top: 5px; display: block;">{{ recaptchaError
+                    }}</span>
                 </div>
 
                 <!-- Submit Button -->
                 <div class="form-submit-row">
-                  <button 
-                    type="submit" 
-                    class="primary-button contact-submit-btn" 
-                    :disabled="submitting"
-                  >
+                  <button type="submit" class="primary-button contact-submit-btn" :disabled="submitting">
                     <span v-if="submitting">Sending...</span>
                     <span v-else>Send Message <span class="arrow-btn">→</span></span>
                   </button>
@@ -151,19 +126,28 @@
               <ul class="details-list">
                 <li>
                   <span class="detail-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                      <polyline points="22,6 12,13 2,6" />
+                    </svg>
                   </span>
                   info@epignosisinsights.com
                 </li>
                 <li>
                   <span class="detail-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.35 1.9.66 2.8a2 2 0 0 1-.45 2.11L8.05 9.9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.31 1.84.53 2.8.66A2 2 0 0 1 22 16.92Z"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path
+                        d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.35 1.9.66 2.8a2 2 0 0 1-.45 2.11L8.05 9.9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.31 1.84.53 2.8.66A2 2 0 0 1 22 16.92Z" />
+                    </svg>
                   </span>
-                  +91 6292226351
+                  +91 9370940742
                 </li>
                 <li>
                   <span class="detail-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                      <circle cx="12" cy="10" r="3" />
+                    </svg>
                   </span>
                   Pune, Maharashtra, India
                 </li>
@@ -188,12 +172,7 @@
       <section class="contact-faqs section-shell">
         <h2 class="faq-section-title">Frequently Asked Questions</h2>
         <div class="faq-accordion">
-          <div 
-            v-for="(faq, idx) in faqs" 
-            :key="idx" 
-            class="faq-item" 
-            :class="{ active: faq.isOpen }"
-          >
+          <div v-for="(faq, idx) in faqs" :key="idx" class="faq-item" :class="{ active: faq.isOpen }">
             <button class="faq-header" @click="toggleFaq(idx)">
               <span>{{ faq.question }}</span>
               <span class="faq-toggle-icon">{{ faq.isOpen ? '−' : '+' }}</span>
@@ -270,9 +249,9 @@ const toggleFaq = (index) => {
 
 // Comprehensive list of countries
 const countriesList = [
-  'Afghanistan', 'Albania', 'Algeria', 'American Samoa', 'Andorra', 
-  'Angola', 'Anguilla', 'Antarctica', 'Antigua and Barbuda', 'Argentina', 
-  'Armenia', 'Aruba', 'Australia', 'Austria', 'Azerbaijan', 'Bahamas', 
+  'Afghanistan', 'Albania', 'Algeria', 'American Samoa', 'Andorra',
+  'Angola', 'Anguilla', 'Antarctica', 'Antigua and Barbuda', 'Argentina',
+  'Armenia', 'Aruba', 'Australia', 'Austria', 'Azerbaijan', 'Bahamas',
   'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Belize',
   'Benin', 'Bermuda', 'Bhutan', 'Bolivia', 'Bosnia and Herzegovina',
   'Botswana', 'Brazil', 'Brunei', 'Bulgaria', 'Burkina Faso', 'Burundi',
@@ -377,12 +356,12 @@ const handleSubmit = async () => {
       ...formData.value,
       recaptcha_token: recaptchaToken.value
     })
-    
+
     if (response.data) {
       submitSuccess.value = true
       // Redirect to thank-you page
       router.push('/thank-you')
-      
+
       // Reset form fields
       formData.value = {
         full_name: '',
