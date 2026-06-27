@@ -88,7 +88,7 @@ class ReportListController extends Controller
     {
         $request->validate([
             'report_category_id' => 'required|exists:report_categories,id',
-            'name'               => 'required|string|max:255',
+            'name'               => 'required|string',
             'status'             => 'required|string|in:Active,Inactive',
         ]);
 
@@ -110,7 +110,7 @@ class ReportListController extends Controller
 
         $request->validate([
             'report_category_id' => 'required|exists:report_categories,id',
-            'name'               => 'required|string|max:255',
+            'name'               => 'required|string',
             'status'             => 'required|string|in:Active,Inactive',
         ]);
 

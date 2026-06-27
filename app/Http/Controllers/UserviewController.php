@@ -185,89 +185,197 @@ class UserviewController extends Controller
     /**
      * Get a single report by slug.
      */
-    public function getReportDetail($slug)
-    {
-        $query = \App\Models\ReportDetail::with(['reportList.reportCategory']);
-        if (is_numeric($slug)) {
-            $query->where(function ($q) use ($slug) {
-                $q->where('id', $slug)
-                  ->orWhere('report_list_id', $slug);
-            });
-        } else {
-            $query->where('slug_url', $slug);
-        }
-        $reportDetail = $query->first();
+ public function getReportDetail($slug)
+{
+    $query = \App\Models\ReportDetail::with(['reportList.reportCategory']);
 
-        if (!$reportDetail) {
-            return response()->json(['message' => 'Report not found'], 404);
-        }
-
-        // Fetch related reports in same category
-        $relatedReports = [];
-        if ($reportDetail->reportList && $reportDetail->reportList->reportCategory) {
-            $catId = $reportDetail->reportList->report_category_id;
-            $relatedReports = \App\Models\ReportList::with(['reportCategory', 'reportDetail'])
-                ->where('report_category_id', $catId)
-                ->where('id', '!=', $reportDetail->report_list_id)
-                ->where('status', 'Active')
-                ->orderBy('created_at', 'desc')
-                ->take(5)
-                ->get()
-                ->map(function ($r) {
-                    return [
-                        'id' => $r->id,
-                        'title' => ($r->reportDetail && $r->reportDetail->title) ? $r->reportDetail->title : $r->name,
-                        'slug' => ($r->reportDetail && $r->reportDetail->slug_url) ? $r->reportDetail->slug_url : '#'
-                    ];
-                });
-        }
-
-        // Fetch related categories / industries
-        $relatedCategories = \App\Models\ReportCategory::where('status', 'Active')
-            ->orderBy('created_at', 'desc')
-            ->take(8)
-            ->get()
-            ->map(function ($cat) {
-                return $cat->name;
-            });
-
-        return response()->json([
-            'id' => $reportDetail->id,
-            'title' => $reportDetail->title ?: ($reportDetail->reportList ? $reportDetail->reportList->name : 'No Title'),
-            'description' => $reportDetail->description,
-            'table_of_contents' => $reportDetail->table_of_contents,
-            'single_user_license_cost' => $reportDetail->single_user_license_cost ?: '3500',
-            'team_user_license_cost' => $reportDetail->team_user_license_cost ?: '5500',
-            'enterprise_user_license_cost' => $reportDetail->enterprise_user_license_cost ?: '7500',
-            'download_text' => $reportDetail->download_text,
-            'image' => '/assets/images/default-report.png',
-            'slug_url' => $reportDetail->slug_url,
-            'breadcrumb_title' => $reportDetail->breadcrumb_title ?: ($reportDetail->reportList ? $reportDetail->reportList->name : ''),
-            'page_main_title' => $reportDetail->page_main_title ?: $reportDetail->title,
-            'report_sku' => $reportDetail->report_sku ?: ('REP-' . str_pad($reportDetail->id, 5, '0', STR_PAD_LEFT)),
-            'faqs' => $reportDetail->faqs ?: [],
-            'category' => ($reportDetail->reportList && $reportDetail->reportList->reportCategory) ? $reportDetail->reportList->reportCategory->name : 'Unknown',
-            'date' => $reportDetail->created_at ? $reportDetail->created_at->format('F Y') : date('F Y'),
-            'pages' => 120, // default pages
-            'format' => 'PDF, Excel', // default format
-            'related_reports' => $relatedReports,
-            'related_industries' => $relatedCategories,
-
-            // ── SEO / Meta fields ────────────────────────────────────────────
-            'meta_title'         => $reportDetail->meta_title,
-            'meta_description'   => $reportDetail->meta_description,
-            'meta_keywords'      => $reportDetail->meta_keywords,
-            'canonical_tag'      => $reportDetail->canonical_tag,
-            'meta_robots'        => $reportDetail->meta_robots,
-            'hreflang_tags'      => $reportDetail->hreflang_tags      ?: [],
-            'open_graph_tags'    => $reportDetail->open_graph_tags    ?: [],
-            'twitter_card_tags'  => $reportDetail->twitter_card_tags  ?: [],
-            'schema_tag'         => $reportDetail->schema_tag,
-            'schema_tag_2'       => $reportDetail->schema_tag_2,
-            'custom_schema_tags' => $reportDetail->custom_schema_tags ?: [],
-        ]);
-
+    if (is_numeric($slug)) {
+        $query->where(function ($q) use ($slug) {
+            $q->where('id', $slug)
+              ->orWhere('report_list_id', $slug);
+        });
+    } else {
+        $query->where('slug_url', $slug);
     }
+
+    $reportDetail = $query->first();
+
+    if (!$reportDetail) {
+        return response()->json([
+            'message' => 'Report not found'
+        ], 404);
+    }
+
+    $geographies = [
+        'Global',
+        'North America',
+        'Latin America',
+        'Europe',
+        'Asia Pacific',
+        'APAC',
+        'Middle East',
+        'Africa',
+        'MEA',
+          'China',
+        'Japan',
+        'Germany',
+        'France',
+        'UK',
+        'United States',
+        'U.S.A',
+        'Canada',
+        'Brazil',
+        'India'
+    ];
+
+    $baseTitle = $reportDetail->title ?: optional($reportDetail->reportList)->name;
+
+    // Use regex with word boundaries to avoid accidentally removing substrings (e.g., 'UK' from 'Ukraine')
+    $geoRegex = '/\b(' . implode('|', array_map(function($g) { return preg_quote($g, '/'); }, $geographies)) . ')\b/i';
+    
+    $baseTitleClean = trim(preg_replace('/\s+/', ' ', preg_replace($geoRegex, '', $baseTitle)));
+    $searchPrefix = substr($baseTitleClean, 0, 15); // Extract first 15 chars for DB filtering
+
+    $geographyReportsQuery = \App\Models\ReportDetail::with('reportList:id,name')
+        ->select('id', 'title', 'slug_url', 'report_list_id')
+        ->where('id', '!=', $reportDetail->id);
+
+    // Add a LIKE filter to the DB query so we don't load the entire table into memory
+    if (strlen($searchPrefix) > 5) {
+        $geographyReportsQuery->where(function($q) use ($searchPrefix) {
+            $q->where('title', 'LIKE', '%' . $searchPrefix . '%')
+              ->orWhereHas('reportList', function($q2) use ($searchPrefix) {
+                  $q2->where('name', 'LIKE', '%' . $searchPrefix . '%');
+              });
+        });
+    }
+
+    $geographyReports = $geographyReportsQuery
+        ->get()
+        ->filter(function ($item) use ($geoRegex, $baseTitleClean) {
+            $itemTitle = $item->title ?: optional($item->reportList)->name;
+            if (!$itemTitle) return false;
+
+            $titleClean = trim(preg_replace('/\s+/', ' ', preg_replace($geoRegex, '', $itemTitle)));
+            
+            // Relaxed matching: Match if first 12 characters are the same
+            return strncasecmp($titleClean, $baseTitleClean, 12) === 0;
+        })
+        ->values()
+        ->map(function ($item) use ($geographies) {
+            $itemTitle = $item->title ?: optional($item->reportList)->name;
+           
+            return [
+                'id'       => $item->id,
+                'title'    => $itemTitle,
+                'geo_name' => $itemTitle,
+                'slug_url' => $item->slug_url
+            ];
+        });
+  $relatedReports = [];
+
+    if ($reportDetail->reportList && $reportDetail->reportList->reportCategory) {
+
+        $catId = $reportDetail->reportList->report_category_id;
+
+        $relatedReports = \App\Models\ReportList::with([
+                'reportCategory',
+                'reportDetail'
+            ])
+            ->where('report_category_id', $catId)
+            ->where('id', '!=', $reportDetail->report_list_id)
+            ->where('status', 'Active')
+            ->orderBy('created_at', 'desc')
+            ->take(5)
+            ->get()
+            ->map(function ($r) {
+                return [
+                    'id' => $r->id,
+                    'title' => optional($r->reportDetail)->title ?: $r->name,
+                    'slug' => optional($r->reportDetail)->slug_url ?: '#'
+                ];
+            });
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Related Industries
+    |--------------------------------------------------------------------------
+    */
+
+    $relatedCategories = \App\Models\ReportCategory::where('status', 'Active')
+        ->orderBy('created_at', 'desc')
+        ->take(8)
+        ->pluck('name');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Response
+    |--------------------------------------------------------------------------
+    */
+
+    return response()->json([
+
+        'id' => $reportDetail->id,
+
+        'title' => $reportDetail->title ?: optional($reportDetail->reportList)->name,
+
+        'description' => $reportDetail->description,
+
+        'table_of_contents' => $reportDetail->table_of_contents,
+
+        'single_user_license_cost' => $reportDetail->single_user_license_cost ?: '',
+
+        'team_user_license_cost' => $reportDetail->team_user_license_cost ?: '',
+
+        'enterprise_user_license_cost' => $reportDetail->enterprise_user_license_cost ?: '',
+
+        'download_text' => $reportDetail->download_text,
+
+        'image' => '/assets/images/default-report.png',
+
+        'slug_url' => $reportDetail->slug_url,
+
+        'breadcrumb_title' => $reportDetail->breadcrumb_title ?: optional($reportDetail->reportList)->name,
+
+        'page_main_title' => $reportDetail->page_main_title ?: $reportDetail->title,
+
+        'report_sku' => $reportDetail->report_sku ?: ('REP-' . str_pad($reportDetail->id, 5, '0', STR_PAD_LEFT)),
+
+        'faqs' => $reportDetail->faqs ?: [],
+
+        'category' => optional(optional($reportDetail->reportList)->reportCategory)->name ?: 'Unknown',
+
+        'date' => $reportDetail->created_at
+            ? $reportDetail->created_at->format('F Y')
+            : date('F Y'),
+
+        'pages' => 120,
+
+        'format' => 'PDF, Excel',
+
+        'related_reports' => $relatedReports,
+
+        'related_industries' => $relatedCategories,
+
+        // Geography dropdown
+        'geography_reports' => $geographyReports,
+
+        // SEO
+        'meta_title' => $reportDetail->meta_title,
+        'meta_description' => $reportDetail->meta_description,
+        'meta_keywords' => $reportDetail->meta_keywords,
+        'canonical_tag' => $reportDetail->canonical_tag,
+        'meta_robots' => $reportDetail->meta_robots,
+        'hreflang_tags' => $reportDetail->hreflang_tags ?: [],
+        'open_graph_tags' => $reportDetail->open_graph_tags ?: [],
+        'twitter_card_tags' => $reportDetail->twitter_card_tags ?: [],
+        'schema_tag' => $reportDetail->schema_tag,
+        'schema_tag_2' => $reportDetail->schema_tag_2,
+        'custom_schema_tags' => $reportDetail->custom_schema_tags ?: [],
+
+    ]);
+}
 
     /**
      * Get a single category by name.
