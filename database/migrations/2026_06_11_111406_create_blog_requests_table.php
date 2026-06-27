@@ -11,16 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('blog_requests', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('blog_id')->constrained('blogs')->onDelete('cascade');
-            $table->string('full_name');
-            $table->string('email');
-            $table->string('phone');
-            $table->string('company_name');
-            $table->string('country');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('blog_requests')) {
+            Schema::create('blog_requests', function (Blueprint $table) {
+                $table->id();
+                $table->foreignId('blog_id')->constrained('blogs')->onDelete('cascade');
+                $table->string('full_name');
+                $table->string('email');
+                $table->string('phone');
+                $table->string('company_name');
+                $table->string('country');
+                $table->timestamps();
+            });
+        }
     }
 
     /**
