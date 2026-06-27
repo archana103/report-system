@@ -353,7 +353,10 @@ const injectMetaTags = (r) => {
 
   // ── Title ──────────────────────────────────────────────────────────────────
   const titleVal = r.meta_title || r.title || ''
-  if (titleVal) document.title = titleVal
+  if (titleVal) {
+    document.title = titleVal
+    tag('meta', { name: 'title', content: titleVal })
+  }
 
   // ── Basic meta ─────────────────────────────────────────────────────────────
   if (r.meta_description) tag('meta', { name: 'description', content: r.meta_description })
