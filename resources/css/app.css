@@ -11,6 +11,20 @@
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
+/* User-side Font Configuration */
+.user-theme {
+  font-family: 'Inter', sans-serif;
+}
+
+.user-theme h1,
+.user-theme h2,
+.user-theme h3,
+.user-theme h4,
+.user-theme h5,
+.user-theme h6 {
+  font-family: 'Poppins', sans-serif;
+}
+
 .base-file-button {
   display: inline-flex;
   align-items: center;

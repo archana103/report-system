@@ -15,6 +15,9 @@
      <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Research Report System</title>
     <link rel="icon" type="image/png" href="/favicon.png?v=3.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.ckeditor.com/4.22.1/full-all/ckeditor.js"></script>
     <script src="https://www.paypal.com/sdk/js?client-id={{ config('services.paypal.client_id') }}&currency=USD"></script>
     <script>
