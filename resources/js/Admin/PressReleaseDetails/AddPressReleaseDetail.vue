@@ -37,7 +37,7 @@
             <!-- Content (CKEditor4) -->
             <div>
               <label class="block text-sm font-medium text-gray-300 mb-1.5">Press Release Content</label>
-              <CkEditor4 id="add-content-editor" v-model="form.content" />
+              <TinyMceEditor id="add-content-editor" v-model="form.content" />
             </div>
 
             <!-- Meta Title -->
@@ -106,7 +106,7 @@
 
             <div class="pt-4">
               <label class="block text-sm font-medium text-gray-300 mb-1.5">Press Release Content</label>
-              <CkEditor4 id="edit-content-editor" v-model="form.content" />
+              <TinyMceEditor id="edit-content-editor" v-model="form.content" />
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -224,7 +224,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import CkEditor4 from '@/components/CkEditor4.vue'
+import TinyMceEditor from '@/components/TinyMceEditor.vue'
 import { getPressReleasesDropdown, storePressReleaseDetail, updatePressReleaseDetail } from './api.js'
 
 const props = defineProps({

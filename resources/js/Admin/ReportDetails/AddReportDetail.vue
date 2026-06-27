@@ -5,7 +5,7 @@ import { storeReportDetail, updateReportDetail, getReportListsDropdown } from '.
 import BaseFileInput from '../../components/BaseFileInput.vue';
 
 // CKEditor
-import CkEditor4 from '../../components/CkEditor4.vue';
+import TinyMceEditor from '../../components/TinyMceEditor.vue';
 
 const props = defineProps({
   report: { type: Object, default: null },
@@ -223,12 +223,12 @@ onMounted(() => {
           
           <div>
             <label class="block text-sm font-semibold text-gray-300 mb-1.5 ml-1">Section 1. About This Report</label>
-               <CkEditor4 id="editor-description" v-model="formData.description" :config="editorConfig" />
+               <TinyMceEditor id="editor-description" v-model="formData.description" :config="editorConfig" />
           </div>
 
           <div>
             <label class="block text-sm font-semibold text-gray-300 mb-1.5 ml-1">Manage Table of Contents</label>
-               <CkEditor4 id="editor-toc" v-model="formData.table_of_contents" :config="editorConfig" />
+               <TinyMceEditor id="editor-toc" v-model="formData.table_of_contents" :config="editorConfig" />
           </div>
           
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">

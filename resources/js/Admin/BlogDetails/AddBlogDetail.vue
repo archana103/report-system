@@ -2,7 +2,7 @@
 import { ref, onMounted, watch } from 'vue';
 import { formData, errors, isSubmitting, successMessage, resetForm, setFormData } from './variable';
 import { storeBlogDetail, updateBlogDetail, getBlogsList } from './api';
-import CkEditor4 from '../../components/CkEditor4.vue';
+import TinyMceEditor from '../../components/TinyMceEditor.vue';
 
 const props = defineProps({
   detail: { type: Object, default: null },
@@ -127,7 +127,7 @@ onMounted(() => {
 
           <div class="col-span-1 md:col-span-2">
             <label class="block text-sm font-semibold text-gray-300 mb-3 ml-1">Blog detail Description</label>
-            <CkEditor4 id="blog-detail-editor" v-model="formData.description" :config="editorConfig" />
+            <TinyMceEditor id="blog-detail-editor" v-model="formData.description" :config="editorConfig" />
           </div>
       </div>
 

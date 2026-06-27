@@ -1,6 +1,6 @@
 <script setup>
 import { watch } from 'vue';
-import CkEditor4 from '../../components/CkEditor4.vue';
+import TinyMceEditor from '../../components/TinyMceEditor.vue';
 import BaseFileInput from '../../components/BaseFileInput.vue';
 import { formData, errors, isSubmitting, successMessage, resetForm, setFormData } from './variable';
 import { storeReportCategory, updateReportCategory } from './api';
@@ -114,7 +114,7 @@ const cancelForm = () => {
       <div>
         <label class="block text-sm font-medium text-gray-400 mb-1.5 ml-1">Main Subheading</label>
         <div class="rounded-xl overflow-hidden shadow-sm border border-gray-700 focus-within:ring-2 focus-within:ring-teal-500/50 focus-within:border-teal-500/50 transition-all ck-editor-custom">
-          <CkEditor4 v-model="formData.main_subheading" :config="editorConfig" />
+          <TinyMceEditor v-model="formData.main_subheading" :config="editorConfig" />
         </div>
         <p v-if="errors.main_subheading" class="text-red-400 text-xs mt-1 ml-1">{{ errors.main_subheading[0] }}</p>
       </div>
