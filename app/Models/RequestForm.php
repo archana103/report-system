@@ -10,10 +10,7 @@ class RequestForm extends Model
         'name',
         'email',
         'phone',
-        'country',
         'subject',
-        'job_title',
-        'company_name',
         'specific_research_requirement',
         'report_name'
     ];

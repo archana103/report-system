@@ -525,12 +525,9 @@ class UserviewController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'phone' => 'required|string|max:45',
-            'country' => 'required|string|max:255',
             'subject' => 'required|string|max:255',
-            'job_title' => 'required|string|max:255',
-            'company_name' => 'required|string|max:255',
             'specific_research_requirement' => 'required|string',
-            'report_name' => 'nullable|string|max:255',
+            'report_name' => 'nullable|string|max:1000',
             'recaptcha_token' => 'nullable|string',
         ]);
 
@@ -573,11 +570,8 @@ class UserviewController extends Controller
                 'name'         => $validated['name'],
                 'email'        => $validated['email'],
                 'phone'        => $validated['phone'],
-                'companyName'  => $validated['company_name'],
-                'country'      => $validated['country'],
                 'messageText'  => $validated['specific_research_requirement'],
                 'reportName'   => $reportNameVal,
-                'jobTitle'     => $validated['job_title'],
             ];
 
             \Illuminate\Support\Facades\Mail::send('emails.inquiry', $data, function ($message) use ($subjectVal, $reportNameVal) {

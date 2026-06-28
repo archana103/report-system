@@ -27,7 +27,6 @@ const headers = [
   { key: 'email', label: 'Email' },
   { key: 'phone', label: 'Phone' },
   { key: 'subject', label: 'Subject' },
-  { key: 'job_title', label: 'Job Title' },
   { key: 'created_at', label: 'Date' },
 ]
 
@@ -170,18 +169,6 @@ onMounted(() => {
             <div>
               <p class="text-xs text-gray-500 uppercase font-semibold tracking-wider mb-1">Phone</p>
               <p class="text-gray-200 font-medium">{{ selectedItem.phone || '—' }}</p>
-            </div>
-            <div>
-              <p class="text-xs text-gray-500 uppercase font-semibold tracking-wider mb-1">Country</p>
-              <p class="text-gray-200 font-medium">{{ selectedItem.country || '—' }}</p>
-            </div>
-            <div>
-              <p class="text-xs text-gray-500 uppercase font-semibold tracking-wider mb-1">Company Name</p>
-              <p class="text-gray-200 font-medium">{{ selectedItem.company_name || '—' }}</p>
-            </div>
-            <div>
-              <p class="text-xs text-gray-500 uppercase font-semibold tracking-wider mb-1">Job Title</p>
-              <p class="text-gray-200 font-medium">{{ selectedItem.job_title || '—' }}</p>
             </div>
             <div class="md:col-span-2">
               <p class="text-xs text-gray-500 uppercase font-semibold tracking-wider mb-1">Subject</p>

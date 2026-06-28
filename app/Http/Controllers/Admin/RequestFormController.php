@@ -19,9 +19,7 @@ class RequestFormController extends Controller
                 $q->where('name', 'like', '%' . $search . '%')
                   ->orWhere('email', 'like', '%' . $search . '%')
                   ->orWhere('phone', 'like', '%' . $search . '%')
-                  ->orWhere('company_name', 'like', '%' . $search . '%')
-                  ->orWhere('subject', 'like', '%' . $search . '%')
-                  ->orWhere('job_title', 'like', '%' . $search . '%');
+                  ->orWhere('subject', 'like', '%' . $search . '%');
             });
         }
 

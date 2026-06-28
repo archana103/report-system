@@ -63,29 +63,6 @@
               />
             </div>
 
-            <!-- Company Name -->
-            <div class="form-group">
-              <label for="rfm_companyName">Company Name <span class="required">*</span></label>
-              <input 
-                type="text" 
-                id="rfm_companyName" 
-                v-model="formData.company_name" 
-                placeholder="Enter Company Name" 
-                required 
-              />
-            </div>
-          </div>
-
-          <div class="form-row-2">
-            <!-- Select Country -->
-            <div class="form-group">
-              <label for="rfm_country">Country <span class="required">*</span></label>
-              <select id="rfm_country" v-model="formData.country" required>
-                <option value="" disabled selected>Select Your Country</option>
-                <option v-for="c in countriesList" :key="c" :value="c">{{ c }}</option>
-              </select>
-            </div>
-
             <!-- Select Subject -->
             <div class="form-group">
               <label for="rfm_subject">Select Subject <span class="required">*</span></label>
@@ -98,30 +75,16 @@
             </div>
           </div>
 
-          <div class="form-row-2">
-            <!-- Job Title -->
-            <div class="form-group">
-              <label for="rfm_jobTitle">Job Title <span class="required">*</span></label>
-              <input 
-                type="text" 
-                id="rfm_jobTitle" 
-                v-model="formData.job_title" 
-                placeholder="Enter Job Title" 
-                required 
-              />
-            </div>
-
-            <!-- Specific Research Requirement -->
-            <div class="form-group">
-              <label for="rfm_requirement">Specific Research Requirement <span class="required">*</span></label>
-              <textarea 
-                id="rfm_requirement" 
-                v-model="formData.specific_research_requirement" 
-                placeholder="Enter your specific requirement" 
-                rows="2"
-                required
-              ></textarea>
-            </div>
+          <!-- Specific Research Requirement -->
+          <div class="form-group" style="margin-top: 15px;">
+            <label for="rfm_requirement">Specific Research Requirement <span class="required">*</span></label>
+            <textarea 
+              id="rfm_requirement" 
+              v-model="formData.specific_research_requirement" 
+              placeholder="Enter your specific requirement" 
+              rows="3"
+              required
+            ></textarea>
           </div>
 
           <!-- Real Google reCAPTCHA Container -->
@@ -174,10 +137,7 @@ const formData = ref({
   name: '',
   email: '',
   phone: '',
-  country: '',
   subject: 'Request Sample',
-  job_title: '',
-  company_name: '',
   specific_research_requirement: '',
   report_name: ''
 })
@@ -201,9 +161,6 @@ watch(() => props.isOpen, async (newVal) => {
     formData.value.name = ''
     formData.value.email = ''
     formData.value.phone = ''
-    formData.value.country = ''
-    formData.value.job_title = ''
-    formData.value.company_name = ''
     formData.value.specific_research_requirement = ''
     formData.value.subject = props.subject || 'Request Sample'
     formData.value.report_name = props.reportName || ''
@@ -241,6 +198,7 @@ watch(() => props.isOpen, async (newVal) => {
       itiInstance.destroy()
       itiInstance = null
     }
+    recaptchaWidgetId.value = null
   }
 })
 
@@ -273,47 +231,6 @@ onUnmounted(() => {
     itiInstance = null
   }
 })
-
-
-
-// Comprehensive Countries List
-const countriesList = [
-  'Afghanistan', 'Albania', 'Algeria', 'American Samoa', 'Andorra', 
-  'Angola', 'Anguilla', 'Antarctica', 'Antigua and Barbuda', 'Argentina', 
-  'Armenia', 'Aruba', 'Australia', 'Austria', 'Azerbaijan', 'Bahamas', 
-  'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Belize',
-  'Benin', 'Bermuda', 'Bhutan', 'Bolivia', 'Bosnia and Herzegovina',
-  'Botswana', 'Brazil', 'Brunei', 'Bulgaria', 'Burkina Faso', 'Burundi',
-  'Cambodia', 'Cameroon', 'Canada', 'Cape Verde', 'Cayman Islands',
-  'Central African Republic', 'Chad', 'Chile', 'China', 'Colombia',
-  'Comoros', 'Congo', 'Costa Rica', 'Croatia', 'Cuba', 'Cyprus',
-  'Czech Republic', 'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic',
-  'Ecuador', 'Egypt', 'El Salvador', 'Equatorial Guinea', 'Eritrea',
-  'Estonia', 'Ethiopia', 'Fiji', 'Finland', 'France', 'Gabon', 'Gambia',
-  'Georgia', 'Germany', 'Ghana', 'Greece', 'Grenada', 'Guatemala',
-  'Guinea', 'Guinea-Bissau', 'Guyana', 'Haiti', 'Honduras', 'Hong Kong',
-  'Hungary', 'Iceland', 'India', 'Indonesia', 'Iran', 'Iraq', 'Ireland',
-  'Israel', 'Italy', 'Jamaica', 'Japan', 'Jordan', 'Kazakhstan', 'Kenya',
-  'Kiribati', 'Kosovo', 'Kuwait', 'Kyrgyzstan', 'Laos', 'Latvia',
-  'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 'Lithuania',
-  'Luxembourg', 'Macedonia', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives',
-  'Mali', 'Malta', 'Marshall Islands', 'Mauritania', 'Mauritius', 'Mexico',
-  'Micronesia', 'Moldova', 'Monaco', 'Mongolia', 'Montenegro', 'Morocco',
-  'Mozambique', 'Myanmar', 'Namibia', 'Nauru', 'Nepal', 'Netherlands',
-  'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'North Korea', 'Norway',
-  'Oman', 'Pakistan', 'Palau', 'Palestine', 'Panama', 'Papua New Guinea',
-  'Paraguay', 'Peru', 'Philippines', 'Poland', 'Portugal', 'Qatar',
-  'Romania', 'Russia', 'Rwanda', 'Saint Kitts and Nevis', 'Saint Lucia',
-  'Samoa', 'San Marino', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles',
-  'Sierra Leone', 'Singapore', 'Slovakia', 'Slovenia', 'Solomon Islands',
-  'Somalia', 'South Africa', 'South Korea', 'South Sudan', 'Spain',
-  'Sri Lanka', 'Sudan', 'Suriname', 'Sweden', 'Switzerland', 'Syria',
-  'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', 'Togo', 'Tonga',
-  'Trinidad and Tobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'Tuvalu',
-  'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom',
-  'United States', 'Uruguay', 'Uzbekistan', 'Vanuatu', 'Vatican City',
-  'Venezuela', 'Vietnam', 'Yemen', 'Zambia', 'Zimbabwe'
-]
 
 const handleSubmit = async () => {
   if (!recaptchaToken.value) {
