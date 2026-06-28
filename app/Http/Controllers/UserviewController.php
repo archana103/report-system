@@ -503,7 +503,7 @@ class UserviewController extends Controller
             ];
 
             \Illuminate\Support\Facades\Mail::send('emails.inquiry', $data, function ($message) {
-                $message->to('archanaguthale103@gmail.com')
+                $message->to(config('mail.to_address', 'sales@epignosisinsights.com'))
                         ->subject('New Inquiry Received on Markspark Solutions');
             });
         } catch (\Exception $e) {
@@ -585,7 +585,7 @@ class UserviewController extends Controller
                 if ($reportNameVal) {
                     $mailSubject .= ' - ' . $reportNameVal;
                 }
-                $message->to('archanaguthale103@gmail.com')
+                $message->to(config('mail.to_address', 'sales@epignosisinsights.com'))
                         ->subject('New Inquiry Received: ' . $mailSubject);
             });
         } catch (\Exception $e) {
@@ -690,7 +690,7 @@ class UserviewController extends Controller
             ];
 
             \Illuminate\Support\Facades\Mail::send('emails.inquiry', $data, function ($message) use ($blogTitle) {
-                $message->to('archanaguthale103@gmail.com')
+                $message->to(config('mail.to_address', 'sales@epignosisinsights.com'))
                         ->subject('New Inquiry Received: Blog Request - ' . $blogTitle);
             });
         } catch (\Exception $e) {
