@@ -181,7 +181,7 @@
 
               <span class="talk-analyst-title">Talk to Analyst</span>
 
-              <a href="tel:+916292226351" class="contact-btn-white call-now-btn">
+              <a href="tel:+919370940742" class="contact-btn-white call-now-btn">
                 Call Now
               </a>
             </div>
