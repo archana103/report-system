@@ -362,7 +362,7 @@ input {
   margin: 0;
   color: #171717;
   font-size: clamp(42px, 5vw, 62px);
-  font-weight: 800;
+  font-weight: 600;
   line-height: 1.25;
   letter-spacing: 0;
 }
@@ -619,9 +619,10 @@ input {
 }
 
 .report-card h3 {
-  margin: 0;
-  font-size: 21px;
-  line-height: 1.35;
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.35;
+    font-weight: 600;
 }
 
 .report-card p {
@@ -780,19 +781,20 @@ input {
 .services-section {
   padding: 0 24px 96px;
   background:
-    radial-gradient(circle at 18% 72%, rgba(221, 242, 255, 0.92), transparent 30%),
-    linear-gradient(180deg, #ffffff 0%, #f1f9ff 100%);
+    radial-gradient(circle at 17% 76%, rgba(221, 242, 255, 0.9), transparent 33%),
+    linear-gradient(180deg, #ffffff 0%, #f2f9ff 100%);
 }
 
 .services-map {
   position: relative;
-  width: min(1140px, 100%);
-  min-height: 535px;
-  margin: 42px auto 0;
+  width: min(980px, 100%);
+  min-height: 610px;
+  height: 610px;
+  margin: 28px auto 0;
   display: grid;
-  grid-template-columns: minmax(300px, 336px) 1fr minmax(300px, 336px);
-  grid-template-rows: auto auto;
-  gap: 90px 190px;
+  grid-template-columns: 320px 1fr 320px;
+  grid-template-rows: 220px 220px;
+  gap: 50px 68px;
   align-items: start;
 }
 
@@ -812,12 +814,13 @@ input {
   overflow: visible;
   z-index: 2;
   width: 100%;
-  min-height: 194px;
-  padding: 28px 28px 26px;
+  min-height: 220px;
+  height: 220px;
+  padding: 20px 26px 18px;
   border: 1px solid #dce6ef;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.93);
-  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.028);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.025);
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
@@ -831,35 +834,64 @@ input {
   border-color: rgba(7, 131, 223, 0.35);
 }
 
-.services-section .service-card.top-left    { grid-column: 1; grid-row: 1; }
-.services-section .service-card.top-right   { grid-column: 3; grid-row: 1; align-self: start; }
-.services-section .service-card.bottom-left { grid-column: 1; grid-row: 2; justify-self: end; }
-.services-section .service-card.bottom-right{ grid-column: 3; grid-row: 2; align-self: end; }
+.services-section .service-card.left {
+  position: absolute;
+  left: 0;
+  top: 120px;
+  width: 320px;
+  height: 220px;
+}
+
+.services-section .service-card.right {
+  position: absolute;
+  right: 0;
+  top: 120px;
+  width: 320px;
+  height: 220px;
+}
+
+.services-section .service-card.bottom {
+  position: absolute;
+  left: 50%;
+  top: 390px;
+  transform: translateX(-50%);
+  width: 320px;
+  height: 220px;
+}
+
+.services-section .service-card.bottom:hover {
+  transform: translate(-50%, -4px);
+}
 
 .services-section .service-icon {
   display: grid;
-  width: 64px;
-  height: 64px;
+  width: 40px;
+  height: 40px;
   place-items: center;
   border-radius: 50%;
   background: #e9f5ff;
   color: #0783df;
 }
 
+.services-section .service-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
 .services-section .service-card h3 {
-  margin: 22px 0 10px;
-  font-size: 20px;
-  font-weight: 800;
+  margin: 20px 0 8px;
+  font-size: 21px;
+  font-weight: 700;
   color: #111827;
   line-height: 1.2;
-  white-space: nowrap;
+  white-space: normal;
 }
 
 .services-section .service-card p {
   margin: 0;
   color: #444953;
-  font-size: 14px;
-  line-height: 1.2;
+  font-size: 15px;
+  line-height: 1.25;
 }
 
 /* Overlay wrapper covers the entire map, not a grid item. */
@@ -874,16 +906,16 @@ input {
 .service-center {
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 132px;
   transform: translate(-50%, -50%);
   z-index: 3;
   display: grid;
-  width: 172px;
-  height: 172px;
+  width: 88px;
+  height: 88px;
   place-items: center;
   border-radius: 50%;
-  background: radial-gradient(circle, #a7d6ff 0 31%, #d6ecff 32% 58%, rgba(231, 245, 255, 0.86) 59% 100%);
-  box-shadow: 0 0 0 28px rgba(234, 247, 255, 0.85);
+  background: radial-gradient(circle, #9ed2ff 0 31%, #d4ecff 32% 58%, rgba(233, 247, 255, 0.9) 59% 100%);
+  box-shadow: 0 0 0 32px rgba(235, 247, 255, 0.82);
 }
 
 .service-connectors {
@@ -904,6 +936,17 @@ input {
   vector-effect: non-scaling-stroke;
 }
 
+.connector-path-blue {
+  fill: none;
+  stroke: #0783df;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 4 4;
+  opacity: 0.8;
+  vector-effect: non-scaling-stroke;
+}
+
 .service-connectors marker path {
   fill: none;
   stroke: #111827;
@@ -913,6 +956,32 @@ input {
   opacity: 0.78;
 }
 
+
+.services-section .section-heading h2 {
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.services-section .section-heading p {
+  max-width: 470px;
+  margin-top: 14px;
+  font-size: 13px;
+  line-height: 1.25;
+}
+
+.services-section .brand-mark.large {
+  width: 50px;
+  height: 50px;
+  font-size: 38px;
+}
+
+
+
+.services-section .primary-button.small {
+  min-height: 34px;
+  padding: 0 28px;
+  font-size: 12px;
+}
 .about-section {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 500px;
@@ -1177,6 +1246,7 @@ input {
   }
 
   .services-map {
+    height: auto;
     min-height: auto;
     grid-template-columns: repeat(2, minmax(280px, 1fr));
     gap: 22px;
@@ -1186,14 +1256,15 @@ input {
     display: none;
   }
 
-  .services-section .service-card.top-left,
-  .services-section .service-card.top-right,
-  .services-section .service-card.bottom-left,
-  .services-section .service-card.bottom-right {
-    grid-column: auto;
-    grid-row: auto;
-    align-self: stretch;
-    justify-self: stretch;
+  .services-section .service-card.left,
+  .services-section .service-card.right,
+  .services-section .service-card.bottom {
+    position: static;
+    transform: none;
+    width: auto;
+    height: auto;
+    min-height: auto;
+    margin-top: 0;
   }
 }
 
@@ -1212,11 +1283,17 @@ input {
   }
 
   .services-map {
+    height: auto;
+    min-height: auto;
     grid-template-columns: 1fr;
     gap: 16px;
   }
 
   .services-section .service-card {
+    position: static;
+    transform: none;
+    width: auto;
+    height: auto;
     min-height: auto;
   }
 
@@ -1282,7 +1359,33 @@ input {
     flex-direction: column;
   }
 
-  .about-section {
+
+.services-section .section-heading h2 {
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.services-section .section-heading p {
+  max-width: 470px;
+  margin-top: 14px;
+  font-size: 13px;
+  line-height: 1.25;
+}
+
+.services-section .brand-mark.large {
+  width: 50px;
+  height: 50px;
+  font-size: 38px;
+}
+
+
+
+.services-section .primary-button.small {
+  min-height: 34px;
+  padding: 0 28px;
+  font-size: 12px;
+}
+.about-section {
     padding: 90px 0;
   }
 }

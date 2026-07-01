@@ -11,19 +11,15 @@
             <p>{{ service.description }}</p>
           </article>
           <div class="services-center-overlay">
-            <svg class="service-connectors" viewBox="0 0 1140 535" preserveAspectRatio="none" aria-hidden="true">
+            <svg class="service-connectors" viewBox="0 0 980 610" preserveAspectRatio="none" aria-hidden="true">
               <defs>
-                <marker id="service-arrow-left" viewBox="0 0 10 10" refX="1.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-                  <path d="M9 1 L1 5 L9 9" />
-                </marker>
-                <marker id="service-arrow-right" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+                <marker id="service-arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
                   <path d="M1 1 L9 5 L1 9" />
                 </marker>
               </defs>
-              <path class="connector-path" marker-end="url(#service-arrow-left)" d="M 482 206 H 396 V 98 H 336" />
-              <path class="connector-path" marker-end="url(#service-arrow-right)" d="M 658 206 H 744 V 98 H 804" />
-              <path class="connector-path" marker-end="url(#service-arrow-left)" d="M 482 330 H 420 V 382 H 336" />
-              <path class="connector-path" marker-end="url(#service-arrow-right)" d="M 658 330 H 720 V 382 H 804" />
+              <path class="connector-path" marker-end="url(#service-arrow)" d="M 404 190 L 325 210" />
+              <path class="connector-path" marker-end="url(#service-arrow)" d="M 576 190 L 655 210" />
+              <path class="connector-path" marker-end="url(#service-arrow)" d="M 490 276 V 385" />
             </svg>
             <div class="service-center">
               <span class="brand-mark large">e</span>
@@ -37,12 +33,11 @@
 </template>
 
 <script setup>
-import { IconBrief, IconTarget, IconTrend, IconBulb } from '../icons'
+import { IconBrief, IconTarget, IconBulb } from '../icons'
 
 const services = [
-  { title: 'Market Research Reports', description: 'Comprehensive reports covering market size, key trends, and future forecasts.', icon: IconBrief, position: 'top-left' },
-  { title: 'Custom Research Solutions', description: 'Tailored research designed to match your business goals and target markets.', icon: IconTarget, position: 'top-right' },
-  { title: 'Industry Analysis', description: 'Detailed insights into industry trends, growth drivers, and opportunities.', icon: IconTrend, position: 'bottom-left' },
-  { title: 'Consulting Services', description: 'Expert guidance to help you interpret data and make strategic decisions.', icon: IconBulb, position: 'bottom-right' }
+  { title: 'Custom Research Solutions', description: 'Tailored research designed to match your business goals and target markets.', icon: IconTarget, position: 'left' },
+  { title: 'Consulting Services', description: 'Expert guidance to help you interpret data and make strategic decisions.', icon: IconBulb, position: 'right' },
+  { title: 'Market Research Reports', description: 'Comprehensive reports covering market size, key trends, and future forecasts.', icon: IconBrief, position: 'bottom' }
 ]
 </script>
