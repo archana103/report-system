@@ -608,7 +608,7 @@ watch(categoryName, () => {
 }
 
 .hover-primary-title {
-  font-size: 19px;
+  font-size: 16px;
   font-weight: 800;
   line-height: 1.4;
   margin: 0 0 10px;

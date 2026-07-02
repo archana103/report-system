@@ -15,6 +15,18 @@
     <template v-else-if="report">
       <!-- Banner Hero Section -->
       <header class="detail-hero-banner">
+        <div class="breadcrumb-container" style="max-width: 1120px; margin: 0 auto 20px; display: flex; align-items: center; gap: 8px; font-size: 13px; color: #6b7280; flex-wrap: wrap;">
+          <router-link to="/" style="color: #0783df; text-decoration: none; font-weight: 500;">Home</router-link>
+          <span style="color: #9ca3af;">/</span>
+          <router-link to="/reports" style="color: #0783df; text-decoration: none; font-weight: 500;">Reports</router-link>
+          <span style="color: #9ca3af;">/</span>
+          <template v-if="report.category">
+            <router-link :to="`/reports?category=${encodeURIComponent(report.category)}`" style="color: #0783df; text-decoration: none; font-weight: 500;">{{ report.category }}</router-link>
+            <span style="color: #9ca3af;">/</span>
+          </template>
+          <span style="color: #4b5563; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; word-break: break-all;" :title="report.title">{{ report.slug_url }}</span>
+        </div>
+        
         <div class="detail-hero-shell">
           <div class="book-cover-container">
             <div class="report-book-cover-image-wrapper">

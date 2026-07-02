@@ -536,6 +536,9 @@
   display: flex;
   flex-direction: column;
   gap: 30px;
+  position: sticky;
+  top: 20px;
+  align-self: start;
 }
 
 /* Get This Report Card */
