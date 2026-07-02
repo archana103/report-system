@@ -24,7 +24,7 @@
             <router-link :to="`/reports?category=${encodeURIComponent(report.category)}`" style="color: #0783df; text-decoration: none; font-weight: 500;">{{ report.category }}</router-link>
             <span style="color: #9ca3af;">/</span>
           </template>
-          <span style="color: #4b5563; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; word-break: break-all;" :title="report.title">{{ report.slug_url }}</span>
+          <span style="color: #4b5563; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 1; line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; word-break: break-all;" :title="report.title">{{ report.slug_url }}</span>
         </div>
         
         <div class="detail-hero-shell">
@@ -37,7 +37,7 @@
 
           <div class="hero-text-content">
             <h1>{{ report.title }}</h1>
-            <p class="hero-description-snippet">{{ getHeroSnippet(report.description) }}</p>
+            <p class="hero-description-snippet">{{ report.detail_description }}</p>
 
             <div class="hero-meta-items">
               <span>Report ID: <strong>{{ report.report_sku }}</strong></span>

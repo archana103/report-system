@@ -503,7 +503,7 @@ watch(categoryName, () => {
   display: flex;
   background: #ffffff;
   border-radius: 18px;
-  padding: 24px;
+  padding: 10px;
   gap: 28px;
   box-shadow: 0 4px 20px rgba(15, 23, 42, 0.02);
   border: 1px solid #eef2f7;

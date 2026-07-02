@@ -76,8 +76,8 @@ class UserviewController extends Controller
             ->take(4)
             ->get()
             ->map(function ($report) {
-                $description = $report->reportDetail ? strip_tags($report->reportDetail->description) : 'No description available.';
-                $description = \Illuminate\Support\Str::limit(html_entity_decode($description), 150);
+                $rawDesc = ($report->reportDetail && !empty($report->reportDetail->detail_description)) ? $report->reportDetail->detail_description : 'No description available.';
+                $description = \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($rawDesc)), 150);
 
                 return [
                     'id' => $report->id,
@@ -124,8 +124,8 @@ class UserviewController extends Controller
         $paginator = $query->orderBy('created_at', 'desc')->paginate(10);
         
         $paginator->getCollection()->transform(function ($report) {
-            $description = $report->reportDetail ? strip_tags($report->reportDetail->description) : 'No description available.';
-            $description = \Illuminate\Support\Str::limit(html_entity_decode($description), 250);
+            $rawDesc = ($report->reportDetail && !empty($report->reportDetail->detail_description)) ? $report->reportDetail->detail_description : 'No description available.';
+            $description = \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($rawDesc)), 250);
 
             return [
                 'id' => $report->id,
@@ -373,6 +373,8 @@ class UserviewController extends Controller
         'title' => $reportDetail->title ?: optional($reportDetail->reportList)->name,
 
         'description' => $reportDetail->description,
+        
+        'detail_description' => !empty($reportDetail->detail_description) ? $reportDetail->detail_description : 'No description available.',
 
         'table_of_contents' => $reportDetail->table_of_contents,
 
