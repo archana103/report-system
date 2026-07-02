@@ -42,8 +42,8 @@
     <div class="footer-bottom">
       <p>© 2025 epignosisinsights. All rights reserved.</p>
       <div>
-        <a href="#">Teams & Conditions</a>
-        <a href="#">Privacy Policy</a>
+        <router-link to="/terms-and-conditions">Terms & Conditions</router-link>
+        <router-link to="/privacy-policy">Privacy Policy</router-link>
       </div>
     </div>
   </footer>
