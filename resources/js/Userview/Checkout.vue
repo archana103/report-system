@@ -34,78 +34,21 @@
 
           <!-- Pricing Grid -->
           <div class="pricing-grid">
-            <!-- Card 1: Single User -->
-            <div class="pricing-card" :class="{ 'selected': selectedLicense === 'single' }">
-              <span class="discount-badge">Get 20% OFF</span>
+            <div v-for="(plan, index) in pricings" :key="plan.id" class="pricing-card" :class="{ 'selected': selectedLicense === plan.id, 'highlighted': index === 1 }">
+              <span class="discount-badge" v-if="index === 1">Most Popular</span>
               <div class="card-header-info">
-                <h3>Single User License</h3>
+                <h3>{{ plan.title }}</h3>
                 <div class="price-box">
-                  <span class="original-price">${{ formatPrice(getOriginalPrice(report.single_user_license_cost || 1999)) }}</span>
-                  <span class="discounted-price">${{ formatPrice(report.single_user_license_cost || 1999) }}</span>
+                  <span class="original-price" v-if="plan.discount_cost">${{ formatPrice(plan.discount_cost) }}</span>
+                  <span class="original-price" v-else>${{ formatPrice(getOriginalPrice(plan.cost)) }}</span>
+                  <span class="discounted-price">${{ formatPrice(plan.cost) }}</span>
                 </div>
               </div>
-              <p class="card-features-description">Access for one user within a single organization.</p>
+              <p class="card-features-description">Access targeted market research matching your needs.</p>
               <ul class="features-list">
-                <li><span class="check-icon-green">✓</span> PDF Report</li>
-                <li><span class="check-icon-green">✓</span> Excel Data Pack</li>
-                <li><span class="check-icon-green">✓</span> Instant Download</li>
-                <li><span class="check-icon-green">✓</span> Analyst Support</li>
+                <li v-for="(feature, fIndex) in parseDetails(plan.details)" :key="'f'+fIndex"><span class="check-icon-green">✓</span> {{ feature }}</li>
               </ul>
-              <button class="pricing-action-btn" @click="selectLicense('single', report.single_user_license_cost || 1999)">
-                Buy Now
-                <span class="btn-circle-arrow">
-                  <svg class="chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                    <polyline points="9 18 15 12 9 6"/>
-                  </svg>
-                </span>
-              </button>
-            </div>
-
-            <!-- Card 2: Team User (Highlighted middle card) -->
-            <div class="pricing-card highlighted" :class="{ 'selected': selectedLicense === 'team' }">
-              <span class="discount-badge">Get 20% OFF</span>
-              <div class="card-header-info">
-                <h3>Team User License</h3>
-                <div class="price-box">
-                  <span class="original-price">${{ formatPrice(getOriginalPrice(report.team_user_license_cost || 3999)) }}</span>
-                  <span class="discounted-price">${{ formatPrice(report.team_user_license_cost || 3999) }}</span>
-                </div>
-              </div>
-              <p class="card-features-description">Access for up to 5 users within a single organization.</p>
-              <ul class="features-list">
-                <li><span class="check-icon-green">✓</span> PDF Report</li>
-                <li><span class="check-icon-green">✓</span> Excel Data Pack</li>
-                <li><span class="check-icon-green">✓</span> Instant Download</li>
-                <li><span class="check-icon-green">✓</span> Analyst Support</li>
-              </ul>
-              <button class="pricing-action-btn" @click="selectLicense('team', report.team_user_license_cost || 3999)">
-                Buy Now
-                <span class="btn-circle-arrow">
-                  <svg class="chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                    <polyline points="9 18 15 12 9 6"/>
-                  </svg>
-                </span>
-              </button>
-            </div>
-
-            <!-- Card 3: Enterprise User -->
-            <div class="pricing-card" :class="{ 'selected': selectedLicense === 'enterprise' }">
-              <span class="discount-badge">Get 20% OFF</span>
-              <div class="card-header-info">
-                <h3>Enterprise License</h3>
-                <div class="price-box">
-                  <span class="original-price">${{ formatPrice(getOriginalPrice(report.enterprise_user_license_cost || 5999)) }}</span>
-                  <span class="discounted-price">${{ formatPrice(report.enterprise_user_license_cost || 5999) }}</span>
-                </div>
-              </div>
-              <p class="card-features-description">Unlimited access for all users within the global organization.</p>
-              <ul class="features-list">
-                <li><span class="check-icon-green">✓</span> PDF Report</li>
-                <li><span class="check-icon-green">✓</span> Excel Data Pack</li>
-                <li><span class="check-icon-green">✓</span> Instant Download</li>
-                <li><span class="check-icon-green">✓</span> Analyst Support</li>
-              </ul>
-              <button class="pricing-action-btn" @click="selectLicense('enterprise', report.enterprise_user_license_cost || 5999)">
+              <button class="pricing-action-btn" @click="selectLicense(plan.id, plan.cost, plan.title)">
                 Buy Now
                 <span class="btn-circle-arrow">
                   <svg class="chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
@@ -120,7 +63,7 @@
           <div class="payment-section-drawer" v-show="selectedLicense">
             <div class="payment-header">
               <h3>Complete Your Secure Purchase</h3>
-              <p>You have selected: <strong>{{ getSelectedLicenseLabel() }}</strong> for <strong>${{ formatPrice(selectedPrice) }}</strong></p>
+              <p>You have selected: <strong>{{ selectedLicenseTitle }}</strong> for <strong>${{ formatPrice(selectedPrice) }}</strong></p>
             </div>
 
             <!-- PayPal buttons container -->
@@ -147,9 +90,11 @@ const route = useRoute()
 const router = useRouter()
 
 const report = ref(null)
+const pricings = ref([])
 const loading = ref(true)
 
 const selectedLicense = ref(null)
+const selectedLicenseTitle = ref('')
 const selectedPrice = ref(0)
 
 const formatPrice = (val) => {
@@ -161,11 +106,9 @@ const getOriginalPrice = (discountedPrice) => {
   return Math.ceil(discountedPrice / 0.8)
 }
 
-const getSelectedLicenseLabel = () => {
-  if (selectedLicense.value === 'single') return 'Single User License'
-  if (selectedLicense.value === 'team') return 'Team User License'
-  if (selectedLicense.value === 'enterprise') return 'Enterprise License'
-  return ''
+const parseDetails = (detailsString) => {
+  if (!detailsString) return [];
+  return detailsString.split('\n').filter(line => line.trim() !== '');
 }
 
 const fetchReportDetails = async (slug) => {
@@ -175,17 +118,20 @@ const fetchReportDetails = async (slug) => {
     if (response.data) {
       report.value = response.data
     }
+    const pricingRes = await axios.get('/api/pricings-active')
+    pricings.value = pricingRes.data
   } catch (error) {
-    console.error('Failed to fetch report details for checkout:', error)
+    console.error('Failed to fetch report or pricings:', error)
     report.value = null
   } finally {
     loading.value = false
   }
 }
 
-const selectLicense = (licenseType, price) => {
+const selectLicense = (licenseType, price, title) => {
   selectedLicense.value = licenseType
   selectedPrice.value = price
+  selectedLicenseTitle.value = title
 
   nextTick(() => {
     // Scroll to payment panel
@@ -229,7 +175,10 @@ const initPaypalButtons = (priceValue) => {
         },
         onApprove: async (data, actions) => {
           try {
-            const response = await axios.post(`/paypal/capture-order/${data.orderID}`)
+            const response = await axios.post(`/paypal/capture-order/${data.orderID}`, {
+              report_detail_id: report.value.id,
+              pricing_id: selectedLicense.value
+            })
             if (response.data.status === 'COMPLETED') {
               router.push('/thank-you')
             } else {

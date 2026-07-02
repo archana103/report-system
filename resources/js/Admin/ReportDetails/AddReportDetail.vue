@@ -134,21 +134,7 @@ onMounted(() => {
           </div>
         </div>
 
-        <!-- Row 3: License Costs -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div>
-            <label class="block text-sm font-semibold text-gray-300 mb-1.5 ml-1">Single User License Cost</label>
-            <input v-model="formData.single_user_license_cost" type="number" class="w-full bg-gray-800/80 border border-gray-700 rounded-xl px-4 py-2 text-sm text-gray-200 focus:ring-2 focus:ring-blue-500/50" />
-          </div>
-          <div>
-            <label class="block text-sm font-semibold text-gray-300 mb-1.5 ml-1">Team User License Cost</label>
-            <input v-model="formData.team_user_license_cost" type="number" class="w-full bg-gray-800/80 border border-gray-700 rounded-xl px-4 py-2 text-sm text-gray-200 focus:ring-2 focus:ring-blue-500/50" />
-          </div>
-          <div>
-            <label class="block text-sm font-semibold text-gray-300 mb-1.5 ml-1">Enterprise User License Cost</label>
-            <input v-model="formData.enterprise_user_license_cost" type="number" class="w-full bg-gray-800/80 border border-gray-700 rounded-xl px-4 py-2 text-sm text-gray-200 focus:ring-2 focus:ring-blue-500/50" />
-          </div>
-        </div>
+        <!-- License Costs Removed -->
 
         <!-- Row 4: Download Text & Image -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -364,20 +350,7 @@ onMounted(() => {
              </div>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div>
-              <label class="block text-sm font-semibold text-gray-300 mb-1.5 ml-1">Single User License Cost</label>
-              <input v-model="formData.single_user_license_cost" type="number" class="w-full bg-gray-800/80 border border-gray-700 rounded-xl px-4 py-2 text-sm text-gray-200 focus:ring-2 focus:ring-blue-500/50" />
-            </div>
-            <div>
-              <label class="block text-sm font-semibold text-gray-300 mb-1.5 ml-1">Team User License Cost</label>
-              <input v-model="formData.team_user_license_cost" type="number" class="w-full bg-gray-800/80 border border-gray-700 rounded-xl px-4 py-2 text-sm text-gray-200 focus:ring-2 focus:ring-blue-500/50" />
-            </div>
-            <div>
-              <label class="block text-sm font-semibold text-gray-300 mb-1.5 ml-1">Enterprise User License Cost</label>
-              <input v-model="formData.enterprise_user_license_cost" type="number" class="w-full bg-gray-800/80 border border-gray-700 rounded-xl px-4 py-2 text-sm text-gray-200 focus:ring-2 focus:ring-blue-500/50" />
-            </div>
-          </div>
+          <!-- License Costs Removed from Edit Mode -->
         </div>
       </div>
 

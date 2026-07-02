@@ -53,9 +53,6 @@ class ReportDetailController extends Controller
             'description' => 'nullable|string',
             'detail_description' => 'nullable|string',
             'category_list_download' => 'nullable|string',
-            'single_user_license_cost' => 'nullable|string',
-            'team_user_license_cost' => 'nullable|string',
-            'enterprise_user_license_cost' => 'nullable|string',
             'download_text' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'status' => 'required|string|in:Active,Inactive',
@@ -94,17 +91,6 @@ class ReportDetailController extends Controller
 
         $detail = ReportDetail::create($data);
 
-        // Synchronize license costs globally across all reports ONLY if they are provided
-        $licenseCosts = $request->only([
-            'single_user_license_cost',
-            'team_user_license_cost',
-            'enterprise_user_license_cost'
-        ]);
-
-        if (array_filter($licenseCosts)) {
-            ReportDetail::query()->update($licenseCosts);
-        }
-
         $detail->load('reportList:id,name');
 
         return response()->json([
@@ -126,9 +112,6 @@ class ReportDetailController extends Controller
             'description' => 'nullable|string',
             'detail_description' => 'nullable|string',
             'category_list_download' => 'nullable|string',
-            'single_user_license_cost' => 'nullable|string',
-            'team_user_license_cost' => 'nullable|string',
-            'enterprise_user_license_cost' => 'nullable|string',
             'download_text' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'status' => 'required|string|in:Active,Inactive',
@@ -169,17 +152,6 @@ class ReportDetailController extends Controller
         }
 
         $detail->update($data);
-
-        // Synchronize license costs globally across all reports ONLY if they are provided
-        $licenseCosts = $request->only([
-            'single_user_license_cost',
-            'team_user_license_cost',
-            'enterprise_user_license_cost'
-        ]);
-
-        if (array_filter($licenseCosts)) {
-            ReportDetail::query()->update($licenseCosts);
-        }
 
         $detail->load('reportList:id,name');
 

@@ -7,9 +7,6 @@ export const formData = reactive({
     detail_description: '',
     table_of_contents: '',
     category_list_download: '',
-    single_user_license_cost: '',
-    team_user_license_cost: '',
-    enterprise_user_license_cost: '',
     download_text: '',
     image: null,
     status: 'Active',
@@ -42,9 +39,6 @@ export const setFormData = (data) => {
     formData.detail_description = data.detail_description || '';
     formData.table_of_contents = data.table_of_contents || '';
     formData.category_list_download = data.category_list_download || '';
-    formData.single_user_license_cost = data.single_user_license_cost || '';
-    formData.team_user_license_cost = data.team_user_license_cost || '';
-    formData.enterprise_user_license_cost = data.enterprise_user_license_cost || '';
     formData.download_text = data.download_text || '';
     formData.image = data.image || null;
     formData.status = data.status || 'Active';
@@ -73,9 +67,6 @@ export const resetForm = () => {
     formData.detail_description = '';
     formData.table_of_contents = '';
     formData.category_list_download = '';
-    formData.single_user_license_cost = '';
-    formData.team_user_license_cost = '';
-    formData.enterprise_user_license_cost = '';
     formData.download_text = '';
     formData.image = null;
     formData.status = 'Active';

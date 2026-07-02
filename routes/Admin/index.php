@@ -3,6 +3,7 @@ use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\ReportCategoryController;
 use App\Http\Controllers\Admin\ReportListController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\PricingController;
 
 Route::post('/admin/login', [AdminAuthController::class, 'login']);
 
@@ -14,6 +15,12 @@ Route::post('/admin/update-username', [DashboardController::class, 'updateUserna
 Route::get('/admin/sessions', [DashboardController::class, 'getSessions']);
 Route::delete('/admin/sessions/{id}', [DashboardController::class, 'logoutSession']);
 Route::delete('/admin/sessions', [DashboardController::class, 'logoutOtherSessions']);
+
+// Global Pricing
+Route::get('/admin/pricings', [PricingController::class, 'index']);
+Route::post('/admin/pricings', [PricingController::class, 'store']);
+Route::put('/admin/pricings/{id}', [PricingController::class, 'update']);
+Route::delete('/admin/pricings/{id}', [PricingController::class, 'destroy']);
 
 // Report Categories
 Route::get('/admin/report-categories', [ReportCategoryController::class, 'index']);

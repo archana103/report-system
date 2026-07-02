@@ -17,6 +17,7 @@ import UserPrivacyPolicy from './Userview/PrivacyPolicy.vue'
 import UserTermsAndConditions from './Userview/TermsAndConditions.vue'
 import AdminLogin from './Admin/Login/Login.vue'
 import SidebarLayout from './Layout/Sidebar.vue'
+import PricingSetup from './Admin/PricingSetup/index.vue'
 import BlogRequests from './Admin/BlogRequests/index.vue'
 import Dashboard from './Admin/Dashboard/index.vue'
 import CategoryReport from './Admin/CategoryReport/index.vue'
@@ -58,6 +59,7 @@ const routes = [
       { path: 'category-report', component: CategoryReport },
       { path: 'category-list', component: ReportList },
       { path: 'category-details', component: ReportDetails },
+      { path: 'pricing-setup', component: PricingSetup },
       { path: 'top-selling-reports', component: TopSellingReports },
       { path: 'contact-us', component: ContactUs },
       { path: 'press-release', component: PressRelease },
