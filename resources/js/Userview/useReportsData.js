@@ -45,17 +45,41 @@ export function useReportsData() {
   }
 
   onMounted(() => {
-    if (route && route.query && route.query.category) {
-      selectedCategory.value = route.query.category
+    if (route && route.query) {
+      if (route.query.category) {
+        selectedCategory.value = route.query.category
+      }
+      if (route.query.search) {
+        searchQuery.value = route.query.search
+      }
     }
     fetchCategories()
     fetchReports(1)
   })
 
-  watch(() => route && route.query ? route.query.category : null, (newCat) => {
-    selectedCategory.value = newCat || 'All'
-    fetchReports(1)
-  })
+  watch(
+    () => [route?.query?.category, route?.query?.search],
+    ([newCat, newSearch]) => {
+      let changed = false;
+      
+      const categoryToSet = newCat || 'All';
+      if (selectedCategory.value !== categoryToSet) {
+          selectedCategory.value = categoryToSet;
+          changed = true;
+      }
+      
+      const searchToSet = newSearch || '';
+      if (searchQuery.value !== searchToSet) {
+          searchQuery.value = searchToSet;
+          changed = true;
+      }
+
+      if (changed) {
+          fetchReports(1);
+      }
+    },
+    { deep: true }
+  )
 
   const paginationRange = computed(() => {
     const current = currentPage.value;

@@ -227,7 +227,8 @@ input {
 .dropdown-menu a:hover {
   background: #f4f9ff;
   color: #0783df;
-  padding-left: 28px; /* micro nudge */
+  padding-left: 28px;
+  /* micro nudge */
 }
 
 /* Override main-nav styling side effects inside Industry dropdown menu */
@@ -258,7 +259,7 @@ input {
   width: 196px;
   height: 32px;
   padding: 0 12px;
-  border: 1px solid #111827;
+  border: 1px solid #b6c2ca;
   border-radius: 20px;
   background: #fff;
 }
@@ -619,10 +620,10 @@ input {
 }
 
 .report-card h3 {
-    margin: 0;
-    font-size: 17px;
-    line-height: 1.35;
-    font-weight: 600;
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.35;
+  font-weight: 600;
 }
 
 .report-card p {
@@ -982,6 +983,7 @@ input {
   padding: 0 28px;
   font-size: 12px;
 }
+
 .about-section {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 500px;
@@ -1360,32 +1362,33 @@ input {
   }
 
 
-.services-section .section-heading h2 {
-  font-size: 30px;
-  font-weight: 700;
-}
+  .services-section .section-heading h2 {
+    font-size: 30px;
+    font-weight: 700;
+  }
 
-.services-section .section-heading p {
-  max-width: 470px;
-  margin-top: 14px;
-  font-size: 13px;
-  line-height: 1.25;
-}
+  .services-section .section-heading p {
+    max-width: 470px;
+    margin-top: 14px;
+    font-size: 13px;
+    line-height: 1.25;
+  }
 
-.services-section .brand-mark.large {
-  width: 50px;
-  height: 50px;
-  font-size: 38px;
-}
+  .services-section .brand-mark.large {
+    width: 50px;
+    height: 50px;
+    font-size: 38px;
+  }
 
 
 
-.services-section .primary-button.small {
-  min-height: 34px;
-  padding: 0 28px;
-  font-size: 12px;
-}
-.about-section {
+  .services-section .primary-button.small {
+    min-height: 34px;
+    padding: 0 28px;
+    font-size: 12px;
+  }
+
+  .about-section {
     padding: 90px 0;
   }
 }

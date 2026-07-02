@@ -21,6 +21,7 @@ Route::post('/api/request-form', [UserviewController::class, 'storeRequestForm']
 Route::post('/api/contact-us', [UserviewController::class, 'storeContactForm']);
 Route::post('/api/blog-request', [UserviewController::class, 'storeBlogRequest']);
 Route::get('/api/pricings-active', [App\Http\Controllers\Admin\PricingController::class, 'getActivePricings']);
+Route::get('/api/search-predictive', [UserviewController::class, 'predictiveSearch']);
 
 Route::get('/', [SeoPageController::class, 'show']);
 include 'Admin/index.php';

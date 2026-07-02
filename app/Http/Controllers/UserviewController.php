@@ -141,6 +141,45 @@ class UserviewController extends Controller
     }
 
     /**
+     * Predictive search for site header.
+     */
+    public function predictiveSearch(Request $request)
+    {
+        $search = $request->query('query');
+        
+        if (!$search || strlen(trim($search)) < 2) {
+            return response()->json([]);
+        }
+
+        $query = ReportList::with(['reportDetail'])
+            ->has('reportDetail')
+            ->where('status', 'Active');
+
+        // Search on title / name using B-Tree index / LIKE matching
+        $query->where(function ($q) use ($search) {
+            $q->whereHas('reportDetail', function ($q2) use ($search) {
+                  $q2->whereRaw("MATCH(title) AGAINST(? IN BOOLEAN MODE)", [$search . '*'])
+                     ->orWhere('title', 'like', '%' . $search . '%');
+              })
+              ->orWhere('name', 'like', '%' . $search . '%');
+        });
+
+        // The user specifically requested a limit of 6
+        $reports = $query->orderBy('created_at', 'desc')
+            ->limit(6)
+            ->get()
+            ->map(function ($report) {
+                return [
+                    'id' => $report->id,
+                    'title' => ($report->reportDetail && $report->reportDetail->title) ? $report->reportDetail->title : $report->name,
+                    'slug_url' => ($report->reportDetail && $report->reportDetail->slug_url) ? $report->reportDetail->slug_url : '#'
+                ];
+            });
+
+        return response()->json($reports);
+    }
+
+    /**
      * Get recent blogs.
      */
     public function blogs()
