@@ -204,4 +204,55 @@ class ReportDetailController extends Controller
             'message' => 'Report Detail deleted successfully!',
         ]);
     }
+
+    /**
+     * Upload an image from the text editor directly to S3.
+     */
+    public function uploadEditorImage(Request $request)
+    {
+        $fileInput = $request->hasFile('file') ? 'file' : ($request->hasFile('blob') ? 'blob' : null);
+
+        \Illuminate\Support\Facades\Log::info('uploadEditorImage request received', [
+            'has_file' => $request->hasFile('file'),
+            'has_blob' => $request->hasFile('blob'),
+            'all_keys' => array_keys($request->all()),
+        ]);
+
+        try {
+            $request->validate([
+                $fileInput ?: 'file' => 'required|image|mimes:jpeg,png,jpg,gif,webp,svg|max:10240',
+            ]);
+
+            if ($fileInput) {
+                $file = $request->file($fileInput);
+                $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $extension = $file->getClientOriginalExtension();
+                $sanitizedName = trim(preg_replace('/[^A-Za-z0-9_\-]/', '_', $originalName), '_');
+                $filename = ($sanitizedName ?: 'editor_image') . '_' . time() . '_' . bin2hex(random_bytes(4)) . '.' . $extension;
+
+                $path = $file->storeAs('uploads/reports', $filename, 'editor');
+                $url = Storage::disk('editor')->url($path);
+
+                \Illuminate\Support\Facades\Log::info('uploadEditorImage success', ['url' => $url]);
+
+                return response()->json([
+                    'location' => $url,
+                ]);
+            }
+
+            \Illuminate\Support\Facades\Log::warning('uploadEditorImage: No file found in request keys: ' . implode(', ', array_keys($request->all())));
+            return response()->json(['error' => 'No file uploaded'], 400);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'error' => $e->validator->errors()->first(),
+            ], 422);
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('uploadEditorImage error', [
+                'message' => $e->getMessage(),
+                'trace' => substr($e->getTraceAsString(), 0, 1000),
+            ]);
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
 }
+

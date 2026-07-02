@@ -6,6 +6,7 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
+import axios from 'axios';
 
 const props = defineProps({
   modelValue: {
@@ -47,6 +48,29 @@ onMounted(() => {
           'bold italic underline strikethrough | forecolor backcolor | ' +
           'link image media table | alignleft aligncenter alignright alignjustify | ' +
           'bullist numlist outdent indent | removeformat | code fullscreen help',
+        images_upload_handler: (blobInfo, progress) => new Promise((resolve, reject) => {
+          const formData = new FormData();
+          formData.append('file', blobInfo.blob(), blobInfo.filename());
+
+          axios.post('/admin/editor/upload-image', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            },
+            onUploadProgress: (e) => {
+              progress(e.loaded / e.total * 100);
+            }
+          })
+          .then(response => {
+            if (response.data && response.data.location) {
+              resolve(response.data.location);
+            } else {
+              reject('Invalid upload response');
+            }
+          })
+          .catch(error => {
+            reject(error.response?.data?.error || error.response?.data?.message || error.message || 'Image upload failed');
+          });
+        }),
         ...props.config,
         setup: (editor) => {
           instance = editor;
@@ -55,7 +79,7 @@ onMounted(() => {
             editor.setContent(props.modelValue || '');
             isSettingData = false;
           });
-          editor.on('input change undo redo', () => {
+          editor.on('input change undo redo keyup ExecCommand NodeChange SetContent', () => {
             if (isSettingData) return;
             emit('update:modelValue', editor.getContent());
           });
@@ -96,3 +120,4 @@ watch(() => props.modelValue, (newVal) => {
   border-radius: 0.75rem !important;
 }
 </style>
+

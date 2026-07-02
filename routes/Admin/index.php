@@ -34,6 +34,7 @@ Route::get('/admin/report-details', [App\Http\Controllers\Admin\ReportDetailCont
 Route::post('/admin/report-details', [App\Http\Controllers\Admin\ReportDetailController::class, 'store']);
 Route::put('/admin/report-details/{id}', [App\Http\Controllers\Admin\ReportDetailController::class, 'update']);
 Route::delete('/admin/report-details/{id}', [App\Http\Controllers\Admin\ReportDetailController::class, 'destroy']);
+Route::post('/admin/editor/upload-image', [App\Http\Controllers\Admin\ReportDetailController::class, 'uploadEditorImage']);
 // Top Selling Reports
 Route::get('/admin/top-selling-reports/search', [App\Http\Controllers\Admin\TopSellingReportController::class, 'search']);
 Route::get('/admin/top-selling-reports', [App\Http\Controllers\Admin\TopSellingReportController::class, 'index']);
