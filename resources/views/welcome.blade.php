@@ -13,7 +13,25 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
      <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Research Report System</title>
+        <title>{{ $seo['title'] ?? 'Research Report System' }}</title>
+    @if(!empty($seo['description']))
+    <meta name="description" content="{{ $seo['description'] }}">
+    @endif
+    @if(!empty($seo['keywords']))
+    <meta name="keywords" content="{{ $seo['keywords'] }}">
+    @endif
+    @if(!empty($seo['robots']))
+    <meta name="robots" content="{{ $seo['robots'] }}">
+    @endif
+    @if(!empty($seo['canonical']))
+    <link rel="canonical" href="{{ $seo['canonical'] }}">
+    @endif
+    @if(!empty($seo['title']))
+    <meta name="title" content="{{ $seo['title'] }}">
+    @endif
+    @if(!empty($seo['raw_head']))
+    {!! $seo['raw_head'] !!}
+    @endif
     <link rel="icon" type="image/png" href="/favicon.png?v=3.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

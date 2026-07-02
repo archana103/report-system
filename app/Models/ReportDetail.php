@@ -13,6 +13,7 @@ class ReportDetail extends Model
         'report_list_id',
         'title',
         'description',
+        'detail_description',
         'category_list_download',
         'single_user_license_cost',
         'team_user_license_cost',

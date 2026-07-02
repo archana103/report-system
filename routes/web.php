@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\UserviewController;
+use App\Http\Controllers\SeoPageController;
 
 Route::get('/api/categories-with-reports', [UserviewController::class, 'categoriesWithReports']);
 Route::get('/api/reports-by-category', [UserviewController::class, 'reportsByCategory']);
@@ -20,13 +21,12 @@ Route::post('/api/request-form', [UserviewController::class, 'storeRequestForm']
 Route::post('/api/contact-us', [UserviewController::class, 'storeContactForm']);
 Route::post('/api/blog-request', [UserviewController::class, 'storeBlogRequest']);
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [SeoPageController::class, 'show']);
 include 'Admin/index.php';
 include 'Paypal/index.php';
 Route::get('storage/{path}', function ($path) {
     return redirect()->away(Storage::disk('s3')->url($path));
 })->where('path', '.*');
 
-Route::view('/{any}', 'welcome')->where('any', '.*');
+Route::get('/{any}', [SeoPageController::class, 'show'])->where('any', '.*');
+

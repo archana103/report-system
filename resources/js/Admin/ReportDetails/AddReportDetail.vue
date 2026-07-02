@@ -126,7 +126,7 @@ onMounted(() => {
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label class="block text-sm font-semibold text-gray-300 mb-1.5 ml-1">Report Details Description</label>
-            <textarea v-model="formData.description" rows="3" class="w-full bg-gray-800/80 border border-gray-700 rounded-xl px-4 py-2 text-sm text-gray-200 focus:ring-2 focus:ring-blue-500/50"></textarea>
+            <textarea v-model="formData.detail_description" rows="3" class="w-full bg-gray-800/80 border border-gray-700 rounded-xl px-4 py-2 text-sm text-gray-200 focus:ring-2 focus:ring-blue-500/50"></textarea>
           </div>
           <div>
             <label class="block text-sm font-semibold text-gray-300 mb-1.5 ml-1">Report Category List Download</label>
@@ -339,6 +339,12 @@ onMounted(() => {
                <label class="block text-sm font-semibold text-gray-300 mb-1.5 ml-1">Report Details Title</label>
                <textarea v-model="formData.title" rows="2" class="w-full bg-gray-800/80 border border-gray-700 rounded-xl px-4 py-2 text-sm text-gray-200 focus:ring-2 focus:ring-blue-500/50"></textarea>
              </div>
+             
+             <div>
+               <label class="block text-sm font-semibold text-gray-300 mb-1.5 ml-1">Report Details Description</label>
+               <textarea v-model="formData.detail_description" rows="2" class="w-full bg-gray-800/80 border border-gray-700 rounded-xl px-4 py-2 text-sm text-gray-200 focus:ring-2 focus:ring-blue-500/50"></textarea>
+             </div>
+
              <div>
                <label class="block text-sm font-semibold text-gray-300 mb-1.5 ml-1">Report Category List Download</label>
                <textarea v-model="formData.category_list_download" rows="2" class="w-full bg-gray-800/80 border border-gray-700 rounded-xl px-4 py-2 text-sm text-gray-200 focus:ring-2 focus:ring-blue-500/50"></textarea>

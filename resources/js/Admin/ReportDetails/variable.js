@@ -4,6 +4,7 @@ export const formData = reactive({
     report_list_id: '',
     title: '',
     description: '',
+    detail_description: '',
     table_of_contents: '',
     category_list_download: '',
     single_user_license_cost: '',
@@ -38,6 +39,7 @@ export const setFormData = (data) => {
     formData.report_list_id = data.report_list_id || '';
     formData.title = data.title || '';
     formData.description = data.description || '';
+    formData.detail_description = data.detail_description || '';
     formData.table_of_contents = data.table_of_contents || '';
     formData.category_list_download = data.category_list_download || '';
     formData.single_user_license_cost = data.single_user_license_cost || '';
@@ -68,6 +70,7 @@ export const resetForm = () => {
     formData.report_list_id = '';
     formData.title = '';
     formData.description = '';
+    formData.detail_description = '';
     formData.table_of_contents = '';
     formData.category_list_download = '';
     formData.single_user_license_cost = '';
