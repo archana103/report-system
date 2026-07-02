@@ -6,10 +6,11 @@
           <img :src="$assetUrl + '/assets/images/logo.png'" alt="Epignosis Insights Logo" class="brand-logo" />
         </a>
         <p>Delivering data-driven insights to support smarter business decisions.</p>
-        <form class="footer-form">
-          <input type="email" placeholder="Email Address" />
-          <button type="submit">Show Now!</button>
+        <form class="footer-form" @submit.prevent="subscribeNewsletter">
+          <input type="email" placeholder="Email Address" v-model="emailAddress" required :disabled="isSubscribing" />
+          <button type="submit" :disabled="isSubscribing" :style="{ opacity: isSubscribing ? 0.7 : 1 }">{{ isSubscribing ? 'Submitting...' : 'Show Now!' }}</button>
         </form>
+        <p v-if="subscriptionMessage" :style="{ color: messageType === 'success' ? '#10b981' : '#ef4444', fontSize: '13px', marginTop: '8px', fontWeight: '500' }">{{ subscriptionMessage }}</p>
       </div>
       <div class="footer-contact">
         <p><span>
@@ -54,9 +55,41 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
+import axios from 'axios'
 import { IconPin, IconMail, PhoneMini, IconArrowUp } from '../icons'
 
 const showUpscroll = ref(false)
+const emailAddress = ref('')
+const isSubscribing = ref(false)
+const subscriptionMessage = ref('')
+const messageType = ref('')
+
+const subscribeNewsletter = async () => {
+  if (!emailAddress.value) return
+  isSubscribing.value = true
+  subscriptionMessage.value = ''
+  
+  try {
+    const response = await axios.post('/api/newsletter', { email: emailAddress.value })
+    subscriptionMessage.value = response.data.message
+    messageType.value = 'success'
+    emailAddress.value = ''
+  } catch (error) {
+    if (error.response && error.response.data && error.response.data.errors) {
+      subscriptionMessage.value = Object.values(error.response.data.errors)[0][0]
+    } else if (error.response && error.response.data && error.response.data.message) {
+      subscriptionMessage.value = error.response.data.message
+    } else {
+      subscriptionMessage.value = 'Something went wrong. Please try again later.'
+    }
+    messageType.value = 'error'
+  } finally {
+    isSubscribing.value = false
+    setTimeout(() => {
+      subscriptionMessage.value = ''
+    }, 5000)
+  }
+}
 
 const handleScroll = () => {
   showUpscroll.value = window.scrollY > 300

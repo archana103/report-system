@@ -63,6 +63,10 @@ Route::delete('/admin/blog-details/{id}', [App\Http\Controllers\Admin\BlogDetail
 // Contact Us
 Route::get('/admin/contact-us-data', [App\Http\Controllers\Admin\ContactUsController::class, 'index']);
 
+// Newsletters
+Route::get('/admin/newsletters-data', [App\Http\Controllers\Admin\NewsletterController::class, 'index']);
+Route::delete('/admin/newsletters-data/{id}', [App\Http\Controllers\Admin\NewsletterController::class, 'destroy']);
+
 // Request Forms
 Route::get('/admin/request-forms', [App\Http\Controllers\Admin\RequestFormController::class, 'index']);
 Route::delete('/admin/request-forms/{id}', [App\Http\Controllers\Admin\RequestFormController::class, 'destroy']);

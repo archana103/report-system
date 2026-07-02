@@ -27,7 +27,7 @@
           </div>
         </div>
         <div class="center-action">
-          <a href="#" class="primary-button small">Learn More</a>
+          <router-link to="/services" class="primary-button small">Learn More</router-link>
         </div>
       </section>
 </template>

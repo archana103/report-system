@@ -44,8 +44,8 @@
           <h1>Data-Driven <span>Insights</span> for <span>Smarter Business</span> Decisions</h1>
           <p>Access in-depth market research reports, industry analysis, and future forecasts to stay ahead of the competition.</p>
           <div class="hero-buttons">
-            <a href="#reports" class="primary-button">Explore Reports</a>
-            <a href="#contact" class="secondary-button">Request Custom Research</a>
+            <router-link to="/reports" class="primary-button">Explore Reports</router-link>
+            <router-link to="/press-releases" class="secondary-button">Press Release</router-link>
           </div>
           <div class="feature-pills">
             <span><IconChart /> Data-Backed Insights</span>

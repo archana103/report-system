@@ -19,6 +19,7 @@ import AdminLogin from './Admin/Login/Login.vue'
 import SidebarLayout from './Layout/Sidebar.vue'
 import PricingSetup from './Admin/PricingSetup/index.vue'
 import BlogRequests from './Admin/BlogRequests/index.vue'
+import Newsletters from './Admin/Newsletters/index.vue'
 import Dashboard from './Admin/Dashboard/index.vue'
 import CategoryReport from './Admin/CategoryReport/index.vue'
 import ReportList from './Admin/ReportList/index.vue'
@@ -68,6 +69,7 @@ const routes = [
       { path: 'blogs', component: Blogs },
       { path: 'blog-details', component: BlogDetails },
       { path: 'blog-requests', component: BlogRequests },
+      { path: 'newsletters', component: Newsletters },
       { path: 'change-password', component: ChangePassword },
     ]
   },
@@ -75,7 +77,16 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    if (to.hash) {
+      return { el: to.hash, behavior: 'smooth' }
+    } else if (savedPosition) {
+      return savedPosition
+    } else {
+      return { top: 0, behavior: 'smooth' }
+    }
+  }
 })
 
 router.beforeEach((to, from) => {
