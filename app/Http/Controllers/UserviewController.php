@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\ReportCategory;
 use App\Models\ReportList;
 use App\Models\PressRelease;
+use App\Models\ContactUS;
+use App\Models\DiscountRequest;
+use App\Models\TopSellingReport;
 
 class UserviewController extends Controller
 {
@@ -176,6 +179,16 @@ class UserviewController extends Controller
                 ];
             });
 
+        return response()->json($reports);
+    }
+    
+    public function publicTopSellingReports()
+    {
+        $reports = TopSellingReport::with('reportDetail:id,title,slug_url')
+            ->orderBy('created_at', 'desc')
+            ->take(5)
+            ->get();
+            
         return response()->json($reports);
     }
 
