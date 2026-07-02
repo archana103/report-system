@@ -109,7 +109,10 @@
         </div>
 
         <!-- Actions -->
-        <div class="flex items-center justify-end space-x-4 pt-4 border-t border-gray-700/50">
+        <div class="flex items-center justify-end space-x-4 px-6 py-4 bg-gray-900/30 border-t border-gray-700/50">
+          <div v-if="successMessage || errorMessage" class="mr-auto text-sm font-medium px-4 py-2 rounded-xl" :class="successMessage ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-rose-500/10 text-rose-400 border border-rose-500/20'">
+            {{ successMessage || errorMessage }}
+          </div>
           <button 
             type="button" 
             @click="$emit('saved')"
@@ -146,6 +149,8 @@ const props = defineProps({
 const emit = defineEmits(['saved'])
 
 const loading = ref(false)
+const successMessage = ref('')
+const errorMessage = ref('')
 
 const form = ref({
   title: '',
@@ -165,6 +170,8 @@ const handleFileChange = (e, field) => {
 
 const handleSubmit = async () => {
   loading.value = true
+  successMessage.value = ''
+  errorMessage.value = ''
   
   try {
     const formData = new FormData()
@@ -181,17 +188,18 @@ const handleSubmit = async () => {
     }
 
     if (props.mode === 'edit') {
-      // For updates in Laravel via FormData, we can append _method = PUT if we mapped route as PUT
-      // But we mapped it as POST in routes/Admin/index.php, so just send POST.
       await updatePressRelease(props.release.id, formData)
     } else {
       await storePressRelease(formData)
     }
     
-    emit('saved')
+    successMessage.value = props.mode === 'edit' ? 'Updated successfully!' : 'Added successfully!'
+    setTimeout(() => {
+      emit('saved')
+    }, 1000)
   } catch (error) {
     console.error('Error saving press release:', error)
-    alert(error.response?.data?.message || 'An error occurred while saving.')
+    errorMessage.value = error.response?.data?.message || 'An error occurred while saving.'
   } finally {
     loading.value = false
   }

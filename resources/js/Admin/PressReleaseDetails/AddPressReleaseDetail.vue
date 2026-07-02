@@ -197,7 +197,10 @@
         </div>
 
         <!-- Submit and Reset Actions -->
-        <div class="flex items-center justify-end space-x-4 pt-4 border-t border-gray-700/50">
+        <div class="flex items-center justify-end space-x-4 px-6 py-4 bg-gray-900/30 border-t border-gray-700/50">
+          <div v-if="successMessage || errorMessage" class="mr-auto text-sm font-medium px-4 py-2 rounded-xl" :class="successMessage ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-rose-500/10 text-rose-400 border border-rose-500/20'">
+            {{ successMessage || errorMessage }}
+          </div>
           <button 
             type="button" 
             @click="$emit('saved')"
@@ -235,6 +238,8 @@ const props = defineProps({
 const emit = defineEmits(['saved'])
 
 const loading = ref(false)
+const successMessage = ref('')
+const errorMessage = ref('')
 const pressReleasesList = ref([])
 
 const form = ref({
@@ -273,16 +278,21 @@ const fetchDropdownData = async () => {
 
 const handleSubmit = async () => {
   loading.value = true
+  successMessage.value = ''
+  errorMessage.value = ''
   try {
     if (props.mode === 'edit') {
       await updatePressReleaseDetail(props.detail.id, form.value)
     } else {
       await storePressReleaseDetail(form.value)
     }
-    emit('saved')
+    successMessage.value = props.mode === 'edit' ? 'Updated successfully!' : 'Added successfully!'
+    setTimeout(() => {
+      emit('saved')
+    }, 1000)
   } catch (error) {
     console.error('Error submitting form:', error)
-    alert(error.response?.data?.message || 'An error occurred while saving.')
+    errorMessage.value = error.response?.data?.message || 'An error occurred while saving.'
   } finally {
     loading.value = false
   }

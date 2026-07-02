@@ -76,15 +76,7 @@ onMounted(() => {
       {{ mode === 'edit' ? 'Edit Report' : 'Add New Report' }}
     </h2>
 
-    <div
-      v-if="successMessage"
-      class="mb-4 p-4 rounded-xl text-sm font-medium"
-      :class="successMessage.includes('successfully')
-        ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
-        : 'bg-red-500/10 text-red-400 border border-red-500/20'"
-    >
-      {{ successMessage }}
-    </div>
+    <!-- Notification moved to bottom -->
 
     <form @submit.prevent="submitForm" class="space-y-6">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -157,8 +149,20 @@ onMounted(() => {
       </div>
 
       <!-- Actions -->
-      <div class="flex items-center pt-4 border-t border-gray-700/50">
-        <button
+      <div class="pt-4 border-t border-gray-700/50">
+        <!-- Status Message -->
+        <div
+          v-if="successMessage"
+          class="mb-6 p-4 rounded-xl text-sm font-medium inline-block w-full"
+          :class="successMessage.includes('successfully')
+            ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+            : 'bg-red-500/10 text-red-400 border border-red-500/20'"
+        >
+          {{ successMessage }}
+        </div>
+        
+        <div class="flex items-center">
+          <button
           type="submit"
           :disabled="isSubmitting"
           class="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500 text-white font-medium py-2.5 px-6 rounded-xl shadow-lg shadow-blue-500/20 transition-all active:scale-95 flex items-center justify-center disabled:opacity-50"
@@ -176,6 +180,7 @@ onMounted(() => {
         >
           Cancel
         </button>
+        </div>
       </div>
     </form>
   </div>

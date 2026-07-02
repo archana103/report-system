@@ -92,15 +92,7 @@ onMounted(() => {
       {{ mode === 'edit' ? 'Edit Report Detail' : 'Add Report Details' }}
     </h2>
 
-    <div
-      v-if="successMessage"
-      class="mb-4 p-4 rounded-xl text-sm font-medium"
-      :class="successMessage.includes('successfully')
-        ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
-        : 'bg-red-500/10 text-red-400 border border-red-500/20'"
-    >
-      {{ successMessage }}
-    </div>
+    <!-- Notification logic moved to bottom -->
 
     <form @submit.prevent="submitForm" class="space-y-8">
       
@@ -355,8 +347,20 @@ onMounted(() => {
       </div>
 
       <!-- Actions -->
-      <div class="flex items-center pt-6 border-t border-gray-700/50">
-        <button
+      <div class="pt-6 border-t border-gray-700/50">
+        <!-- Status Message -->
+        <div
+          v-if="successMessage"
+          class="mb-6 p-4 rounded-xl text-sm font-medium inline-block w-full"
+          :class="successMessage.includes('successfully')
+            ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+            : 'bg-red-500/10 text-red-400 border border-red-500/20'"
+        >
+          {{ successMessage }}
+        </div>
+        
+        <div class="flex items-center">
+          <button
           type="submit"
           :disabled="isSubmitting"
           class="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500 text-white font-medium py-3 px-8 rounded-xl shadow-lg shadow-blue-500/20 transition-all active:scale-95 flex items-center justify-center disabled:opacity-50"
@@ -374,6 +378,7 @@ onMounted(() => {
         >
           Close
         </button>
+        </div>
       </div>
     </form>
   </div>

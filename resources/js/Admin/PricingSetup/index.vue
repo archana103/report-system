@@ -66,11 +66,16 @@
               </div>
             </div>
             
-            <div class="mt-8 flex justify-end space-x-3">
-              <button type="button" @click="closeModal" class="px-6 py-2.5 font-medium text-gray-300 hover:text-white rounded-xl hover:bg-gray-700/50 transition-colors">Cancel</button>
-              <button type="submit" :disabled="isSubmitting" class="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500 disabled:opacity-50 text-white font-medium py-2.5 px-6 rounded-xl shadow-lg shadow-blue-500/20 transition-all">
-                {{ isSubmitting ? 'Saving...' : 'Save Options' }}
-              </button>
+            <div class="mt-8 flex flex-col items-end">
+              <div v-if="errorMessage" class="w-full mb-4 px-4 py-3 bg-red-500/10 text-red-500 border border-red-500/20 rounded-xl text-sm font-medium">
+                {{ errorMessage }}
+              </div>
+              <div class="flex justify-end space-x-3 w-full">
+                <button type="button" @click="closeModal" class="px-6 py-2.5 font-medium text-gray-300 hover:text-white rounded-xl hover:bg-gray-700/50 transition-colors">Cancel</button>
+                <button type="submit" :disabled="isSubmitting" class="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500 disabled:opacity-50 text-white font-medium py-2.5 px-6 rounded-xl shadow-lg shadow-blue-500/20 transition-all">
+                  {{ isSubmitting ? 'Saving...' : 'Save Options' }}
+                </button>
+              </div>
             </div>
           </form>
         </div>
@@ -87,6 +92,7 @@ const pricings = ref([]);
 const isModalOpen = ref(false);
 const isEditing = ref(false);
 const isSubmitting = ref(false);
+const errorMessage = ref('');
 
 const form = ref({
   id: null,
@@ -124,6 +130,7 @@ const openModal = (pricing = null) => {
 
 const closeModal = () => {
   isModalOpen.value = false;
+  errorMessage.value = '';
 };
 
 const submitForm = async () => {
@@ -139,9 +146,9 @@ const submitForm = async () => {
   } catch (error) {
     console.error('Error saving pricing', error);
     if (error.response && error.response.data && error.response.data.message) {
-      alert('Error: ' + error.response.data.message);
+      errorMessage.value = error.response.data.message;
     } else {
-      alert('Failed to save pricing option.');
+      errorMessage.value = 'Failed to save pricing option.';
     }
   } finally {
     isSubmitting.value = false;

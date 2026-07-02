@@ -12,9 +12,7 @@
         </div>
 
         <div class="flex-grow overflow-y-auto p-8 custom-scrollbar">
-          <div v-if="successMessage" class="mb-6 p-4 rounded-xl text-sm font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-             {{ successMessage }}
-          </div>
+          <!-- Notification moved to bottom -->
 
           <form @submit.prevent="submitForm" class="space-y-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -73,14 +71,19 @@
           </form>
         </div>
 
-        <div class="px-8 py-4 bg-gray-900/30 border-t border-gray-700 flex justify-end items-center">
-          <button @click="$emit('cancel')" class="mr-4 text-gray-400 hover:text-gray-200 font-medium py-2 px-6 rounded-xl hover:bg-gray-700/50 transition-all text-sm">
-            Cancel
-          </button>
-          <button @click="submitForm" :disabled="isSubmitting" class="bg-gradient-to-r from-teal-500 to-emerald-600 hover:from-teal-400 hover:to-emerald-500 text-white font-medium py-2 px-8 rounded-xl shadow-lg shadow-teal-500/20 transition-all active:scale-95 flex items-center justify-center disabled:opacity-50 text-sm">
-            <span v-if="isSubmitting">Saving Changes...</span>
-            <span v-else>Update Category</span>
-          </button>
+        <div class="px-8 flex-col justify-end items-end w-full py-4 bg-gray-900/30 border-t border-gray-700 flex justify-end items-center">
+          <div v-if="successMessage" class="mb-4 w-full p-3 rounded-xl text-sm font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-center">
+             {{ successMessage }}
+          </div>
+          <div class="flex justify-end items-center w-full">
+            <button @click="$emit('cancel')" class="mr-4 text-gray-400 hover:text-gray-200 font-medium py-2 px-6 rounded-xl hover:bg-gray-700/50 transition-all text-sm">
+              Cancel
+            </button>
+            <button @click="submitForm" :disabled="isSubmitting" class="bg-gradient-to-r from-teal-500 to-emerald-600 hover:from-teal-400 hover:to-emerald-500 text-white font-medium py-2 px-8 rounded-xl shadow-lg shadow-teal-500/20 transition-all active:scale-95 flex items-center justify-center disabled:opacity-50 text-sm">
+              <span v-if="isSubmitting">Saving Changes...</span>
+              <span v-else>Update Category</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>

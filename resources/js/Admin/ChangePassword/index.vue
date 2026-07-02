@@ -7,15 +7,7 @@
         Change Admin Password
       </h2>
 
-      <div
-        v-if="message"
-        class="mb-6 p-4 rounded-xl text-sm font-medium"
-        :class="isError 
-          ? 'bg-rose-500/10 text-rose-400 border border-rose-500/20' 
-          : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'"
-      >
-        {{ message }}
-      </div>
+      <!-- Messages moved to bottom near action -->
 
       <form @submit.prevent="handleSubmit" class="bg-gray-900/40 rounded-2xl p-6 border border-gray-800 shadow-inner space-y-6">
         <div>
@@ -61,7 +53,16 @@
           </div>
         </div>
 
-        <div class="pt-2">
+        <div class="pt-2 flex flex-col items-start w-full">
+          <div
+            v-if="message"
+            class="mb-4 w-full p-4 rounded-xl text-sm font-medium"
+            :class="isError 
+              ? 'bg-rose-500/10 text-rose-400 border border-rose-500/20' 
+              : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'"
+          >
+            {{ message }}
+          </div>
           <button
             type="submit"
             :disabled="loading"

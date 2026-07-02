@@ -91,13 +91,7 @@ onMounted(() => {
         </div>
     </div>
 
-    <div
-      v-if="successMessage"
-      class="mb-6 p-4 rounded-xl text-sm font-medium animate-in zoom-in-95 duration-300 shadow-lg shadow-emerald-500/10 border border-emerald-500/20"
-      :class="successMessage.includes('successfully') ? 'bg-emerald-500/10 text-emerald-400' : 'bg-red-500/10 text-red-400'"
-    >
-      {{ successMessage }}
-    </div>
+    <!-- Notification logic moved below -->
 
     <form @submit.prevent="submitForm" class="space-y-8 pb-12">
       <!-- Basic Info -->
@@ -221,7 +215,16 @@ onMounted(() => {
       </template>
 
       <!-- Actions -->
-      <div class="flex items-center justify-end space-x-4">
+      <div class="flex flex-col items-end">
+        <div
+          v-if="successMessage"
+          class="mb-4 w-full p-4 rounded-xl text-sm font-medium animate-in zoom-in-95 duration-300 shadow-lg shadow-emerald-500/10 border border-emerald-500/20"
+          :class="successMessage.includes('successfully') ? 'bg-emerald-500/10 text-emerald-400' : 'bg-red-500/10 text-red-400'"
+        >
+          {{ successMessage }}
+        </div>
+        
+        <div class="flex items-center justify-end space-x-4 w-full">
         <button type="button" @click="$emit('cancel')" class="px-8 py-3 rounded-xl text-sm font-medium text-gray-400 hover:text-white transition-all">Cancel</button>
         <button
           type="submit"
@@ -231,6 +234,7 @@ onMounted(() => {
           <span v-if="isSubmitting">Saving...</span>
           <span v-else>{{ mode === 'edit' ? 'Update Detail' : 'Add Detail' }}</span>
         </button>
+        </div>
       </div>
     </form>
   </div>
