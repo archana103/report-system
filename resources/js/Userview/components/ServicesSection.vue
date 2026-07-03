@@ -19,10 +19,10 @@
               </defs>
               <path class="connector-path" marker-end="url(#service-arrow)" d="M 404 190 L 325 210" />
               <path class="connector-path" marker-end="url(#service-arrow)" d="M 576 190 L 655 210" />
-              <path class="connector-path" marker-end="url(#service-arrow)" d="M 490 276 V 385" />
+              <path class="connector-path" marker-end="url(#service-arrow)" d="M 490 276 V 390" />
             </svg>
             <div class="service-center">
-              <span class="brand-mark large">e</span>
+              <img :src="'/assets/images/service-center.png'" alt="Service Map Center" class="service-center-img" />
             </div>
           </div>
         </div>

@@ -14,13 +14,13 @@
       </div>
       <div class="footer-contact">
         <p><span>
-            <IconPin />
+            <img :src="$assetUrl + '/assets/images/footer_icons/icon_mail.png'" alt="Location" class="footer-icon-img" />
           </span>703 Kumar Corporate Building, Pune-411028, India</p>
         <p><span>
-            <IconMail />
+            <img :src="$assetUrl + '/assets/images/footer_icons/Icon.png'" alt="Email" class="footer-icon-img" />
           </span>sales@epignosisinsights.com</p>
         <p><span>
-            <PhoneMini />
+            <img :src="$assetUrl + '/assets/images/footer_icons/icon_phone.png'" alt="Phone" class="footer-icon-img" />
           </span>+91 9370940742</p>
       </div>
     </div>
@@ -34,10 +34,18 @@
         <router-link to="/contact">Contact</router-link>
       </nav>
       <div class="social-links">
-        <a href="https://www.facebook.com/people/Epignosis-Insights/61591089437924/" target="_blank" rel="noopener noreferrer">f</a>
-        <a href="https://www.linkedin.com/company/epignosis-insights/" target="_blank" rel="noopener noreferrer">in</a>
-        <a href="https://x.com/epignosisinsigh" target="_blank" rel="noopener noreferrer">x</a>
-        <a href="https://www.instagram.com/epignosisinsights/" target="_blank" rel="noopener noreferrer">ig</a>
+        <a href="https://www.facebook.com/people/Epignosis-Insights/61591089437924/" target="_blank" rel="noopener noreferrer">
+          <img :src="$assetUrl + '/assets/images/footer_icons/facebook.png'" alt="Facebook" class="social-icon-img" />
+        </a>
+        <a href="https://www.linkedin.com/company/epignosis-insights/" target="_blank" rel="noopener noreferrer">
+          <img :src="$assetUrl + '/assets/images/footer_icons/linkedin.png'" alt="LinkedIn" class="social-icon-img" />
+        </a>
+        <a href="https://x.com/epignosisinsigh" target="_blank" rel="noopener noreferrer">
+          <img :src="$assetUrl + '/assets/images/footer_icons/x.png'" alt="X" class="social-icon-img" />
+        </a>
+        <a href="https://www.instagram.com/epignosisinsights/" target="_blank" rel="noopener noreferrer">
+          <img :src="$assetUrl + '/assets/images/footer_icons/instagram.png'" alt="Instagram" class="social-icon-img" />
+        </a>
       </div>
     </div>
     <div class="footer-bottom">

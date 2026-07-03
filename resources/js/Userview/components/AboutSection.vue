@@ -9,7 +9,10 @@
         <img class="about-image" :src="$assetUrl + '/assets/images/aboutus.png'" alt="Analysts reviewing a market report" />
         <div class="about-stats">
           <div v-for="stat in aboutStats" :key="stat.label">
-            <span><component :is="stat.icon" /></span>
+            <span class="icon-span">
+              <img v-if="stat.image" :src="$assetUrl + stat.image" alt="Stat Icon" class="stat-img-icon" />
+              <component v-else :is="stat.icon" />
+            </span>
             <strong>{{ stat.value }}</strong>
             <p>{{ stat.label }}</p>
           </div>
@@ -21,10 +24,10 @@
 import { IconBrief, IconUsers, IconSliders, IconPin } from '../icons'
 
 const aboutStats = [
-  { value: '500+', label: 'Reports Published', icon: IconBrief },
-  { value: '100+', label: 'Global Clients', icon: IconUsers },
-  { value: '20+', label: 'Industries Covered', icon: IconSliders },
-  { value: '50+', label: 'Countries Analyzed', icon: IconPin }
+  { value: '500+', label: 'Reports Published', image: '/assets/images/about_icons/icon1.png' },
+  { value: '100+', label: 'Global Clients', image: '/assets/images/about_icons/icon3.png' },
+  { value: '20+', label: 'Industries Covered', image: '/assets/images/about_icons/icon2.png' },
+  { value: '50+', label: 'Countries Analyzed', image: '/assets/images/about_icons/icon1.png' }
 ]
 </script>
 
