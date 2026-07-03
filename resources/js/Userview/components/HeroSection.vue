@@ -1,44 +1,10 @@
 <template>
 <section class="hero-section">
-        <div class="hero-ring" aria-hidden="true"></div>
-        <div class="hero-card hero-card-left-top">
-          <p>Monthly Market Insights</p>
-          <div class="mini-bars tall">
-            <span v-for="n in 24" :key="`top-${n}`" :style="{ height: `${20 + ((n * 11) % 64)}px` }"></span>
-          </div>
-          <small>Global Market Trends - 2025</small>
-        </div>
-        <div class="hero-card hero-card-left-bottom">
-          <small>Industry Analysis</small>
-          <h3>Global Market Revenue</h3>
-          <div class="mini-bars">
-            <span v-for="n in 12" :key="`rev-${n}`" :style="{ height: `${30 + ((n * 17) % 76)}px` }"></span>
-          </div>
-          <div class="card-metrics">
-            <small>Current Growth</small>
-            <small>$920B</small>
-            <small>$1.4T</small>
-          </div>
-        </div>
-        <div class="hero-card hero-card-right-top">
-          <div class="donut"><span>65%</span></div>
-          <p>Market Growth Rate</p>
-          <small>Projected CAGR 2025-2030</small>
-        </div>
-        <div class="hero-card hero-card-right-mid">
-          <strong>65%</strong>
-          <small>Increase in Demand</small>
-          <div class="tiny-bars">
-            <span v-for="n in 6" :key="`tiny-${n}`" :style="{ height: `${12 + ((n * 13) % 34)}px` }"></span>
-          </div>
-        </div>
-        <div class="hero-card hero-card-right-bottom">
-          <p>Market Activity Trends</p>
-          <div class="mini-bars short">
-            <span v-for="n in 7" :key="`activity-${n}`" :style="{ height: `${28 + ((n * 19) % 75)}px` }"></span>
-          </div>
-          <small>S M T W T F S</small>
-        </div>
+        <img :src="'/assets/images/hero-cards/card5.png'" alt="Monthly Market Insights" class="hero-img-card hero-card-left-top" />
+        <img :src="'/assets/images/hero-cards/card3.png'" alt="Global Market Revenue" class="hero-img-card hero-card-left-bottom" />
+        <img :src="'/assets/images/hero-cards/card4.png'" alt="Market Growth Rate" class="hero-img-card hero-card-right-top" />
+        <img :src="'/assets/images/hero-cards/card2.png'" alt="Increase in Demand" class="hero-img-card hero-card-right-mid" />
+        <img :src="'/assets/images/hero-cards/card1.png'" alt="Market Activity Trends" class="hero-img-card hero-card-right-bottom" />
 
         <div class="hero-content">
           <h1>Data-Driven <span>Insights</span> for <span>Smarter Business</span> Decisions</h1>

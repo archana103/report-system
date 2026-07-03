@@ -60,15 +60,7 @@
                 <!-- Premium Pure CSS 3D Mockup Book Cover -->
                 <div class="report-image-wrap">
                   <router-link :to="`/report/${report.slug && report.slug !== '#' ? report.slug : report.id}`" class="cover-link">
-                    <div class="mockup-book-cover">
-                      <!-- <div class="spine-crease"></div> -->
-                      <div class="cover-content">
-                        <span class="cover-super-title">MARKET RESEARCH</span>
-                        <h4 class="cover-main-title">{{ report.category }}</h4>
-                        <span class="cover-sub-title">Premium Insights</span>
-                      </div>
-                      <div class="cover-badge">REPORT</div>
-                    </div>
+                    <img :src="report.image || '/assets/images/default-report.png'" :alt="report.title" />
                   </router-link>
                 </div>
 
@@ -100,35 +92,7 @@
             </div>
 
             <!-- Category Report Pagination -->
-            <div class="pagination-wrapper" v-if="totalPages > 1">
-              <button
-                class="nav-btn prev-btn"
-                :disabled="currentPage === 1"
-                @click="changePage(currentPage - 1)"
-              >
-                ‹ Previous
-              </button>
-
-              <div class="page-numbers">
-                <button
-                  v-for="page in paginationRange"
-                  :key="page"
-                  class="num-btn"
-                  :class="{ active: page === currentPage }"
-                  @click="changePage(page)"
-                >
-                  {{ page }}
-                </button>
-              </div>
-
-              <button
-                class="nav-btn next-btn"
-                :disabled="currentPage === totalPages"
-                @click="changePage(currentPage + 1)"
-              >
-                Next ›
-              </button>
-            </div>
+            <ReportPagination :currentPage="currentPage" :totalPages="totalPages" :paginationRange="paginationRange" @page-change="changePage" />
           </template>
         </section>
       </div>
@@ -152,6 +116,7 @@ import SiteHeader from './components/SiteHeader.vue'
 import SiteFooter from './components/SiteFooter.vue'
 import CustomResearchCTA from './components/CustomResearchCTA.vue'
 import RequestFormModal from '../components/RequestFormModal.vue'
+import ReportPagination from './components/ReportPagination.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -237,22 +202,32 @@ const changePage = (page) => {
 }
 
 const paginationRange = computed(() => {
-  const current = currentPage.value
-  const last = totalPages.value
-  const range = []
+  const current = currentPage.value;
+  const last = totalPages.value;
+  const delta = 1;
+  const range = [];
+  const rangeWithDots = [];
+  let l;
 
-  let start = Math.max(1, current - 1)
-  let end = Math.min(last, start + 2)
-
-  if (end - start < 2 && start > 1) {
-    start = Math.max(1, end - 2)
+  for (let i = 1; i <= last; i++) {
+    if (i === 1 || i === 2 || i === last || i === last - 1 || (i >= current - delta && i <= current + delta)) {
+      range.push(i);
+    }
   }
 
-  for (let i = start; i <= end; i++) {
-    range.push(i)
+  for (let i of range) {
+    if (l) {
+      if (i - l === 2) {
+        rangeWithDots.push(l + 1);
+      } else if (i - l !== 1) {
+        rangeWithDots.push('...');
+      }
+    }
+    rangeWithDots.push(i);
+    l = i;
   }
 
-  return range
+  return rangeWithDots;
 })
 
 // Initialize Page Data
@@ -501,7 +476,7 @@ watch(categoryName, () => {
 
 .report-list-card {
   display: flex;
-  background: #ffffff;
+  background: #FAFAFA;
   border-radius: 18px;
   padding: 10px;
   gap: 28px;
@@ -608,8 +583,8 @@ watch(categoryName, () => {
 }
 
 .hover-primary-title {
-  font-size: 16px;
-  font-weight: 800;
+  font-size: 15px;
+  font-weight: 500;
   line-height: 1.4;
   margin: 0 0 10px;
   transition: color 0.2s ease-in-out;
@@ -657,7 +632,7 @@ watch(categoryName, () => {
   background: transparent;
   border: 1px solid #0783df;
   color: #0783df;
-  padding: 8px 20px;
+  padding: 8px 12px;
   border-radius: 30px;
   font-weight: 600;
   text-decoration: none;

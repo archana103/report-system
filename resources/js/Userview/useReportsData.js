@@ -84,20 +84,30 @@ export function useReportsData() {
   const paginationRange = computed(() => {
     const current = currentPage.value;
     const last = totalPages.value;
+    const delta = 1;
     const range = [];
+    const rangeWithDots = [];
+    let l;
 
-    let start = Math.max(1, current - 1);
-    let end = Math.min(last, start + 2);
-    
-    if (end - start < 2 && start > 1) {
-      start = Math.max(1, end - 2);
+    for (let i = 1; i <= last; i++) {
+      if (i === 1 || i === 2 || i === last || i === last - 1 || (i >= current - delta && i <= current + delta)) {
+        range.push(i);
+      }
     }
 
-    for (let i = start; i <= end; i++) {
-      range.push(i);
+    for (let i of range) {
+      if (l) {
+        if (i - l === 2) {
+          rangeWithDots.push(l + 1);
+        } else if (i - l !== 1) {
+          rangeWithDots.push('...');
+        }
+      }
+      rangeWithDots.push(i);
+      l = i;
     }
 
-    return range;
+    return rangeWithDots;
   });
 
   return {

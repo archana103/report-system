@@ -18,19 +18,25 @@ class UserviewController extends Controller
      */
     public function categoriesWithReports()
     {
-        $categories = ReportCategory::where('status', 'Active')
-            ->orderBy('created_at', 'desc')
-            ->take(8)
-            ->get();
-
-        foreach ($categories as $category) {
-            $category->reports = ReportList::where('report_category_id', $category->id)
-                ->has('reportDetail')
-                ->where('status', 'Active')
+        $version = \Illuminate\Support\Facades\Cache::get('userview_cache_version', 1);
+        $key = 'categories_with_reports_v' . $version;
+        
+        $categories = \Illuminate\Support\Facades\Cache::remember($key, 60*60*24, function () {
+            $cats = ReportCategory::where('status', 'Active')
                 ->orderBy('created_at', 'desc')
-                ->take(3)
+                ->take(8)
                 ->get();
-        }
+
+            foreach ($cats as $category) {
+                $category->reports = ReportList::where('report_category_id', $category->id)
+                    ->has('reportDetail')
+                    ->where('status', 'Active')
+                    ->orderBy('created_at', 'desc')
+                    ->take(3)
+                    ->get();
+            }
+            return $cats;
+        });
 
         return response()->json($categories);
     }
@@ -62,34 +68,38 @@ class UserviewController extends Controller
     public function reportsByCategory(Request $request)
     {
         $categoryName = $request->query('category', 'All');
+        $version = \Illuminate\Support\Facades\Cache::get('userview_cache_version', 1);
+        $key = sprintf('reports_by_category_v%s_c%s', $version, md5($categoryName));
 
-        $query = ReportList::with(['reportCategory', 'reportDetail'])
-            ->has('reportDetail')
-            ->where('status', 'Active');
+        $reports = \Illuminate\Support\Facades\Cache::remember($key, 60*60*24, function () use ($categoryName) {
+            $query = ReportList::with(['reportCategory', 'reportDetail'])
+                ->has('reportDetail')
+                ->where('status', 'Active');
 
-        if ($categoryName !== 'All') {
-            $query->whereHas('reportCategory', function ($q) use ($categoryName) {
-                $q->where('name', $categoryName);
-            });
-        }
+            if ($categoryName !== 'All') {
+                $query->whereHas('reportCategory', function ($q) use ($categoryName) {
+                    $q->where('name', $categoryName);
+                });
+            }
 
-        $reports = $query->orderBy('created_at', 'desc')
-            ->take(4)
-            ->get()
-            ->map(function ($report) {
-                $rawDesc = ($report->reportDetail && !empty($report->reportDetail->detail_description)) ? $report->reportDetail->detail_description : 'No description available.';
-                $description = \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($rawDesc)), 150);
+            return $query->orderBy('created_at', 'desc')
+                ->take(4)
+                ->get()
+                ->map(function ($report) {
+                    $rawDesc = ($report->reportDetail && !empty($report->reportDetail->detail_description)) ? $report->reportDetail->detail_description : 'No description available.';
+                    $description = \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($rawDesc)), 150);
 
-                return [
-                    'id' => $report->id,
-                    'title' => ($report->reportDetail && $report->reportDetail->title) ? $report->reportDetail->title : $report->name,
-                    'description' => $description,
-                    'category' => $report->reportCategory ? $report->reportCategory->name : 'Unknown',
-                    'date' => $report->created_at->format('F Y'),
-                    'image' => '/assets/images/default-report.png',
-                    'slug' => ($report->reportDetail && $report->reportDetail->slug_url) ? $report->reportDetail->slug_url : '#'
-                ];
-            });
+                    return [
+                        'id' => $report->id,
+                        'title' => ($report->reportDetail && $report->reportDetail->title) ? $report->reportDetail->title : $report->name,
+                        'description' => $description,
+                        'category' => $report->reportCategory ? $report->reportCategory->name : 'Unknown',
+                        'date' => $report->created_at->format('F Y'),
+                        'image' => '/assets/images/default-report.png',
+                        'slug' => ($report->reportDetail && $report->reportDetail->slug_url) ? $report->reportDetail->slug_url : '#'
+                    ];
+                });
+        });
 
         return response()->json($reports);
     }
@@ -99,46 +109,62 @@ class UserviewController extends Controller
      */
     public function getAllReports(Request $request)
     {
-        $search = $request->query('search');
+        $search = $request->query('search', '');
         $categoryName = $request->query('category', 'All');
-
-        $query = ReportList::with(['reportCategory', 'reportDetail'])
-            ->has('reportDetail')
-            ->where('status', 'Active');
-
-        if ($categoryName !== 'All') {
-            $query->whereHas('reportCategory', function ($q) use ($categoryName) {
-                $q->where('name', $categoryName);
-            });
-        }
-
-        if ($search) {
-            $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', '%' . $search . '%')
-                  ->orWhereHas('reportDetail', function ($q2) use ($search) {
-                      $q2->where('title', 'like', '%' . $search . '%')
-                         ->orWhere('description', 'like', '%' . $search . '%');
-                  });
-            });
-        }
-
-        $paginator = $query->orderBy('created_at', 'desc')->paginate(10);
+        $page = $request->query('page', 1);
+        $sort = $request->query('sort', '');
         
-        $paginator->getCollection()->transform(function ($report) {
-            $rawDesc = ($report->reportDetail && !empty($report->reportDetail->detail_description)) ? $report->reportDetail->detail_description : 'No description available.';
-            $description = \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($rawDesc)), 250);
+        $version = \Illuminate\Support\Facades\Cache::get('userview_cache_version', 1);
+        $key = sprintf(
+            'reports:v%s:p%s:s%s:c%s:o%s',
+            $version,
+            $page,
+            md5($search),
+            md5($categoryName),
+            $sort
+        );
 
-            return [
-                'id' => $report->id,
-                'title' => ($report->reportDetail && $report->reportDetail->title) ? $report->reportDetail->title : $report->name,
-                'description' => $description,
-                'category' => $report->reportCategory ? $report->reportCategory->name : 'Unknown',
-                'date' => $report->created_at->format('M-Y'),
-                'image' => '/assets/images/default-report.png',
-                'pages' => 120, // Placeholder
-                'format' => 'PDF, Excel', // Placeholder
-                'slug' => ($report->reportDetail && $report->reportDetail->slug_url) ? $report->reportDetail->slug_url : '#'
-            ];
+        $paginator = \Illuminate\Support\Facades\Cache::remember($key, 60*60*24, function () use ($search, $categoryName) {
+            $query = ReportList::with(['reportCategory', 'reportDetail'])
+                ->has('reportDetail')
+                ->where('status', 'Active');
+
+            if ($categoryName !== 'All') {
+                $query->whereHas('reportCategory', function ($q) use ($categoryName) {
+                    $q->where('name', $categoryName);
+                });
+            }
+
+            if ($search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%')
+                      ->orWhereHas('reportDetail', function ($q2) use ($search) {
+                          $q2->where('title', 'like', '%' . $search . '%')
+                             ->orWhere('description', 'like', '%' . $search . '%');
+                      });
+                });
+            }
+
+            $paginatorData = $query->orderBy('created_at', 'desc')->paginate(10);
+            
+            $paginatorData->getCollection()->transform(function ($report) {
+                $rawDesc = ($report->reportDetail && !empty($report->reportDetail->detail_description)) ? $report->reportDetail->detail_description : 'No description available.';
+                $description = \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($rawDesc)), 250);
+
+                return [
+                    'id' => $report->id,
+                    'title' => ($report->reportDetail && $report->reportDetail->title) ? $report->reportDetail->title : $report->name,
+                    'description' => $description,
+                    'category' => $report->reportCategory ? $report->reportCategory->name : 'Unknown',
+                    'date' => $report->created_at->format('M-Y'),
+                    'image' => '/assets/images/default-report.png',
+                    'pages' => 120, // Placeholder
+                    'format' => 'PDF, Excel', // Placeholder
+                    'slug' => ($report->reportDetail && $report->reportDetail->slug_url) ? $report->reportDetail->slug_url : '#'
+                ];
+            });
+            
+            return $paginatorData;
         });
 
         return response()->json($paginator);
@@ -185,10 +211,15 @@ class UserviewController extends Controller
     
     public function publicTopSellingReports()
     {
-        $reports = TopSellingReport::with('reportDetail:id,title,slug_url')
-            ->orderBy('created_at', 'desc')
-            ->take(5)
-            ->get();
+        $version = \Illuminate\Support\Facades\Cache::get('userview_cache_version', 1);
+        $key = 'top_selling_reports_v' . $version;
+        
+        $reports = \Illuminate\Support\Facades\Cache::remember($key, 60*60*24, function () {
+            return TopSellingReport::with('reportDetail:id,title,slug_url')
+                ->orderBy('created_at', 'desc')
+                ->take(5)
+                ->get();
+        });
             
         return response()->json($reports);
     }
@@ -460,10 +491,15 @@ class UserviewController extends Controller
      */
     public function categoriesDropdown()
     {
-        $categories = ReportCategory::select('id', 'name')
-            ->where('status', 'Active')
-            ->orderBy('name')
-            ->get();
+        $version = \Illuminate\Support\Facades\Cache::get('userview_cache_version', 1);
+        $key = 'categories_dropdown_v' . $version;
+        
+        $categories = \Illuminate\Support\Facades\Cache::remember($key, 60*60*24, function () {
+            return ReportCategory::select('id', 'name')
+                ->where('status', 'Active')
+                ->orderBy('name')
+                ->get();
+        });
 
         return response()->json($categories);
     }
