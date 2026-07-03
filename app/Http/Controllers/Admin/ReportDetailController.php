@@ -202,7 +202,9 @@ class ReportDetailController extends Controller
                 $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
                 $extension = $file->getClientOriginalExtension();
                 $sanitizedName = trim(preg_replace('/[^A-Za-z0-9_\-]/', '_', $originalName), '_');
-                $filename = ($sanitizedName ?: 'editor_image') . '_' . time() . '_' . bin2hex(random_bytes(4)) . '.' . $extension;
+                
+                // Use just the exact sanitized name so SEO keywords are preserved cleanly
+                $filename = ($sanitizedName ?: 'editor_image') . '.' . $extension;
 
                 $path = $file->storeAs('uploads/reports', $filename, 'editor');
                 $url = Storage::disk('editor')->url($path);
