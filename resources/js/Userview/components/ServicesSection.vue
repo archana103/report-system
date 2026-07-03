@@ -22,7 +22,7 @@
               <path class="connector-path" marker-end="url(#service-arrow)" d="M 490 276 V 390" />
             </svg>
             <div class="service-center">
-              <img :src="'/assets/images/service-center.png'" alt="Service Map Center" class="service-center-img" />
+              <img :src="$assetUrl + '/assets/images/service-center.png'" alt="Service Map Center" class="service-center-img" />
             </div>
           </div>
         </div>

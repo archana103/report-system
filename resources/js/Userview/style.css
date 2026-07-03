@@ -340,7 +340,7 @@ input {
   min-height: 735px;
   overflow: hidden;
   padding: 170px 24px 90px;
-  background: url('/assets/images/hero-bg-screenshot.png') no-repeat center center;
+  background: url('https://epignosisinsights-images.s3.ap-south-1.amazonaws.com/assets/images/hero-bg-screenshot.png') no-repeat center center;
   background-size: cover;
 }
 
@@ -1058,7 +1058,7 @@ input {
   padding: 64px 24px;
   text-align: center;
   color: #ffffff;
-  background: url('/assets/images/cta-bg.png') no-repeat center center;
+  background: url('https://epignosisinsights-images.s3.ap-south-1.amazonaws.com/assets/images/cta-bg.png') no-repeat center center;
   background-size: cover;
 }
 

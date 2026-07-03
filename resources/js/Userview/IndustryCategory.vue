@@ -60,7 +60,7 @@
                 <!-- Premium Pure CSS 3D Mockup Book Cover -->
                 <div class="report-image-wrap">
                   <router-link :to="`/report/${report.slug && report.slug !== '#' ? report.slug : report.id}`" class="cover-link">
-                    <img :src="report.image || '/assets/images/default-report.png'" :alt="report.title" />
+                    <img :src="$assetUrl + '/assets/images/default-report.png'" :alt="report.title" />
                   </router-link>
                 </div>
 
