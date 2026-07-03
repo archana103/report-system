@@ -123,7 +123,7 @@ onMounted(() => {
     <ConfirmationModal
       :show="showDeleteModal"
       title="Delete Blog Detail"
-      :message="`Are you sure you want to delete the detailed content for '${item?.blog?.title}'? This action is permanent.`"
+      :message="`Are you sure you want to delete the detailed content for '${detailToDelete?.blog?.title || 'this blog'}'? This action is permanent.`"
       @confirm="confirmDelete"
       @cancel="showDeleteModal = false"
     />

@@ -55,10 +55,10 @@ Route::delete('/admin/blogs/{id}', [App\Http\Controllers\Admin\BlogController::c
 
 // Blog Details
 Route::get('/admin/blog-details/blogs-list', [App\Http\Controllers\Admin\BlogDetailController::class, 'getBlogsList']);
-Route::get('/admin/blog-details', [App\Http\Controllers\Admin\BlogDetailController::class, 'index']);
-Route::post('/admin/blog-details', [App\Http\Controllers\Admin\BlogDetailController::class, 'store']);
-Route::put('/admin/blog-details/{id}', [App\Http\Controllers\Admin\BlogDetailController::class, 'update']);
-Route::delete('/admin/blog-details/{id}', [App\Http\Controllers\Admin\BlogDetailController::class, 'destroy']);
+Route::get('/admin/blog-details-data', [App\Http\Controllers\Admin\BlogDetailController::class, 'index']);
+Route::post('/admin/blog-details-data', [App\Http\Controllers\Admin\BlogDetailController::class, 'store']);
+Route::put('/admin/blog-details-data/{id}', [App\Http\Controllers\Admin\BlogDetailController::class, 'update']);
+Route::delete('/admin/blog-details-data/{id}', [App\Http\Controllers\Admin\BlogDetailController::class, 'destroy']);
 
 // Contact Us
 Route::get('/admin/contact-us-data', [App\Http\Controllers\Admin\ContactUsController::class, 'index']);
@@ -82,10 +82,10 @@ Route::post('/admin/press-releases/{id}', [App\Http\Controllers\Admin\PressRelea
 Route::delete('/admin/press-releases/{id}', [App\Http\Controllers\Admin\PressReleaseController::class, 'destroy']);
 
 // Press Release Details
-Route::get('/admin/press-release-details', [App\Http\Controllers\Admin\PressReleaseDetailController::class, 'index']);
-Route::post('/admin/press-release-details', [App\Http\Controllers\Admin\PressReleaseDetailController::class, 'store']);
-Route::put('/admin/press-release-details/{id}', [App\Http\Controllers\Admin\PressReleaseDetailController::class, 'update']);
-Route::delete('/admin/press-release-details/{id}', [App\Http\Controllers\Admin\PressReleaseDetailController::class, 'destroy']);
+Route::get('/admin/press-release-details-data', [App\Http\Controllers\Admin\PressReleaseDetailController::class, 'index']);
+Route::post('/admin/press-release-details-data', [App\Http\Controllers\Admin\PressReleaseDetailController::class, 'store']);
+Route::put('/admin/press-release-details-data/{id}', [App\Http\Controllers\Admin\PressReleaseDetailController::class, 'update']);
+Route::delete('/admin/press-release-details-data/{id}', [App\Http\Controllers\Admin\PressReleaseDetailController::class, 'destroy']);
 Route::get('/admin/press-releases-dropdown', [App\Http\Controllers\Admin\PressReleaseDetailController::class, 'getPressReleasesList']);
 
 // Change password

@@ -16,15 +16,9 @@
     </template>
 
     <template #item-content="{ item }">
-      <div class="max-w-xs truncate text-gray-400 text-sm" v-html="item.content"></div>
-    </template>
-
-    <template #item-meta_title="{ item }">
-      <div class="max-w-xs truncate" :title="item.meta_title">{{ item.meta_title || '—' }}</div>
-    </template>
-
-    <template #item-meta_description="{ item }">
-      <div class="max-w-xs truncate" :title="item.meta_description">{{ item.meta_description || '—' }}</div>
+      <div class="max-w-xs text-gray-400 text-sm italic" :title="stripHtml(item.content)">
+        {{ truncateText(item.content, 80) }}
+      </div>
     </template>
 
     <template #item-created_at="{ item }">
@@ -67,8 +61,6 @@ const pagination = ref({
 const headers = [
   { key: 'press_release', label: 'Press Release Title' },
   { key: 'content', label: 'Press Release Content' },
-  { key: 'meta_title', label: 'Press Release Meta Tag' },
-  { key: 'meta_description', label: 'Press Release Meta Description' },
   { key: 'created_at', label: 'Date' },
 ]
 
@@ -76,6 +68,19 @@ const formatDate = (dateStr) => {
   if (!dateStr) return '—'
   return new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: 'numeric' }).format(new Date(dateStr))
 }
+
+const stripHtml = (html) => {
+  if (!html) return "";
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  return doc.body.textContent || "";
+};
+
+const truncateText = (text, length = 60) => {
+  if (!text) return '—';
+  const cleanText = stripHtml(text);
+  if (cleanText.length <= length) return cleanText;
+  return cleanText.substring(0, length) + '...';
+};
 
 const fetchData = async (page = 1) => {
   loading.value = true
