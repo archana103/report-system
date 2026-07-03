@@ -1,8 +1,8 @@
 <template>
 <header class="site-header">
-      <a class="brand" href="#" aria-label="Epignosis Insights home">
+      <router-link class="brand" to="/" aria-label="Epignosis Insights home">
         <img :src="$assetUrl + '/assets/images/logo.png'" alt="Epignosis Insights Logo" class="brand-logo" />
-      </a>
+      </router-link>
 
       <nav class="main-nav" aria-label="Main navigation">
         <router-link to="/">Home</router-link>

@@ -31,13 +31,13 @@
         <router-link to="/reports">Reports</router-link>
         <router-link to="/blogs">Blogs</router-link>
         <router-link to="/press-releases">Press Release</router-link>
-        <a href="#">Contact</a>
+        <router-link to="/contact">Contact</router-link>
       </nav>
       <div class="social-links">
-        <a href="#">f</a>
-        <a href="#">in</a>
-        <a href="#">x</a>
-        <a href="#">ig</a>
+        <a href="https://www.facebook.com/people/Epignosis-Insights/61591089437924/" target="_blank" rel="noopener noreferrer">f</a>
+        <a href="https://www.linkedin.com/company/epignosis-insights/" target="_blank" rel="noopener noreferrer">in</a>
+        <a href="https://x.com/epignosisinsigh" target="_blank" rel="noopener noreferrer">x</a>
+        <a href="https://www.instagram.com/epignosisinsights/" target="_blank" rel="noopener noreferrer">ig</a>
       </div>
     </div>
     <div class="footer-bottom">

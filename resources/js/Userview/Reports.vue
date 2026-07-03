@@ -7,7 +7,7 @@
 
         <section class="reports-content section-shell reports-two-column-layout">
             <div class="reports-main-column">
-                <ReportList :reports="reports" :loading="loading" />
+                <ReportList :reports="reports" :loading="loading" @trigger-request="handleRequestSample" />
                 <ReportPagination :currentPage="currentPage" :totalPages="totalPages" :paginationRange="paginationRange" @page-change="fetchReports" />
             </div>
             
@@ -20,6 +20,12 @@
         <CustomResearchCTA />
     </main>
 
+    <RequestFormModal 
+      :isOpen="isRequestModalOpen" 
+      :subject="requestSubject" 
+      :reportName="selectedReportName"
+      @close="isRequestModalOpen = false" 
+    />
     <SiteFooter />
 </div>
 </template>
@@ -33,6 +39,8 @@ import ReportList from './components/ReportList.vue'
 import ReportPagination from './components/ReportPagination.vue'
 import CustomResearchCTA from './components/CustomResearchCTA.vue'
 import TopSellingReportsWidget from './components/TopSellingReportsWidget.vue'
+import RequestFormModal from '../components/RequestFormModal.vue'
+import { ref } from 'vue'
 import {
     useReportsData
 } from './useReportsData'
@@ -48,6 +56,16 @@ const {
     fetchReports,
     paginationRange
 } = useReportsData()
+
+const isRequestModalOpen = ref(false)
+const requestSubject = ref('')
+const selectedReportName = ref('')
+
+const handleRequestSample = ({ report, subject }) => {
+    selectedReportName.value = report.title
+    requestSubject.value = subject
+    isRequestModalOpen.value = true
+}
 </script>
 
 <style src="./style.css"></style>

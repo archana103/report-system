@@ -557,10 +557,7 @@ class UserviewController extends Controller
                 'jobTitle'     => '',
             ];
 
-            \Illuminate\Support\Facades\Mail::send('emails.inquiry', $data, function ($message) {
-                $message->to(config('mail.to_address', 'sales@epignosisinsights.com'))
-                        ->subject('New Inquiry Received on Markspark Solutions');
-            });
+            \App\Jobs\SendInquiryEmailJob::dispatch($data, 'New Inquiry Received on Markspark Solutions');
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Log::error('Mail sending failed in storeContactForm: ' . $e->getMessage());
         }
@@ -629,14 +626,11 @@ class UserviewController extends Controller
                 'reportName'   => $reportNameVal,
             ];
 
-            \Illuminate\Support\Facades\Mail::send('emails.inquiry', $data, function ($message) use ($subjectVal, $reportNameVal) {
-                $mailSubject = $subjectVal;
-                if ($reportNameVal) {
-                    $mailSubject .= ' - ' . $reportNameVal;
-                }
-                $message->to(config('mail.to_address', 'sales@epignosisinsights.com'))
-                        ->subject('New Inquiry Received: ' . $mailSubject);
-            });
+            $mailSubject = $subjectVal;
+            if ($reportNameVal) {
+                $mailSubject .= ' - ' . $reportNameVal;
+            }
+            \App\Jobs\SendInquiryEmailJob::dispatch($data, 'New Inquiry Received: ' . $mailSubject);
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Log::error('Mail sending failed in storeRequestForm: ' . $e->getMessage());
         }
@@ -738,10 +732,7 @@ class UserviewController extends Controller
                 'jobTitle'     => '',
             ];
 
-            \Illuminate\Support\Facades\Mail::send('emails.inquiry', $data, function ($message) use ($blogTitle) {
-                $message->to(config('mail.to_address', 'sales@epignosisinsights.com'))
-                        ->subject('New Inquiry Received: Blog Request - ' . $blogTitle);
-            });
+            \App\Jobs\SendInquiryEmailJob::dispatch($data, 'New Inquiry Received: Blog Request - ' . $blogTitle);
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Log::error('Mail sending failed in storeBlogRequest: ' . $e->getMessage());
         }
