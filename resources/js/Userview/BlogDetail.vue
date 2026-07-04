@@ -15,12 +15,12 @@
 
         <div v-else class="blog-detail-content">
           <!-- Breadcrumbs -->
-          <div class="blog-breadcrumbs">
-            <router-link to="/">Home</router-link>
+          <div class="blog-breadcrumbs" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 14px; margin-bottom: 24px; color: #6b7280;">
+            <router-link to="/" style="color: #0783df; text-decoration: none;">Home</router-link>
             <span>/</span>
-            <router-link to="/blogs">Blog</router-link>
+            <router-link to="/blogs" style="color: #0783df; text-decoration: none;">Blog</router-link>
             <span>/</span>
-            <span>{{ blog.title }}</span>
+            <span style="display: -webkit-box; -webkit-line-clamp: 1; line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; word-break: break-all; color: #4b5563;" :title="blog.title">{{ blog.url }}</span>
           </div>
 
           <!-- Main Layout Grid -->

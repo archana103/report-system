@@ -1434,11 +1434,48 @@ input {
   transform: translateY(-3px);
 }
 
-@media (max-width: 560px) {
-  .upscroll-button {
-    bottom: 20px;
-    right: 20px;
-    width: 44px;
-    height: 44px;
+  @media (max-width: 560px) {
+    .upscroll-button {
+      bottom: 20px;
+      right: 20px;
+      width: 44px;
+      height: 44px;
+    }
   }
-}
+  
+  /* Apply default list styles for dynamically injected v-html content */
+  .dynamic-report-content ul,
+  .blog-body-text ul,
+  .press-body-text ul,
+  .report-description ul,
+  .category-subheading-desc ul,
+  .v-html-content ul {
+    list-style-type: disc !important;
+    padding-left: 20px;
+    margin-bottom: 15px;
+  }
+  
+  .dynamic-report-content ol,
+  .blog-body-text ol,
+  .press-body-text ol,
+  .report-description ol,
+  .category-subheading-desc ol,
+  .v-html-content ol {
+    list-style-type: decimal !important;
+    padding-left: 20px;
+    margin-bottom: 15px;
+  }
+  
+  .dynamic-report-content ul li,
+  .dynamic-report-content ol li,
+  .blog-body-text ul li,
+  .blog-body-text ol li,
+  .press-body-text ul li,
+  .press-body-text ol li,
+  .report-description ul li,
+  .report-description ol li,
+  .category-subheading-desc ul li,
+  .category-subheading-desc ol li {
+    margin-bottom: 8px;
+    display: list-item;
+  }
