@@ -3,6 +3,7 @@ import { reactive, ref } from 'vue';
 export const formData = reactive({
     blog_id: '',
     title: '',
+    breadcrumb_title: '',
     description: '',
     meta_title: '',
     meta_description: '',
@@ -29,6 +30,7 @@ export const successMessage = ref('');
 export const resetForm = () => {
     formData.blog_id = '';
     formData.title = '';
+    formData.breadcrumb_title = '';
     formData.description = '';
     formData.meta_title = '';
     formData.meta_description = '';
@@ -50,6 +52,7 @@ export const resetForm = () => {
 export const setFormData = (data) => {
     formData.blog_id = data.blog_id || '';
     formData.title = data.title || '';
+    formData.breadcrumb_title = data.breadcrumb_title || '';
     formData.description = data.description || '';
     formData.meta_title = data.meta_title || '';
     formData.meta_description = data.meta_description || '';

@@ -40,6 +40,7 @@ class BlogDetailController extends Controller
         $request->validate([
             'blog_id' => 'required|exists:blogs,id',
             'title' => 'required|string',
+            'breadcrumb_title' => 'nullable|string',
             'description' => 'nullable|string',
             'meta_title' => 'nullable|string',
             'meta_description' => 'nullable|string',
@@ -64,6 +65,7 @@ class BlogDetailController extends Controller
         $request->validate([
             'blog_id' => 'required|exists:blogs,id',
             'title' => 'required|string',
+            'breadcrumb_title' => 'nullable|string',
             'description' => 'nullable|string',
             'meta_title' => 'nullable|string',
             'meta_description' => 'nullable|string',

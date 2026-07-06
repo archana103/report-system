@@ -20,7 +20,7 @@
             <span>/</span>
             <router-link to="/press-releases" style="color: #0783df; text-decoration: none;">Press Release</router-link>
             <span>/</span>
-            <span style="display: -webkit-box; -webkit-line-clamp: 1; line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; word-break: break-all; color: #4b5563;" :title="pressRelease.title">{{ pressRelease.url }}</span>
+            <span style="display: -webkit-box; -webkit-line-clamp: 1; line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; word-break: break-all; color: #4b5563;" :title="pressRelease.title">{{ pressRelease.breadcrumb_title }}</span>
           </div>
 
           <!-- Main Layout Grid -->

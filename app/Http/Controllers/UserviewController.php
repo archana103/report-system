@@ -711,6 +711,7 @@ class UserviewController extends Controller
             'image' => $blog->image ?: '/assets/images/default-report.png',
             'date' => $blog->created_at->format('F d, Y'),
             'url' => $blog->url,
+            'breadcrumb_title' => $blog->blogDetail?->breadcrumb_title ?: $blog->title,
             'detail' => $blog->blogDetail ? [
                 'title'       => $blog->blogDetail->title,
                 'description' => $blog->blogDetail->description,
@@ -813,6 +814,7 @@ class UserviewController extends Controller
             'image' => $pr->thumbnail_image ?: ($pr->main_image ?: '/assets/images/default-report.png'),
             'date' => $pr->created_at->format('F d, Y'),
             'url' => $pr->url,
+            'breadcrumb_title' => $pr->pressReleaseDetail?->breadcrumb_title ?: $pr->title,
             'detail' => $pr->pressReleaseDetail ? [
                 'content' => $pr->pressReleaseDetail->content,
             ] : null,

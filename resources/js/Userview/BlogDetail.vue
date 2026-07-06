@@ -15,12 +15,15 @@
 
         <div v-else class="blog-detail-content">
           <!-- Breadcrumbs -->
-          <div class="blog-breadcrumbs" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 14px; margin-bottom: 24px; color: #6b7280;">
+          <div class="blog-breadcrumbs"
+            style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 14px; margin-bottom: 24px; color: #6b7280;">
             <router-link to="/" style="color: #0783df; text-decoration: none;">Home</router-link>
             <span>/</span>
             <router-link to="/blogs" style="color: #0783df; text-decoration: none;">Blog</router-link>
             <span>/</span>
-            <span style="display: -webkit-box; -webkit-line-clamp: 1; line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; word-break: break-all; color: #4b5563;" :title="blog.title">{{ blog.url }}</span>
+            <span
+              style="display: -webkit-box; -webkit-line-clamp: 1; line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; word-break: break-all; color: #4b5563;"
+              :title="blog.title">{{ blog.breadcrumb_title }}</span>
           </div>
 
           <!-- Main Layout Grid -->
@@ -29,24 +32,20 @@
             <article class="blog-post-content">
               <div class="blog-pub-date">Published: {{ blog.date }}</div>
               <h1 class="blog-post-title">{{ blog.title }}</h1>
-              
+
               <div class="blog-main-image-wrapper">
                 <img :src="blog.image" :alt="blog.title" class="blog-main-image" />
               </div>
 
               <!-- Main Rich Text Body -->
-              <div class="blog-body-text" v-html="blog.detail ? blog.detail.description : '<p>No content details available.</p>'"></div>
+              <div class="blog-body-text"
+                v-html="blog.detail ? blog.detail.description : '<p>No content details available.</p>'"></div>
 
               <!-- FAQs Section -->
               <section class="blog-faqs" v-if="blog.detail && blog.detail.faqs && blog.detail.faqs.length > 0">
                 <h2 class="faq-title">Frequently Asked Questions</h2>
                 <div class="faq-accordion">
-                  <div 
-                    v-for="(faq, idx) in faqs" 
-                    :key="idx" 
-                    class="faq-item" 
-                    :class="{ active: faq.isOpen }"
-                  >
+                  <div v-for="(faq, idx) in faqs" :key="idx" class="faq-item" :class="{ active: faq.isOpen }">
                     <button class="faq-header" @click="toggleFaq(idx)">
                       <span>{{ faq.question }}</span>
                       <span class="faq-toggle-icon">{{ faq.isOpen ? '−' : '+' }}</span>
@@ -69,20 +68,20 @@
                 <p>Connect with our industry analysts to receive custom research and sector highlights.</p>
                 <button class="widget-cta-btn" @click="openModal">
                   Request Sample
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                  </svg>
                 </button>
               </div>
 
               <!-- Related Articles Widget -->
-              <div class="sidebar-widget widget-related" v-if="blog.related_articles && blog.related_articles.length > 0">
+              <div class="sidebar-widget widget-related"
+                v-if="blog.related_articles && blog.related_articles.length > 0">
                 <h3>Related Articles</h3>
                 <div class="related-articles-list">
-                  <router-link 
-                    v-for="item in blog.related_articles" 
-                    :key="item.id" 
-                    :to="'/blog/' + item.url" 
-                    class="related-article-item"
-                  >
+                  <router-link v-for="item in blog.related_articles" :key="item.id" :to="'/blog/' + item.url"
+                    class="related-article-item">
                     <h4>{{ item.title }}</h4>
                     <p>{{ item.description }}...</p>
                   </router-link>
@@ -99,13 +98,15 @@
       <div class="modal-card">
         <button class="modal-close-btn" @click="closeModal">&times;</button>
         <h2>Request Sample</h2>
-        <p class="modal-subtitle">Fill out the form below to receive a summary copy of this document, including key analysis, market scope, and research highlights.</p>
-        
+        <p class="modal-subtitle">Fill out the form below to receive a summary copy of this document, including key
+          analysis, market scope, and research highlights.</p>
+
         <form @submit.prevent="handleFormSubmit" class="modal-form">
           <!-- Full Name -->
           <div class="form-group-full">
             <label for="req_fullName">Full Name *</label>
-            <input type="text" id="req_fullName" v-model="formData.full_name" placeholder="Enter Your Full Name" required />
+            <input type="text" id="req_fullName" v-model="formData.full_name" placeholder="Enter Your Full Name"
+              required />
           </div>
 
           <!-- Business Email -->
@@ -123,7 +124,8 @@
           <!-- Company Name -->
           <div>
             <label for="req_company">Company Name *</label>
-            <input type="text" id="req_company" v-model="formData.company_name" placeholder="Enter Company Name" required />
+            <input type="text" id="req_company" v-model="formData.company_name" placeholder="Enter Company Name"
+              required />
           </div>
 
           <!-- Country Selection -->
@@ -219,8 +221,8 @@ const injectMetaTags = (b) => {
 
   // Basic meta
   if (b.meta_description) tag('meta', { name: 'description', content: b.meta_description })
-  if (b.meta_keywords)    tag('meta', { name: 'keywords',    content: b.meta_keywords })
-  if (b.meta_robots)      tag('meta', { name: 'robots',      content: b.meta_robots })
+  if (b.meta_keywords) tag('meta', { name: 'keywords', content: b.meta_keywords })
+  if (b.meta_robots) tag('meta', { name: 'robots', content: b.meta_robots })
 
   // Canonical
   if (b.canonical_tag) tag('link', { rel: 'canonical', href: b.canonical_tag })
@@ -296,7 +298,7 @@ const injectMetaTags = (b) => {
           dateIso = d.toISOString().split('T')[0]
         }
       }
-    } catch (e) {}
+    } catch (e) { }
     if (!dateIso) {
       dateIso = new Date().toISOString().split('T')[0]
     }
@@ -398,9 +400,9 @@ onUnmounted(() => {
 
 // Comprehensive Country List
 const countriesList = [
-  'Afghanistan', 'Albania', 'Algeria', 'American Samoa', 'Andorra', 
-  'Angola', 'Anguilla', 'Antarctica', 'Antigua and Barbuda', 'Argentina', 
-  'Armenia', 'Aruba', 'Australia', 'Austria', 'Azerbaijan', 'Bahamas', 
+  'Afghanistan', 'Albania', 'Algeria', 'American Samoa', 'Andorra',
+  'Angola', 'Anguilla', 'Antarctica', 'Antigua and Barbuda', 'Argentina',
+  'Armenia', 'Aruba', 'Australia', 'Austria', 'Azerbaijan', 'Bahamas',
   'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Belize',
   'Benin', 'Bermuda', 'Bhutan', 'Bolivia', 'Bosnia and Herzegovina',
   'Botswana', 'Brazil', 'Brunei', 'Bulgaria', 'Burkina Faso', 'Burundi',

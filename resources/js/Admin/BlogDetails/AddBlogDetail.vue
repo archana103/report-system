@@ -119,6 +119,17 @@ onMounted(() => {
             <p v-if="errors.title" class="text-red-400 text-xs mt-2 ml-1">{{ errors.title[0] }}</p>
           </div>
 
+          <div :class="mode === 'edit' ? 'col-span-2' : ''">
+            <label class="block text-sm font-semibold text-gray-300 mb-3 ml-1">Breadcrumb Title</label>
+            <input 
+              v-model="formData.breadcrumb_title" 
+              type="text" 
+              placeholder="Short title for breadcrumbs..."
+              class="w-full bg-gray-800 border border-gray-700/50 rounded-xl px-5 py-3 text-sm text-gray-200 focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition-all shadow-inner" 
+            />
+            <p v-if="errors.breadcrumb_title" class="text-red-400 text-xs mt-2 ml-1">{{ errors.breadcrumb_title[0] }}</p>
+          </div>
+
           <div class="col-span-1 md:col-span-2">
             <label class="block text-sm font-semibold text-gray-300 mb-3 ml-1">Blog detail Description</label>
             <TinyMceEditor id="blog-detail-editor" v-model="formData.description" :config="editorConfig" />

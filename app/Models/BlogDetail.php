@@ -12,6 +12,7 @@ class BlogDetail extends Model
     protected $fillable = [
         'blog_id',
         'title',
+        'breadcrumb_title',
         'description',
         'meta_title',
         'meta_description',
