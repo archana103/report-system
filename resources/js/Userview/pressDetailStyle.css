@@ -103,6 +103,32 @@
   font-size: 15px;
 }
 
+.press-body-text figure.table {
+  margin: 24px 0;
+  overflow-x: auto;
+}
+
+.press-body-text table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+}
+
+.press-body-text figure.table table {
+  margin: 0;
+}
+
+.press-body-text table,
+.press-body-text th,
+.press-body-text td {
+  border: 1px solid #000000;
+}
+
+.press-body-text th,
+.press-body-text td {
+  padding: 0px 14px;
+}
+
 /* Sidebar Widgets */
 .press-sidebar {
   display: flex;

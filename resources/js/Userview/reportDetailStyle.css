@@ -225,6 +225,32 @@
   color: #4b5563;
 }
 
+.dynamic-report-content figure.table {
+  margin: 24px 0;
+  overflow-x: auto;
+}
+
+.dynamic-report-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+}
+
+.dynamic-report-content figure.table table {
+  margin: 0;
+}
+
+.dynamic-report-content table,
+.dynamic-report-content th,
+.dynamic-report-content td {
+  border: 1px solid #000000;
+}
+
+.dynamic-report-content th,
+.dynamic-report-content td {
+  padding: 10px 14px;
+}
+
 /* Pure CSS and HTML Responsive Line Chart Card */
 .premium-chart-card {
   background: #ffffff;

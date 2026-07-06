@@ -103,6 +103,32 @@
   font-size: 15px;
 }
 
+.blog-body-text figure.table {
+  margin: 24px 0;
+  overflow-x: auto;
+}
+
+.blog-body-text table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+}
+
+.blog-body-text figure.table table {
+  margin: 0;
+}
+
+.blog-body-text table,
+.blog-body-text th,
+.blog-body-text td {
+  border: 1px solid #000000;
+}
+
+.blog-body-text th,
+.blog-body-text td {
+  padding: 0px 14px;
+}
+
 /* Frequently Asked Questions */
 .blog-faqs {
   margin-top: 64px;
