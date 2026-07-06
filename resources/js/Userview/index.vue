@@ -3,25 +3,14 @@
     <SiteHeader />
     <main>
       <HeroSection />
-      <TrendingReports 
-        :categories="categories" 
-        :activeCategory="activeCategory" 
-        :reports="reports" 
-        @update:activeCategory="activeCategory = $event" 
-      />
-      <PressReleases 
-        :pressReleases="visiblePressReleases" 
-        @next="nextPressRelease" 
-        @prev="prevPressRelease" 
-      />
-      <LatestInsights 
-        :insights="visibleInsights" 
-        @next="nextInsight" 
-        @prev="prevInsight" 
-      />
+      <TrendingReports :categories="categories" :activeCategory="activeCategory" :reports="reports"
+        @update:activeCategory="activeCategory = $event" />
+      <PressReleases :pressReleases="visiblePressReleases" @next="nextPressRelease" @prev="prevPressRelease" />
+      <LatestInsights :insights="visibleInsights" @next="nextInsight" @prev="prevInsight" />
       <ServicesSection />
       <AboutSection />
       <ContactSection />
+      <div style="min-height: 150px;"></div>
     </main>
     <SiteFooter />
   </div>

@@ -23,6 +23,13 @@
                 <p v-if="errors.name" class="text-red-400 text-xs mt-1 ml-1">{{ errors.name[0] }}</p>
               </div>
 
+              <!-- Slug URL -->
+              <div>
+                <label class="block text-sm font-medium text-gray-400 mb-1.5 ml-1">Slug URL</label>
+                <input v-model="form.slug_url" type="text" class="w-full bg-gray-800/80 border border-gray-700 rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-500/50 focus:border-teal-500/50 transition-all" />
+                <p v-if="errors.slug_url" class="text-red-400 text-xs mt-1 ml-1">{{ errors.slug_url[0] }}</p>
+              </div>
+
               <!-- Status -->
               <div>
                 <label class="block text-sm font-medium text-gray-400 mb-1.5 ml-1">Status</label>
@@ -109,6 +116,7 @@ const editorConfig = {
 
 const form = reactive({
   name: '',
+  slug_url: '',
   status: '',
   main_heading: '',
   main_subheading: '',
@@ -124,6 +132,7 @@ const successMessage = ref('')
 watch(() => props.category, (newVal) => {
   if (newVal && props.show) {
     form.name = newVal.name || ''
+    form.slug_url = newVal.slug_url || ''
     form.status = newVal.status || 'Active'
     form.main_heading = newVal.main_heading || ''
     form.main_subheading = newVal.main_subheading || ''

@@ -17,10 +17,10 @@
           <div class="dropdown-menu dropdown-left-align">
             <router-link 
               v-for="cat in industryCategories" 
-              :key="cat" 
-              :to="`/industry/${cat}`"
+              :key="cat.slug_url" 
+              :to="`/industry/${cat.slug_url}`"
             >
-              {{ cat }}
+              {{ cat.name }}
             </router-link>
           </div>
         </div>
@@ -30,7 +30,7 @@
 
       <div class="header-actions">
         <div class="top-banner">
-          <router-link to="/about">About Us</router-link>
+          <router-link to="/about-us">About Us</router-link>
           <div class="dropdown-menu-container">
             <router-link to="/services" class="dropdown-trigger">
               Service
@@ -38,7 +38,7 @@
             </router-link>
           
           </div>
-          <router-link to="/contact">Contact</router-link>
+          <router-link to="/contact-us">Contact</router-link>
         </div>
 
         <div class="bottom-actions">
@@ -163,7 +163,10 @@ onMounted(async () => {
   try {
     const response = await axios.get('/api/categories-dropdown')
     if (response.data && response.data.length > 0) {
-      industryCategories.value = response.data.map(cat => cat.name)
+      industryCategories.value = response.data.map(cat => ({ 
+        name: cat.name, 
+        slug_url: cat.slug_url || cat.name 
+      }))
     }
   } catch (error) {
     console.error('Failed to fetch categories for header dropdown', error)

@@ -35,12 +35,12 @@
             <nav class="sidebar-nav">
               <router-link
                 v-for="cat in sidebarCategories"
-                :key="cat"
-                :to="`/industry/${cat}`"
+                :key="cat.slug_url"
+                :to="`/industry/${cat.slug_url}`"
                 class="sidebar-nav-item"
                 :class="{ 'active-sidebar-item': isCurrentCategory(cat) }"
               >
-                <span class="nav-text">{{ cat }}</span>
+                <span class="nav-text">{{ cat.name }}</span>
                 <span class="chevron-arrow">›</span>
               </router-link>
             </nav>
@@ -145,22 +145,30 @@ const fetchSidebarCategories = async () => {
   try {
     const response = await axios.get('/api/categories-dropdown')
     if (response.data && response.data.length > 0) {
-      sidebarCategories.value = response.data.map(cat => cat.name)
+      sidebarCategories.value = response.data.map(cat => ({ 
+        name: cat.name, 
+        slug_url: cat.slug_url || cat.name 
+      }))
     }
   } catch (error) {
     console.error('Failed to fetch sidebar categories:', error)
   }
 }
 
-// Fetch single category info (banner image, main heading, subheadings)
 const fetchCategoryInfo = async () => {
   try {
     const response = await axios.get(`/api/category/${categoryName.value}`)
     categoryInfo.value = response.data
+    
+    // Automatically correct URL to use slug if visited with old name
+    if (categoryInfo.value.slug_url && String(categoryInfo.value.slug_url).toLowerCase() !== String(categoryName.value).toLowerCase()) {
+      router.replace(`/industry/${categoryInfo.value.slug_url}`);
+    }
   } catch (error) {
     console.error('Failed to fetch category details:', error)
     categoryInfo.value = {
       name: categoryName.value,
+      slug_url: categoryName.value,
       main_heading: `${categoryName.value} Market Research and Insights`,
       main_subheading: null,
       category_image: null
@@ -191,7 +199,7 @@ const fetchCategoryReports = async (page = 1) => {
 }
 
 const isCurrentCategory = (cat) => {
-  return String(cat).toLowerCase() === String(categoryName.value).toLowerCase()
+  return String(cat.slug_url).toLowerCase() === String(categoryName.value).toLowerCase() || String(cat.name).toLowerCase() === String(categoryName.value).toLowerCase()
 }
 
 const changePage = (page) => {

@@ -37,10 +37,10 @@ import ChangePassword from './Admin/ChangePassword/index.vue'
 const routes = [
   { path: '/', component: UserIndex },
   { path: '/reports', component: UserReports },
-  { path: '/about', component: UserAbout },
+  { path: '/about-us', component: UserAbout },
   { path: '/blogs', component: UserBlogs },
   { path: '/press-releases', component: UserPressReleases },
-  { path: '/contact', component: UserContact },
+  { path: '/contact-us', component: UserContact },
   { path: '/services', component: UserServices },
   { path: '/privacy-policy', component: UserPrivacyPolicy },
   { path: '/terms-and-conditions', component: UserTermsAndConditions },

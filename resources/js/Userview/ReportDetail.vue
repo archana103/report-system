@@ -134,7 +134,7 @@
           <div class="analyst-support-card">
             <h3>Small Analyst Support Card</h3>
             <p>Need Help Choosing the Right Report? Speak directly with our lead industry expert.</p>
-            <router-link to="/contact" class="talk-analyst-btn">
+            <router-link to="/contact-us" class="talk-analyst-btn">
               <PhoneMini style="width:18px; height:18px;" /> Talk to Our Analyst
             </router-link>
           </div>

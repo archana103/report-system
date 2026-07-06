@@ -44,6 +44,7 @@ class ReportCategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'slug_url' => 'nullable|string|unique:report_categories,slug_url',
             'status' => 'required|string|in:Active,Inactive',
             'main_heading' => 'nullable|string|max:255',
             'main_subheading' => 'nullable|string',
@@ -80,6 +81,7 @@ class ReportCategoryController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
+            'slug_url' => 'nullable|string|unique:report_categories,slug_url,' . $id,
             'status' => 'required|string|in:Active,Inactive',
             'main_heading' => 'nullable|string|max:255',
             'main_subheading' => 'nullable|string',

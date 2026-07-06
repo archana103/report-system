@@ -16,7 +16,7 @@
           </p>
           <div class="services-hero-cta">
             <a href="#services" class="primary-button">Explore Services</a>
-            <router-link to="/contact" class="secondary-button">Talk to an Analyst</router-link>
+            <router-link to="/contact-us" class="secondary-button">Talk to an Analyst</router-link>
           </div>
         </div>
       </section>
@@ -189,7 +189,7 @@
           <div class="cta-left">
             <h2>Ready to<br />Commission a<br />Custom Study?</h2>
             <p>Speak to one of our lead analysts to structure a research proposal matched to your objectives.</p>
-            <router-link to="/contact" class="cta-button-blue">
+            <router-link to="/contact-us" class="cta-button-blue">
               Get in Touch <span class="arrow-circle">→</span>
             </router-link>
           </div>

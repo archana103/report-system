@@ -78,7 +78,7 @@ class UserviewController extends Controller
 
             if ($categoryName !== 'All') {
                 $query->whereHas('reportCategory', function ($q) use ($categoryName) {
-                    $q->where('name', $categoryName);
+                    $q->where('slug_url', $categoryName)->orWhere('name', $categoryName);
                 });
             }
 
@@ -131,7 +131,7 @@ class UserviewController extends Controller
 
             if ($categoryName !== 'All') {
                 $query->whereHas('reportCategory', function ($q) use ($categoryName) {
-                    $q->where('name', $categoryName);
+                    $q->where('slug_url', $categoryName)->orWhere('name', $categoryName);
                 });
             }
 
@@ -468,9 +468,15 @@ class UserviewController extends Controller
      */
     public function getCategoryDetail($name)
     {
-        $category = \App\Models\ReportCategory::where('name', $name)
+        $category = \App\Models\ReportCategory::where('slug_url', $name)
             ->where('status', 'Active')
             ->first();
+
+        if (!$category) {
+            $category = \App\Models\ReportCategory::where('name', $name)
+                ->where('status', 'Active')
+                ->first();
+        }
 
         if (!$category) {
             return response()->json(['message' => 'Category not found'], 404);
@@ -479,6 +485,7 @@ class UserviewController extends Controller
         return response()->json([
             'id' => $category->id,
             'name' => $category->name,
+            'slug_url' => $category->slug_url,
             'main_heading' => $category->main_heading,
             'main_subheading' => $category->main_subheading,
             'category_image' => $category->category_image,
@@ -495,7 +502,7 @@ class UserviewController extends Controller
         $key = 'categories_dropdown_v' . $version;
         
         $categories = \Illuminate\Support\Facades\Cache::remember($key, 60*60*24, function () {
-            return ReportCategory::select('id', 'name')
+            return ReportCategory::select('id', 'name', 'slug_url')
                 ->where('status', 'Active')
                 ->orderBy('name')
                 ->get();

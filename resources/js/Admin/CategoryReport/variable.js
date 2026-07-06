@@ -2,6 +2,7 @@ import { reactive, ref } from 'vue';
 
 export const formData = reactive({
     name: '',
+    slug_url: '',
     status: '',
     main_heading: '',
     main_subheading: '',
@@ -15,6 +16,7 @@ export const successMessage = ref('');
 
 export const setFormData = (data) => {
   formData.name = data.name || '';
+  formData.slug_url = data.slug_url || '';
   formData.status = data.status || '';
   formData.main_heading = data.main_heading || '';
   formData.main_subheading = data.main_subheading || '';
@@ -24,6 +26,7 @@ export const setFormData = (data) => {
 
 export const resetForm = () => {
   formData.name = '';
+  formData.slug_url = '';
   formData.status = '';
   formData.main_heading = '';
   formData.main_subheading = '';

@@ -540,7 +540,7 @@ input {
 }
 
 .section-shell {
-  width: min(1094px, calc(100% - 48px));
+  width: min(1210px, calc(100% - 48px));
   margin: 0 auto;
 }
 
@@ -1081,7 +1081,7 @@ input {
 }
 
 .footer-section {
-  background: #ffffff;
+  background: #0783df;
 }
 
 .footer-top {
@@ -1101,8 +1101,8 @@ input {
 .footer-top p {
   max-width: 405px;
   margin: 30px 0 0;
-  font-size: 20px;
-  color: #3e4249
+  font-size: 18px;
+  color: white
 }
 
 .footer-form {
@@ -1110,7 +1110,7 @@ input {
   width: 360px;
   height: 43px;
   margin-top: 40px;
-  border: 1px solid #9fa7b3;
+  border: 1px solid #e0e0e0;
   border-radius: 999px;
   overflow: hidden;
 }
@@ -1121,6 +1121,7 @@ input {
   border: 0;
   padding: 0 18px;
   outline: 0;
+  color:white
 }
 
 .footer-form button {
@@ -1128,8 +1129,8 @@ input {
   padding: 0 24px;
   border: 0;
   border-radius: 999px;
-  background: #0783df;
-  color: #ffffff;
+  background: #fff;
+  color: #0783df;
   font-weight: 700;
 }
 
@@ -1144,6 +1145,7 @@ input {
   gap: 20px;
   margin: 0;
   max-width: none;
+  color: white;
 }
 
 .footer-contact span {
@@ -1174,7 +1176,7 @@ input {
   width: min(1120px, calc(100% - 48px));
   margin: 0 auto;
   padding: 28px 0 56px;
-  color: #3e4249
+  color: white
 }
 
 .footer-links nav {

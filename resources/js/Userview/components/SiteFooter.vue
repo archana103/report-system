@@ -27,11 +27,11 @@
     <div class="footer-links">
       <nav>
         <router-link to="/">Home</router-link>
-        <router-link to="/about">About Us</router-link>
+        <router-link to="/about-us">About Us</router-link>
         <router-link to="/reports">Reports</router-link>
         <router-link to="/blogs">Blogs</router-link>
         <router-link to="/press-releases">Press Release</router-link>
-        <router-link to="/contact">Contact</router-link>
+        <router-link to="/contact-us">Contact</router-link>
       </nav>
       <div class="social-links">
         <a href="https://www.facebook.com/people/Epignosis-Insights/61591089437924/" target="_blank" rel="noopener noreferrer">
@@ -49,7 +49,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 epignosisinsights. All rights reserved.</p>
+      <p>© 2026 epignosisinsights. All rights reserved.</p>
       <div>
         <router-link to="/terms-and-conditions">Terms & Conditions</router-link>
         <router-link to="/privacy-policy">Privacy Policy</router-link>

@@ -12,6 +12,7 @@ class ReportCategory extends Model
 
     protected $fillable = [
         'name',
+        'slug_url',
         'status',
         'main_heading',
         'main_subheading',

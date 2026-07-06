@@ -73,6 +73,13 @@ const cancelForm = () => {
           <p v-if="errors.name" class="text-red-400 text-xs mt-1 ml-1">{{ errors.name[0] }}</p>
         </div>
         <div>
+          <label class="block text-sm font-medium text-gray-400 mb-1.5 ml-1">Slug URL</label>
+          <input v-model="formData.slug_url" type="text" class="w-full bg-gray-800/80 border border-gray-700 rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-500/50 focus:border-teal-500/50 transition-all" />
+          <p v-if="errors.slug_url" class="text-red-400 text-xs mt-1 ml-1">{{ errors.slug_url[0] }}</p>
+        </div>
+
+        <!-- Row 2 -->
+        <div>
           <label class="block text-sm font-medium text-gray-400 mb-1.5 ml-1">Status</label>
           <div class="relative">
             <select v-model="formData.status" class="w-full bg-gray-800/80 border border-gray-700 rounded-xl pl-4 pr-10 py-2.5 text-sm text-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-500/50 focus:border-teal-500/50 transition-all appearance-none cursor-pointer">
@@ -86,26 +93,23 @@ const cancelForm = () => {
           </div>
           <p v-if="errors.status" class="text-red-400 text-xs mt-1 ml-1">{{ errors.status[0] }}</p>
         </div>
-
-        <!-- Row 2 -->
         <div>
           <label class="block text-sm font-medium text-gray-400 mb-1.5 ml-1">Main Heading</label>
           <input v-model="formData.main_heading" type="text" class="w-full bg-gray-800/80 border border-gray-700 rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-500/50 focus:border-teal-500/50 transition-all" />
           <p v-if="errors.main_heading" class="text-red-400 text-xs mt-1 ml-1">{{ errors.main_heading[0] }}</p>
         </div>
+
+        <!-- Row 3 -->
         <div>
           <BaseFileInput id="categoryImage" label="Category Image" v-model="formData.category_image" />
           <p class="text-[11px] text-gray-500 mt-1.5 ml-1">Allowed formats: JPG, PNG, GIF, SVG</p>
           <p v-if="errors.category_image" class="text-red-400 text-xs mt-1 ml-1">{{ errors.category_image[0] }}</p>
         </div>
-
-        <!-- Row 3 -->
         <div>
           <BaseFileInput id="categoryIcon" label="Category Icon (JPG, PNG, GIF, SVG - 20x20px)" v-model="formData.category_icon" />
           <p class="text-[11px] text-gray-500 mt-1.5 ml-1">Please upload an image file with dimensions exactly 20x20px</p>
           <p v-if="errors.category_icon" class="text-red-400 text-xs mt-1 ml-1">{{ errors.category_icon[0] }}</p>
         </div>
-        <div class="hidden md:block"></div>
       </div>
 
       <!-- Row 4: CKEditor -->
