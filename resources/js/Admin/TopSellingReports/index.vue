@@ -160,7 +160,7 @@ const headers = [
 const fetchReports = async (page = 1) => {
   loading.value = true
   try {
-    const response = await axios.get('/admin/top-selling-reports', { params: { page } })
+    const response = await axios.get('/admin/top-selling-reports-data', { params: { page } })
     reports.value = response.data.data
     pagination.value = {
       current_page: response.data.current_page,
@@ -196,7 +196,7 @@ const handleSearch = () => {
     searching.value = true
     searchTimeout = setTimeout(async () => {
         try {
-            const response = await axios.get('/admin/top-selling-reports/search', { params: { q: searchQuery.value } })
+            const response = await axios.get('/admin/top-selling-reports-data/search', { params: { q: searchQuery.value } })
             searchResults.value = response.data
         } catch (error) {
             console.error('Error searching reports:', error)
@@ -211,7 +211,7 @@ const addReport = async () => {
     
     adding.value = true
     try {
-      const response = await axios.post('/admin/top-selling-reports', {
+      const response = await axios.post('/admin/top-selling-reports-data', {
         report_detail_id: selectedReport.value.id
       })
       // Add to list and close
@@ -232,7 +232,7 @@ const openDeleteModal = (item) => {
 
 const confirmDelete = async () => {
   try {
-    await axios.delete(`/admin/top-selling-reports/${reportToDelete.value.id}`)
+    await axios.delete(`/admin/top-selling-reports-data/${reportToDelete.value.id}`)
     fetchReports()
     showDeleteModal.value = false
   } catch (error) {

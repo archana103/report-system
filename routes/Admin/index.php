@@ -24,8 +24,8 @@ Route::put('/admin/pricings/{id}', [PricingController::class, 'update']);
 Route::delete('/admin/pricings/{id}', [PricingController::class, 'destroy']);
 
 // Report Methodology
-Route::get('/admin/report-methodology', [ReportMethodologyController::class, 'index']);
-Route::post('/admin/report-methodology', [ReportMethodologyController::class, 'store']);
+Route::get('/admin/report-methodology-data', [ReportMethodologyController::class, 'index']);
+Route::post('/admin/report-methodology-data', [ReportMethodologyController::class, 'store']);
 
 // Report Categories
 Route::get('/admin/report-categories', [ReportCategoryController::class, 'index']);
@@ -48,15 +48,15 @@ Route::put('/admin/report-details/{id}', [App\Http\Controllers\Admin\ReportDetai
 Route::delete('/admin/report-details/{id}', [App\Http\Controllers\Admin\ReportDetailController::class, 'destroy']);
 Route::post('/admin/editor/upload-image', [App\Http\Controllers\Admin\ReportDetailController::class, 'uploadEditorImage']);
 // Top Selling Reports
-Route::get('/admin/top-selling-reports/search', [App\Http\Controllers\Admin\TopSellingReportController::class, 'search']);
-Route::get('/admin/top-selling-reports', [App\Http\Controllers\Admin\TopSellingReportController::class, 'index']);
-Route::post('/admin/top-selling-reports', [App\Http\Controllers\Admin\TopSellingReportController::class, 'store']);
-Route::delete('/admin/top-selling-reports/{id}', [App\Http\Controllers\Admin\TopSellingReportController::class, 'destroy']);
+Route::get('/admin/top-selling-reports-data/search', [App\Http\Controllers\Admin\TopSellingReportController::class, 'search']);
+Route::get('/admin/top-selling-reports-data', [App\Http\Controllers\Admin\TopSellingReportController::class, 'index']);
+Route::post('/admin/top-selling-reports-data', [App\Http\Controllers\Admin\TopSellingReportController::class, 'store']);
+Route::delete('/admin/top-selling-reports-data/{id}', [App\Http\Controllers\Admin\TopSellingReportController::class, 'destroy']);
 // Blogs
-Route::get('/admin/blogs', [App\Http\Controllers\Admin\BlogController::class, 'index']);
-Route::post('/admin/blogs', [App\Http\Controllers\Admin\BlogController::class, 'store']);
-Route::put('/admin/blogs/{id}', [App\Http\Controllers\Admin\BlogController::class, 'update']);
-Route::delete('/admin/blogs/{id}', [App\Http\Controllers\Admin\BlogController::class, 'destroy']);
+Route::get('/admin/blogs-data', [App\Http\Controllers\Admin\BlogController::class, 'index']);
+Route::post('/admin/blogs-data', [App\Http\Controllers\Admin\BlogController::class, 'store']);
+Route::put('/admin/blogs-data/{id}', [App\Http\Controllers\Admin\BlogController::class, 'update']);
+Route::delete('/admin/blogs-data/{id}', [App\Http\Controllers\Admin\BlogController::class, 'destroy']);
 
 // Blog Details
 Route::get('/admin/blog-details/blogs-list', [App\Http\Controllers\Admin\BlogDetailController::class, 'getBlogsList']);
@@ -77,8 +77,8 @@ Route::get('/admin/request-forms', [App\Http\Controllers\Admin\RequestFormContro
 Route::delete('/admin/request-forms/{id}', [App\Http\Controllers\Admin\RequestFormController::class, 'destroy']);
 
 // Blog Requests
-Route::get('/admin/blog-requests', [App\Http\Controllers\Admin\BlogRequestController::class, 'index']);
-Route::delete('/admin/blog-requests/{id}', [App\Http\Controllers\Admin\BlogRequestController::class, 'destroy']);
+Route::get('/admin/blog-requests-data', [App\Http\Controllers\Admin\BlogRequestController::class, 'index']);
+Route::delete('/admin/blog-requests-data/{id}', [App\Http\Controllers\Admin\BlogRequestController::class, 'destroy']);
 
 // Press Release
 Route::get('/admin/press-releases', [App\Http\Controllers\Admin\PressReleaseController::class, 'index']);

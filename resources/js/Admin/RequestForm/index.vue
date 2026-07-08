@@ -110,7 +110,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="h-full bg-gray-800/40 rounded-3xl p-8 shadow-2xl border border-gray-700/50 backdrop-blur-sm relative overflow-hidden flex flex-col">
+  <div>
+    <div class="h-full bg-gray-800/40 rounded-3xl p-8 shadow-2xl border border-gray-700/50 backdrop-blur-sm relative overflow-hidden flex flex-col">
     <div class="absolute -top-10 -right-10 w-40 h-40 bg-teal-500/20 rounded-full blur-3xl pointer-events-none"></div>
     
     <div class="relative z-10 flex-grow flex flex-col">
@@ -197,7 +198,8 @@ onMounted(() => {
         </div>
       </div>
     </div>
-  </Transition>
+    </Transition>
+  </div>
 </template>
 
 <style scoped>

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const getBlogs = async (params) => {
-    const response = await axios.get('/admin/blogs', { params });
+    const response = await axios.get('/admin/blogs-data', { params });
     return response.data;
 };
 
@@ -12,7 +12,7 @@ export const storeBlog = async (data) => {
             formData.append(key, data[key]);
         }
     }
-    const response = await axios.post('/admin/blogs', formData, {
+    const response = await axios.post('/admin/blogs-data', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
     });
     return response.data;
@@ -28,13 +28,13 @@ export const updateBlog = async (id, data) => {
     // Laravel needs _method=PUT for multipart/form-data updates
     formData.append('_method', 'PUT');
     
-    const response = await axios.post(`/admin/blogs/${id}`, formData, {
+    const response = await axios.post(`/admin/blogs-data/${id}`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
     });
     return response.data;
 };
 
 export const deleteBlog = async (id) => {
-    const response = await axios.delete(`/admin/blogs/${id}`);
+    const response = await axios.delete(`/admin/blogs-data/${id}`);
     return response.data;
 };
