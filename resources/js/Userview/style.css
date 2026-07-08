@@ -1302,6 +1302,10 @@ input {
     grid-template-columns: 1fr;
   }
 
+  .hero-img-card {
+    display: none !important;
+  }
+
   .services-map {
     height: auto;
     min-height: auto;

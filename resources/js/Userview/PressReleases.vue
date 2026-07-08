@@ -4,7 +4,7 @@
 
     <main class="press-main">
       <!-- Banner Section -->
-      <section class="press-banner">
+      <section class="press-banner" :style="{ backgroundImage: `url(${$assetUrl}/assets/images/background-image/press_relasebg.png)`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }">
         <div class="press-banner-glow"></div>
         <div class="press-banner-content section-shell">
           <h1>Press Releases</h1>

@@ -88,7 +88,10 @@
                 <div class="form-submit-row">
                   <button type="submit" class="primary-button contact-submit-btn" :disabled="submitting">
                     <span v-if="submitting">Sending...</span>
-                    <span v-else>Send Message <span class="arrow-btn">→</span></span>
+                    <span v-else style="display: flex; align-items: center; gap: 6px;">
+                      Send Message
+                      <CircleArrow style="width: 18px; height: 18px;" />
+                    </span>
                   </button>
                 </div>
               </form>
@@ -102,19 +105,23 @@
               <h3>Why Choose Epignosis Insights</h3>
               <ul class="why-list">
                 <li>
-                  <span class="check-icon">✓</span>
+                  <img :src="$assetUrl + '/assets/images/contact-us/tick.png'"
+                    style="width: 24px; height: 24px; flex-shrink: 0;" alt="check" />
                   Reliable Market Intelligence
                 </li>
                 <li>
-                  <span class="check-icon">✓</span>
+                  <img :src="$assetUrl + '/assets/images/contact-us/tick.png'"
+                    style="width: 24px; height: 24px; flex-shrink: 0;" alt="check" />
                   Global Industry Coverage
                 </li>
                 <li>
-                  <span class="check-icon">✓</span>
+                  <img :src="$assetUrl + '/assets/images/contact-us/tick.png'"
+                    style="width: 24px; height: 24px; flex-shrink: 0;" alt="check" />
                   Customized Research Solutions
                 </li>
                 <li>
-                  <span class="check-icon">✓</span>
+                  <img :src="$assetUrl + '/assets/images/contact-us/tick.png'"
+                    style="width: 24px; height: 24px; flex-shrink: 0;" alt="check" />
                   Expert Analyst Support
                 </li>
               </ul>
@@ -125,30 +132,18 @@
               <h3>Contact Information</h3>
               <ul class="details-list">
                 <li>
-                  <span class="detail-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                      <polyline points="22,6 12,13 2,6" />
-                    </svg>
-                  </span>
-                  info@epignosisinsights.com
+                  <img :src="$assetUrl + '/assets/images/contact-us/black_message.png'"
+                    style="width: 35px; height: 35px; flex-shrink: 0;" alt="check" />
+                  sales@epignosisinsights.com
                 </li>
                 <li>
-                  <span class="detail-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path
-                        d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.35 1.9.66 2.8a2 2 0 0 1-.45 2.11L8.05 9.9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.31 1.84.53 2.8.66A2 2 0 0 1 22 16.92Z" />
-                    </svg>
-                  </span>
+                  <img :src="$assetUrl + '/assets/images/contact-us/black_tel.png'"
+                    style="width: 35px; height: 35px; flex-shrink: 0;" alt="check" />
                   +91 9370940742
                 </li>
                 <li>
-                  <span class="detail-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                      <circle cx="12" cy="10" r="3" />
-                    </svg>
-                  </span>
+                  <img :src="$assetUrl + '/assets/images/contact-us/black_location.png'"
+                    style="width: 35px; height: 35px; flex-shrink: 0;" alt="check" />
                   Pune, Maharashtra, India
                 </li>
               </ul>
@@ -158,10 +153,21 @@
             <div class="info-block follow-us-block">
               <h3>Follow Us</h3>
               <div class="contact-social-links">
-                <a href="#" class="social-circle">f</a>
-                <a href="#" class="social-circle">in</a>
-                <a href="#" class="social-circle">x</a>
-                <a href="#" class="social-circle">ig</a>
+                <a href="https://www.facebook.com/people/Epignosis-Insights/61591089437924/" target="_blank" rel="noopener noreferrer">
+                  <img :src="$assetUrl + '/assets/images/contact-us/black_facebook.png'" style="width: 35px; height: 35px; flex-shrink: 0;" alt="Facebook" />
+                </a>
+                <a href="https://www.linkedin.com/company/epignosis-insights/" target="_blank" rel="noopener noreferrer">
+                  <img :src="$assetUrl + '/assets/images/contact-us/black_linkedin.png'" style="width: 35px; height: 35px; flex-shrink: 0;" alt="LinkedIn" />
+                </a>
+                <a href="https://x.com/epignosisinsigh" target="_blank" rel="noopener noreferrer">
+                  <img :src="$assetUrl + '/assets/images/contact-us/black_x.png'" style="width: 35px; height: 35px; flex-shrink: 0;" alt="X" />
+                </a>
+                <a href="https://www.instagram.com/epignosisinsights/" target="_blank" rel="noopener noreferrer">
+                  <img :src="$assetUrl + '/assets/images/contact-us/black_insta.png'" style="width: 35px; height: 35px; flex-shrink: 0;" alt="Instagram" />
+                </a>
+               
+
+
               </div>
             </div>
           </div>
@@ -199,7 +205,7 @@ import intlTelInput from 'intl-tel-input/intlTelInputWithUtils'
 import 'intl-tel-input/styles'
 import SiteHeader from './components/SiteHeader.vue'
 import SiteFooter from './components/SiteFooter.vue'
-
+import { CircleArrow } from './icons'
 const router = useRouter()
 
 const phoneInputRef = ref(null)
@@ -222,23 +228,28 @@ const formData = ref({
 
 const faqs = ref([
   {
-    question: 'Can I request customized market research?',
-    answer: 'Yes, we provide fully customized research reports designed to address your organization\'s unique objectives, key indicators, and data points. Share your specific scope with our team to get a project quote.',
+    question: 'How can I request a customized market research report?',
+    answer: 'Contact our research team with your requirements, including industry, geography, segmentation, and objectives. We will prepare a tailored proposal based on your business needs.',
     isOpen: false
   },
   {
-    question: 'How quickly can I receive a sample report?',
-    answer: 'Sample reports are typically generated and emailed to your business address within 24 hours of form submission, following brief validation of coordinates by our client service team.',
+    question: 'Do you offer custom research and consulting services?',
+    answer: 'Yes. We provide custom market research, competitive intelligence, primary research, market sizing, forecasting, pricing analysis, feasibility studies, and strategic consulting across multiple industries.',
     isOpen: false
   },
   {
-    question: 'Which industries do you specialize in?',
-    answer: 'We cover several core verticals globally, including technology, consumer goods, healthcare, electronics, energy & power, finance, chemical & materials, and food & beverages.',
+    question: 'How quickly will I receive a response after submitting an inquiry?',
+    answer: 'Our team typically responds within 24 business hours to discuss your requirements, provide additional information, or share a quotation.',
     isOpen: false
   },
   {
-    question: 'How can I connect with an analyst?',
-    answer: 'You can submit custom requests via this form or email us directly at info@epignosisinsights.com. We schedule direct consultation briefings with industry lead analysts within 1-2 business days.',
+    question: 'Can I request a sample report before purchasing?',
+    answer: 'Yes. We can provide a sample report or table of contents to help you evaluate the report structure, methodology, and level of analysis.',
+    isOpen: false
+  },
+  {
+    question: 'Do you provide analyst support after report purchase?',
+    answer: 'Yes. Complimentary analyst support is available for a specified period after purchase to help clarify report findings, assumptions, and methodologies.',
     isOpen: false
   }
 ])

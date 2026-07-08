@@ -65,7 +65,7 @@
               <!-- CTA Widget -->
               <div class="sidebar-widget widget-cta">
                 <h3>Unlock Premium Market Insights</h3>
-                <p>Connect with our industry analysts to receive custom research and sector highlights.</p>
+                <p>Access detailed industry analysis, market forecasts, and strategic insights tailored to your business needs.</p>
                 <button class="widget-cta-btn" @click="openModal">
                   Request Sample
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">

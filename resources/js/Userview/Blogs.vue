@@ -4,7 +4,7 @@
 
     <main class="blogs-main">
       <!-- Banner Section -->
-      <section class="blogs-banner">
+      <section class="blogs-banner" :style="{ backgroundImage: `url(${$assetUrl}/assets/images/background-image/blogbg.png)`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }">
         <div class="blogs-banner-glow"></div>
         <div class="blogs-banner-content section-shell">
           <h1>Market Insights & Industry Trends</h1>

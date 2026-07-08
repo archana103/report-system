@@ -71,7 +71,7 @@ class DatabaseSeeder extends Seeder
                     ],
                     [
                         'question' => 'How can I connect with an analyst?',
-                        'answer' => 'You can submit custom requests via this form or email us directly at info@epignosisinsights.com. We schedule direct consultation briefings with industry lead analysts within 1-2 business days.'
+                        'answer' => 'You can submit custom requests via this form or email us directly at sales@epignosisinsights.com. We schedule direct consultation briefings with industry lead analysts within 1-2 business days.'
                     ]
                 ]
             ]);

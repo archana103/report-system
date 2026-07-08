@@ -13,10 +13,10 @@
 .contact-banner {
   position: relative;
   overflow: hidden;
-  padding: 170px 24px 90px;
-  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  padding: 100px 24px 45px 90px;
+  /* background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); */
   text-align: center;
-  color: #ffffff;
+  color: #000000;
 }
 
 .contact-banner-glow {
@@ -35,23 +35,23 @@
 .contact-banner-content {
   position: relative;
   z-index: 5;
-  max-width: 800px;
+  max-width: 700px;
   margin: 0 auto;
 }
 
 .contact-banner-content h1 {
   margin: 0;
-  font-size: clamp(32px, 5vw, 44px);
-  font-weight: 800;
+  font-size: 50px;
+  font-weight: 500;
   line-height: 1.2;
 }
 
 .contact-banner-content p {
   max-width: 620px;
   margin: 20px auto 0;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.45;
-  color: rgba(255, 255, 255, 0.88);
+  color: rgba(79, 76, 76, 0.88);
 }
 
 /* Contact Columns Grid */
@@ -71,7 +71,7 @@
   background-color: #ffffff;
   border: 1px solid rgba(220, 230, 242, 0.7);
   border-radius: 20px;
-  padding: 40px;
+  padding: 25px;
   box-shadow: 0 15px 45px rgba(8, 20, 48, 0.025);
 }
 
@@ -258,8 +258,8 @@
 }
 
 .info-block h3 {
-  font-size: 18px;
-  font-weight: 800;
+  font-size: 25px;
+  /* font-weight: 800; */
   color: #111827;
   margin: 0 0 20px;
   border-bottom: 2px solid #f1f5f9;
@@ -281,7 +281,7 @@
   align-items: center;
   gap: 12px;
   font-size: 15px;
-  font-weight: 600;
+  /* font-weight: 600; */
   color: #374151;
 }
 
@@ -441,10 +441,13 @@
 }
 
 /* Transitions */
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
   transition: opacity 0.3s ease;
 }
-.fade-enter-from, .fade-leave-to {
+
+.fade-enter-from,
+.fade-leave-to {
   opacity: 0;
 }
 

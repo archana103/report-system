@@ -21,7 +21,7 @@
           <router-link to="/reports" style="color: #0783df; text-decoration: none; font-weight: 500;">Reports</router-link>
           <span style="color: #9ca3af;">/</span>
           <template v-if="report.category">
-            <router-link :to="`/reports?category=${encodeURIComponent(report.category)}`" style="color: #0783df; text-decoration: none; font-weight: 500;">{{ report.category }}</router-link>
+            <router-link :to="`/industry/${generateSlug(report.category)}`" style="color: #0783df; text-decoration: none; font-weight: 500;">{{ report.category }}</router-link>
             <span style="color: #9ca3af;">/</span>
           </template>
           <span style="color: #4b5563; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 1; line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; word-break: break-all;" :title="report.title">{{ report.breadcrumb_title }}</span>
@@ -526,8 +526,14 @@ const handleGeographyChange = (event) => {
   }
 }
 
+const generateSlug = (text) => {
+  if (!text) return ''
+  return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')
+}
+
 const goToCategory = (categoryName) => {
-  router.push({ path: '/reports', query: { category: categoryName } })
+  if (!categoryName) return
+  router.push(`/industry/${generateSlug(categoryName)}`)
 }
 
 onMounted(() => {
