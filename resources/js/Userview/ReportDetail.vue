@@ -76,6 +76,9 @@
               <button class="tab-nav-btn" :class="{ 'active-tab': activeTab === 'toc' }" @click="setActiveTab('toc')">
                 Table of Contents
               </button>
+              <button v-if="report.report_methodology && report.report_methodology.trim() !== ''" class="tab-nav-btn" :class="{ 'active-tab': activeTab === 'methodology' }" @click="setActiveTab('methodology')">
+                Report Methodology
+              </button>
             </div>
             <div class="tabs-right-action">
               <button class="download-sample-btn" @click="openRequestModal('Download Free Sample')">
@@ -105,6 +108,12 @@
               </div>
             </div>
 
+            <!-- Report Methodology Tab Pane -->
+            <div v-else-if="activeTab === 'methodology'" class="toc-pane">
+              <h2 class="section-title">Report Methodology</h2>
+              <div v-if="report.report_methodology && report.report_methodology.trim() !== ''"
+                v-html="report.report_methodology" class="dynamic-report-content"></div>
+            </div>
           </div>
 
           <!-- FAQ Section -->
@@ -153,7 +162,7 @@
           </div>
 
           <!-- Jump to Section -->
-          <div v-if="activeTab === 'overview' && extractedHeadings.length > 0" class="sidebar-white-info-card jump-to-section-card" style="margin-bottom: 24px;">
+          <div v-if="(activeTab === 'overview' || activeTab === 'methodology') && extractedHeadings.length > 0" class="sidebar-white-info-card jump-to-section-card" style="margin-bottom: 24px;">
             <h4 style="font-size: 16px; font-weight: 700; color: #111827; margin-bottom: 16px;">Jump to Section</h4>
             <div class="jump-links-container">
               <a v-for="(heading, idx) in extractedHeadings" :key="idx"
@@ -246,7 +255,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, watch } from 'vue'
+import { ref, onMounted, onUnmounted, watch, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 import SiteHeader from './components/SiteHeader.vue'
@@ -261,20 +270,27 @@ const report = ref(null)
 const loading = ref(true)
 const activeTab = ref('overview')
 const activeFaqIndex = ref(0)
-const extractedHeadings = ref([])
+const overviewHeadings = ref([])
+const methodologyHeadings = ref([])
 const activeHeadingId = ref('')
 let headingObserver = null
 
+const extractedHeadings = computed(() => {
+  if (activeTab.value === 'overview') return overviewHeadings.value
+  if (activeTab.value === 'methodology') return methodologyHeadings.value
+  return []
+})
+
 // Process HTML string to inject IDs and extract headings
-const processDescription = (htmlString) => {
-  if (!htmlString) return ''
+const processContent = (htmlString, prefix) => {
+  if (!htmlString) return { html: '', headings: [] }
   const tempDiv = document.createElement('div')
   tempDiv.innerHTML = htmlString
   const headings = tempDiv.querySelectorAll('h2, h3')
   const newHeadings = []
 
   headings.forEach((heading, index) => {
-    const id = heading.id || `section-heading-${index}`
+    const id = heading.id || `${prefix}-heading-${index}`
     heading.id = id
     newHeadings.push({
       id: id,
@@ -283,8 +299,7 @@ const processDescription = (htmlString) => {
     })
   })
 
-  extractedHeadings.value = newHeadings
-  return tempDiv.innerHTML
+  return { html: tempDiv.innerHTML, headings: newHeadings }
 }
 
 const scrollToHeading = (id) => {
@@ -333,6 +348,8 @@ const setTabFromQuery = () => {
     activeTab.value = 'overview'
   } else if (['toc', 'table-of-contents', 'buy'].includes(queryTab)) {
     activeTab.value = 'toc'
+  } else if (['methodology'].includes(queryTab)) {
+    activeTab.value = 'methodology'
   } else {
     activeTab.value = 'overview'
   }
@@ -429,7 +446,15 @@ const loadReportDetails = async (slug) => {
     const data = response.data
 
     if (data.description) {
-      data.description = processDescription(data.description)
+      const { html, headings } = processContent(data.description, 'overview')
+      data.description = html
+      overviewHeadings.value = headings
+    }
+
+    if (data.report_methodology) {
+      const { html, headings } = processContent(data.report_methodology, 'methodology')
+      data.report_methodology = html
+      methodologyHeadings.value = headings
     }
 
     report.value = data
@@ -531,6 +556,14 @@ watch(
     setTabFromQuery()
   }
 )
+
+// Watch for tab changes to update the scroll spy bindings for Jump to Section
+watch(activeTab, () => {
+  activeHeadingId.value = ''
+  setTimeout(() => {
+    setupScrollSpy()
+  }, 300)
+})
 </script>
 
 <style src="./style.css"></style>

@@ -467,8 +467,13 @@
 
 /* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideUp {
@@ -476,6 +481,7 @@
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -495,7 +501,7 @@
     grid-template-columns: 1fr;
     gap: 40px;
   }
-  
+
   .blog-sidebar {
     position: static;
   }
@@ -505,17 +511,17 @@
   .blog-detail-main {
     padding-top: 110px;
   }
-  
+
   .modal-form {
     grid-template-columns: 1fr;
     gap: 16px;
   }
-  
+
   .form-group-full,
   .modal-actions {
     grid-column: span 1;
   }
-  
+
   .modal-card {
     padding: 30px 20px;
   }

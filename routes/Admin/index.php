@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\ReportCategoryController;
 use App\Http\Controllers\Admin\ReportListController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PricingController;
+use App\Http\Controllers\Admin\ReportMethodologyController;
 
 Route::post('/admin/login', [AdminAuthController::class, 'login']);
 
@@ -21,6 +22,10 @@ Route::get('/admin/pricings', [PricingController::class, 'index']);
 Route::post('/admin/pricings', [PricingController::class, 'store']);
 Route::put('/admin/pricings/{id}', [PricingController::class, 'update']);
 Route::delete('/admin/pricings/{id}', [PricingController::class, 'destroy']);
+
+// Report Methodology
+Route::get('/admin/report-methodology', [ReportMethodologyController::class, 'index']);
+Route::post('/admin/report-methodology', [ReportMethodologyController::class, 'store']);
 
 // Report Categories
 Route::get('/admin/report-categories', [ReportCategoryController::class, 'index']);

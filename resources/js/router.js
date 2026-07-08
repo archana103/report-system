@@ -33,6 +33,7 @@ import BlogDetails from './Admin/BlogDetails/index.vue'
 import TopSellingReports from './Admin/TopSellingReports/index.vue'
 
 import ChangePassword from './Admin/ChangePassword/index.vue'
+import ReportMethodology from './Admin/ReportMethodology/index.vue'
 
 const routes = [
   { path: '/', component: UserIndex },
@@ -71,6 +72,7 @@ const routes = [
       { path: 'blog-requests', component: BlogRequests },
       { path: 'newsletters', component: Newsletters },
       { path: 'change-password', component: ChangePassword },
+      { path: 'report-methodology', component: ReportMethodology },
     ]
   },
 ]

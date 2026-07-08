@@ -444,6 +444,9 @@ class UserviewController extends Controller
 
         'related_industries' => $relatedCategories,
 
+        // Global Methodology
+        'report_methodology' => optional(\App\Models\ReportMethodology::first())->content ?: '',
+
         // Geography dropdown
         'geography_reports' => $geographyReports,
 
