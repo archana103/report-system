@@ -3,8 +3,8 @@
     <SiteHeader />
 
     <main class="services-main">
-      <section class="services-hero">
-        <div class="services-hero-glow"></div>
+      <section class="services-hero"
+        :style="{ backgroundImage: 'url(' + $assetUrl + '/assets/images/background-image/servicepage_banner.png)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }">
         <div class="services-hero-content section-shell">
           <!-- <span class="eyebrow">Research and advisory services</span> -->
           <h1>
@@ -12,10 +12,11 @@
             for Better Market Decisions
           </h1>
           <p>
-            From custom studies and brand tracking to evidence-led consulting, our services help teams turn complex market questions into confident commercial action.
+            From custom studies and brand tracking to evidence-led consulting, our services help teams turn complex
+            market questions into confident commercial action.
           </p>
           <div class="services-hero-cta">
-            <a href="#services" class="primary-button">Explore Services</a>
+            <router-link to="/reports" class="primary-button">Explore Reports</router-link>
             <router-link to="/contact-us" class="secondary-button">Talk to an Analyst</router-link>
           </div>
         </div>
@@ -23,21 +24,18 @@
 
       <section class="services-overview section-shell">
         <div class="services-section-header centered">
-      
+
           <h2>Proven Research Capability</h2>
           <p>Our operating model is built around speed, rigor, and measurable impact.</p>
         </div>
 
         <div class="services-metrics-grid">
           <div class="main-image-container">
-            <img
-              :src="$assetUrl + '/assets/images/performance_metrics.gif'"
-              alt="Services performance metrics chart"
-              class="main-charts-image"
-            />
+            <img :src="$assetUrl + '/assets/images/performance_metrics.gif'" alt="Services performance metrics chart"
+              class="main-charts-image" />
           </div>
 
-         
+
         </div>
       </section>
 
@@ -78,7 +76,8 @@
             <div class="service-feature-list">
               <div class="service-feature-item">
                 <h4>Tailored to Your Questions</h4>
-                <p>Custom built research designed around your strategic and market challenges, covering consumer behaviour, market sizing, competitive mapping, and concept testing.</p>
+                <p>Custom built research designed around your strategic and market challenges, covering consumer
+                  behaviour, market sizing, competitive mapping, and concept testing.</p>
               </div>
               <div class="service-feature-item">
                 <h4>Blended Methods, Senior Led</h4>
@@ -90,7 +89,8 @@
           </div>
           <div class="service-proof-card">
             <h3>Best for</h3>
-            <p>Market entry, category validation, audience understanding, opportunity sizing, and competitor mapping.</p>
+            <p>Market entry, category validation, audience understanding, opportunity sizing, and competitor mapping.
+            </p>
             <div class="proof-stats-row">
               <div class="proof-stat">
                 <strong>400+</strong>
@@ -113,7 +113,8 @@
             <div class="service-feature-list">
               <div class="service-feature-item">
                 <h4>Continuous Pulse on Brand Health</h4>
-                <p>Track the metrics that matter most awareness, consideration, preference, purchase intent, usage, and brand imagery with regular monthly, quarterly, or bi annual fieldwork.</p>
+                <p>Track the metrics that matter most awareness, consideration, preference, purchase intent, usage, and
+                  brand imagery with regular monthly, quarterly, or bi annual fieldwork.</p>
               </div>
               <div class="service-feature-item">
                 <h4>Reliable Data, Strategic Narrative</h4>
@@ -125,7 +126,8 @@
           </div>
           <div class="service-proof-card">
             <h3>Best for</h3>
-            <p>Brand health monitoring, campaign tracking, competitive comparison, and early-warning performance signals.</p>
+            <p>Brand health monitoring, campaign tracking, competitive comparison, and early-warning performance
+              signals.</p>
             <div class="proof-stats-row">
               <div class="proof-stat">
                 <strong>+30%</strong>
@@ -148,7 +150,9 @@
             <div class="service-feature-list">
               <div class="service-feature-item">
                 <h4>From Insights to Action</h4>
-                <p>We bridge the gap between research and strategy across market entry, portfolio and segmentation, brand positioning, and customer experience, with flexible engagements from two week sprints to long term advisory.</p>
+                <p>We bridge the gap between research and strategy across market entry, portfolio and segmentation,
+                  brand positioning, and customer experience, with flexible engagements from two week sprints to long
+                  term advisory.</p>
               </div>
               <div class="service-feature-item">
                 <h4>Embedded Thinking Partners</h4>
@@ -160,7 +164,8 @@
           </div>
           <div class="service-proof-card">
             <h3>Best for</h3>
-            <p>Strategic planning, go-to-market decisions, segmentation, positioning, and board-level recommendations.</p>
+            <p>Strategic planning, go-to-market decisions, segmentation, positioning, and board-level recommendations.
+            </p>
             <div class="proof-stats-row">
               <div class="proof-stat">
                 <strong>82%</strong>
@@ -175,14 +180,10 @@
         </div>
       </section>
 
-    
 
-      <LatestInsights 
-        v-if="insights && insights.length > 0"
-        :insights="visibleInsights" 
-        @next="nextInsight" 
-        @prev="prevInsight" 
-      />
+
+      <LatestInsights v-if="insights && insights.length > 0" :insights="visibleInsights" @next="nextInsight"
+        @prev="prevInsight" />
 
       <section class="services-bottom-cta section-shell">
         <div class="custom-cta-card">

@@ -52,6 +52,7 @@
   font-size: 18px;
   line-height: 1.45;
   color: rgba(79, 76, 76, 0.88);
+  font-weight: 400;
 }
 
 /* Contact Columns Grid */
@@ -69,7 +70,7 @@
 /* Form Card Container */
 .contact-form-card {
   background-color: #ffffff;
-  border: 1px solid rgba(220, 230, 242, 0.7);
+  border: 1px solid rgb(171 181 195 / 70%);
   border-radius: 20px;
   padding: 25px;
   box-shadow: 0 15px 45px rgba(8, 20, 48, 0.025);
@@ -105,7 +106,7 @@
 .form-group textarea {
   width: 100%;
   padding: 12px 18px;
-  border: 1.5px solid #e2e8f0;
+      border: 1px solid rgb(171 181 195 / 70%);
   border-radius: 12px;
   font-size: 14px;
   outline: none;
@@ -366,8 +367,8 @@
 }
 
 .faq-section-title {
-  font-size: 28px;
-  font-weight: 800;
+  font-size: 40px !important;
+  font-weight: 600;
   color: #111827;
   text-align: center;
   margin-bottom: 40px;

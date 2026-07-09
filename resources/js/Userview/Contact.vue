@@ -144,7 +144,7 @@
                 <li>
                   <img :src="$assetUrl + '/assets/images/contact-us/black_location.png'"
                     style="width: 35px; height: 35px; flex-shrink: 0;" alt="check" />
-                  Pune, Maharashtra, India
+                  703 Kumar Corporate Building, Pune-411028, India
                 </li>
               </ul>
             </div>

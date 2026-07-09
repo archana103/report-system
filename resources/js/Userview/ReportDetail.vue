@@ -15,18 +15,23 @@
     <template v-else-if="report">
       <!-- Banner Hero Section -->
       <header class="detail-hero-banner">
-        <div class="breadcrumb-container" style="max-width: 1120px; margin: 0 auto 20px; display: flex; align-items: center; gap: 8px; font-size: 13px; color: #6b7280; flex-wrap: wrap;">
+        <div class="breadcrumb-container"
+          style="max-width: 1120px; margin: 0 auto 20px; display: flex; align-items: center; gap: 8px; font-size: 13px; color: #6b7280; flex-wrap: wrap;">
           <router-link to="/" style="color: #0783df; text-decoration: none; font-weight: 500;">Home</router-link>
           <span style="color: #9ca3af;">/</span>
-          <router-link to="/reports" style="color: #0783df; text-decoration: none; font-weight: 500;">Reports</router-link>
+          <router-link to="/reports"
+            style="color: #0783df; text-decoration: none; font-weight: 500;">Reports</router-link>
           <span style="color: #9ca3af;">/</span>
           <template v-if="report.category">
-            <router-link :to="`/industry/${generateSlug(report.category)}`" style="color: #0783df; text-decoration: none; font-weight: 500;">{{ report.category }}</router-link>
+            <router-link :to="`/industry/${generateSlug(report.category)}`"
+              style="color: #0783df; text-decoration: none; font-weight: 500;">{{ report.category }}</router-link>
             <span style="color: #9ca3af;">/</span>
           </template>
-          <span style="color: #4b5563; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 1; line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; word-break: break-all;" :title="report.title">{{ report.breadcrumb_title }}</span>
+          <span
+            style="color: #4b5563; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 1; line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; word-break: break-all;"
+            :title="report.title">{{ report.breadcrumb_title }}</span>
         </div>
-        
+
         <div class="detail-hero-shell">
           <div class="book-cover-container">
             <div class="report-book-cover-image-wrapper">
@@ -76,7 +81,8 @@
               <button class="tab-nav-btn" :class="{ 'active-tab': activeTab === 'toc' }" @click="setActiveTab('toc')">
                 Table of Contents
               </button>
-              <button v-if="report.report_methodology && report.report_methodology.trim() !== ''" class="tab-nav-btn" :class="{ 'active-tab': activeTab === 'methodology' }" @click="setActiveTab('methodology')">
+              <button v-if="report.report_methodology && report.report_methodology.trim() !== ''" class="tab-nav-btn"
+                :class="{ 'active-tab': activeTab === 'methodology' }" @click="setActiveTab('methodology')">
                 Report Methodology
               </button>
             </div>
@@ -100,7 +106,7 @@
 
             <!-- Table of Contents Tab Pane -->
             <div v-else-if="activeTab === 'toc'" class="toc-pane">
-              <h2 class="section-title">Table of Contents</h2>
+             
               <div v-if="report.table_of_contents && report.table_of_contents.trim() !== ''"
                 v-html="report.table_of_contents" class="dynamic-report-content table-of-contents-block"></div>
               <div v-else class="dynamic-report-content">
@@ -110,7 +116,7 @@
 
             <!-- Report Methodology Tab Pane -->
             <div v-else-if="activeTab === 'methodology'" class="toc-pane">
-              <h2 class="section-title">Report Methodology</h2>
+
               <div v-if="report.report_methodology && report.report_methodology.trim() !== ''"
                 v-html="report.report_methodology" class="dynamic-report-content"></div>
             </div>
@@ -140,36 +146,31 @@
           </div>
 
           <!-- Analyst Support Card -->
-          <div class="analyst-support-card">
-            <h3>Small Analyst Support Card</h3>
-            <p>Need Help Choosing the Right Report? Speak directly with our lead industry expert.</p>
-            <router-link to="/contact-us" class="talk-analyst-btn">
-              <PhoneMini style="width:18px; height:18px;" /> Talk to Our Analyst
-            </router-link>
-          </div>
+      
         </section>
 
         <!-- Right Sidebar Column -->
         <aside class="sidebar-content-column">
           <!-- Geography Dropdown -->
-          <div v-if="report.geography_reports && report.geography_reports.length > 0" class="geography-dropdown-wrapper" style="margin-bottom: 24px;">
+          <div v-if="report.geography_reports && report.geography_reports.length > 0" class="geography-dropdown-wrapper"
+            style="margin-bottom: 24px;">
             <select class="geography-select" @change="handleGeographyChange">
               <option value="" disabled selected>Select Another Geography</option>
-              <option v-for="(geo, idx) in report.geography_reports" :key="idx" :value="geo.slug_url || geo.slug || geo.id">
+              <option v-for="(geo, idx) in report.geography_reports" :key="idx"
+                :value="geo.slug_url || geo.slug || geo.id">
                 {{ geo.geo_name || geo.title }}
               </option>
             </select>
           </div>
 
           <!-- Jump to Section -->
-          <div v-if="(activeTab === 'overview' || activeTab === 'methodology') && extractedHeadings.length > 0" class="sidebar-white-info-card jump-to-section-card" style="margin-bottom: 24px;">
+          <div v-if="(activeTab === 'overview' || activeTab === 'methodology') && extractedHeadings.length > 0"
+            class="sidebar-white-info-card jump-to-section-card" style="margin-bottom: 24px;">
             <h4 style="font-size: 16px; font-weight: 700; color: #111827; margin-bottom: 16px;">Jump to Section</h4>
             <div class="jump-links-container">
-              <a v-for="(heading, idx) in extractedHeadings" :key="idx"
-                 href="#"
-                 @click.prevent="scrollToHeading(heading.id)"
-                 class="jump-link-item"
-                 :class="{ 'active': activeHeadingId === heading.id, 'sub-heading': heading.tagName === 'h3' }">
+              <a v-for="(heading, idx) in extractedHeadings" :key="idx" href="#"
+                @click.prevent="scrollToHeading(heading.id)" class="jump-link-item"
+                :class="{ 'active': activeHeadingId === heading.id, 'sub-heading': heading.tagName === 'h3' }">
                 {{ heading.text }}
               </a>
             </div>
@@ -245,6 +246,17 @@
           database.
         </p>
         <router-link to="/reports" class="primary-button">Back to Reports List</router-link>
+      </div>
+    </div>
+    <div style="max-width: 1300px; margin: 0 auto 60px; padding: 0 24px;">
+      <div class="analyst-support-card"
+          :style="{ backgroundImage: 'url(' + $assetUrl + '/assets/images/background-image/mainreportpage_cta.png)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', margin: '0', padding: '100px 40px', borderRadius: '24px' }">
+          <h3 style="font-size: 40px; font-weight: 600; color: #111827;">Small Analyst Support Card</h3>
+          <p style="font-size: 16px; color: #4b5563; margin-bottom: 30px;">Need Help Choosing the Right Report</p>
+          <router-link to="/contact-us" class="talk-analyst-btn">
+            Talk to Our Analyst
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;margin-left:4px;"><circle cx="12" cy="12" r="10"/><path d="M12 16l4-4-4-4M8 12h8"/></svg>
+          </router-link>
       </div>
     </div>
 
