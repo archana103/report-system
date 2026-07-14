@@ -364,5 +364,10 @@ class DatabaseSeeder extends Seeder
             }
         }
         $this->command->info('20 dummy reports, categories, and details seeded successfully!');
+
+        $this->call([
+            PageSeoSeeder::class,
+        ]);
+        $this->command->info('Page SEO tags seeded successfully!');
     }
 }

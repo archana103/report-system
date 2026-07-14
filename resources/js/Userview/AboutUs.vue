@@ -299,7 +299,7 @@
         :style="{ backgroundImage: 'url(' + $assetUrl + '/assets/images/background-image/aboutus_cta.png)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }">
         <div class="section-shell cta-container">
           <div class="cta-left">
-            <h2>Ready to Unlock Market Insights?</h2>
+            <h3>Ready to Unlock Market Insights?</h3>
             <p>Get reliable research and data-driven insights tailored to your business goals.</p>
             <router-link to="/reports" class="white-button">
               Get Research

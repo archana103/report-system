@@ -34,6 +34,7 @@ import TopSellingReports from './Admin/TopSellingReports/index.vue'
 
 import ChangePassword from './Admin/ChangePassword/index.vue'
 import ReportMethodology from './Admin/ReportMethodology/index.vue'
+import PageSeos from './Admin/PageSeos/index.vue'
 
 const routes = [
   { path: '/', component: UserIndex },
@@ -73,6 +74,7 @@ const routes = [
       { path: 'newsletters', component: Newsletters },
       { path: 'change-password', component: ChangePassword },
       { path: 'report-methodology', component: ReportMethodology },
+      { path: 'page-seo', component: PageSeos },
     ]
   },
 ]

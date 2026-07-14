@@ -34,6 +34,7 @@
     @if(!empty($seo['raw_head']))
     {!! $seo['raw_head'] !!}
     @endif
+    <!-- DEBUG_DATA: {{ json_encode($seo['open_graph'] ?? 'not_set') }} -->
     <link rel="icon" type="image/png" href="/favicon.png?v=3.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

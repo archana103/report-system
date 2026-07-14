@@ -149,11 +149,25 @@
   align-items: center;
   border-bottom: 2px solid #ecf2f8;
   margin-bottom: 30px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: #ffffff;
+  padding-top: 10px;
 }
 
 .tabs-btn-group {
   display: flex;
   gap: 30px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.tabs-btn-group::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
 }
 
 .tab-nav-btn {

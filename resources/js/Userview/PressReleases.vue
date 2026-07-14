@@ -4,12 +4,14 @@
 
     <main class="press-main">
       <!-- Banner Section -->
-      <section class="press-banner" :style="{ backgroundImage: `url(${$assetUrl}/assets/images/background-image/press_relasebg.png)`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }">
-        <div class="press-banner-glow"></div>
+      <section class="press-banner"
+        :style="{ backgroundImage: `url(${$assetUrl}/assets/images/background-image/press_relasebg.png)`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }">
+        <!-- <div class="press-banner-glow"></div> -->
         <div class="press-banner-content section-shell">
           <h1>Press Releases</h1>
           <p>
-            Stay updated with the latest announcements, research developments, industry insights, and company news from Epignosis Insights.
+            Stay updated with the latest announcements, research developments, industry insights, and company news from
+            Epignosis Insights.
           </p>
         </div>
       </section>
@@ -19,13 +21,10 @@
         <div class="press-content-header">
           <h2>Latest Press Releases</h2>
           <div class="press-search-wrapper">
-            <input 
-              type="search" 
-              v-model="searchQuery" 
-              placeholder="Search press releases..." 
-              class="press-search-input"
-            />
-            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <input type="search" v-model="searchQuery" placeholder="Search press releases..."
+              class="press-search-input" />
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
               <circle cx="11" cy="11" r="7"></circle>
               <path d="m20 20-3.5-3.5"></path>
             </svg>
@@ -45,7 +44,8 @@
           <div class="press-grid">
             <router-link v-for="pr in pressReleases" :key="pr.id" :to="'/press-release/' + pr.url" class="press-card">
               <div class="press-image-wrapper">
-                <img :src="pr.image || $assetUrl + '/assets/images/default-report.png'" :alt="pr.title" class="press-image" />
+                <img :src="pr.image || $assetUrl + '/assets/images/default-report.png'" :alt="pr.title"
+                  class="press-image" />
               </div>
               <div class="press-info">
                 <span class="press-date">
@@ -60,17 +60,14 @@
 
           <!-- Pagination -->
           <div class="press-pagination" v-if="totalPages > 1">
-            <button 
-              class="pagination-arrow" 
-              :disabled="currentPage === 1" 
-              @click="goToPage(currentPage - 1)"
-            >
-              <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="m15 18-6-6 6-6"/>
+            <button class="pagination-arrow" :disabled="currentPage === 1" @click="goToPage(currentPage - 1)">
+              <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="m15 18-6-6 6-6" />
               </svg>
               Previous
             </button>
-            
+
             <div class="pagination-numbers">
               <template v-for="(page, index) in paginationRange" :key="index">
                 <span v-if="page === '...'" class="pagination-dots">
@@ -78,25 +75,18 @@
                   <span></span>
                   <span></span>
                 </span>
-                <button 
-                  v-else
-                  class="pagination-num" 
-                  :class="{ active: currentPage === page }"
-                  @click="goToPage(page)"
-                >
+                <button v-else class="pagination-num" :class="{ active: currentPage === page }" @click="goToPage(page)">
                   {{ page }}
                 </button>
               </template>
             </div>
 
-            <button 
-              class="pagination-arrow active-arrow" 
-              :disabled="currentPage === totalPages" 
-              @click="goToPage(currentPage + 1)"
-            >
+            <button class="pagination-arrow active-arrow" :disabled="currentPage === totalPages"
+              @click="goToPage(currentPage + 1)">
               Next
-              <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="m9 18 6-6-6-6"/>
+              <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="m9 18 6-6-6-6" />
               </svg>
             </button>
           </div>
@@ -155,7 +145,7 @@ const fetchPressReleases = async (page = 1) => {
   loading.value = true
   try {
     const response = await axios.get('/api/press-releases-list', {
-      params: { 
+      params: {
         page,
         search: searchQuery.value
       }

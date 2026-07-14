@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Blog;
 use App\Models\PressRelease;
 use App\Models\ReportDetail;
+use App\Models\PageSeo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -165,7 +166,16 @@ class SeoPageController extends Controller
 
     private function baseSeo(Request $request): array
     {
-        return $this->buildSeo([
+        $path = ltrim($request->path(), '/');
+        // Handle home route explicitly since path() might return empty or '/'
+        if ($path === '') {
+            $path = '/';
+        }
+
+        $pageSeo = PageSeo::where('url_path', $path)->orWhere('url_path', '/'.$path)->first();
+
+        // Base defaults
+        $data = [
             'title' => 'Epignosis Insights - Market Research Reports and Industry Analysis',
             'description' => 'Explore market research reports, industry analysis, trends, forecasts, blogs, and press releases from Epignosis Insights.',
             'canonical' => $request->url(),
@@ -173,7 +183,18 @@ class SeoPageController extends Controller
                 $this->organizationSchema(),
                 $this->websiteSchema($request),
             ],
-        ], $request);
+        ];
+
+        if ($pageSeo) {
+            $customSchemas = $this->customSchemas(array_filter([
+                $pageSeo->schema_tag
+            ]));
+
+            $data['schemas'] = array_merge($customSchemas, $data['schemas']);
+            $data['raw_tags'] = $pageSeo->raw_tags;
+        }
+
+        return $this->buildSeo($data, $request);
     }
 
     private function buildSeo(array $data, Request $request): array
@@ -187,10 +208,8 @@ class SeoPageController extends Controller
             'robots' => $this->cleanText(Arr::get($data, 'robots')),
             'canonical' => $this->cleanUrl(Arr::get($data, 'canonical')) ?: $request->url(),
             'raw_head' => implode("\n    ", array_filter([
-                $this->renderRawTags(Arr::get($data, 'open_graph'), 'meta'),
-                $this->renderRawTags(Arr::get($data, 'twitter'), 'meta'),
-                $this->renderRawTags(Arr::get($data, 'hreflang'), 'link'),
                 $this->renderSchemaTags(Arr::get($data, 'schemas', [])),
+                Arr::get($data, 'raw_tags', ''),
             ])),
         ];
     }

@@ -71,7 +71,7 @@
           <div class="service-detail-info">
             <div class="service-header-inline">
               <div class="service-number-circle">1</div>
-              <h2>Custom Research Solutions</h2>
+              <h3>Custom Research Solutions</h3>
             </div>
             <div class="service-feature-list">
               <div class="service-feature-item">
@@ -108,7 +108,7 @@
           <div class="service-detail-info">
             <div class="service-header-inline">
               <div class="service-number-circle">2</div>
-              <h2>Brand Track Reports</h2>
+              <h3>Brand Track Reports</h3>
             </div>
             <div class="service-feature-list">
               <div class="service-feature-item">
@@ -145,7 +145,7 @@
           <div class="service-detail-info">
             <div class="service-header-inline">
               <div class="service-number-circle">3</div>
-              <h2>Consulting Services</h2>
+              <h3>Consulting Services</h3>
             </div>
             <div class="service-feature-list">
               <div class="service-feature-item">
@@ -188,7 +188,7 @@
       <section class="services-bottom-cta section-shell">
         <div class="custom-cta-card">
           <div class="cta-left">
-            <h2>Ready to<br />Commission a<br />Custom Study?</h2>
+            <h3>Ready to<br />Commission a<br />Custom Study?</h3>
             <p>Speak to one of our lead analysts to structure a research proposal matched to your objectives.</p>
             <router-link to="/contact-us" class="cta-button-blue">
               Get in Touch <span class="arrow-circle">→</span>

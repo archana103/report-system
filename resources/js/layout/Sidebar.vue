@@ -194,8 +194,15 @@
           <svg class="w-5 h-5 text-indigo-300 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
           <span class="font-medium relative z-10 text-gray-200 group-[.router-link-active]:text-white">Newsletter</span>
         </router-link>
-
-
+        <router-link
+          to="/admin/page-seo"
+          class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 hover:bg-white/5 border border-transparent hover:border-gray-700 relative overflow-hidden group"
+          active-class="bg-gradient-to-r from-indigo-600 to-purple-600 shadow-lg border-transparent hover:border-transparent text-white ring-1 ring-white/20"
+        >
+          <div class="absolute inset-0 bg-gradient-to-r from-white/0 via-white/5 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+          <svg class="w-5 h-5 text-indigo-300 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+          <span class="font-medium relative z-10 text-gray-200 group-[.router-link-active]:text-white">Page SEO</span>
+        </router-link>
 
 
 

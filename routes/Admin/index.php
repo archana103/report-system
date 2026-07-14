@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ReportListController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PricingController;
 use App\Http\Controllers\Admin\ReportMethodologyController;
+use App\Http\Controllers\Admin\PageSeoController;
 
 Route::post('/admin/login', [AdminAuthController::class, 'login']);
 
@@ -95,3 +96,9 @@ Route::get('/admin/press-releases-dropdown', [App\Http\Controllers\Admin\PressRe
 
 // Change password
 Route::post('/admin/change-password', [AdminAuthController::class, 'changePassword']);
+
+// Page SEO
+Route::get('/admin/page-seos-data', [PageSeoController::class, 'index']);
+Route::post('/admin/page-seos-data', [PageSeoController::class, 'store']);
+Route::put('/admin/page-seos-data/{id}', [PageSeoController::class, 'update']);
+Route::delete('/admin/page-seos-data/{id}', [PageSeoController::class, 'destroy']);
