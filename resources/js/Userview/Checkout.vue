@@ -35,7 +35,6 @@
           <!-- Pricing Grid -->
           <div class="pricing-grid">
             <div v-for="(plan, index) in pricings" :key="plan.id" class="pricing-card" :class="{ 'selected': selectedLicense === plan.id, 'highlighted': index === 1 }">
-              <span class="discount-badge" v-if="index === 1">Most Popular</span>
               <div class="card-header-info">
                 <h3>{{ plan.title }}</h3>
                 <div class="price-box">
