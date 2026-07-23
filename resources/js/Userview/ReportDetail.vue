@@ -106,7 +106,7 @@
 
             <!-- Table of Contents Tab Pane -->
             <div v-else-if="activeTab === 'toc'" class="toc-pane">
-             
+
               <div v-if="report.table_of_contents && report.table_of_contents.trim() !== ''"
                 v-html="report.table_of_contents" class="dynamic-report-content table-of-contents-block"></div>
               <div v-else class="dynamic-report-content">
@@ -146,7 +146,7 @@
           </div>
 
           <!-- Analyst Support Card -->
-      
+
         </section>
 
         <!-- Right Sidebar Column -->
@@ -203,7 +203,7 @@
 
               <span class="talk-analyst-title">Talk to Analyst</span>
 
-              <a href="tel:+919370940742" class="contact-btn-white call-now-btn">
+              <a href="tel:+919370941234" class="contact-btn-white call-now-btn">
                 Call Now
               </a>
             </div>
@@ -250,13 +250,17 @@
     </div>
     <div style="max-width: 1300px; margin: 0 auto 60px; padding: 0 24px;">
       <div class="analyst-support-card"
-          :style="{ backgroundImage: 'url(' + $assetUrl + '/assets/images/background-image/mainreportpage_cta.png)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', margin: '0', padding: '100px 40px', borderRadius: '24px' }">
-          <h3 style="font-size: 40px; font-weight: 600; color: #111827;">Small Analyst Support Card</h3>
-          <p style="font-size: 16px; color: #4b5563; margin-bottom: 30px;">Need Help Choosing the Right Report</p>
-          <router-link to="/contact-us" class="talk-analyst-btn">
-            Talk to Our Analyst
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;margin-left:4px;"><circle cx="12" cy="12" r="10"/><path d="M12 16l4-4-4-4M8 12h8"/></svg>
-          </router-link>
+        :style="{ backgroundImage: 'url(' + $assetUrl + '/assets/images/background-image/mainreportpage_cta.png)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', margin: '0', padding: '100px 40px', borderRadius: '24px' }">
+        <h3 style="font-size: 40px; font-weight: 600; color: #111827;">Small Analyst Support Card</h3>
+        <p style="font-size: 16px; color: #4b5563; margin-bottom: 30px;">Need Help Choosing the Right Report</p>
+        <router-link to="/contact-us" class="talk-analyst-btn">
+          Talk to Our Analyst
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            style="width:18px;height:18px;margin-left:4px;">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 16l4-4-4-4M8 12h8" />
+          </svg>
+        </router-link>
       </div>
     </div>
 

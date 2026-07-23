@@ -103,9 +103,6 @@ const isEditing = ref(false)
 const form = ref({
   id: null,
   url_path: '',
-  title: '',
-  meta_description: '',
-  meta_keywords: '',
   schema_tag: '',
   raw_tags: ''
 })
@@ -142,7 +139,7 @@ const fetchPageSeos = async () => {
 
 const openAddModal = () => {
   isEditing.value = false
-  form.value = { id: null, url_path: '', title: '', meta_description: '', meta_keywords: '', schema_tag: '', raw_tags: '' }
+  form.value = { id: null, url_path: '', schema_tag: '', raw_tags: '' }
   isModalOpen.value = true
 }
 

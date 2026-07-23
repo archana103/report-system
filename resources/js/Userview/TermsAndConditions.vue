@@ -282,7 +282,7 @@
         <p>
           <strong>Epignosis Insights LLP</strong><br>
           <strong>Email:</strong> sales@epignosisinsights.com<br>
-          <strong>Phone:</strong> 9370940742<br>
+          <strong>Phone:</strong> 9370941234<br>
           <strong>Website:</strong> <a href="https://epignosisinsights.com/"
             target="_blank">https://epignosisinsights.com/</a><br>
           <strong>Business Hours:</strong> Monday–Friday, 9:00 AM – 6:00 PM (IST)
@@ -331,7 +331,7 @@ import SiteFooter from './components/SiteFooter.vue'
 
 .effective-date,
 .updated-date {
- 
+
   font-size: 0.95rem;
   margin: 5px 0;
 

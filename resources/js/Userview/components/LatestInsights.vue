@@ -18,7 +18,7 @@
           </article>
         </div>
         <div class="center-action">
-          <router-link to="/press-releases" class="primary-button small">Read More <CircleArrow /></router-link>
+          <router-link to="/blogs" class="primary-button small">Read More <CircleArrow /></router-link>
         </div>
       </section>
 </template>

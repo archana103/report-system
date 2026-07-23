@@ -8,20 +8,24 @@
         <p>Delivering data-driven insights to support smarter business decisions.</p>
         <form class="footer-form" @submit.prevent="subscribeNewsletter">
           <input type="email" placeholder="Email Address" v-model="emailAddress" required :disabled="isSubscribing" />
-          <button type="submit" :disabled="isSubscribing" :style="{ opacity: isSubscribing ? 0.7 : 1 }">{{ isSubscribing ? 'Submitting...' : 'Show Now!' }}</button>
+          <button type="submit" :disabled="isSubscribing" :style="{ opacity: isSubscribing ? 0.7 : 1 }">{{ isSubscribing
+            ? 'Submitting...' : 'Show Now!' }}</button>
         </form>
-        <p v-if="subscriptionMessage" :style="{ color: messageType === 'success' ? '#10b981' : '#ef4444', fontSize: '13px', marginTop: '8px', fontWeight: '500' }">{{ subscriptionMessage }}</p>
+        <p v-if="subscriptionMessage"
+          :style="{ color: messageType === 'success' ? '#10b981' : '#ef4444', fontSize: '13px', marginTop: '8px', fontWeight: '500' }">
+          {{ subscriptionMessage }}</p>
       </div>
       <div class="footer-contact">
         <p><span>
-            <img :src="$assetUrl + '/assets/images/footer_icons/icon_mail.png'" alt="Location" class="footer-icon-img" />
+            <img :src="$assetUrl + '/assets/images/footer_icons/icon_mail.png'" alt="Location"
+              class="footer-icon-img" />
           </span>703 Kumar Corporate Building, Pune-411028, India</p>
         <p><span>
             <img :src="$assetUrl + '/assets/images/footer_icons/Icon.png'" alt="Email" class="footer-icon-img" />
           </span>sales@epignosisinsights.com</p>
         <p><span>
             <img :src="$assetUrl + '/assets/images/footer_icons/icon_phone.png'" alt="Phone" class="footer-icon-img" />
-          </span>+91 9370940742</p>
+          </span>+91 9370941234</p>
       </div>
     </div>
     <div class="footer-links">
@@ -34,7 +38,8 @@
         <router-link to="/contact-us">Contact</router-link>
       </nav>
       <div class="social-links">
-        <a href="https://www.facebook.com/people/Epignosis-Insights/61591089437924/" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.facebook.com/people/Epignosis-Insights/61591089437924/" target="_blank"
+          rel="noopener noreferrer">
           <img :src="$assetUrl + '/assets/images/footer_icons/facebook.png'" alt="Facebook" class="social-icon-img" />
         </a>
         <a href="https://www.linkedin.com/company/epignosis-insights/" target="_blank" rel="noopener noreferrer">
@@ -76,7 +81,7 @@ const subscribeNewsletter = async () => {
   if (!emailAddress.value) return
   isSubscribing.value = true
   subscriptionMessage.value = ''
-  
+
   try {
     const response = await axios.post('/api/newsletter', { email: emailAddress.value })
     subscriptionMessage.value = response.data.message

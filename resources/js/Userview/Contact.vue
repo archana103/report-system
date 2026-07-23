@@ -139,7 +139,7 @@
                 <li>
                   <img :src="$assetUrl + '/assets/images/contact-us/black_tel.png'"
                     style="width: 35px; height: 35px; flex-shrink: 0;" alt="check" />
-                  +91 9370940742
+                  +91 9370941234
                 </li>
                 <li>
                   <img :src="$assetUrl + '/assets/images/contact-us/black_location.png'"
@@ -153,19 +153,25 @@
             <div class="info-block follow-us-block">
               <h3>Follow Us</h3>
               <div class="contact-social-links">
-                <a href="https://www.facebook.com/people/Epignosis-Insights/61591089437924/" target="_blank" rel="noopener noreferrer">
-                  <img :src="$assetUrl + '/assets/images/contact-us/black_facebook.png'" style="width: 35px; height: 35px; flex-shrink: 0;" alt="Facebook" />
+                <a href="https://www.facebook.com/people/Epignosis-Insights/61591089437924/" target="_blank"
+                  rel="noopener noreferrer">
+                  <img :src="$assetUrl + '/assets/images/contact-us/black_facebook.png'"
+                    style="width: 35px; height: 35px; flex-shrink: 0;" alt="Facebook" />
                 </a>
-                <a href="https://www.linkedin.com/company/epignosis-insights/" target="_blank" rel="noopener noreferrer">
-                  <img :src="$assetUrl + '/assets/images/contact-us/black_linkedin.png'" style="width: 35px; height: 35px; flex-shrink: 0;" alt="LinkedIn" />
+                <a href="https://www.linkedin.com/company/epignosis-insights/" target="_blank"
+                  rel="noopener noreferrer">
+                  <img :src="$assetUrl + '/assets/images/contact-us/black_linkedin.png'"
+                    style="width: 35px; height: 35px; flex-shrink: 0;" alt="LinkedIn" />
                 </a>
                 <a href="https://x.com/epignosisinsigh" target="_blank" rel="noopener noreferrer">
-                  <img :src="$assetUrl + '/assets/images/contact-us/black_x.png'" style="width: 35px; height: 35px; flex-shrink: 0;" alt="X" />
+                  <img :src="$assetUrl + '/assets/images/contact-us/black_x.png'"
+                    style="width: 35px; height: 35px; flex-shrink: 0;" alt="X" />
                 </a>
                 <a href="https://www.instagram.com/epignosisinsights/" target="_blank" rel="noopener noreferrer">
-                  <img :src="$assetUrl + '/assets/images/contact-us/black_insta.png'" style="width: 35px; height: 35px; flex-shrink: 0;" alt="Instagram" />
+                  <img :src="$assetUrl + '/assets/images/contact-us/black_insta.png'"
+                    style="width: 35px; height: 35px; flex-shrink: 0;" alt="Instagram" />
                 </a>
-               
+
 
 
               </div>

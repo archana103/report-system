@@ -81,7 +81,7 @@
                   <div class="report-actions">
                     <button class="secondary-button outlined" @click="openRequestModal('Request Sample', report.title)">Request Sample</button>
                     <button class="secondary-button outlined" @click="openRequestModal('Download Free Sample', report.title)">Download Sample</button>
-                    <router-link :to="`/report/${report.slug && report.slug !== '#' ? report.slug : report.id}`" class="primary-button small">Buy Now</router-link>
+                    <router-link :to="`/checkout/${report.slug && report.slug !== '#' ? report.slug : report.id}`" class="primary-button small">Buy Now</router-link>
                   </div>
                 </div>
               </article>
