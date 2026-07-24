@@ -102,3 +102,7 @@ Route::get('/admin/page-seos-data', [PageSeoController::class, 'index']);
 Route::post('/admin/page-seos-data', [PageSeoController::class, 'store']);
 Route::put('/admin/page-seos-data/{id}', [PageSeoController::class, 'update']);
 Route::delete('/admin/page-seos-data/{id}', [PageSeoController::class, 'destroy']);
+
+// Purchases
+Route::get('/admin/purchases-data', [\App\Http\Controllers\Admin\PurchaseController::class, 'index']);
+Route::delete('/admin/purchases-data/{id}', [\App\Http\Controllers\Admin\PurchaseController::class, 'destroy']);

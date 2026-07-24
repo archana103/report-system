@@ -24,6 +24,7 @@ Route::get('/api/pricings-active', [App\Http\Controllers\Admin\PricingController
 Route::get('/api/search-predictive', [UserviewController::class, 'predictiveSearch']);
 
 Route::post('/api/newsletter', [UserviewController::class, 'storeNewsletter']);
+Route::post('/api/checkout/purchase', [\App\Http\Controllers\CheckoutController::class, 'store']);
 
 Route::get('/api/public-top-selling-reports', [UserviewController::class, 'publicTopSellingReports']);
 

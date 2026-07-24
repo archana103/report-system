@@ -12,6 +12,7 @@ import UserThankYou from './Userview/ThankYou.vue'
 import UserBlogDetail from './Userview/BlogDetail.vue'
 import UserPressReleaseDetail from './Userview/PressReleaseDetail.vue'
 import UserCheckout from './Userview/Checkout.vue'
+import UserPurchaseForm from './Userview/components/CheckoutForm.vue'
 import UserServices from './Userview/Services.vue'
 import UserPrivacyPolicy from './Userview/PrivacyPolicy.vue'
 import UserTermsAndConditions from './Userview/TermsAndConditions.vue'
@@ -35,6 +36,7 @@ import TopSellingReports from './Admin/TopSellingReports/index.vue'
 import ChangePassword from './Admin/ChangePassword/index.vue'
 import ReportMethodology from './Admin/ReportMethodology/index.vue'
 import PageSeos from './Admin/PageSeos/index.vue'
+import Purchases from './Admin/Purchases/index.vue'
 
 const routes = [
   { path: '/', component: UserIndex },
@@ -52,6 +54,7 @@ const routes = [
   { path: '/blog/:slug', component: UserBlogDetail },
   { path: '/press-release/:slug', component: UserPressReleaseDetail },
   { path: '/checkout/:slug', component: UserCheckout },
+  { path: '/purchase/:slug', component: UserPurchaseForm },
   { path: '/report', redirect: '/reports' },
   { path: '/admin/login', component: AdminLogin },
   { 
@@ -75,6 +78,7 @@ const routes = [
       { path: 'change-password', component: ChangePassword },
       { path: 'report-methodology', component: ReportMethodology },
       { path: 'page-seo', component: PageSeos },
+      { path: 'purchases', component: Purchases },
     ]
   },
 ]
