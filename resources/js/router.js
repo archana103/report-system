@@ -107,5 +107,18 @@ router.beforeEach((to, from) => {
   }
 })
 
+let defaultTitle = 'Epignosis Insights';
+if (typeof document !== 'undefined') {
+  defaultTitle = document.title;
+}
+
+router.afterEach((to) => {
+  if (to.meta && to.meta.title) {
+    document.title = to.meta.title;
+  } else {
+    document.title = defaultTitle;
+  }
+})
+
 export default router
 

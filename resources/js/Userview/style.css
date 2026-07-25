@@ -308,6 +308,7 @@ input {
   min-height: 34px;
   padding: 0 20px;
   font-size: 13px;
+  white-space: nowrap;
 }
 
 .primary-button.small {
@@ -540,7 +541,7 @@ input {
 }
 
 .section-shell {
-  width: min(1210px, calc(100% - 48px));
+  width: min(1282px, calc(100% - 48px));
   margin: 0 auto;
 }
 
@@ -1090,7 +1091,7 @@ input {
   gap: 64px;
   width: min(1190px, calc(100% - 48px));
   margin: 0 auto;
-  padding: 70px 0 48px;
+  padding: 28px 0 48px;
   border-bottom: 1px solid #d7dce3;
 }
 
@@ -1175,7 +1176,7 @@ input {
   justify-content: space-between;
   width: min(1120px, calc(100% - 48px));
   margin: 0 auto;
-  padding: 28px 0 56px;
+  padding: 28px 0 26px;
   color: white
 }
 

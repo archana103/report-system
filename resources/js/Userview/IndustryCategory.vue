@@ -359,7 +359,7 @@ watch(categoryName, () => {
   line-height: 1.68;
   color: #4b5361;
   text-align: center;
-  max-width: 900px;
+  /* max-width: 900px; */
   margin: 0 auto;
 }
 
@@ -406,7 +406,7 @@ watch(categoryName, () => {
 .sidebar-nav {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 1px;
 }
 
 .sidebar-nav-item {
@@ -414,13 +414,14 @@ watch(categoryName, () => {
   justify-content: space-between;
   align-items: center;
   padding: 10px 14px;
-  border-radius: 10px;
+  /* border-radius: 10px; */
   font-size: 14px;
   font-weight: 500;
   color: #4b5563;
   transition: all 0.2s ease-in-out;
   text-transform: capitalize;
   text-decoration: none;
+  /* border-bottom: 1px solid #d0d7df; */
 }
 
 .sidebar-nav-item:hover {
@@ -431,7 +432,7 @@ watch(categoryName, () => {
 
 /* Highlighted active state */
 .active-sidebar-item {
-  background: #eef6ff !important;
+  /* background: #eef6ff !important; */
   color: #0783df !important;
   font-weight: 700;
   box-shadow: inset 3px 0 0 #0783df;

@@ -20,8 +20,9 @@
           </router-link>
         </div>
       </div>
-      <router-link to="/blogs">Blog</router-link>
       <router-link to="/press-releases">Press Release</router-link>
+      <router-link to="/blogs">Blog</router-link>
+
     </nav>
 
     <div class="header-actions">
