@@ -341,7 +341,7 @@ input {
   min-height: 735px;
   overflow: hidden;
   padding: 170px 24px 90px;
-  background: url('https://epignosisinsights-images.s3.ap-south-1.amazonaws.com/assets/images/hero-bg-screenshot.png') no-repeat center center;
+  background: url('/assets/images/hero-bg-screenshot.png') no-repeat center center;
   background-size: cover;
 }
 

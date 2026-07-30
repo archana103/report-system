@@ -35,6 +35,11 @@
     {!! $seo['raw_head'] !!}
     @endif
     <!-- DEBUG_DATA: {{ json_encode($seo['open_graph'] ?? 'not_set') }} -->
+    
+    @if(request()->is('/'))
+    <link rel="preload" as="image" href="/assets/images/hero-bg-screenshot.png" fetchpriority="high">
+    @endif
+
     <link rel="icon" type="image/png" href="/favicon.png?v=3.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
