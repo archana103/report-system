@@ -84,6 +84,7 @@ class SeoPageController extends Controller
             'open_graph' => $report->open_graph_tags,
             'twitter' => $report->twitter_card_tags,
             'schemas' => $schemas,
+            'prerendered_html' => $this->generateReportHtml($report),
         ], $request);
     }
 
@@ -123,6 +124,7 @@ class SeoPageController extends Controller
             'open_graph' => optional($detail)->open_graph_tags,
             'twitter' => optional($detail)->twitter_card_tags,
             'schemas' => $schemas,
+            'prerendered_html' => $this->generateBlogHtml($blog, $detail),
         ], $request);
     }
 
@@ -161,6 +163,7 @@ class SeoPageController extends Controller
             'open_graph' => optional($detail)->open_graph_tags,
             'twitter' => optional($detail)->twitter_card_tags,
             'schemas' => $schemas,
+            'prerendered_html' => $this->generatePressReleaseHtml($pressRelease, $detail),
         ], $request);
     }
 
@@ -211,6 +214,7 @@ class SeoPageController extends Controller
                 $this->renderSchemaTags(Arr::get($data, 'schemas', [])),
                 Arr::get($data, 'raw_tags', ''),
             ])),
+            'prerendered_html' => Arr::get($data, 'prerendered_html', ''),
         ];
     }
 
@@ -245,6 +249,21 @@ class SeoPageController extends Controller
         }
 
         return $schema;
+    }
+
+    private function generateReportHtml(ReportDetail $report): string
+    {
+        return view('seo.report', compact('report'))->render();
+    }
+
+    private function generateBlogHtml(Blog $blog, $detail): string
+    {
+        return view('seo.blog', compact('blog', 'detail'))->render();
+    }
+
+    private function generatePressReleaseHtml(PressRelease $pressRelease, $detail): string
+    {
+        return view('seo.press-release', compact('pressRelease', 'detail'))->render();
     }
 
     private function blogSchema(Request $request, Blog $blog, string $title, ?string $description): array

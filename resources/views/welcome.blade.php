@@ -48,6 +48,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
-    <div id="app"></div>
+    <div id="app">
+        {!! $seo['prerendered_html'] ?? '' !!}
+    </div>
 </body>
 </html>
