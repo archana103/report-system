@@ -21,4 +21,5 @@ return [
 
     'payment_action' => 'Sale',
     'currency' => 'USD',
+    'validate_ssl' => env('PAYPAL_VALIDATE_SSL', false),
 ];

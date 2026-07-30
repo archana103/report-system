@@ -134,9 +134,12 @@
                 </div>
               </div>
 
-              <button type="submit" class="buy-now-submit-btn" :disabled="isSubmitting">
-                {{ isSubmitting ? 'Processing...' : 'BUY NOW' }}
-              </button>
+              <div class="submit-actions-wrapper">
+                <button v-show="paymentMethod !== 'paypal'" type="submit" class="buy-now-submit-btn" :disabled="isSubmitting">
+                  {{ isSubmitting ? 'Processing...' : 'BUY NOW' }}
+                </button>
+                <div v-show="paymentMethod === 'paypal'" id="paypal-button-container" class="mt-4" style="text-align: center;"></div>
+              </div>
             </form>
           </div>
 
@@ -298,6 +301,86 @@ onMounted(async () => {
   }
 })
 
+let paypalButtonsRendered = false
+
+watch(paymentMethod, async (newVal) => {
+  if (newVal === 'paypal' && !paypalButtonsRendered && window.paypal) {
+    await nextTick()
+    
+    window.paypal.Buttons({
+      onClick: (data, actions) => {
+        // Validate form
+        const requiredFields = [
+          form.value.full_name,
+          form.value.business_email,
+          form.value.company_name,
+          form.value.country,
+          form.value.pricing_id
+        ]
+        
+        if (requiredFields.some(field => !field || String(field).trim() === '')) {
+          alert('Please fill out all required fields (Name, Email, Company, Country, License).')
+          return actions.reject()
+        }
+
+        if (itiInstance) {
+          const number = itiInstance.getNumber()
+          if (!number) {
+            alert('Please enter a valid phone number.')
+            return actions.reject()
+          }
+          form.value.phone_number = number
+        }
+
+        return actions.resolve()
+      },
+      createOrder: async (data, actions) => {
+        try {
+          const res = await axios.post('/api/paypal/create-order', {
+            pricing_id: form.value.pricing_id
+          })
+          if (res.data && res.data.id) {
+            return res.data.id
+          } else {
+            console.error('Invalid PayPal order response', res.data)
+            alert('Unable to create PayPal order. Please try again later.')
+          }
+        } catch (error) {
+          console.error('Failed to create PayPal order', error)
+          const errorMsg = error.response?.data?.error || error.message || 'Error initializing PayPal transaction.'
+          alert(`PayPal Error: ${errorMsg}`)
+        }
+      },
+      onApprove: async (data, actions) => {
+        isSubmitting.value = true
+        try {
+          const payload = {
+            ...form.value,
+            report_detail_id: report.value ? report.value.id : null
+          }
+          const res = await axios.post(`/api/paypal/capture-order/${data.orderID}`, payload)
+          if (res.data && res.data.status === 'COMPLETED') {
+            alert('Payment successful! Your order has been placed.')
+            router.push('/thank-you')
+          } else {
+            alert('Payment was processed, but status is pending/unverified. Contact support.')
+          }
+        } catch (err) {
+          console.error('Failed to capture PayPal payment', err)
+          alert('Failed to capture your payment. If issues persist, please contact support.')
+        } finally {
+          isSubmitting.value = false
+        }
+      },
+      onError: (err) => {
+        console.error('PayPal checkout error:', err)
+      }
+    }).render('#paypal-button-container')
+    
+    paypalButtonsRendered = true
+  }
+})
+
 onUnmounted(() => {
   if (itiInstance) {
     itiInstance.destroy()
@@ -320,6 +403,11 @@ watch(() => route.query.pricing_id, (newVal) => {
 })
 
 const submitPurchase = async () => {
+  if (paymentMethod.value === 'paypal') {
+    alert("Please click the yellow PayPal button to securely process your payment.")
+    return
+  }
+
   if (!form.value.pricing_id) {
     alert("Please select a license type.")
     return

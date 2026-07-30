@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\Paypal\PaypalController;
 
-Route::post('/paypal/create-order', [PaypalController::class, 'createOrder']);
-Route::post('/paypal/capture-order/{id}', [PaypalController::class, 'captureOrder']);
+Route::post('/api/paypal/create-order', [PaypalController::class, 'createOrder']);
+Route::post('/api/paypal/capture-order/{id}', [PaypalController::class, 'captureOrder']);
+

@@ -122,7 +122,7 @@ onMounted(() => {
       >
         <template #item-reportDetail="{ item }">
           <div class="max-w-xs truncate whitespace-normal leading-relaxed text-sm">
-            {{ item.reportDetail?.title || 'Unknown Report' }}
+            {{ item.report_detail?.title || 'Unknown Report' }}
           </div>
         </template>
         
