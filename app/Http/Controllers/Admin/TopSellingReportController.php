@@ -21,7 +21,7 @@ class TopSellingReportController extends Controller
         $reports = TopSellingReport::with('reportDetail:id,title')
             ->orderBy('created_at', 'desc')
             ->paginate(20);
-            
+
         return response()->json($reports);
     }
 
@@ -50,13 +50,13 @@ class TopSellingReportController extends Controller
     public function search(Request $request)
     {
         $query = $request->get('q', '');
-        
+
         $reports = ReportDetail::whereNotIn('id', TopSellingReport::pluck('report_detail_id'));
 
         if (!empty($query)) {
             $reports->where('title', 'like', "%{$query}%");
         }
-            
+
         return response()->json($reports->get(['id', 'title']));
     }
 

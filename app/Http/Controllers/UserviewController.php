@@ -572,10 +572,13 @@ class UserviewController extends Controller
             $recaptchaData = $response->json();
 
             if (!$recaptchaData['success']) {
-                return response()->json([
-                    'message' => 'ReCAPTCHA validation failed. Please try again.',
-                    'errors' => ['recaptcha_token' => ['The recaptcha token is invalid or expired.']]
-                ], 422);
+                if ($request->wantsJson()) {
+                    return response()->json([
+                        'message' => 'ReCAPTCHA validation failed. Please try again.',
+                        'errors' => ['recaptcha_token' => ['The recaptcha token is invalid or expired.']]
+                    ], 422);
+                }
+                return redirect()->back()->withErrors(['recaptcha_token' => 'The recaptcha token is invalid or expired.'])->withInput();
             }
         }
 
@@ -608,10 +611,14 @@ class UserviewController extends Controller
             \Illuminate\Support\Facades\Log::error('Mail sending failed in storeContactForm: ' . $e->getMessage());
         }
 
-        return response()->json([
-            'message' => 'Your message has been sent successfully!',
-            'data' => $contact
-        ], 201);
+        if ($request->wantsJson()) {
+            return response()->json([
+                'message' => 'Your message has been sent successfully!',
+                'data' => $contact
+            ], 201);
+        }
+        
+        return redirect()->to('/thank-you');
     }
 
     /**
@@ -641,10 +648,13 @@ class UserviewController extends Controller
             $recaptchaData = $response->json();
 
             if (!$recaptchaData['success']) {
-                return response()->json([
-                    'message' => 'ReCAPTCHA validation failed. Please try again.',
-                    'errors' => ['recaptcha_token' => ['The recaptcha token is invalid or expired.']]
-                ], 422);
+                if ($request->wantsJson()) {
+                    return response()->json([
+                        'message' => 'ReCAPTCHA validation failed. Please try again.',
+                        'errors' => ['recaptcha_token' => ['The recaptcha token is invalid or expired.']]
+                    ], 422);
+                }
+                return redirect()->back()->withErrors(['recaptcha_token' => 'The recaptcha token is invalid or expired.'])->withInput();
             }
         }
 
@@ -681,10 +691,14 @@ class UserviewController extends Controller
             \Illuminate\Support\Facades\Log::error('Mail sending failed in storeRequestForm: ' . $e->getMessage());
         }
 
-        return response()->json([
-            'message' => 'Request submitted successfully!',
-            'data' => $requestForm
-        ], 201);
+        if ($request->wantsJson()) {
+            return response()->json([
+                'message' => 'Request submitted successfully!',
+                'data' => $requestForm
+            ], 201);
+        }
+
+        return redirect()->to('/thank-you')->with('success', 'Request submitted successfully!');
     }
 
     /**
@@ -784,10 +798,13 @@ class UserviewController extends Controller
             \Illuminate\Support\Facades\Log::error('Mail sending failed in storeBlogRequest: ' . $e->getMessage());
         }
 
-        return response()->json([
-            'message' => 'Your request has been submitted successfully!',
-            'data' => $blogRequest
-        ], 201);
+        if ($request->wantsJson()) {
+            return response()->json([
+                'message' => 'Your request has been submitted successfully!',
+                'data' => $blogRequest
+            ], 201);
+        }
+        return redirect()->to('/thank-you')->with('success', 'Your request has been submitted successfully!');
     }
 
     /**
@@ -860,6 +877,9 @@ class UserviewController extends Controller
             'email' => $request->input('email')
         ]);
 
-        return response()->json(['message' => 'Successfully subscribed to the newsletter!']);
+        if ($request->wantsJson()) {
+            return response()->json(['message' => 'Successfully subscribed to the newsletter!']);
+        }
+        return redirect()->back()->with('newsletter_success', 'Successfully subscribed to the newsletter!');
     }
 }

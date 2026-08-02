@@ -14,9 +14,164 @@ class SeoPageController extends Controller
 {
     public function show(Request $request)
     {
-        return view('welcome', [
-            'seo' => $this->seoForPath($request),
-        ]);
+        $seo = $this->seoForPath($request);
+        $path = trim($request->path(), '/');
+        $segments = $request->segments();
+
+        if ($path === '') {
+            $userview = app(\App\Http\Controllers\UserviewController::class);
+            $categoriesData = $userview->categoriesDropdown()->getData();
+            $trendingReportsData = $userview->reportsByCategory($request)->getData();
+            $latestInsightsData = $userview->blogs()->getData();
+            $pressReleasesData = $userview->pressReleases()->getData();
+
+            return view('pages.home', [
+                'seo' => $seo,
+                'initialCategories' => $categoriesData,
+                'trendingReports' => $trendingReportsData,
+                'latestInsights' => $latestInsightsData,
+                'pressReleases' => $pressReleasesData
+            ]);
+        }
+
+        if (($segments[0] ?? '') === 'reports' && empty($segments[1])) {
+            $userview = app(\App\Http\Controllers\UserviewController::class);
+
+            $request->query->add(['page' => $request->query('page', 1)]);
+            if ($request->has('q')) {
+                $request->query->add(['search' => $request->query('q')]);
+            }
+
+            $reportsResponse = $userview->getAllReports($request);
+            $reportsData = $reportsResponse->getData();
+
+            $categoriesResponse = $userview->categoriesDropdown();
+            $categoriesData = $categoriesResponse->getData();
+
+            $topSellersResponse = $userview->publicTopSellingReports();
+            $topSellersData = $topSellersResponse->getData();
+
+            return view('pages.reports.index', [
+                'seo' => $seo,
+                'initialReports' => $reportsData->data ?? [],
+                'initialTotalPages' => $reportsData->last_page ?? 1,
+                'initialCategories' => $categoriesData,
+                'initialTopSellers' => $topSellersData,
+            ]);
+        }
+
+        if (($segments[0] ?? '') === 'report' && !empty($segments[1]) && !empty($seo['report'])) {
+            $userview = app(\App\Http\Controllers\UserviewController::class);
+            $reportDataResponse = $userview->getReportDetail($segments[1]);
+            $reportData = $reportDataResponse->getData();
+            return view('pages.reports.show', [
+                'seo' => $seo,
+                'report' => $seo['report'],
+                'reportData' => $reportData
+            ]);
+        }
+
+        if (($segments[0] ?? '') === 'blogs' && empty($segments[1])) {
+            $userview = app(\App\Http\Controllers\UserviewController::class);
+            $request->query->add(['page' => $request->query('page', 1)]);
+            $blogsResponse = $userview->getAllBlogs($request);
+            $blogsData = $blogsResponse->getData();
+            return view('pages.blogs.index', [
+                'seo' => $seo,
+                'initialBlogs' => $blogsData->data ?? [],
+                'initialTotalPages' => $blogsData->last_page ?? 1,
+            ]);
+        }
+
+        if (($segments[0] ?? '') === 'blog' && !empty($segments[1])) {
+            $userview = app(\App\Http\Controllers\UserviewController::class);
+            $blogDetailResponse = $userview->getBlogDetail($segments[1]);
+            if ($blogDetailResponse->getStatusCode() === 404)
+                return abort(404);
+            return view('pages.blogs.show', [
+                'seo' => $seo,
+                'blog' => $blogDetailResponse->getData()
+            ]);
+        }
+
+        if (($segments[0] ?? '') === 'press-releases' && empty($segments[1])) {
+            $userview = app(\App\Http\Controllers\UserviewController::class);
+            $request->query->add(['page' => $request->query('page', 1)]);
+            if ($request->has('q'))
+                $request->query->add(['search' => $request->query('q')]);
+
+            $prResponse = $userview->getAllPressReleases($request);
+            $prData = $prResponse->getData();
+            return view('pages.press-releases.index', [
+                'seo' => $seo,
+                'initialPressReleases' => $prData->data ?? [],
+                'initialTotalPages' => $prData->last_page ?? 1,
+            ]);
+        }
+
+        if (($segments[0] ?? '') === 'press-release' && !empty($segments[1])) {
+            $userview = app(\App\Http\Controllers\UserviewController::class);
+            $prDetailResponse = $userview->getPressReleaseDetail($segments[1]);
+            if ($prDetailResponse->getStatusCode() === 404)
+                return abort(404);
+            return view('pages.press-releases.show', [
+                'seo' => $seo,
+                'pressRelease' => $prDetailResponse->getData()
+            ]);
+        }
+
+        if (($segments[0] ?? '') === 'industry' && !empty($segments[1])) {
+            $userview = app(\App\Http\Controllers\UserviewController::class);
+            $categoryDetailResponse = $userview->getCategoryDetail($segments[1]);
+
+            if ($categoryDetailResponse->getStatusCode() === 404)
+                return abort(404);
+
+            $categoryInfo = $categoryDetailResponse->getData();
+
+            $request->query->add(['page' => $request->query('page', 1)]);
+            $request->query->add(['category' => $categoryInfo->name]);
+
+            $reportsResponse = $userview->getAllReports($request);
+            $reportsData = $reportsResponse->getData();
+
+            $categoriesResponse = $userview->categoriesDropdown();
+            $categoriesData = $categoriesResponse->getData();
+
+            return view('pages.industry.show', [
+                'seo' => $seo,
+                'categoryInfo' => $categoryInfo,
+                'categoryName' => $categoryInfo->name,
+                'initialReports' => $reportsData->data ?? [],
+                'initialTotalPages' => $reportsData->last_page ?? 1,
+                'sidebarCategories' => $categoriesData ?? [],
+            ]);
+        }
+
+        $staticPages = [
+            'about-us' => 'pages.about-us',
+            'contact-us' => 'pages.contact-us',
+            'services' => 'pages.services',
+            'privacy-policy' => 'pages.privacy',
+            'terms-and-conditions' => 'pages.terms',
+            'thank-you' => 'pages.thank-you'
+        ];
+
+        if (array_key_exists($path, $staticPages)) {
+            $viewData = ['seo' => $seo];
+            if (in_array($path, ['about-us', 'services'])) {
+                $viewData['latestInsights'] = app(\App\Http\Controllers\UserviewController::class)->blogs()->getData();
+            }
+            return view($staticPages[$path], $viewData);
+        }
+
+        if (([0] ?? '') === 'admin') {
+            return view('welcome', [
+                'seo' => $seo,
+            ]);
+        }
+
+        abort(404);
     }
 
     private function seoForPath(Request $request): array
@@ -36,7 +191,73 @@ class SeoPageController extends Controller
             return $this->pressReleaseSeo($segments[1], $request);
         }
 
+        if (($segments[0] ?? '') === 'industry' && !empty($segments[1])) {
+            return $this->industrySeo($segments[1], $request);
+        }
+
         return $this->baseSeo($request);
+    }
+
+    private function industrySeo(string $slug, Request $request): array
+    {
+        $category = \App\Models\ReportCategory::where('slug_url', $slug)
+            ->where('status', 'Active')
+            ->first();
+
+        if (!$category) {
+            $category = \App\Models\ReportCategory::where('name', $slug)
+                ->where('status', 'Active')
+                ->first();
+        }
+
+        if (!$category) {
+            return $this->baseSeo($request);
+        }
+
+        $path = ltrim($request->path(), '/');
+        $pageSeo = PageSeo::where('url_path', $path)->orWhere('url_path', '/' . $path)->first();
+
+        $title = $category->name . ' Market Research Reports | Epignosis Insights';
+        $description = 'Explore ' . strtolower($category->name) . ' market research reports from Epignosis Insights, covering market size, trends, competitive landscape, and forecasts.';
+
+        $data = [
+            'title' => $title,
+            'description' => $description,
+            'canonical' => url('/industry/' . $category->slug_url),
+            'schemas' => [
+                $this->organizationSchema(),
+                $this->websiteSchema($request),
+                $this->breadcrumbSchema($request, [
+                    ['name' => 'Home', 'url' => url('/')],
+                    ['name' => 'Industries', 'url' => url('/industry')],
+                    ['name' => $category->name, 'url' => $request->url()],
+                ]),
+                [
+                    '@context' => 'https://schema.org',
+                    '@type' => 'CollectionPage',
+                    'name' => $title,
+                    'description' => $description,
+                    'url' => $request->url(),
+                ]
+            ],
+        ];
+
+        if ($pageSeo) {
+            if ($pageSeo->meta_title)
+                $data['title'] = $pageSeo->meta_title;
+            if ($pageSeo->meta_description)
+                $data['description'] = $pageSeo->meta_description;
+            if ($pageSeo->meta_keywords)
+                $data['keywords'] = $pageSeo->meta_keywords;
+            if ($pageSeo->schema_tag) {
+                $customSchemas = $this->customSchemas(array_filter([$pageSeo->schema_tag]));
+                $data['schemas'] = array_merge($customSchemas, $data['schemas']);
+            }
+            if ($pageSeo->raw_tags)
+                $data['raw_tags'] = $pageSeo->raw_tags;
+        }
+
+        return $this->buildSeo($data, $request);
     }
 
     private function reportSeo(string $slug, Request $request): array
@@ -85,6 +306,7 @@ class SeoPageController extends Controller
             'twitter' => $report->twitter_card_tags,
             'schemas' => $schemas,
             'prerendered_html' => $this->generateReportHtml($report),
+            'report' => $report,
         ], $request);
     }
 
@@ -175,7 +397,7 @@ class SeoPageController extends Controller
             $path = '/';
         }
 
-        $pageSeo = PageSeo::where('url_path', $path)->orWhere('url_path', '/'.$path)->first();
+        $pageSeo = PageSeo::where('url_path', $path)->orWhere('url_path', '/' . $path)->first();
 
         // Base defaults
         $data = [
@@ -215,6 +437,7 @@ class SeoPageController extends Controller
                 Arr::get($data, 'raw_tags', ''),
             ])),
             'prerendered_html' => Arr::get($data, 'prerendered_html', ''),
+            'report' => Arr::get($data, 'report', null),
         ];
     }
 

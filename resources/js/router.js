@@ -1,21 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import UserIndex from './Userview/index.vue'
-import UserReports from './Userview/Reports.vue'
-import UserReportDetail from './Userview/ReportDetail.vue'
-import UserIndustryCategory from './Userview/IndustryCategory.vue'
-import UserAbout from './Userview/AboutUs.vue'
-import UserBlogs from './Userview/Blogs.vue'
-import UserPressReleases from './Userview/PressReleases.vue'
-import UserContact from './Userview/Contact.vue'
-import UserThankYou from './Userview/ThankYou.vue'
-import UserBlogDetail from './Userview/BlogDetail.vue'
-import UserPressReleaseDetail from './Userview/PressReleaseDetail.vue'
-import UserCheckout from './Userview/Checkout.vue'
-import UserPurchaseForm from './Userview/components/CheckoutForm.vue'
-import UserServices from './Userview/Services.vue'
-import UserPrivacyPolicy from './Userview/PrivacyPolicy.vue'
-import UserTermsAndConditions from './Userview/TermsAndConditions.vue'
 import AdminLogin from './Admin/Login/Login.vue'
 import SidebarLayout from './Layout/Sidebar.vue'
 import PricingSetup from './Admin/PricingSetup/index.vue'
@@ -39,23 +23,6 @@ import PageSeos from './Admin/PageSeos/index.vue'
 import Purchases from './Admin/Purchases/index.vue'
 
 const routes = [
-  { path: '/', component: UserIndex },
-  { path: '/reports', component: UserReports },
-  { path: '/about-us', component: UserAbout },
-  { path: '/blogs', component: UserBlogs },
-  { path: '/press-releases', component: UserPressReleases },
-  { path: '/contact-us', component: UserContact },
-  { path: '/services', component: UserServices },
-  { path: '/privacy-policy', component: UserPrivacyPolicy },
-  { path: '/terms-and-conditions', component: UserTermsAndConditions },
-  { path: '/thank-you', component: UserThankYou },
-  { path: '/industry/:name', component: UserIndustryCategory },
-  { path: '/report/:slug', component: UserReportDetail },
-  { path: '/blog/:slug', component: UserBlogDetail },
-  { path: '/press-release/:slug', component: UserPressReleaseDetail },
-  { path: '/checkout/:slug', component: UserCheckout },
-  { path: '/purchase/:slug', component: UserPurchaseForm },
-  { path: '/report', redirect: '/reports' },
   { path: '/admin/login', component: AdminLogin },
   { 
     path: '/admin', 
