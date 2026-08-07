@@ -38,7 +38,7 @@
               <a href="{{ url('/industry/' . (!empty($cat->slug_url) ? $cat->slug_url : $cat->name)) }}" 
                  class="sidebar-nav-item {{ (strtolower(!empty($cat->slug_url) ? $cat->slug_url : $cat->name) === strtolower($categoryName) || strtolower($cat->name) === strtolower($categoryName)) ? 'active-sidebar-item' : '' }}">
                 <span class="nav-text">{{ $cat->name }}</span>
-                <span class="chevron-arrow">â€º</span>
+               <span class="chevron-arrow">›</span>
               </a>
               @endforeach
             </nav>

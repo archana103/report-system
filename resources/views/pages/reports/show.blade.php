@@ -22,15 +22,15 @@
     <div class="detail-hero-shell">
       <div class="book-cover-container">
         <div class="report-book-cover-image-wrapper">
-          <img src="{{ env('AWS_URL') }}/assets/images/default-report.png" alt="{{ $report->title ?: optional($report->reportList)->name }}"
-            class="report-book-cover-img" />
+          <img src="{{ env('AWS_URL') }}/assets/images/default-report.png"
+            alt="{{ $report->title ?: optional($report->reportList)->name }}" class="report-book-cover-img" />
         </div>
       </div>
 
       <div class="hero-text-content">
         <h1>{{ $report->title ?: optional($report->reportList)->name }}</h1>
         <p class="hero-description-snippet">
-          {{ \Illuminate\Support\Str::limit(strip_tags(html_entity_decode($report->detail_description ?: '')), 220, '...') }}
+          {{ $report->detail_description }}
         </p>
 
         <div class="hero-meta-items">
@@ -100,7 +100,8 @@
         @else
           <div class="toc-pane">
             <div class="dynamic-report-content">
-              {!! $reportData->report_methodology ?? '<p>No methodology available.</p>' !!}</div>
+              {!! $reportData->report_methodology ?? '<p>No methodology available.</p>' !!}
+            </div>
           </div>
         @endif
       </div>
@@ -132,6 +133,12 @@
           href="{{ url('/report/' . ($geo->slug_url ?: ($geo->slug ?? $geo->id))) }}">{{ $geo->geo_name ?? ($geo->title ?? '') }}</a>@endforeach
         </div>
       @endif
+
+      <!-- Jump to Section (Dynamic TOC) -->
+      <div class="sidebar-white-info-card" id="jump-to-section-card" style="display: none; margin-bottom: 24px;">
+        <h4 style="margin-bottom:16px; font-size: 16px; font-weight: 700; color: #111827;">Jump to Section</h4>
+        <nav class="jump-links-container" id="jump-links-container"></nav>
+      </div>
 
       <!-- Get This Report Card -->
       <div class="sidebar-get-report-card">
@@ -275,4 +282,86 @@
     border-color: #0783df;
   }
 </style>
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const contentContainers = document.querySelectorAll('.dynamic-report-content');
+    const jumpCard = document.getElementById('jump-to-section-card');
+    const jumpLinksContainer = document.getElementById('jump-links-container');
+    
+    if (contentContainers.length === 0 || !jumpCard || !jumpLinksContainer) return;
+
+    // Find all h2, h3 tags in the active content tab
+    let headings = [];
+    contentContainers.forEach(container => {
+        // Only get headings from the visible pane
+        if (container.closest('.tab-pane-content')) {
+           const headingElements = container.querySelectorAll('h2, h3, h4');
+           headings = [...headings, ...headingElements];
+        }
+    });
+    
+    if (headings.length === 0) return;
+
+    jumpCard.style.display = 'block';
+    
+    headings.forEach((heading, index) => {
+        // Add ID if it doesn't have one
+        if (!heading.id) {
+            const text = heading.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-');
+            heading.id = text ? text + '-' + index : 'section-' + index;
+        }
+
+        const link = document.createElement('a');
+        link.href = '#' + heading.id;
+        const tagName = heading.tagName.toLowerCase();
+        link.className = 'jump-link-item' + (tagName === 'h3' || tagName === 'h4' ? ' sub-heading' : '');
+        link.textContent = heading.textContent;
+        
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.getElementById(heading.id);
+            if (target) {
+                const yOffset = -120; // adjust based on header height
+                const y = target.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                window.scrollTo({top: y, behavior: 'smooth'});
+            }
+        });
+
+        jumpLinksContainer.appendChild(link);
+    });
+
+    // Intersection Observer for highlighting active link
+    const observerOptions = {
+        root: null,
+        rootMargin: '-120px 0px -40% 0px',
+        threshold: 0
+    };
+
+    let activeId = null;
+
+    const observer = new IntersectionObserver(entries => {
+        let isIntersectingSomething = false;
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                isIntersectingSomething = true;
+                activeId = entry.target.id;
+            }
+        });
+
+        if (isIntersectingSomething) {
+           document.querySelectorAll('.jump-link-item').forEach(link => {
+              if (link.getAttribute('href') === '#' + activeId) {
+                  link.classList.add('active');
+              } else {
+                  link.classList.remove('active');
+              }
+           });
+        }
+    }, observerOptions);
+
+    headings.forEach(heading => observer.observe(heading));
+});
+</script>
 @endsection

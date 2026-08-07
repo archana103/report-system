@@ -467,15 +467,17 @@ class UserviewController extends Controller
             'country' => 'required|string|max:255',
             'company_name' => 'required|string|max:255',
             'specific_research_requirement' => 'required|string',
-            'recaptcha_token' => 'nullable|string',
+            'g-recaptcha-response' => 'nullable|string',
         ]);
+
+
 
         // Verify ReCAPTCHA with Google API
         $recaptchaSecret = config('services.recaptcha.secret');
-        if ($recaptchaSecret && $recaptchaSecret !== 'your_secret_key') {
+        if ($recaptchaSecret && $recaptchaSecret !== 'your_secret_key' && $request->has('g-recaptcha-response')) {
             $response = \Illuminate\Support\Facades\Http::withoutVerifying()->asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
                 'secret' => $recaptchaSecret,
-                'response' => $request->input('recaptcha_token'),
+                'response' => $request->input('g-recaptcha-response'),
                 'remoteip' => $request->ip(),
             ]);
 
@@ -485,10 +487,10 @@ class UserviewController extends Controller
                 if ($request->wantsJson()) {
                     return response()->json([
                         'message' => 'ReCAPTCHA validation failed. Please try again.',
-                        'errors' => ['recaptcha_token' => ['The recaptcha token is invalid or expired.']]
+                        'errors' => ['g-recaptcha-response' => ['The recaptcha token is invalid or expired.']]
                     ], 422);
                 }
-                return redirect()->back()->withErrors(['recaptcha_token' => 'The recaptcha token is invalid or expired.'])->withInput();
+                return redirect()->back()->withErrors(['g-recaptcha-response' => 'The recaptcha token is invalid or expired.'])->withInput();
             }
         }
 
@@ -543,15 +545,15 @@ class UserviewController extends Controller
             'subject' => 'required|string|max:255',
             'specific_research_requirement' => 'required|string',
             'report_name' => 'nullable|string|max:1000',
-            'recaptcha_token' => 'nullable|string',
+            'g-recaptcha-response' => 'nullable|string',
         ]);
 
         // Verify ReCAPTCHA with Google API
         $recaptchaSecret = config('services.recaptcha.secret');
-        if ($recaptchaSecret && $recaptchaSecret !== 'your_secret_key') {
+        if ($recaptchaSecret && $recaptchaSecret !== 'your_secret_key' && $request->has('g-recaptcha-response')) {
             $response = \Illuminate\Support\Facades\Http::withoutVerifying()->asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
                 'secret' => $recaptchaSecret,
-                'response' => $request->input('recaptcha_token'),
+                'response' => $request->input('g-recaptcha-response'),
                 'remoteip' => $request->ip(),
             ]);
 
@@ -561,10 +563,10 @@ class UserviewController extends Controller
                 if ($request->wantsJson()) {
                     return response()->json([
                         'message' => 'ReCAPTCHA validation failed. Please try again.',
-                        'errors' => ['recaptcha_token' => ['The recaptcha token is invalid or expired.']]
+                        'errors' => ['g-recaptcha-response' => ['The recaptcha token is invalid or expired.']]
                     ], 422);
                 }
-                return redirect()->back()->withErrors(['recaptcha_token' => 'The recaptcha token is invalid or expired.'])->withInput();
+                return redirect()->back()->withErrors(['g-recaptcha-response' => 'The recaptcha token is invalid or expired.'])->withInput();
             }
         }
 
@@ -682,6 +684,8 @@ class UserviewController extends Controller
             'company_name' => 'required|string|max:255',
             'country' => 'required|string|max:255',
         ]);
+
+
 
         $blogRequest = \App\Models\BlogRequest::create($validated);
 

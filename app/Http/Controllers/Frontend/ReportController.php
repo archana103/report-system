@@ -43,7 +43,10 @@ class ReportController extends FrontendController
     {
         $seo = $this->seoService->getReportSeo($slug, $request);
         $userview = app(\App\Http\Controllers\UserviewController::class);
-        
+        if (!isset($seo['report'])) {
+            abort(404);
+        }
+
         return view('pages.reports.show', [
             'seo' => $seo,
             'report' => $seo['report'] ?? null,

@@ -55,19 +55,24 @@
                 <!-- Full Name -->
                 <div class="form-group">
                   <label for="contact_fullName">Full Name <span class="required">*</span></label>
-                  <input type="text" id="contact_fullName" name="full_name" placeholder="Enter Your Full Name" required />
+                  <input type="text" id="contact_fullName" name="full_name" placeholder="Enter Your Full Name"
+                    value="{{ old('full_name') }}" required />
                 </div>
 
                 <!-- Email -->
                 <div class="form-group">
                   <label for="contact_email">Email <span class="required">*</span></label>
-                  <input type="email" id="contact_email" name="email" placeholder="Enter Your Email" required />
+                  <input type="email" id="contact_email" name="email" placeholder="Enter Your Email"
+                    value="{{ old('email') }}" required />
                 </div>
 
                 <!-- Phone Number -->
-                <div class="form-group" wire:ignore>
+                <div class="form-group">
                   <label for="contact_phone">Phone Number <span class="required">*</span></label>
-                  <input type="tel" id="contact_phone" name="phone" required />
+                  <!-- The visible input for user typing -->
+                  <input type="tel" id="contact_phone" value="{{ old('phone') }}" required />
+                  <!-- Hidden input to store full international number -->
+                  <input type="hidden" id="full_contact_phone" name="phone" value="{{ old('phone') }}" />
                 </div>
 
                 <!-- Select Country -->
@@ -275,7 +280,7 @@
                         'Zambia',
                         'Zimbabwe'
                       ] as $c)
-                      <option value="{{ $c }}">{{ $c }}</option>
+                      <option value="{{ $c }}" {{ old('country') == $c ? 'selected' : '' }}>{{ $c }}</option>
                     @endforeach
                   </select>
                 </div>
@@ -284,21 +289,31 @@
                 <div class="form-group">
                   <label for="contact_companyName">Company Name <span class="required">*</span></label>
                   <input type="text" id="contact_companyName" name="company_name" placeholder="Enter Company Name"
-                    required />
+                    value="{{ old('company_name') }}" required />
                 </div>
 
                 <!-- Specific Research Requirement -->
                 <div class="form-group">
                   <label for="contact_requirement">Specific Research Requirement <span class="required">*</span></label>
                   <textarea id="contact_requirement" name="specific_research_requirement"
-                    placeholder="How can we help you?" rows="4" required></textarea>
-                </div>`n <!-- Submit Button -->
-                <div class="form-submit-row">
-                  <button type="submit" class="primary-button contact-submit-btn">
+                    placeholder="How can we help you?" rows="4"
+                    required>{{ old('specific_research_requirement') }}</textarea>
+                </div>
 
+                <div class="form-group" style="margin-bottom: 24px;">
+                  <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.site_key') }}"></div>
+                  @error('g-recaptcha-response')
+                    <div style="color: #ef4444; font-size: 13px; margin-top: 4px;">{{ $message }}</div>
+                  @enderror
+                </div>
+
+                <!-- Submit Button -->
+                <div class="form-submit-row" style="margin-top: 15px;">
+                  <button type="submit" class="primary-button contact-submit-btn">
                     <span style="display: flex; align-items: center; gap: 6px;">
                       Send Message
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" style="width: 18px; height: 18px;">
                         <circle cx="12" cy="12" r="10"></circle>
                         <path d="M12 16l4-4-4-4M8 12h8"></path>
                       </svg>
@@ -366,41 +381,185 @@
               <div class="contact-social-links">
                 <a href="https://www.facebook.com/people/Epignosis-Insights/61591089437924/" target="_blank"
                   rel="noopener noreferrer" class="social-icon" aria-label="Facebook">
-                  <svg fill="currentColor" viewBox="0 0 24 24"
-                    style="width:35px; height:35px; flex-shrink:0; color:#111827;">
-                    <path
-                      d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
-                  </svg>
+                  <img src="{{ env('AWS_URL') }}/assets/images/contact-us/black_facebook.png"
+                    style="width: 35px; height: 35px; flex-shrink: 0;" alt="Facebook" />
                 </a>
                 <a href="https://www.linkedin.com/company/epignosis-insights/" target="_blank" rel="noopener noreferrer"
                   class="social-icon" aria-label="LinkedIn">
-                  <svg fill="currentColor" viewBox="0 0 24 24"
-                    style="width:35px; height:35px; flex-shrink:0; color:#111827;">
-                    <path
-                      d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z" />
-                  </svg>
+                   <img src="{{ env('AWS_URL') }}/assets/images/contact-us/black_linkedin.png"
+                    style="width: 35px; height: 35px; flex-shrink: 0;" alt="LinkedIn" />
                 </a>
                 <a href="https://x.com/epignosisinsigh" target="_blank" rel="noopener noreferrer" class="social-icon"
                   aria-label="X (Twitter)">
-                  <svg fill="currentColor" viewBox="0 0 24 24"
-                    style="width:35px; height:35px; flex-shrink:0; color:#111827;">
-                    <path
-                      d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L5.26 21.75H1.95l7.73-8.835L1.484 2.25h6.81l4.71 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                  </svg>
+                    <img src="{{ env('AWS_URL') }}/assets/images/contact-us/black_x.png"
+                    style="width: 35px; height: 35px; flex-shrink: 0;" alt="X" />
                 </a>
                 <a href="https://www.instagram.com/epignosisinsights/" target="_blank" rel="noopener noreferrer"
                   class="social-icon" aria-label="Instagram">
-                  <svg fill="currentColor" viewBox="0 0 24 24"
-                    style="width:35px; height:35px; flex-shrink:0; color:#111827;">
-                    <path
-                      d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
-                  </svg>
+                 <img src="{{ env('AWS_URL') }}/assets/images/contact-us/black_insta.png"
+                    style="width: 35px; height: 35px; flex-shrink: 0;" alt="Instagram" />
                 </a>
               </div>
             </div>
           </div>
         </div>
-      </section>`n
+      </section>
+
+      @php
+      $faqs = [
+          [
+              'question' => 'How can I request a customized market research report?',
+              'answer' => 'Contact our research team with your requirements, including industry, geography, segmentation, and objectives. We will prepare a tailored proposal based on your business needs.'
+          ],
+          [
+              'question' => 'Do you offer custom research and consulting services?',
+              'answer' => 'Yes. We provide custom market research, competitive intelligence, primary research, market sizing, forecasting, pricing analysis, feasibility studies, and strategic consulting across multiple industries.'
+          ],
+          [
+              'question' => 'How quickly will I receive a response after submitting an inquiry?',
+              'answer' => 'Our team typically responds within 24 business hours to discuss your requirements, provide additional information, or share a quotation.'
+          ],
+          [
+              'question' => 'Can I request a sample report before purchasing?',
+              'answer' => 'Yes. We can provide a sample report or table of contents to help you evaluate the report structure, methodology, and level of analysis.'
+          ],
+          [
+              'question' => 'Do you provide analyst support after report purchase?',
+              'answer' => 'Yes. Complimentary analyst support is available for a specified period after purchase to help clarify report findings, assumptions, and methodologies.'
+          ]
+      ];
+      @endphp
+
+      <!-- FAQ Section Accordion -->
+      <section class="contact-faqs section-shell">
+        <h2 class="faq-section-title">Frequently Asked Questions</h2>
+        <div class="faq-accordion">
+          @foreach($faqs as $idx => $faq)
+          <div class="faq-item" id="faq-item-{{ $idx }}">
+            <button class="faq-header" type="button" onclick="toggleFaq({{ $idx }})">
+              <span>{{ $faq['question'] }}</span>
+              <span class="faq-toggle-icon" id="faq-icon-{{ $idx }}">+</span>
+            </button>
+            <div class="faq-body" id="faq-body-{{ $idx }}" style="max-height: 0px;">
+              <div class="faq-content">
+                {{ $faq['answer'] }}
+              </div>
+            </div>
+          </div>
+          @endforeach
+        </div>
+      </section>
     </main>
   </div>
+
+  <!-- intl-tel-input styles -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.4/build/css/intlTelInput.css" />
+  <style>
+    /* intl-tel-input overrides to match form design */
+    .iti {
+      width: 100%;
+      display: block;
+    }
+
+    .iti__input {
+      width: 100% !important;
+      padding: 12px 18px 12px 82px !important;
+      /* Extra padding for dropdown */
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 14px;
+      outline: none;
+      background: #fcfdfe;
+      color: #1f2937;
+      transition: all 0.2s ease-in-out;
+      height: auto;
+      box-sizing: border-box;
+    }
+
+    .iti__input:focus {
+      border-color: #0783df;
+      background: #ffffff;
+      box-shadow: 0 0 0 4px rgba(7, 131, 223, 0.08);
+    }
+
+    .iti__selected-dial-code {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #4b5563;
+    }
+
+    .iti__country-container {
+      border-radius: 12px 0 0 12px;
+    }
+
+    .iti__selected-country-primary {
+      border-radius: 11px 0 0 11px;
+      padding: 0 8px;
+    }
+
+    .iti__arrow {
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid #9ca3af;
+      margin-left: 4px;
+    }
+  </style>
+
+  <!-- intl-tel-input scripts & initialization -->
+  <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.4/build/js/intlTelInput.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const phoneInput = document.querySelector("#contact_phone");
+      const hiddenPhoneInput = document.querySelector("#full_contact_phone");
+      const form = phoneInput.closest("form");
+
+      const iti = window.intlTelInput(phoneInput, {
+        initialCountry: "in",
+        preferredCountries: ["in", "us", "uk"],
+        separateDialCode: true,
+        countrySearch: true,
+        fixDropdownWidth: true,
+        autoPlaceholder: "aggressive",
+        formatOnDisplay: true,
+        utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.4/build/js/utils.js",
+      });
+
+      // Handle old value on validation error
+      if (hiddenPhoneInput.value) {
+        iti.setNumber(hiddenPhoneInput.value);
+      }
+
+      // Update hidden input on change and submit
+      const updateHiddenInput = () => {
+        hiddenPhoneInput.value = iti.getNumber();
+      };
+
+      phoneInput.addEventListener('change', updateHiddenInput);
+      phoneInput.addEventListener('keyup', updateHiddenInput);
+
+      form.addEventListener("submit", function () {
+        updateHiddenInput();
+      });
+    });
+
+    function toggleFaq(index) {
+      const item = document.getElementById('faq-item-' + index);
+      const icon = document.getElementById('faq-icon-' + index);
+      const body = document.getElementById('faq-body-' + index);
+
+      const isActive = item.classList.contains('active');
+
+      if (isActive) {
+        item.classList.remove('active');
+        icon.textContent = '+';
+        body.style.maxHeight = '0px';
+      } else {
+        item.classList.add('active');
+        icon.textContent = '−';
+        body.style.maxHeight = body.scrollHeight + 'px';
+      }
+    }
+  </script>
+
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 @endsection
