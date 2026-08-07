@@ -59,7 +59,7 @@ class ReportService
     {
         return Str::limit(
             html_entity_decode(strip_tags($description ?? 'No description available.')),
-            150
+            250
         );
     }
 }

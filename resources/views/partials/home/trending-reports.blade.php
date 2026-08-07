@@ -8,49 +8,16 @@
 
     <div class="category-filter">
       @php $activeCategory = request('category', 'All'); @endphp
-      <a href="{{ url('/') }}" class="{{ $activeCategory === 'All' ? 'active' : '' }}"
+      <a href="javascript:void(0)" data-url="{{ url('/') }}" class="category-btn {{ $activeCategory === 'All' ? 'active' : '' }}"
         style="text-decoration: none;">All</a>
       @foreach($initialCategories as $cat)
-        <a href="{{ url('/?category=' . urlencode($cat->name)) }}#reports"
-          class="{{ $activeCategory === $cat->name ? 'active' : '' }}" style="text-decoration: none;">{{ $cat->name }}</a>
+        <a href="javascript:void(0)" data-url="{{ url('/?category=' . urlencode($cat->name)) }}"
+          class="category-btn {{ $activeCategory === $cat->name ? 'active' : '' }}" style="text-decoration: none;">{{ $cat->name }}</a>
       @endforeach
     </div>
 
-    <div class="report-list">
-      @foreach($trendingReports as $report)
-        <article class="report-list-card">
-          <div class="report-image-wrap">
-            <a
-              href="{{ url('/report/' . (!empty($report->slug) && $report->slug !== '#' ? $report->slug : $report->id)) }}">
-              <img src="{{ !empty($report->image) ? $report->image : env('AWS_URL') . '/assets/images/default-report.png' }}"
-                alt="{{ $report->title ?? '' }}" />
-            </a>
-          </div>
-          <div class="report-details">
-            <a href="{{ url('/report/' . (!empty($report->slug) && $report->slug !== '#' ? $report->slug : $report->id)) }}"
-              style="color: inherit; text-decoration: none;">
-              <h3 class="hover-primary-title">{{ $report->title ?? '' }}</h3>
-            </a>
-            <p>{!! $report->description ?? '' !!}</p>
-            <div class="report-metadata">
-              <span>Pages: <strong>{{ !empty($report->pages) ? $report->pages : 120 }}</strong></span>
-              <span class="divider">|</span>
-              <span>Format: <strong>{{ !empty($report->format) ? $report->format : 'PDF, Excel' }}</strong></span>
-              <span class="divider">|</span>
-              <span>Publish Date: <strong>{{ $report->date ?? now()->format('M-Y') }}</strong></span>
-            </div>
-            <div class="report-actions">
-              <a href="{{ url('/report/' . (!empty($report->slug) && $report->slug !== '#' ? $report->slug : $report->id) . '?tab=overview') }}"
-                class="secondary-button outlined" style="padding: 10px 24px; min-height: auto; line-height: 1.2;">View
-                Details</a>
-              <a href="/contact-us" class="secondary-button outlined"
-                style="padding: 10px 24px; min-height: auto; line-height: 1.2;">Request Sample</a>
-              <a href="/contact-us" class="primary-button small"
-                style="padding: 10px 24px; min-height: auto; line-height: 1.2;">Buy Now</a>
-            </div>
-          </div>
-        </article>
-      @endforeach
+    <div id="trending-reports-list" class="report-list" style="transition: opacity 0.3s;">
+      @include('partials.home.trending-report-cards')
     </div>
 
     <div class="center-action">
@@ -69,6 +36,54 @@
     </div>
   </div>
 </section>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const filterLinks = document.querySelectorAll('.category-filter .category-btn');
+    const reportsList = document.getElementById('trending-reports-list');
+
+    if (!reportsList) return;
+
+    filterLinks.forEach(link => {
+        link.addEventListener("click", function(e) {
+            e.preventDefault();
+            
+            // Remove active classes
+            filterLinks.forEach(l => l.classList.remove('active'));
+            // Add active class to clicked
+            this.classList.add('active');
+
+            const url = this.getAttribute('data-url');
+            
+            // Visual fade-out effect during load
+            reportsList.style.opacity = '0.5';
+            reportsList.style.pointerEvents = 'none';
+
+            fetch(url, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => {
+                if(!response.ok) throw new Error("Network error");
+                return response.text();
+            })
+            .then(html => {
+                reportsList.innerHTML = html;
+                reportsList.style.opacity = '1';
+                reportsList.style.pointerEvents = 'auto';
+            })
+            .catch(error => {
+                console.error('Error fetching reports:', error);
+                reportsList.style.opacity = '1';
+                reportsList.style.pointerEvents = 'auto';
+                reportsList.innerHTML = '<div style="text-align:center; padding: 20px; color: red;">Failed to load reports. Please try again.</div>';
+            });
+        });
+    });
+});
+</script>
+
 <style>
   .hover-primary-title {
     transition: color 0.2s ease-in-out;

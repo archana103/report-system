@@ -29,6 +29,12 @@ class HomeController extends FrontendController
 
     public function index(Request $request)
     {
+        if ($request->ajax()) {
+            return view('partials.home.trending-report-cards', [
+                'trendingReports' => $this->reportService->getReportsByCategory($request->query('category', 'All'))
+            ]);
+        }
+
         $seo = $this->seoForPath($request);
 
         return view('pages.home', [

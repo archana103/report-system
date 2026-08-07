@@ -395,3 +395,63 @@
   width: min(1337px, calc(100% - 48px));
   margin: 18px auto;
 }
+
+/* Category Filter Overrides for Anchor Tags */
+.category-filter a {
+  display: inline-flex;
+  align-items: center;
+  min-width: 96px;
+  height: 30px;
+  padding: 0 20px;
+  border: 1px solid #dce6ef;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #3e4249;
+  text-transform: capitalize;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+}
+.category-filter a:hover {
+  border-color: #0783df;
+}
+
+/* Simple Card Variant */
+.report-list-card.simple-card {
+  display: block;
+  padding: 32px 40px;
+  border: 1px solid #eef2f6;
+  border-radius: 12px;
+  background: #fff;
+  margin-bottom: 24px;
+}
+.report-list-card.simple-card .report-details h3 {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.35;
+  margin-bottom: 16px;
+}
+.report-list-card.simple-card p {
+  color: #6b7280;
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0 0 24px;
+}
+.report-metadata-simple {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-size: 14px;
+  color: #4b5563;
+}
+.report-metadata-simple .meta-item strong {
+  color: #111827;
+  font-weight: 700;
+}
+.report-metadata-simple .view-report-link {
+  margin-left: auto;
+  font-weight: 600;
+  color: #0783df;
+  text-decoration: none;
+  font-size: 14px;
+}

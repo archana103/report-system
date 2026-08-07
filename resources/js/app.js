@@ -1,4 +1,5 @@
 import { createApp } from 'vue'
+import './footer';
 import './bootstrap'
 import router from './router'
 

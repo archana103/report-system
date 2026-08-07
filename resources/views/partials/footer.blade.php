@@ -79,69 +79,8 @@
 
 <button id="scrollToTopBtn" class="upscroll-button" aria-label="Scroll to top" style="display: none;">
   <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 24px; height: 24px" stroke-width="2">
-     <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+    <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
   </svg>
 </button>
 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    const form = document.getElementById('newsletter-form');
-    const messageEl = document.getElementById('newsletter-message');
-    
-    if (form) {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const formData = new FormData(form);
-            
-            messageEl.style.display = 'none';
-            messageEl.textContent = '';
-            
-            fetch(form.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'Accept': 'application/json',
-                    'X-CSRF-TOKEN': formData.get('_token') 
-                }
-            })
-            .then(async response => {
-                const data = await response.json().catch(() => ({}));
-                messageEl.style.display = 'block';
-                
-                if (!response.ok) {
-                    messageEl.style.color = '#fca5a5';
-                    messageEl.textContent = data.errors && data.errors.email ? data.errors.email[0] : (data.message || 'Error subscribing.');
-                } else {
-                    messageEl.style.color = '#93e0c0';
-                    messageEl.textContent = data.message || 'Successfully subscribed!';
-                    form.reset();
-                }
-            })
-            .catch(error => {
-                messageEl.style.display = 'block';
-                messageEl.style.color = '#fca5a5';
-                messageEl.textContent = 'An error occurred. Please try again.';
-            });
-        });
-    }
-
-    const scrollBtn = document.getElementById('scrollToTopBtn');
-    if (scrollBtn) {
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > 300) {
-                scrollBtn.style.display = 'flex';
-            } else {
-                scrollBtn.style.display = 'none';
-            }
-        });
-        
-        scrollBtn.addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-    }
-});
-</script>
+@vite(['resources/css/app.css', 'resources/js/app.js'])

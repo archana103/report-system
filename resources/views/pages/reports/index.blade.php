@@ -48,14 +48,13 @@
             </article>
           @endforeach
 
-          @if(empty($initialReports))
+          @if(empty($initialReports) || count($initialReports) == 0)
             <div class="no-results">
               No reports found for your search criteria.
             </div>
           @endif
         </div>
 
-        <!-- Pagination -->
         <!-- Pagination -->
         @if($initialTotalPages > 1)
           <div class="pagination-wrapper" style="display: flex;">
