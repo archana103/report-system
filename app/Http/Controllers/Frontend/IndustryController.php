@@ -5,8 +5,17 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\FrontendController;
 use Illuminate\Http\Request;
 
+use App\Services\CategoryService;
+
 class IndustryController extends FrontendController
 {
+    protected $categoryService;
+
+    public function __construct(CategoryService $categoryService)
+    {
+        $this->categoryService = $categoryService;
+    }
+
     public function show(Request $request, $slug)
     {
         $userview = app(\App\Http\Controllers\UserviewController::class);
@@ -28,7 +37,7 @@ class IndustryController extends FrontendController
             'categoryName' => $categoryInfo->name,
             'initialReports' => $reportsData->data ?? [],
             'initialTotalPages' => $reportsData->last_page ?? 1,
-            'sidebarCategories' => $userview->categoriesDropdown()->getData(),
+            'sidebarCategories' => $this->categoryService->getDropdownCategories(),
         ]);
     }
 }

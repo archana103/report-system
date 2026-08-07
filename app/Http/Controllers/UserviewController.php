@@ -11,6 +11,7 @@ use App\Models\DiscountRequest;
 use App\Models\TopSellingReport;
 use App\Models\Newsletter;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 
 class UserviewController extends Controller
 {
@@ -63,47 +64,7 @@ class UserviewController extends Controller
 
         return response()->json($pressReleases);
     }
-    /**
-     * Get reports by category.
-     */
-    public function reportsByCategory(Request $request)
-    {
-        $categoryName = $request->query('category', 'All');
-        $version = Cache::get('userview_cache_version', 1);
-        $key = sprintf('reports_by_category_v%s_c%s', $version, md5($categoryName));
 
-        $reports = Cache::remember($key, 60*60*24, function () use ($categoryName) {
-            $query = ReportList::with(['reportCategory', 'reportDetail'])
-                ->has('reportDetail')
-                ->where('status', 'Active');
-
-            if ($categoryName !== 'All') {
-                $query->whereHas('reportCategory', function ($q) use ($categoryName) {
-                    $q->where('slug_url', $categoryName)->orWhere('name', $categoryName);
-                });
-            }
-
-            return $query->orderBy('created_at', 'desc')
-                ->take(4)
-                ->get()
-                ->map(function ($report) {
-                    $rawDesc = ($report->reportDetail && !empty($report->reportDetail->detail_description)) ? $report->reportDetail->detail_description : 'No description available.';
-                    $description = \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($rawDesc)), 150);
-
-                    return [
-                        'id' => $report->id,
-                        'title' => ($report->reportDetail && $report->reportDetail->title) ? $report->reportDetail->title : $report->name,
-                        'description' => $description,
-                        'category' => $report->reportCategory ? $report->reportCategory->name : 'Unknown',
-                        'date' => $report->created_at->format('F Y'),
-                        'image' => '/assets/images/default-report.png',
-                        'slug' => ($report->reportDetail && $report->reportDetail->slug_url) ? $report->reportDetail->slug_url : '#'
-                    ];
-                });
-        });
-
-        return response()->json($reports);
-    }
 
     /**
      * Get all reports paginated with filters.
@@ -225,48 +186,12 @@ class UserviewController extends Controller
         return response()->json($reports);
     }
 
-    /**
-     * Get recent blogs.
-     */
-    public function blogs()
-    {
-        $blogs = \App\Models\Blog::orderBy('created_at', 'desc')
-            ->take(5)
-            ->get()
-            ->map(function ($blog) {
-                return [
-                    'title' => $blog->title,
-                    'description' => \Illuminate\Support\Str::limit(strip_tags(html_entity_decode($blog->description)), 120),
-                    'date' => $blog->created_at->format('F d, Y'),
-                    'image' => $blog->image ?: '/assets/images/default.jpg',
-                    'url' => $blog->url,
-                ];
-            });
 
-        return response()->json($blogs);
-    }
 
     /**
      * Get all blogs paginated for the public blogs page.
      */
-    public function getAllBlogs(Request $request)
-    {
-        $blogs = \App\Models\Blog::orderBy('created_at', 'desc')->paginate(12);
-
-        $blogs->getCollection()->transform(function ($blog) {
-            return [
-                'id' => $blog->id,
-                'title' => $blog->title,
-                'description' => \Illuminate\Support\Str::limit(strip_tags(html_entity_decode($blog->description)), 150),
-                'date' => $blog->created_at->format('F d, Y'),
-                'image' => $blog->image ?: '/assets/images/default-report.png',
-                'url' => $blog->url,
-            ];
-        });
-
-        return response()->json($blogs);
-    }
-
+  
     /**
      * Get a single report by slug.
      */
@@ -497,23 +422,7 @@ class UserviewController extends Controller
         ]);
     }
 
-    /**
-     * Get all active categories for public dropdown (header, sidebar, etc.).
-     */
-    public function categoriesDropdown()
-    {
-        $version = Cache::get('userview_cache_version', 1);
-        $key = 'categories_dropdown_v' . $version;
-        
-        $categories = Cache::remember($key, 60*60*24, function () {
-            return ReportCategory::select('id', 'name', 'slug_url')
-                ->where('status', 'Active')
-                ->orderBy('name')
-                ->get();
-        });
-
-        return response()->json($categories);
-    }
+    
 
     /**
      * Get all active press releases paginated with search filter.

@@ -5,8 +5,17 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\FrontendController;
 use Illuminate\Http\Request;
 
+use App\Services\CategoryService;
+
 class ReportController extends FrontendController
 {
+    protected $categoryService;
+
+    public function __construct(CategoryService $categoryService)
+    {
+        $this->categoryService = $categoryService;
+    }
+
     public function index(Request $request)
     {
         $request->query->add(['page' => $request->query('page', 1)]);
@@ -22,7 +31,7 @@ class ReportController extends FrontendController
             'seo' => $seo,
             'initialReports' => $reportsData->data ?? [],
             'initialTotalPages' => $reportsData->last_page ?? 1,
-            'initialCategories' => $userview->categoriesDropdown()->getData(),
+            'initialCategories' => $this->categoryService->getDropdownCategories(),
             'initialTopSellers' => $userview->publicTopSellingReports()->getData(),
         ]);
     }
