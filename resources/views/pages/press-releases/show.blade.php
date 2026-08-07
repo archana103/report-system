@@ -22,7 +22,7 @@
               <h1 class="press-post-title">{{ $pressRelease->title }}</h1>
               
               <div class="press-main-image-wrapper">
-                <img src="{{ !empty($pressRelease->image) ? $pressRelease->image : '/assets/images/default-report.png' }}" alt="{{ $pressRelease->title }}" class="press-main-image" />
+                <img src="{{ !empty($pressRelease->image) ? $pressRelease->image : env('AWS_URL') . '/assets/images/default-report.png' }}" alt="{{ $pressRelease->title }}" class="press-main-image" />
               </div>
 
               <!-- Main Rich Text Body -->

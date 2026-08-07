@@ -1,11 +1,11 @@
 <section class="hero-section">
-  <img src="/assets/images/hero-cards/card5.png" alt="Monthly Market Insights"
+  <img src="{{ env('AWS_URL') }}/assets/images/hero-cards/card5.png" alt="Monthly Market Insights"
     class="hero-img-card hero-card-left-top" />
-  <img src="/assets/images/hero-cards/card3.png" alt="Global Market Revenue"
+  <img src="{{ env('AWS_URL') }}/assets/images/hero-cards/card3.png" alt="Global Market Revenue"
     class="hero-img-card hero-card-left-bottom" />
-  <img src="/assets/images/hero-cards/card4.png" alt="Market Growth Rate" class="hero-img-card hero-card-right-top" />
-  <img src="/assets/images/hero-cards/card2.png" alt="Increase in Demand" class="hero-img-card hero-card-right-mid" />
-  <img src="/assets/images/hero-cards/card1.png" alt="Market Activity Trends"
+  <img src="{{ env('AWS_URL') }}/assets/images/hero-cards/card4.png" alt="Market Growth Rate" class="hero-img-card hero-card-right-top" />
+  <img src="{{ env('AWS_URL') }}/assets/images/hero-cards/card2.png" alt="Increase in Demand" class="hero-img-card hero-card-right-mid" />
+  <img src="{{ env('AWS_URL') }}/assets/images/hero-cards/card1.png" alt="Market Activity Trends"
     class="hero-img-card hero-card-right-bottom" />
 
   <div class="hero-content">

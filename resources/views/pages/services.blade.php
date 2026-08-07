@@ -3,7 +3,7 @@
 @section('content')
 <div class="services-page">
     <main class="services-main">
-      <section class="services-hero" style="background-image: url('https://epignosisinsights-images.s3.ap-south-1.amazonaws.com/assets/images/background-image/servicepage_banner.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+      <section class="services-hero" style="background-image: url('{{ env('AWS_URL') }}/assets/images/background-image/servicepage_banner.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
         <div class="services-hero-content section-shell">
           <h1>
             Purpose-Built <span class="highlight">Research</span><br />
@@ -27,7 +27,7 @@
 
         <div class="services-metrics-grid">
           <div class="main-image-container">
-            <img src="/assets/images/performance_metrics.gif" alt="Services performance metrics chart" class="main-charts-image" />
+            <img src="{{ env('AWS_URL') }}/assets/images/performance_metrics.gif" alt="Services performance metrics chart" class="main-charts-image" />
           </div>
         </div>
       </section>
@@ -169,7 +169,7 @@
               @foreach($latestInsights as $item)
                   <article class="insight-card" style="scroll-snap-align: start; flex: 0 0 calc(33.33% - 15px); min-width: 280px; margin-right: 20px;">
                     <a href="{{ url('/blog/' . ($item->url ?? '')) }}" style="color: inherit; text-decoration: none;">
-                        <img src="{{ $item->image ?? '/assets/images/default-report.png' }}" alt="{{ $item->title ?? '' }}" />
+                        <img src="{{ $item->image ?? env('AWS_URL') . '/assets/images/default-report.png' }}" alt="{{ $item->title ?? '' }}" />
                         <h3>{{ $item->title ?? '' }}</h3>
                         <p>{{ $item->description ?? '' }}</p>
                     </a>

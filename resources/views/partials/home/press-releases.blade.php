@@ -21,7 +21,7 @@
     @foreach($pressReleases as $item)
       <article class="story-card" style="scroll-snap-align: start; flex: 0 0 calc(33.33% - 15px); min-width: 280px; margin-right: 20px;">
           <a href="{{ url('/press-release/' . ($item->url ?? '')) }}" class="insight-card pr-card" style="text-decoration: none; color: inherit; display: block;">
-            <img src="{{ $item->image ?? '/assets/images/default-report.png' }}" alt="{{ $item->title ?? '' }}" />
+            <img src="{{ $item->image ?? env('AWS_URL') . '/assets/images/default-report.png' }}" alt="{{ $item->title ?? '' }}" />
             <div class="pr-meta" style="margin: 12px 0 8px; font-size: 13px; color: #6b7280; display: flex; align-items: center; gap: 8px;">
                 <span class="pr-date">{{ $item->date ?? ($item->created_at ? \Carbon\Carbon::parse($item->created_at)->format('Y-m-d') : '') }}</span>
             </div>

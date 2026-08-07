@@ -37,7 +37,7 @@
     @endif
     
     @if(request()->is('/'))
-    <link rel="preload" as="image" href="/assets/images/hero-bg-screenshot.png" fetchpriority="high">
+    <link rel="preload" as="image" href="{{ env('AWS_URL') }}/assets/images/hero-bg-screenshot.png" fetchpriority="high">
     @endif
 
     <link rel="icon" type="image/png" href="/favicon.png?v=3.0">

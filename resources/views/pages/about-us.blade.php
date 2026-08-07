@@ -4,7 +4,7 @@
 <div class="about-page">
     <main class="about-main">
       <!-- Hero Section -->
-      <section class="about-hero" style="background-image: url('https://epignosisinsights-images.s3.ap-south-1.amazonaws.com/assets/images/background-image/aboutpage_banner.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+      <section class="about-hero" style="background-image: url('{{ env('AWS_URL') }}/assets/images/background-image/aboutpage_banner.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
         <div class="about-hero-content section-shell">
           <h1>
             Driving Smarter <span class="highlight">Decisions</span><br />
@@ -43,7 +43,7 @@
           </p>
         </div>
         <div class="why-choose-image-container">
-          <img class="who-image" src="/assets/images/Business.png" alt="Epignosis Insights Business Overview" />
+          <img class="who-image" src="{{ env('AWS_URL') }}/assets/images/Business.png" alt="Epignosis Insights Business Overview" />
         </div>
       </section>
 
@@ -52,7 +52,7 @@
         <!-- Mission Section -->
         <div class="mission-section">
           <div class="why-choose-image-container">
-            <img class="mission-image" src="/assets/images/Client.png" alt="Client collaboration and mission commitment" />
+            <img class="mission-image" src="{{ env('AWS_URL') }}/assets/images/Client.png" alt="Client collaboration and mission commitment" />
           </div>
           <div class="mission-copy">
             <h3>Our Mission</h3>
@@ -127,7 +127,7 @@
             </p>
           </div>
           <div class="why-choose-image-container">
-            <img class="vision-image" src="/assets/images/Growth.png" alt="Epignosis Insights Vision and Growth" />
+            <img class="vision-image" src="{{ env('AWS_URL') }}/assets/images/Growth.png" alt="Epignosis Insights Vision and Growth" />
           </div>
         </div>
       </section>
@@ -238,7 +238,7 @@
           </div>
 
           <div class="why-choose-image-container">
-            <img class="performance-image" src="/assets/images/Performance.png" alt="Performance Metrics Chart" />
+            <img class="performance-image" src="{{ env('AWS_URL') }}/assets/images/Performance.png" alt="Performance Metrics Chart" />
           </div>
 
           <div class="why-choose-card">
@@ -284,7 +284,7 @@
               @foreach($latestInsights as $item)
                   <article class="insight-card" style="scroll-snap-align: start; flex: 0 0 calc(33.33% - 15px); min-width: 280px; margin-right: 20px;">
                     <a href="{{ url('/blog/' . ($item->url ?? '')) }}" style="color: inherit; text-decoration: none;">
-                        <img src="{{ $item->image ?? '/assets/images/default-report.png' }}" alt="{{ $item->title ?? '' }}" />
+                        <img src="{{ $item->image ?? env('AWS_URL') . '/assets/images/default-report.png' }}" alt="{{ $item->title ?? '' }}" />
                         <h3>{{ $item->title ?? '' }}</h3>
                         <p>{{ $item->description ?? '' }}</p>
                     </a>
@@ -301,7 +301,7 @@
 
 
       <!-- Footer CTA Section -->
-      <section class="about-bottom-cta" style="background-image: url('https://epignosisinsights-images.s3.ap-south-1.amazonaws.com/assets/images/background-image/aboutus_cta.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+      <section class="about-bottom-cta" style="background-image: url('{{ env('AWS_URL') }}/assets/images/background-image/aboutus_cta.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
         <div class="section-shell cta-container">
           <div class="cta-left">
             <h3>Ready to Unlock Market Insights?</h3>
@@ -315,7 +315,7 @@
             </a>
           </div>
           <div class="cta-right">
-            <div class="industry-card" style="background-image: url('https://epignosisinsights-images.s3.ap-south-1.amazonaws.com/assets/images/background-image/aboutus_ctaaboveimage.png'); background-size: cover; background-position: center; background-repeat: no-repeat; min-height: 380px;">
+            <div class="industry-card" style="background-image: url('{{ env('AWS_URL') }}/assets/images/background-image/aboutus_ctaaboveimage.png'); background-size: cover; background-position: center; background-repeat: no-repeat; min-height: 380px;">
             </div>
           </div>
         </div>

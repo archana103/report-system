@@ -22,7 +22,7 @@
               <h1 class="blog-post-title">{{ $blog->title }}</h1>
 
               <div class="blog-main-image-wrapper">
-                <img src="{{ !empty($blog->image) ? $blog->image : '/assets/images/default-report.png' }}" alt="{{ $blog->title }}" class="blog-main-image" />
+                <img src="{{ !empty($blog->image) ? $blog->image : env('AWS_URL') . '/assets/images/default-report.png' }}" alt="{{ $blog->title }}" class="blog-main-image" />
               </div>
 
               <!-- Main Rich Text Body -->

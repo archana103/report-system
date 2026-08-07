@@ -10,6 +10,7 @@ use App\Models\ContactUS;
 use App\Models\DiscountRequest;
 use App\Models\TopSellingReport;
 use App\Models\Newsletter;
+use Illuminate\Support\Facades\Cache;
 
 class UserviewController extends Controller
 {
@@ -18,10 +19,10 @@ class UserviewController extends Controller
      */
     public function categoriesWithReports()
     {
-        $version = \Illuminate\Support\Facades\Cache::get('userview_cache_version', 1);
+        $version = Cache::get('userview_cache_version', 1);
         $key = 'categories_with_reports_v' . $version;
         
-        $categories = \Illuminate\Support\Facades\Cache::remember($key, 60*60*24, function () {
+        $categories = Cache::remember($key, 60*60*24, function () {
             $cats = ReportCategory::where('status', 'Active')
                 ->orderBy('created_at', 'desc')
                 ->take(8)
@@ -68,10 +69,10 @@ class UserviewController extends Controller
     public function reportsByCategory(Request $request)
     {
         $categoryName = $request->query('category', 'All');
-        $version = \Illuminate\Support\Facades\Cache::get('userview_cache_version', 1);
+        $version = Cache::get('userview_cache_version', 1);
         $key = sprintf('reports_by_category_v%s_c%s', $version, md5($categoryName));
 
-        $reports = \Illuminate\Support\Facades\Cache::remember($key, 60*60*24, function () use ($categoryName) {
+        $reports = Cache::remember($key, 60*60*24, function () use ($categoryName) {
             $query = ReportList::with(['reportCategory', 'reportDetail'])
                 ->has('reportDetail')
                 ->where('status', 'Active');
@@ -114,7 +115,7 @@ class UserviewController extends Controller
         $page = $request->query('page', 1);
         $sort = $request->query('sort', '');
         
-        $version = \Illuminate\Support\Facades\Cache::get('userview_cache_version', 1);
+        $version = Cache::get('userview_cache_version', 1);
         $key = sprintf(
             'reports:v%s:p%s:s%s:c%s:o%s',
             $version,
@@ -124,7 +125,7 @@ class UserviewController extends Controller
             $sort
         );
 
-        $paginator = \Illuminate\Support\Facades\Cache::remember($key, 60*60*24, function () use ($search, $categoryName) {
+        $paginator = Cache::remember($key, 60*60*24, function () use ($search, $categoryName) {
             $query = ReportList::with(['reportCategory', 'reportDetail'])
                 ->has('reportDetail')
                 ->where('status', 'Active');
@@ -211,10 +212,10 @@ class UserviewController extends Controller
     
     public function publicTopSellingReports()
     {
-        $version = \Illuminate\Support\Facades\Cache::get('userview_cache_version', 1);
+        $version = Cache::get('userview_cache_version', 1);
         $key = 'top_selling_reports_v' . $version;
         
-        $reports = \Illuminate\Support\Facades\Cache::remember($key, 60*60*24, function () {
+        $reports = Cache::remember($key, 60*60*24, function () {
             return TopSellingReport::with('reportDetail:id,title,slug_url')
                 ->orderBy('created_at', 'desc')
                 ->take(5)
@@ -501,10 +502,10 @@ class UserviewController extends Controller
      */
     public function categoriesDropdown()
     {
-        $version = \Illuminate\Support\Facades\Cache::get('userview_cache_version', 1);
+        $version = Cache::get('userview_cache_version', 1);
         $key = 'categories_dropdown_v' . $version;
         
-        $categories = \Illuminate\Support\Facades\Cache::remember($key, 60*60*24, function () {
+        $categories = Cache::remember($key, 60*60*24, function () {
             return ReportCategory::select('id', 'name', 'slug_url')
                 ->where('status', 'Active')
                 ->orderBy('name')

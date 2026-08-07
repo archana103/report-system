@@ -5,7 +5,7 @@
 
     <main class="blogs-main">
       <!-- Banner Section -->
-      <section class="blogs-banner" style="background-image: url('https://epignosisinsights-images.s3.ap-south-1.amazonaws.com/assets/images/background-image/blogbg.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+      <section class="blogs-banner" style="background-image: url('{{ env('AWS_URL') }}/assets/images/background-image/blogbg.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
         <div class="blogs-banner-content section-shell">
           <h1>Market Insights & Industry Trends</h1>
           <p>
@@ -21,7 +21,7 @@
                 @foreach($initialBlogs as $blog)
                 <a href="{{ url('/blog/' . ($blog->url ?? $blog->id)) }}" class="blog-card" style="display: block; text-decoration: none; color: inherit;">
                   <div class="blog-image-wrapper">
-                    <img src="{{ !empty($blog->image) ? $blog->image : '/assets/images/default-report.png' }}" alt="{{ $blog->title ?? '' }}" class="blog-image" />
+                    <img src="{{ !empty($blog->image) ? $blog->image : env('AWS_URL') . '/assets/images/default-report.png' }}" alt="{{ $blog->title ?? '' }}" class="blog-image" />
                   </div>
                   <div class="blog-info">
                     <h3>{{ $blog->title ?? '' }}</h3>

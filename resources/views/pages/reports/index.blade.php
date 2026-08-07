@@ -18,7 +18,7 @@
               <div class="report-image-wrap">
                 <a
                   href="{{ url('/report/' . (!empty($report->slug) && $report->slug !== '#' ? $report->slug : $report->id)) }}">
-                  <img src="{{ !empty($report->image) ? $report->image : '/assets/images/default-report.png' }}"
+                  <img src="{{ !empty($report->image) ? $report->image : env('AWS_URL') . '/assets/images/default-report.png' }}"
                     alt="{{ $report->title ?? '' }}" />
                 </a>
               </div>
@@ -156,7 +156,7 @@
     <!-- Custom Research CTA -->
     <section class="custom-research-cta section-shell">
       <div class="cta-inner"
-        style="background-image: url('https://epignosisinsights-images.s3.ap-south-1.amazonaws.com/assets/images/background-image/reportpage_cta.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+        style="background-image: url('{{ env('AWS_URL') }}/assets/images/background-image/reportpage_cta.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
         <div class="cta-content">
           <h2>Looking for Custom<br>Market Research?</h2>
           <p>Connect with our analysts for tailored research to answer your specific strategic questions and overcome

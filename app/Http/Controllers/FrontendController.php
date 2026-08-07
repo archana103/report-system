@@ -10,171 +10,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
-class SeoPageController extends Controller
+class FrontendController extends Controller
 {
-    public function show(Request $request)
-    {
-        $seo = $this->seoForPath($request);
-        $path = trim($request->path(), '/');
-        $segments = $request->segments();
-
-        if ($path === '') {
-            $userview = app(\App\Http\Controllers\UserviewController::class);
-            $categoriesData = $userview->categoriesDropdown()->getData();
-            $trendingReportsData = $userview->reportsByCategory($request)->getData();
-            $latestInsightsData = $userview->blogs()->getData();
-            $pressReleasesData = $userview->pressReleases()->getData();
-
-            return view('pages.home', [
-                'seo' => $seo,
-                'initialCategories' => $categoriesData,
-                'trendingReports' => $trendingReportsData,
-                'latestInsights' => $latestInsightsData,
-                'pressReleases' => $pressReleasesData
-            ]);
-        }
-
-        if (($segments[0] ?? '') === 'reports' && empty($segments[1])) {
-            $userview = app(\App\Http\Controllers\UserviewController::class);
-
-            $request->query->add(['page' => $request->query('page', 1)]);
-            if ($request->has('q')) {
-                $request->query->add(['search' => $request->query('q')]);
-            }
-
-            $reportsResponse = $userview->getAllReports($request);
-            $reportsData = $reportsResponse->getData();
-
-            $categoriesResponse = $userview->categoriesDropdown();
-            $categoriesData = $categoriesResponse->getData();
-
-            $topSellersResponse = $userview->publicTopSellingReports();
-            $topSellersData = $topSellersResponse->getData();
-
-            return view('pages.reports.index', [
-                'seo' => $seo,
-                'initialReports' => $reportsData->data ?? [],
-                'initialTotalPages' => $reportsData->last_page ?? 1,
-                'initialCategories' => $categoriesData,
-                'initialTopSellers' => $topSellersData,
-            ]);
-        }
-
-        if (($segments[0] ?? '') === 'report' && !empty($segments[1]) && !empty($seo['report'])) {
-            $userview = app(\App\Http\Controllers\UserviewController::class);
-            $reportDataResponse = $userview->getReportDetail($segments[1]);
-            $reportData = $reportDataResponse->getData();
-            return view('pages.reports.show', [
-                'seo' => $seo,
-                'report' => $seo['report'],
-                'reportData' => $reportData
-            ]);
-        }
-
-        if (($segments[0] ?? '') === 'blogs' && empty($segments[1])) {
-            $userview = app(\App\Http\Controllers\UserviewController::class);
-            $request->query->add(['page' => $request->query('page', 1)]);
-            $blogsResponse = $userview->getAllBlogs($request);
-            $blogsData = $blogsResponse->getData();
-            return view('pages.blogs.index', [
-                'seo' => $seo,
-                'initialBlogs' => $blogsData->data ?? [],
-                'initialTotalPages' => $blogsData->last_page ?? 1,
-            ]);
-        }
-
-        if (($segments[0] ?? '') === 'blog' && !empty($segments[1])) {
-            $userview = app(\App\Http\Controllers\UserviewController::class);
-            $blogDetailResponse = $userview->getBlogDetail($segments[1]);
-            if ($blogDetailResponse->getStatusCode() === 404)
-                return abort(404);
-            return view('pages.blogs.show', [
-                'seo' => $seo,
-                'blog' => $blogDetailResponse->getData()
-            ]);
-        }
-
-        if (($segments[0] ?? '') === 'press-releases' && empty($segments[1])) {
-            $userview = app(\App\Http\Controllers\UserviewController::class);
-            $request->query->add(['page' => $request->query('page', 1)]);
-            if ($request->has('q'))
-                $request->query->add(['search' => $request->query('q')]);
-
-            $prResponse = $userview->getAllPressReleases($request);
-            $prData = $prResponse->getData();
-            return view('pages.press-releases.index', [
-                'seo' => $seo,
-                'initialPressReleases' => $prData->data ?? [],
-                'initialTotalPages' => $prData->last_page ?? 1,
-            ]);
-        }
-
-        if (($segments[0] ?? '') === 'press-release' && !empty($segments[1])) {
-            $userview = app(\App\Http\Controllers\UserviewController::class);
-            $prDetailResponse = $userview->getPressReleaseDetail($segments[1]);
-            if ($prDetailResponse->getStatusCode() === 404)
-                return abort(404);
-            return view('pages.press-releases.show', [
-                'seo' => $seo,
-                'pressRelease' => $prDetailResponse->getData()
-            ]);
-        }
-
-        if (($segments[0] ?? '') === 'industry' && !empty($segments[1])) {
-            $userview = app(\App\Http\Controllers\UserviewController::class);
-            $categoryDetailResponse = $userview->getCategoryDetail($segments[1]);
-
-            if ($categoryDetailResponse->getStatusCode() === 404)
-                return abort(404);
-
-            $categoryInfo = $categoryDetailResponse->getData();
-
-            $request->query->add(['page' => $request->query('page', 1)]);
-            $request->query->add(['category' => $categoryInfo->name]);
-
-            $reportsResponse = $userview->getAllReports($request);
-            $reportsData = $reportsResponse->getData();
-
-            $categoriesResponse = $userview->categoriesDropdown();
-            $categoriesData = $categoriesResponse->getData();
-
-            return view('pages.industry.show', [
-                'seo' => $seo,
-                'categoryInfo' => $categoryInfo,
-                'categoryName' => $categoryInfo->name,
-                'initialReports' => $reportsData->data ?? [],
-                'initialTotalPages' => $reportsData->last_page ?? 1,
-                'sidebarCategories' => $categoriesData ?? [],
-            ]);
-        }
-
-        $staticPages = [
-            'about-us' => 'pages.about-us',
-            'contact-us' => 'pages.contact-us',
-            'services' => 'pages.services',
-            'privacy-policy' => 'pages.privacy',
-            'terms-and-conditions' => 'pages.terms',
-            'thank-you' => 'pages.thank-you'
-        ];
-
-        if (array_key_exists($path, $staticPages)) {
-            $viewData = ['seo' => $seo];
-            if (in_array($path, ['about-us', 'services'])) {
-                $viewData['latestInsights'] = app(\App\Http\Controllers\UserviewController::class)->blogs()->getData();
-            }
-            return view($staticPages[$path], $viewData);
-        }
-
-        if (([0] ?? '') === 'admin') {
-            return view('welcome', [
-                'seo' => $seo,
-            ]);
-        }
-
-        abort(404);
-    }
-
-    private function seoForPath(Request $request): array
+    protected function seoForPath(Request $request): array
     {
         $path = trim($request->path(), '/');
         $segments = $path === '' ? [] : explode('/', $path);
@@ -198,7 +36,7 @@ class SeoPageController extends Controller
         return $this->baseSeo($request);
     }
 
-    private function industrySeo(string $slug, Request $request): array
+    protected function industrySeo(string $slug, Request $request): array
     {
         $category = \App\Models\ReportCategory::where('slug_url', $slug)
             ->where('status', 'Active')
@@ -260,7 +98,7 @@ class SeoPageController extends Controller
         return $this->buildSeo($data, $request);
     }
 
-    private function reportSeo(string $slug, Request $request): array
+    protected function reportSeo(string $slug, Request $request): array
     {
         $query = ReportDetail::with(['reportList:id,name,report_category_id', 'reportList.reportCategory:id,name']);
 
@@ -310,7 +148,7 @@ class SeoPageController extends Controller
         ], $request);
     }
 
-    private function blogSeo(string $slug, Request $request): array
+    protected function blogSeo(string $slug, Request $request): array
     {
         $blog = Blog::with('blogDetail')
             ->where('url', $slug)
@@ -350,7 +188,7 @@ class SeoPageController extends Controller
         ], $request);
     }
 
-    private function pressReleaseSeo(string $slug, Request $request): array
+    protected function pressReleaseSeo(string $slug, Request $request): array
     {
         $pressRelease = PressRelease::with('pressReleaseDetail')
             ->where('url', $slug)
@@ -389,7 +227,7 @@ class SeoPageController extends Controller
         ], $request);
     }
 
-    private function baseSeo(Request $request): array
+    protected function baseSeo(Request $request): array
     {
         $path = ltrim($request->path(), '/');
         // Handle home route explicitly since path() might return empty or '/'
@@ -422,7 +260,7 @@ class SeoPageController extends Controller
         return $this->buildSeo($data, $request);
     }
 
-    private function buildSeo(array $data, Request $request): array
+    protected function buildSeo(array $data, Request $request): array
     {
         $title = trim((string) Arr::get($data, 'title', '')) ?: 'Epignosis Insights';
 
@@ -441,7 +279,7 @@ class SeoPageController extends Controller
         ];
     }
 
-    private function reportSchema(Request $request, ReportDetail $report, string $title, ?string $description, ?string $category): array
+    protected function reportSchema(Request $request, ReportDetail $report, string $title, ?string $description, ?string $category): array
     {
         $schema = [
             '@context' => 'https://schema.org',
@@ -474,22 +312,22 @@ class SeoPageController extends Controller
         return $schema;
     }
 
-    private function generateReportHtml(ReportDetail $report): string
+    protected function generateReportHtml(ReportDetail $report): string
     {
         return view('seo.report', compact('report'))->render();
     }
 
-    private function generateBlogHtml(Blog $blog, $detail): string
+    protected function generateBlogHtml(Blog $blog, $detail): string
     {
         return view('seo.blog', compact('blog', 'detail'))->render();
     }
 
-    private function generatePressReleaseHtml(PressRelease $pressRelease, $detail): string
+    protected function generatePressReleaseHtml(PressRelease $pressRelease, $detail): string
     {
         return view('seo.press-release', compact('pressRelease', 'detail'))->render();
     }
 
-    private function blogSchema(Request $request, Blog $blog, string $title, ?string $description): array
+    protected function blogSchema(Request $request, Blog $blog, string $title, ?string $description): array
     {
         return [
             '@context' => 'https://schema.org',
@@ -512,7 +350,7 @@ class SeoPageController extends Controller
         ];
     }
 
-    private function pressReleaseSchema(Request $request, PressRelease $pressRelease, string $title, ?string $description): array
+    protected function pressReleaseSchema(Request $request, PressRelease $pressRelease, string $title, ?string $description): array
     {
         return [
             '@context' => 'https://schema.org',
@@ -531,7 +369,7 @@ class SeoPageController extends Controller
         ];
     }
 
-    private function organizationSchema(): array
+    protected function organizationSchema(): array
     {
         return [
             '@context' => 'https://schema.org',
@@ -544,7 +382,7 @@ class SeoPageController extends Controller
         ];
     }
 
-    private function websiteSchema(Request $request): array
+    protected function websiteSchema(Request $request): array
     {
         return [
             '@context' => 'https://schema.org',
@@ -561,7 +399,7 @@ class SeoPageController extends Controller
         ];
     }
 
-    private function breadcrumbSchema(Request $request, array $items): array
+    protected function breadcrumbSchema(Request $request, array $items): array
     {
         return [
             '@context' => 'https://schema.org',
@@ -577,7 +415,7 @@ class SeoPageController extends Controller
         ];
     }
 
-    private function organizationReference(bool $withLogo = false): array
+    protected function organizationReference(bool $withLogo = false): array
     {
         $organization = [
             '@type' => 'Organization',
@@ -596,12 +434,12 @@ class SeoPageController extends Controller
         return $organization;
     }
 
-    private function customSchemas(array $items): array
+    protected function customSchemas(array $items): array
     {
         return array_values($items);
     }
 
-    private function renderRawTags($items, string $tagName): string
+    protected function renderRawTags($items, string $tagName): string
     {
         $tags = [];
 
@@ -620,7 +458,7 @@ class SeoPageController extends Controller
         return implode("\n    ", array_filter($tags));
     }
 
-    private function renderSchemaTags($items): string
+    protected function renderSchemaTags($items): string
     {
         $scripts = [];
 
@@ -653,7 +491,7 @@ class SeoPageController extends Controller
         return implode("\n    ", array_filter($scripts));
     }
 
-    private function schemaScript(?string $json): string
+    protected function schemaScript(?string $json): string
     {
         if (!$json) {
             return '';
@@ -662,7 +500,7 @@ class SeoPageController extends Controller
         return '<script type="application/ld+json">' . $this->escapeJsonLd($json) . '</script>';
     }
 
-    private function sanitizeStandaloneTag(string $tag, string $tagName): string
+    protected function sanitizeStandaloneTag(string $tag, string $tagName): string
     {
         $allowed = $tagName === 'meta'
             ? ['name', 'content', 'property', 'charset', 'http-equiv']
@@ -688,12 +526,12 @@ class SeoPageController extends Controller
         return $attrs ? '<' . $tagName . ' ' . implode(' ', $attrs) . '>' : '';
     }
 
-    private function escapeJsonLd(string $json): string
+    protected function escapeJsonLd(string $json): string
     {
         return str_ireplace('</script', '<\/script', $json);
     }
 
-    private function normalizeSchemaList($items): array
+    protected function normalizeSchemaList($items): array
     {
         if (!$items) {
             return [];
@@ -709,7 +547,7 @@ class SeoPageController extends Controller
 
         return array_values($items);
     }
-    private function normalizeList($items): array
+    protected function normalizeList($items): array
     {
         if (!$items) {
             return [];
@@ -722,14 +560,14 @@ class SeoPageController extends Controller
         return [$items];
     }
 
-    private function cleanText($value): ?string
+    protected function cleanText($value): ?string
     {
         $value = trim(strip_tags(html_entity_decode((string) $value)));
 
         return $value !== '' ? $value : null;
     }
 
-    private function cleanUrl($value): ?string
+    protected function cleanUrl($value): ?string
     {
         $value = trim((string) $value);
 
@@ -740,7 +578,7 @@ class SeoPageController extends Controller
         return preg_match('/^https?:\/\//i', $value) ? $value : null;
     }
 
-    private function absoluteImage(?string $path): ?string
+    protected function absoluteImage(?string $path): ?string
     {
         $path = trim((string) $path);
 

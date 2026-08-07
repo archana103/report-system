@@ -22,7 +22,7 @@
           <div class="report-image-wrap">
             <a
               href="{{ url('/report/' . (!empty($report->slug) && $report->slug !== '#' ? $report->slug : $report->id)) }}">
-              <img src="{{ !empty($report->image) ? $report->image : '/assets/images/default-report.png' }}"
+              <img src="{{ !empty($report->image) ? $report->image : env('AWS_URL') . '/assets/images/default-report.png' }}"
                 alt="{{ $report->title ?? '' }}" />
             </a>
           </div>

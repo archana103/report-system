@@ -21,7 +21,7 @@
     @foreach($latestInsights as $item)
       <article class="insight-card" style="scroll-snap-align: start; flex: 0 0 calc(33.33% - 15px); min-width: 280px; margin-right: 20px;">
           <a href="{{ url('/blog/' . ($item->url ?? '')) }}" class="insight-card" style="text-decoration: none; color: inherit; display: block;">
-            <img src="{{ $item->image ?? '/assets/images/default-report.png' }}" alt="{{ $item->title ?? '' }}" />
+            <img src="{{ $item->image ?? env('AWS_URL') . '/assets/images/default-report.png' }}" alt="{{ $item->title ?? '' }}" />
             <h3>{{ $item->title ?? '' }}</h3>
             <p>{{ $item->description ?? '' }}</p>
           </a>

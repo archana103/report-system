@@ -54,7 +54,7 @@
                 <!-- Premium Pure CSS 3D Mockup Book Cover -->
                 <div class="report-image-wrap">
                   <a href="{{ url('/report/' . (!empty($report->slug) && $report->slug !== '#' ? $report->slug : $report->id)) }}" class="cover-link">
-                    <img src="/assets/images/default-report.png" alt="{{ $report->title ?? '' }}" />
+                    <img src="{{ env('AWS_URL') }}/assets/images/default-report.png" alt="{{ $report->title ?? '' }}" />
                   </a>
                 </div>
 
@@ -122,7 +122,7 @@
 
     <!-- Custom Analyst Research CTA Component -->
     <section class="custom-research-cta section-shell">
-      <div class="cta-inner" style="background-image: url('https://epignosisinsights-images.s3.ap-south-1.amazonaws.com/assets/images/background-image/reportpage_cta.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+      <div class="cta-inner" style="background-image: url('{{ env('AWS_URL') }}/assets/images/background-image/reportpage_cta.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
         <div class="cta-content">
           <h2>Looking for Custom<br>Market Research?</h2>
           <p>Connect with our analysts for tailored research to answer your specific strategic questions and overcome challenges.</p>

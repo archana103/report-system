@@ -5,7 +5,7 @@
 
     <main class="press-main">
       <!-- Banner Section -->
-      <section class="press-banner" style="background-image: url('https://epignosisinsights-images.s3.ap-south-1.amazonaws.com/assets/images/background-image/press_relasebg.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+      <section class="press-banner" style="background-image: url('{{ env('AWS_URL') }}/assets/images/background-image/press_relasebg.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
         <div class="press-banner-content section-shell">
           <h1>Press Releases</h1>
           <p>
@@ -34,7 +34,7 @@
                 @foreach($initialPressReleases as $pr)
                 <a href="{{ url('/press-release/' . ($pr->url ?? $pr->id)) }}" class="press-card" style="display: block; text-decoration: none; color: inherit;">
                   <div class="press-image-wrapper">
-                    <img src="{{ !empty($pr->image) ? $pr->image : '/assets/images/default-report.png' }}" alt="{{ $pr->title ?? '' }}" class="press-image" />
+                    <img src="{{ !empty($pr->image) ? $pr->image : env('AWS_URL') . '/assets/images/default-report.png' }}" alt="{{ $pr->title ?? '' }}" class="press-image" />
                   </div>
                   <div class="press-info">
                     <span class="press-date">

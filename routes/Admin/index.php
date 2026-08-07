@@ -7,7 +7,7 @@ use App\Http\Controllers\Admin\PricingController;
 use App\Http\Controllers\Admin\ReportMethodologyController;
 use App\Http\Controllers\Admin\PageSeoController;
 
-Route::post('/admin/login', [AdminAuthController::class, 'login']);
+
 
 // Dashboard & Profile
 Route::get('/admin/dashboard-stats', [DashboardController::class, 'stats']);
