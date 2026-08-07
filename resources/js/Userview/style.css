@@ -341,8 +341,6 @@ input {
   min-height: 735px;
   overflow: hidden;
   padding: 170px 24px 90px;
-  background: url('/assets/images/hero-bg-screenshot.png') no-repeat center center;
-  background-size: cover;
 }
 
 /* CSS hero ring replaced by background image */

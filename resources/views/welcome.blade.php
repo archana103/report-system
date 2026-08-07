@@ -54,7 +54,6 @@
 </head>
 <body>
     <div id="app">
-        {!! $seo['prerendered_html'] ?? '' !!}
     </div>
 </body>
 </html>

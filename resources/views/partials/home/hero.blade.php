@@ -1,4 +1,4 @@
-<section class="hero-section">
+<section class="hero-section" style="background: url('{{ asset('assets/images/hero-bg-screenshot.png') }}') no-repeat center center; background-size: cover;">
   <img src="{{ env('AWS_URL') }}/assets/images/hero-cards/card5.png" alt="Monthly Market Insights"
     class="hero-img-card hero-card-left-top" />
   <img src="{{ env('AWS_URL') }}/assets/images/hero-cards/card3.png" alt="Global Market Revenue"

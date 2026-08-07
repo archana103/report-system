@@ -143,7 +143,6 @@ class FrontendController extends Controller
             'open_graph' => $report->open_graph_tags,
             'twitter' => $report->twitter_card_tags,
             'schemas' => $schemas,
-            'prerendered_html' => $this->generateReportHtml($report),
             'report' => $report,
         ], $request);
     }
@@ -184,7 +183,6 @@ class FrontendController extends Controller
             'open_graph' => optional($detail)->open_graph_tags,
             'twitter' => optional($detail)->twitter_card_tags,
             'schemas' => $schemas,
-            'prerendered_html' => $this->generateBlogHtml($blog, $detail),
         ], $request);
     }
 
@@ -223,7 +221,6 @@ class FrontendController extends Controller
             'open_graph' => optional($detail)->open_graph_tags,
             'twitter' => optional($detail)->twitter_card_tags,
             'schemas' => $schemas,
-            'prerendered_html' => $this->generatePressReleaseHtml($pressRelease, $detail),
         ], $request);
     }
 
@@ -274,7 +271,6 @@ class FrontendController extends Controller
                 $this->renderSchemaTags(Arr::get($data, 'schemas', [])),
                 Arr::get($data, 'raw_tags', ''),
             ])),
-            'prerendered_html' => Arr::get($data, 'prerendered_html', ''),
             'report' => Arr::get($data, 'report', null),
         ];
     }
@@ -312,20 +308,7 @@ class FrontendController extends Controller
         return $schema;
     }
 
-    protected function generateReportHtml(ReportDetail $report): string
-    {
-        return view('seo.report', compact('report'))->render();
-    }
 
-    protected function generateBlogHtml(Blog $blog, $detail): string
-    {
-        return view('seo.blog', compact('blog', 'detail'))->render();
-    }
-
-    protected function generatePressReleaseHtml(PressRelease $pressRelease, $detail): string
-    {
-        return view('seo.press-release', compact('pressRelease', 'detail'))->render();
-    }
 
     protected function blogSchema(Request $request, Blog $blog, string $title, ?string $description): array
     {

@@ -774,22 +774,5 @@ class UserviewController extends Controller
     /**
      * Store a new newsletter subscription.
      */
-    public function storeNewsletter(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email|unique:newsletters,email',
-        ], [
-            'email.unique' => 'You are already subscribed to our newsletter!',
-            'email.email' => 'Please enter a valid email address.'
-        ]);
-
-        Newsletter::create([
-            'email' => $request->input('email')
-        ]);
-
-        if ($request->wantsJson()) {
-            return response()->json(['message' => 'Successfully subscribed to the newsletter!']);
-        }
-        return redirect()->back()->with('newsletter_success', 'Successfully subscribed to the newsletter!');
-    }
+  
 }
