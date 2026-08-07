@@ -39,7 +39,7 @@
                   <a href="{{ url('/report/' . (!empty($report->slug) && $report->slug !== '#' ? $report->slug : $report->id) . '?tab=overview') }}"
                     class="secondary-button outlined" style="padding: 10px 24px; min-height: auto; line-height: 1.2;">View
                     Details</a>
-                  <a href="/contact-us" class="secondary-button outlined"
+                  <a href="javascript:void(0)" onclick="openRequestModal('Request Sample', '{{ addslashes(htmlspecialchars($report->title ?? '', ENT_QUOTES, 'UTF-8')) }}')" class="secondary-button outlined"
                     style="padding: 10px 24px; min-height: auto; line-height: 1.2;">Request Sample</a>
                   <a href="/contact-us" class="primary-button small"
                     style="padding: 10px 24px; min-height: auto; line-height: 1.2;">Buy Now</a>

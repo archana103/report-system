@@ -46,10 +46,10 @@
         </div>
 
         <div class="hero-actions-row" style="flex-wrap: wrap; gap: 12px;">
-          <a href="/contact-us" class="secondary-button outlined">Request Sample</a>
-          <a href="/contact-us" class="secondary-button outlined">Ask for Discount</a>
-          <a href="/contact-us" class="secondary-button outlined">Request Customized Report</a>
-          <a href="/contact-us" class="primary-button">Buy Now</a>
+          <a href="javascript:void(0)" onclick="openRequestModal('Request Sample', '{{ addslashes(htmlspecialchars($report->title ?: optional($report->reportList)->name, ENT_QUOTES, 'UTF-8')) }}')" class="secondary-button outlined">Request Sample</a>
+          <a href="javascript:void(0)" onclick="openRequestModal('Ask for discount', '{{ addslashes(htmlspecialchars($report->title ?: optional($report->reportList)->name, ENT_QUOTES, 'UTF-8')) }}')" class="secondary-button outlined">Ask for Discount</a>
+          <a href="javascript:void(0)" onclick="openRequestModal('Request customized report', '{{ addslashes(htmlspecialchars($report->title ?: optional($report->reportList)->name, ENT_QUOTES, 'UTF-8')) }}')" class="secondary-button outlined">Request Customized Report</a>
+          <a href="/checkout/{{ $report->id ?? optional($report->reportList)->id }}" class="primary-button">Buy Now</a>
         </div>
       </div>
     </div>
@@ -68,7 +68,7 @@
             Methodology</a>
         </div>
         <div class="tabs-right-action">
-          <a href="/contact-us" class="download-sample-btn">
+          <a href="javascript:void(0)" onclick="openRequestModal('Download Free Sample', '{{ addslashes(htmlspecialchars($report->title ?: optional($report->reportList)->name, ENT_QUOTES, 'UTF-8')) }}')" class="download-sample-btn">
             <svg viewBox="0 0 24 24" fill="none" class="icon" style="width:16px; height:16px;" stroke="currentColor"
               stroke-width="1.8" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round">
               <path d="M4 21v-7"></path>
@@ -153,7 +153,7 @@
             </span>
           </a>
 
-          <a href="/contact-us" class="contact-btn-white request-sample-btn">
+          <a href="javascript:void(0)" onclick="openRequestModal('Request Sample', '{{ addslashes(htmlspecialchars($report->title ?: optional($report->reportList)->name, ENT_QUOTES, 'UTF-8')) }}')" class="contact-btn-white request-sample-btn">
             Request Sample
             <span class="btn-circle-arrow">
               <svg class="chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
