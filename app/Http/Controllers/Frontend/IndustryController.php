@@ -6,14 +6,17 @@ use App\Http\Controllers\FrontendController;
 use Illuminate\Http\Request;
 
 use App\Services\CategoryService;
+use App\Services\SeoService;
 
 class IndustryController extends FrontendController
 {
     protected $categoryService;
+    protected $seoService;
 
-    public function __construct(CategoryService $categoryService)
+    public function __construct(CategoryService $categoryService, SeoService $seoService)
     {
         $this->categoryService = $categoryService;
+        $this->seoService = $seoService;
     }
 
     public function show(Request $request, $slug)
@@ -32,7 +35,7 @@ class IndustryController extends FrontendController
         $reportsData = $userview->getAllReports($request)->getData();
 
         return view('pages.industry.show', [
-            'seo' => $this->seoForPath($request),
+            'seo' => $this->seoService->getIndustrySeo($slug, $request),
             'categoryInfo' => $categoryInfo,
             'categoryName' => $categoryInfo->name,
             'initialReports' => $reportsData->data ?? [],

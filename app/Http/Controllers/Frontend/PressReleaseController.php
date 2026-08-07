@@ -5,8 +5,17 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\FrontendController;
 use Illuminate\Http\Request;
 
+use App\Services\SeoService;
+
 class PressReleaseController extends FrontendController
 {
+    protected $seoService;
+
+    public function __construct(SeoService $seoService)
+    {
+        $this->seoService = $seoService;
+    }
+
     public function index(Request $request)
     {
         $request->query->add(['page' => $request->query('page', 1)]);
@@ -18,7 +27,7 @@ class PressReleaseController extends FrontendController
         $prData = $userview->getAllPressReleases($request)->getData();
         
         return view('pages.press-releases.index', [
-            'seo' => $this->seoForPath($request),
+            'seo' => $this->seoService->getBaseSeo($request),
             'initialPressReleases' => $prData->data ?? [],
             'initialTotalPages' => $prData->last_page ?? 1,
         ]);
@@ -34,7 +43,7 @@ class PressReleaseController extends FrontendController
         }
             
         return view('pages.press-releases.show', [
-            'seo' => $this->seoForPath($request),
+            'seo' => $this->seoService->getPressReleaseSeo($slug, $request),
             'pressRelease' => $prDetailResponse->getData()
         ]);
     }

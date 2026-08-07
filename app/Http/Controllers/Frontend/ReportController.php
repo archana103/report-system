@@ -6,14 +6,17 @@ use App\Http\Controllers\FrontendController;
 use Illuminate\Http\Request;
 
 use App\Services\CategoryService;
+use App\Services\SeoService;
 
 class ReportController extends FrontendController
 {
     protected $categoryService;
+    protected $seoService;
 
-    public function __construct(CategoryService $categoryService)
+    public function __construct(CategoryService $categoryService, SeoService $seoService)
     {
         $this->categoryService = $categoryService;
+        $this->seoService = $seoService;
     }
 
     public function index(Request $request)
@@ -25,7 +28,7 @@ class ReportController extends FrontendController
         
         $userview = app(\App\Http\Controllers\UserviewController::class);
         $reportsData = $userview->getAllReports($request)->getData();
-        $seo = $this->seoForPath($request);
+        $seo = $this->seoService->getBaseSeo($request);
         
         return view('pages.reports.index', [
             'seo' => $seo,
@@ -38,7 +41,7 @@ class ReportController extends FrontendController
 
     public function show(Request $request, $slug)
     {
-        $seo = $this->seoForPath($request);
+        $seo = $this->seoService->getReportSeo($slug, $request);
         $userview = app(\App\Http\Controllers\UserviewController::class);
         
         return view('pages.reports.show', [

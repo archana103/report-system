@@ -1,16 +1,18 @@
 @extends('layouts.public')
 
 @section('content')
-<div class="services-page">
+  <div class="services-page">
     <main class="services-main">
-      <section class="services-hero" style="background-image: url('{{ env('AWS_URL') }}/assets/images/background-image/servicepage_banner.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+      <section class="services-hero"
+        style="background-image: url('{{ env('AWS_URL') }}/assets/images/background-image/servicepage_banner.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
         <div class="services-hero-content section-shell">
           <h1>
             Purpose-Built <span class="highlight">Research</span><br />
             for Better Market Decisions
           </h1>
           <p>
-            From custom studies and brand tracking to evidence-led consulting, our services help teams turn complex market questions into confident commercial action.
+            From custom studies and brand tracking to evidence-led consulting, our services help teams turn complex market
+            questions into confident commercial action.
           </p>
           <div class="services-hero-cta">
             <a href="/reports" class="primary-button" style="text-decoration: none;">Explore Reports</a>
@@ -27,7 +29,8 @@
 
         <div class="services-metrics-grid">
           <div class="main-image-container">
-            <img src="{{ env('AWS_URL') }}/assets/images/performance_metrics.gif" alt="Services performance metrics chart" class="main-charts-image" />
+            <img src="{{ env('AWS_URL') }}/assets/images/performance_metrics.gif" alt="Services performance metrics chart"
+              class="main-charts-image" />
           </div>
         </div>
       </section>
@@ -96,7 +99,8 @@
           </div>
           <div class="service-proof-card">
             <h3>Best for</h3>
-            <p>Brand health monitoring, campaign tracking, competitive comparison, and early-warning performance signals.</p>
+            <p>Brand health monitoring, campaign tracking, competitive comparison, and early-warning performance signals.
+            </p>
             <div class="proof-stats-row">
               <div class="proof-stat">
                 <strong>+30%</strong>
@@ -151,36 +155,41 @@
       <!-- Latest Insights -->
       <section class="content-row-section insights-section">
         <div>
-            <div class="section-heading row-heading">
-              <div>
-                <h2>Latest Insights</h2>
-                <p>Explore expert perspectives, industry trends, and data-driven stories shaping global markets.</p>
-              </div>
-              <div class="slider-controls">
-                <button aria-label="Previous" onclick="document.getElementById('services-insights-grid').scrollBy({left: -350, behavior: 'smooth'})">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"></path></svg>
-                </button>
-                <button class="active" aria-label="Next" onclick="document.getElementById('services-insights-grid').scrollBy({left: 350, behavior: 'smooth'})">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"></path></svg>
-                </button>
-              </div>
+          <div class="section-heading row-heading">
+            <div>
+              <h2>Latest Insights</h2>
+              <p>Explore expert perspectives, industry trends, and data-driven stories shaping global markets.</p>
             </div>
-            <div class="insight-strip" id="services-insights-grid" style="display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;">
-              @foreach($latestInsights as $item)
-                  <article class="insight-card" style="scroll-snap-align: start; flex: 0 0 calc(33.33% - 15px); min-width: 280px; margin-right: 20px;">
-                    <a href="{{ url('/blog/' . ($item->url ?? '')) }}" style="color: inherit; text-decoration: none;">
-                        <img src="{{ $item->image ?? env('AWS_URL') . '/assets/images/default-report.png' }}" alt="{{ $item->title ?? '' }}" />
-                        <h3>{{ $item->title ?? '' }}</h3>
-                        <p>{{ $item->description ?? '' }}</p>
-                    </a>
-                  </article>
-              @endforeach
+            <div class="slider-controls">
+              <button aria-label="Previous"
+                onclick="document.getElementById('services-insights-grid').scrollBy({left: -350, behavior: 'smooth'})">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M15 18l-6-6 6-6"></path>
+                </svg>
+              </button>
+              <button class="active" aria-label="Next"
+                onclick="document.getElementById('services-insights-grid').scrollBy({left: 350, behavior: 'smooth'})">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M9 18l6-6-6-6"></path>
+                </svg>
+              </button>
             </div>
-            <div class="center-action">
-              <a href="/blogs" class="primary-button small" style="text-decoration: none;">Read More 
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 16l4-4-4-4M8 12h8"></path></svg>
-              </a>
-            </div>
+          </div>
+          <div class="insight-strip" id="services-insights-grid"
+            style="display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;">
+            @foreach($latestInsights as $item)
+              <article class="insight-card"
+                style="scroll-snap-align: start; flex: 0 0 calc(33.33% - 15px); min-width: 280px; margin-right: 20px;">
+                <a href="{{ url('/blog/' . ($item->url ?? '')) }}" style="color: inherit; text-decoration: none;">
+                  <img src="{{ $item->image ?? env('AWS_URL') . '/assets/images/default-report.png' }}"
+                    alt="{{ $item->title ?? '' }}" />
+                  <h3>{{ $item->title ?? '' }}</h3>
+                  <p>{{ $item->description ?? '' }}</p>
+                </a>
+              </article>
+            @endforeach
+          </div>
+          <x-center-action href="/blogs" text="Read More" />
         </div>
       </section>
 
@@ -201,13 +210,13 @@
                   'Evidence-led Advisory',
                   'Fast 3-6 Week Completion',
                   'Dedicated Senior Leads'
-              ] as $item)
-              <div class="cta-pill">{{ $item }}</div>
+                ] as $item)
+                <div class="cta-pill">{{ $item }}</div>
               @endforeach
             </div>
           </div>
         </div>
       </section>
     </main>
-</div>
+  </div>
 @endsection

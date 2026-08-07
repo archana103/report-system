@@ -4,15 +4,17 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\FrontendController;
 use App\Services\BlogService;
+use App\Services\SeoService;
 use Illuminate\Http\Request;
 
 class BlogController extends FrontendController
 {
     protected $blogService;
-    public function __construct(BlogService $blogService)
+    protected $seoService;
+    public function __construct(BlogService $blogService, SeoService $seoService)
     {
-
         $this->blogService = $blogService;
+        $this->seoService = $seoService;
     }
     public function index(Request $request)
     {
@@ -21,7 +23,7 @@ class BlogController extends FrontendController
         $blogsData = $this->blogService->getAllBlogs($request)->getData();
 
         return view('pages.blogs.index', [
-            'seo' => $this->seoForPath($request),
+            'seo' => $this->seoService->getBaseSeo($request),
             'initialBlogs' => $blogsData->data ?? [],
             'initialTotalPages' => $blogsData->last_page ?? 1,
         ]);
@@ -37,7 +39,7 @@ class BlogController extends FrontendController
         }
 
         return view('pages.blogs.show', [
-            'seo' => $this->seoForPath($request),
+            'seo' => $this->seoService->getBlogSeo($slug, $request),
             'blog' => $blogDetailResponse->getData()
         ]);
     }

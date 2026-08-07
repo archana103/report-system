@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Services\CategoryService;
 use App\Services\ReportService;
 use App\Services\BlogService;
+use App\Services\SeoService;
 
 class HomeController extends FrontendController
 {
@@ -18,13 +19,15 @@ class HomeController extends FrontendController
     protected $reportService;
     protected $blogService;
     protected $pressreleaseService;
+    protected $seoService;
 
-    public function __construct(CategoryService $categoryService, ReportService $reportService, BlogService $blogService, PressreleaseService $pressreleaseService)
+    public function __construct(CategoryService $categoryService, ReportService $reportService, BlogService $blogService, PressreleaseService $pressreleaseService, SeoService $seoService)
     {
         $this->categoryService = $categoryService;
         $this->reportService = $reportService;
         $this->blogService = $blogService;
         $this->pressreleaseService = $pressreleaseService;
+        $this->seoService = $seoService;
     }
 
     public function index(Request $request)
@@ -35,7 +38,7 @@ class HomeController extends FrontendController
             ]);
         }
 
-        $seo = $this->seoForPath($request);
+        $seo = $this->seoService->getBaseSeo($request);
 
         return view('pages.home', [
             'seo' => $seo,
