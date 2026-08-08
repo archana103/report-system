@@ -20,7 +20,8 @@
           </router-link>
         </div>
       </div>
-      <router-link to="/press-releases">Press Release</router-link>
+      <router-link to="/qualitative-services">Qualitative Services</router-link>
+      <router-link to="/press-releases">PR</router-link>
       <router-link to="/blogs">Blog</router-link>
 
     </nav>

@@ -16,6 +16,7 @@ import UserPurchaseForm from './Userview/components/CheckoutForm.vue'
 import UserServices from './Userview/Services.vue'
 import UserPrivacyPolicy from './Userview/PrivacyPolicy.vue'
 import UserTermsAndConditions from './Userview/TermsAndConditions.vue'
+import UserQualitativeServices from './Userview/QualitativeServices.vue'
 import AdminLogin from './Admin/Login/Login.vue'
 import SidebarLayout from './Layout/Sidebar.vue'
 import PricingSetup from './Admin/PricingSetup/index.vue'
@@ -57,6 +58,7 @@ const routes = [
   { path: '/purchase/:slug', component: UserPurchaseForm },
   { path: '/report', redirect: '/reports' },
   { path: '/admin/login', component: AdminLogin },
+  { path: '/qualitative-services', component: UserQualitativeServices },
   { 
     path: '/admin', 
     component: SidebarLayout,
