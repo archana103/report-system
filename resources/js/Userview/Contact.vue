@@ -139,7 +139,7 @@
                 <li>
                   <img :src="$assetUrl + '/assets/images/contact-us/black_tel.png'"
                     style="width: 35px; height: 35px; flex-shrink: 0;" alt="check" />
-                  +91 9370941234
+                  +91 9370865430
                 </li>
                 <li>
                   <img :src="$assetUrl + '/assets/images/contact-us/black_location.png'"

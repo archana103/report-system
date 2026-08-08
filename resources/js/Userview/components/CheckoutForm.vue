@@ -6,168 +6,191 @@
       <div class="spinner"></div>
       <p>Loading your purchase details...</p>
     </div>
-    
+
     <div v-else>
       <!-- Hero Banner for Checkout Form -->
       <header class="checkout-hero-banner">
         <div class="breadcrumb-nav">
           <router-link to="/" class="breadcrumb-link home-link">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
             Home
-          </router-link> 
-          <span class="sep"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span> 
-          <router-link to="/reports" class="breadcrumb-link">Reports</router-link> 
-          
+          </router-link>
+          <span class="sep"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg></span>
+          <router-link to="/reports" class="breadcrumb-link">Reports</router-link>
+
           <template v-if="report && report.category">
-            <span class="sep"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span> 
-            <router-link :to="`/industry/${generateSlug(report.category)}`" class="breadcrumb-link">{{ report.category.name || report.category }}</router-link>
+            <span class="sep"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg></span>
+            <router-link :to="`/industry/${generateSlug(report.category)}`" class="breadcrumb-link">{{
+              report.category.name || report.category }}</router-link>
           </template>
 
           <template v-if="report">
-            <span class="sep"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span> 
-            <router-link :to="`/report/${report.slug_url || route.params.slug}`" class="breadcrumb-link truncate-title" :title="report.title">
+            <span class="sep"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg></span>
+            <router-link :to="`/report/${report.slug_url || route.params.slug}`" class="breadcrumb-link truncate-title"
+              :title="report.title">
               {{ report.breadcrumb_title || report.title }}
             </router-link>
           </template>
 
-          <span class="sep"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span> 
+          <span class="sep"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg></span>
           <span class="current-page">Purchase Report</span>
         </div>
         <div class="checkout-hero-content">
           <h1><span class="text-blue">Purchase</span> Market Research Report</h1>
-          <p>Complete the form below to purchase your selected market research report. Choose the license that best fits your business needs and enjoy secure payment, instant confirmation, and dedicated analyst support.</p>
+          <p>Complete the form below to purchase your selected market research report. Choose the license that best fits
+            your
+            business needs and enjoy secure payment, instant confirmation, and dedicated analyst support.</p>
         </div>
       </header>
 
-    <main class="checkout-main pt-0">
-      <div class="section-shell" style="margin-top: 30px;">
-        <div class="checkout-two-columns">
-          <!-- Left Column (Form) -->
-          <div class="">
-            <div class="form-header">
-              <h2>Complete Your Purchase</h2>
-              <p>Provide your business details to securely purchase the report. Our team will process your order and
-                deliver your report promptly.</p>
+      <main class="checkout-main pt-0">
+        <div class="section-shell" style="margin-top: 30px;">
+          <div class="checkout-two-columns">
+            <!-- Left Column (Form) -->
+            <div class="">
+              <div class="form-header">
+                <h2>Complete Your Purchase</h2>
+                <p>Provide your business details to securely purchase the report. Our team will process your order and
+                  deliver your report promptly.</p>
+              </div>
+
+              <form @submit.prevent="submitPurchase" class="purchase-form">
+                <div class="form-grid-2">
+                  <div class="input-group">
+                    <label>Full Name <span class="text-red-600">*</span></label>
+                    <input type="text" v-model="form.full_name" placeholder="Enter Your Full Name" required />
+                  </div>
+                  <div class="input-group">
+                    <label>Business Email <span class="text-red-600">*</span></label>
+                    <input type="email" v-model="form.business_email" placeholder="Enter Your Business Email"
+                      required />
+                  </div>
+                  <div class="input-group">
+                    <label>Phone Number <span class="text-red-600">*</span></label>
+                    <input type="tel" ref="phoneInputRef" placeholder="Enter Phone Number" required />
+                  </div>
+                  <div class="input-group">
+                    <label>Company Name <span class="text-red-600">*</span></label>
+                    <input type="text" v-model="form.company_name" placeholder="Enter Company Name" required />
+                  </div>
+                  <div class="input-group">
+                    <label>Country <span class="text-red-600">*</span></label>
+                    <select v-model="form.country" required>
+                      <option value="" disabled>Select Your Country</option>
+                      <option v-for="country in countriesList" :key="country" :value="country">{{ country }}</option>
+                    </select>
+                  </div>
+                  <div class="input-group">
+                    <label>License Type <span class="text-red-600">*</span></label>
+                    <select v-model="form.pricing_id" required>
+                      <option value="" disabled>Select License Type</option>
+                      <option v-for="plan in pricings" :key="plan.id" :value="plan.id">
+                        {{ plan.title }} - ${{ formatPrice(plan.cost) }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Payment Options -->
+                <div class="secure-payment-section">
+                  <h4>Secure Payment Options:</h4>
+                  <p>We support secure online payments through trusted global payment providers.</p>
+                  <div class="payment-methods-grid">
+                    <label class="payment-method-card" :class="{ 'active': paymentMethod === 'visa' }">
+                      <input type="radio" v-model="paymentMethod" value="visa" name="payment" />
+                      <div class="payment-method-header">
+                        <span class="radio-custom"></span>
+                        <span class="payment-name">Visa</span>
+                      </div>
+                      <img
+                        src="https://epignosisinsights-images.s3.ap-south-1.amazonaws.com/assets/images/payment_images/visa.png"
+                        alt="Visa" class="w-12 mt-auto" />
+                    </label>
+                    <label class="payment-method-card" :class="{ 'active': paymentMethod === 'amex' }">
+                      <input type="radio" v-model="paymentMethod" value="amex" name="payment" />
+                      <div class="payment-method-header">
+                        <span class="radio-custom"></span>
+                        <span class="payment-name">American Express</span>
+                      </div>
+                      <img
+                        src="https://epignosisinsights-images.s3.ap-south-1.amazonaws.com/assets/images/payment_images/american_express.png"
+                        alt="AMEX" class="mt-auto" style="width: 51%;height: 19px;" />
+                    </label>
+                    <label class="payment-method-card" :class="{ 'active': paymentMethod === 'paypal' }">
+                      <input type="radio" v-model="paymentMethod" value="paypal" name="payment" />
+                      <div class="payment-method-header">
+                        <span class="radio-custom"></span>
+                        <span class="payment-name">PayPal</span>
+                      </div>
+                      <img
+                        src="https://epignosisinsights-images.s3.ap-south-1.amazonaws.com/assets/images/payment_images/paypal.png"
+                        alt="PayPal" class=" mt-auto" style="width: 51%;height: 19px;" />
+                    </label>
+                    <label class="payment-method-card" :class="{ 'active': paymentMethod === 'mastercard' }">
+                      <input type="radio" v-model="paymentMethod" value="mastercard" name="payment" />
+                      <div class="payment-method-header">
+                        <span class="radio-custom"></span>
+                        <span class="payment-name">Mastercard</span>
+                      </div>
+                      <img
+                        src="https://epignosisinsights-images.s3.ap-south-1.amazonaws.com/assets/images/payment_images/mastercard.png"
+                        alt="Mastercard" class="mt-auto" style="width: 51%;height: 19px;" />
+                    </label>
+                  </div>
+                </div>
+
+                <div class="submit-actions-wrapper">
+                  <button v-show="paymentMethod !== 'paypal'" type="submit" class="buy-now-submit-btn"
+                    :disabled="isSubmitting">
+                    {{ isSubmitting ? 'Processing...' : 'BUY NOW' }}
+                  </button>
+                  <div v-show="paymentMethod === 'paypal'" id="paypal-button-container" class="mt-4"
+                    style="text-align: center;"></div>
+                </div>
+              </form>
             </div>
 
-            <form @submit.prevent="submitPurchase" class="purchase-form">
-              <div class="form-grid-2">
-                <div class="input-group">
-                  <label>Full Name <span class="text-red-600">*</span></label>
-                  <input type="text" v-model="form.full_name" placeholder="Enter Your Full Name" required />
-                </div>
-                <div class="input-group">
-                  <label>Business Email <span class="text-red-600">*</span></label>
-                  <input type="email" v-model="form.business_email" placeholder="Enter Your Business Email" required />
-                </div>
-                <div class="input-group">
-                  <label>Phone Number <span class="text-red-600">*</span></label>
-                  <input type="tel" ref="phoneInputRef" placeholder="Enter Phone Number" required />
-                </div>
-                <div class="input-group">
-                  <label>Company Name <span class="text-red-600">*</span></label>
-                  <input type="text" v-model="form.company_name" placeholder="Enter Company Name" required />
-                </div>
-                <div class="input-group">
-                  <label>Country <span class="text-red-600">*</span></label>
-                  <select v-model="form.country" required>
-                    <option value="" disabled>Select Your Country</option>
-                    <option v-for="country in countriesList" :key="country" :value="country">{{ country }}</option>
-                  </select>
-                </div>
-                <div class="input-group">
-                  <label>License Type <span class="text-red-600">*</span></label>
-                  <select v-model="form.pricing_id" required>
-                    <option value="" disabled>Select License Type</option>
-                    <option v-for="plan in pricings" :key="plan.id" :value="plan.id">
-                      {{ plan.title }} - ${{ formatPrice(plan.cost) }}
-                    </option>
-                  </select>
-                </div>
+            <!-- Right Column (Info) -->
+            <aside class="checkout-sidebar">
+              <div class="included-card">
+                <h3>What's Included</h3>
+                <p>See What's Included with Your Purchase</p>
+                <ul class="included-list">
+                  <li v-for="(feature, index) in selectedFeatures" :key="'f' + index">
+                    <span class="green-check">✔</span> {{ feature }}
+                  </li>
+                </ul>
               </div>
 
-              <!-- Payment Options -->
-              <div class="secure-payment-section">
-                <h4>Secure Payment Options:</h4>
-                <p>We support secure online payments through trusted global payment providers.</p>
-                <div class="payment-methods-grid">
-                  <label class="payment-method-card" :class="{ 'active': paymentMethod === 'visa' }">
-                    <input type="radio" v-model="paymentMethod" value="visa" name="payment" />
-                    <div class="payment-method-header">
-                      <span class="radio-custom"></span>
-                      <span class="payment-name">Visa</span>
-                    </div>
-                    <img
-                      src="https://epignosisinsights-images.s3.ap-south-1.amazonaws.com/assets/images/payment_images/visa.png"
-                      alt="Visa" class="w-12 mt-auto" />
-                  </label>
-                  <label class="payment-method-card" :class="{ 'active': paymentMethod === 'amex' }">
-                    <input type="radio" v-model="paymentMethod" value="amex" name="payment" />
-                    <div class="payment-method-header">
-                      <span class="radio-custom"></span>
-                      <span class="payment-name">American Express</span>
-                    </div>
-                    <img
-                      src="https://epignosisinsights-images.s3.ap-south-1.amazonaws.com/assets/images/payment_images/american_express.png"
-                      alt="AMEX" class="mt-auto" style="width: 51%;height: 19px;" />
-                  </label>
-                  <label class="payment-method-card" :class="{ 'active': paymentMethod === 'paypal' }">
-                    <input type="radio" v-model="paymentMethod" value="paypal" name="payment" />
-                    <div class="payment-method-header">
-                      <span class="radio-custom"></span>
-                      <span class="payment-name">PayPal</span>
-                    </div>
-                    <img
-                      src="https://epignosisinsights-images.s3.ap-south-1.amazonaws.com/assets/images/payment_images/paypal.png"
-                      alt="PayPal" class=" mt-auto" style="width: 51%;height: 19px;" />
-                  </label>
-                  <label class="payment-method-card" :class="{ 'active': paymentMethod === 'mastercard' }">
-                    <input type="radio" v-model="paymentMethod" value="mastercard" name="payment" />
-                    <div class="payment-method-header">
-                      <span class="radio-custom"></span>
-                      <span class="payment-name">Mastercard</span>
-                    </div>
-                    <img
-                      src="https://epignosisinsights-images.s3.ap-south-1.amazonaws.com/assets/images/payment_images/mastercard.png"
-                      alt="Mastercard" class="mt-auto" style="width: 51%;height: 19px;" />
-                  </label>
+              <div class="help-card">
+                <h3>Need Help Choosing<br />the Right License?</h3>
+                <p>Need guidance before buying? We're here for you.</p>
+                <div class="help-contact">
+                  <span><strong>Email:</strong> sales@epignosisinsights.co</span>
+                  <span><strong>Phone:</strong> +91 9370865430</span>
                 </div>
+                <router-link to="/contact-us" class="contact-support-btn">Contact Support</router-link>
               </div>
-
-              <div class="submit-actions-wrapper">
-                <button v-show="paymentMethod !== 'paypal'" type="submit" class="buy-now-submit-btn" :disabled="isSubmitting">
-                  {{ isSubmitting ? 'Processing...' : 'BUY NOW' }}
-                </button>
-                <div v-show="paymentMethod === 'paypal'" id="paypal-button-container" class="mt-4" style="text-align: center;"></div>
-              </div>
-            </form>
+            </aside>
           </div>
-
-          <!-- Right Column (Info) -->
-          <aside class="checkout-sidebar">
-            <div class="included-card">
-              <h3>What's Included</h3>
-              <p>See What's Included with Your Purchase</p>
-              <ul class="included-list">
-                <li v-for="(feature, index) in selectedFeatures" :key="'f'+index">
-                  <span class="green-check">✔</span> {{ feature }}
-                </li>
-              </ul>
-            </div>
-
-            <div class="help-card">
-              <h3>Need Help Choosing<br />the Right License?</h3>
-              <p>Need guidance before buying? We're here for you.</p>
-              <div class="help-contact">
-                <span><strong>Email:</strong> sales@epignosisinsights.co</span>
-                <span><strong>Phone:</strong> +91 9370941234</span>
-              </div>
-              <router-link to="/contact-us" class="contact-support-btn">Contact Support</router-link>
-            </div>
-          </aside>
         </div>
-      </div>
-    </main>
+      </main>
     </div>
 
     <SiteFooter />
@@ -306,7 +329,7 @@ let paypalButtonsRendered = false
 watch(paymentMethod, async (newVal) => {
   if (newVal === 'paypal' && !paypalButtonsRendered && window.paypal) {
     await nextTick()
-    
+
     window.paypal.Buttons({
       onClick: (data, actions) => {
         // Validate form
@@ -317,7 +340,7 @@ watch(paymentMethod, async (newVal) => {
           form.value.country,
           form.value.pricing_id
         ]
-        
+
         if (requiredFields.some(field => !field || String(field).trim() === '')) {
           alert('Please fill out all required fields (Name, Email, Company, Country, License).')
           return actions.reject()
@@ -376,7 +399,7 @@ watch(paymentMethod, async (newVal) => {
         console.error('PayPal checkout error:', err)
       }
     }).render('#paypal-button-container')
-    
+
     paypalButtonsRendered = true
   }
 })
@@ -392,7 +415,7 @@ watch(() => route.query.ref, (newVal) => {
   if (newVal) {
     try {
       form.value.pricing_id = Number(atob(newVal))
-    } catch (e) {}
+    } catch (e) { }
   }
 })
 

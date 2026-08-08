@@ -25,7 +25,7 @@
           </span>sales@epignosisinsights.com</p>
         <p><span>
             <img :src="$assetUrl + '/assets/images/footer_icons/icon_phone.png'" alt="Phone" class="footer-icon-img" />
-          </span>+91 9370941234</p>
+          </span>+91 9370865430</p>
       </div>
     </div>
     <div class="footer-links">
