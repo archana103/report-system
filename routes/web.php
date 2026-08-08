@@ -14,6 +14,7 @@ include 'User/report.php';//report page url for /report
 include 'User/blog.php';//report page url for /blog
 include 'User/pressrelease.php';//report page url for /pressrelease
 include 'User/industry.php';//industry page url for /industry
+include 'User/checkout.php';//checkout and purchase page urls
 include 'Paypal/index.php';
 
 
