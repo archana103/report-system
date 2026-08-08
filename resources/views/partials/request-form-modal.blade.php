@@ -87,7 +87,6 @@
   inset: 0;
   background: rgba(8, 20, 36, 0.45);
   backdrop-filter: blur(12px);
-  display: none; 
   align-items: center;
   justify-content: center;
   z-index: 10000;
@@ -366,7 +365,7 @@
       if (modalRecaptchaWidgetId === null) {
         try {
           modalRecaptchaWidgetId = window.grecaptcha.render('modal-recaptcha-container', {
-            sitekey: '{{ env('RECAPTCHA_SITE_KEY', '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI') }}',
+            sitekey: window.RECAPTCHA_SITE_KEY || '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI', // Fallback local test key
             callback: (token) => {
               modalRecaptchaToken = token;
               document.getElementById('modal-recaptcha-error').style.display = 'none';
@@ -388,13 +387,6 @@
   }
 
   window.openRequestModal = function(subject, reportName = '') {
-    // Reset Form First before setting dynamic values
-    document.getElementById('modal-request-form').reset();
-    if (modalItiInstance) {
-        modalItiInstance.setNumber('');
-        document.getElementById('rfm_full_phone').value = '';
-    }
-
     // Set Subject Dropdown
     const subjectEl = document.getElementById('rfm_subject');
     if (subjectEl) {
@@ -452,6 +444,13 @@
     document.getElementById('modal-request-form').style.display = 'flex';
     document.getElementById('modal-success-alert').style.display = 'none';
 
+    // Reset Form
+    document.getElementById('modal-request-form').reset();
+    if (modalItiInstance) {
+        modalItiInstance.setNumber('');
+        document.getElementById('rfm_full_phone').value = '';
+    }
+    
     // Init ReCAPTCHA
     initModalRecaptcha();
   };
@@ -523,4 +522,3 @@
     }
   });
 </script>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
