@@ -3,6 +3,7 @@
     <SiteHeader />
     <main>
       <HeroSection />
+      <ClientLogos />
       <TrendingReports :categories="categories" :activeCategory="activeCategory" :reports="reports"
         @update:activeCategory="activeCategory = $event" />
       <PressReleases :pressReleases="visiblePressReleases" @next="nextPressRelease" @prev="prevPressRelease" />
@@ -20,6 +21,7 @@
 import { useHomeData } from './useHomeData'
 import SiteHeader from './components/SiteHeader.vue'
 import HeroSection from './components/HeroSection.vue'
+import ClientLogos from './components/ClientLogos.vue'
 import TrendingReports from './components/TrendingReports.vue'
 import PressReleases from './components/PressReleases.vue'
 import LatestInsights from './components/LatestInsights.vue'

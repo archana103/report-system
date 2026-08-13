@@ -1,31 +1,50 @@
 <template>
   <footer class="footer-section">
     <div class="footer-top">
-      <div>
-        <a class="brand footer-brand" href="#">
-          <img :src="$assetUrl + '/assets/images/logo.png'" alt="Epignosis Insights Logo" class="brand-logo" />
-        </a>
-        <p>Delivering data-driven insights to support smarter business decisions.</p>
-        <form class="footer-form" @submit.prevent="subscribeNewsletter">
-          <input type="email" placeholder="Email Address" v-model="emailAddress" required :disabled="isSubscribing" />
-          <button type="submit" :disabled="isSubscribing" :style="{ opacity: isSubscribing ? 0.7 : 1 }">{{ isSubscribing
-            ? 'Submitting...' : 'Show Now!' }}</button>
-        </form>
-        <p v-if="subscriptionMessage"
-          :style="{ color: messageType === 'success' ? '#10b981' : '#ef4444', fontSize: '13px', marginTop: '8px', fontWeight: '500' }">
-          {{ subscriptionMessage }}</p>
+      <div class="footer-left">
+        <div class="brand-info">
+          <a class="brand footer-brand" href="#">
+            <img :src="$assetUrl + '/assets/images/logo.png'" alt="Epignosis Insights Logo" class="brand-logo" />
+          </a>
+          <p>Delivering data-driven insights to support smarter business decisions.</p>
+        </div>
+        <div class="newsletter-section">
+          <h2>Stay Ahead with Market Insights</h2>
+          <form class="footer-form" @submit.prevent="subscribeNewsletter">
+            <input type="email" placeholder="Email Address" v-model="emailAddress" required :disabled="isSubscribing" />
+            <button type="submit" :disabled="isSubscribing" :style="{ opacity: isSubscribing ? 0.7 : 1 }">{{ isSubscribing
+              ? 'Submitting...' : 'Show Now!' }}</button>
+          </form>
+          <p v-if="subscriptionMessage"
+            :style="{ color: messageType === 'success' ? '#10b981' : '#ef4444', fontSize: '13px', marginTop: '8px', fontWeight: '500' }">
+            {{ subscriptionMessage }}</p>
+        </div>
       </div>
       <div class="footer-contact">
-        <p><span>
-            <img :src="$assetUrl + '/assets/images/footer_icons/icon_mail.png'" alt="Location"
-              class="footer-icon-img" />
-          </span>703 Kumar Corporate Building, Pune-411028, India</p>
-        <p><span>
-            <img :src="$assetUrl + '/assets/images/footer_icons/Icon.png'" alt="Email" class="footer-icon-img" />
-          </span>sales@epignosisinsights.com</p>
-        <p><span>
-            <img :src="$assetUrl + '/assets/images/footer_icons/icon_phone.png'" alt="Phone" class="footer-icon-img" />
-          </span>+91 9370865430</p>
+        <div class="contact-info">
+          <p><span>
+              <img :src="$assetUrl + '/assets/images/footer_icons/icon_mail.png'" alt="Location"
+                class="footer-icon-img" />
+            </span>703 Kumar Corporate Building, Pune-411028, India</p>
+          <p><span>
+              <img :src="$assetUrl + '/assets/images/footer_icons/Icon.png'" alt="Email" class="footer-icon-img" />
+            </span>sales@epignosisinsights.com</p>
+          <p><span>
+              <img :src="$assetUrl + '/assets/images/footer_icons/icon_phone.png'" alt="Phone" class="footer-icon-img" />
+            </span>+91 9370865430</p>
+        </div>
+        
+        <div class="payment-partners">
+          <h4>Payment Partner</h4>
+          <div class="payment-logos">
+            <img :src="$assetUrl + '/assets/images/bank_images/visa.png'" alt="Visa" />
+            <img :src="$assetUrl + '/assets/images/bank_images/paypal.png'" alt="PayPal" />
+            <img :src="$assetUrl + '/assets/images/bank_images/mastercard.png'" alt="Mastercard" />
+            <img :src="$assetUrl + '/assets/images/bank_images/discover.png'" alt="Discover" />
+            <img :src="$assetUrl + '/assets/images/bank_images/wire_transfer.png'" alt="Wire Transfer" />
+            <img :src="$assetUrl + '/assets/images/bank_images/american.png'" alt="American Express" />
+          </div>
+        </div>
       </div>
     </div>
     <div class="footer-links">
@@ -120,3 +139,35 @@ onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
 })
 </script>
+
+<style scoped>
+.footer-left, .footer-contact {
+  display: flex;
+  flex-direction: column;
+}
+.newsletter-section, .payment-partners {
+  margin-top: auto;
+  /* padding-top: 1rem; */
+}
+.newsletter-section h2, .payment-partners h4 {
+  font-size: 23px;
+  font-weight: 400;
+  margin-bottom: 1rem;
+  color: #ffffff;
+}
+.payment-logos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  max-width: 340px;
+}
+.payment-logos img {
+  width: 100%;
+  height: 48px;
+  background-color: #ffffff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  object-fit: contain;
+  box-sizing: border-box;
+}
+</style>
