@@ -50,6 +50,7 @@
             @if(!empty($initialReports) && count($initialReports) > 0)
             <div class="report-list-vertical">
                 @foreach($initialReports as $report)
+              @php $report = (object) $report; @endphp
               <article class="report-list-card">
                 <!-- Premium Pure CSS 3D Mockup Book Cover -->
                 <div class="report-image-wrap">

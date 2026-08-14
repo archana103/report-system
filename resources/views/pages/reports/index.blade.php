@@ -14,6 +14,7 @@
       <div class="reports-main-column">
         <div class="report-list-vertical">
           @foreach($initialReports as $report)
+            @php $report = (object) $report; @endphp
             <article class="report-list-card">
               <div class="report-image-wrap">
                 <a

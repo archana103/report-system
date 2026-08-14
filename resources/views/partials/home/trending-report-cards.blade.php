@@ -1,4 +1,5 @@
 @foreach($trendingReports as $report)
+  @php $report = (object) $report; @endphp
   <article class="report-list-card simple-card">
     <div class="report-details">
       <a href="{{ url('/report/' . (!empty($report->slug) && $report->slug !== '#' ? $report->slug : $report->id)) }}"

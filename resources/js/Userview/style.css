@@ -544,7 +544,7 @@ input {
 }
 
 .reports-section {
-  padding: 84px 0 142px;
+  padding: 70px 0 142px;
   background:
     radial-gradient(circle at left 28%, rgba(220, 241, 255, 0.78), transparent 23%),
     linear-gradient(180deg, #ffffff 0%, #f8fcff 100%);

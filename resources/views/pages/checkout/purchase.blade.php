@@ -219,8 +219,8 @@
 .payment-method-card:hover, .payment-method-card.active { border-color: #0284c74f; box-shadow: 0 1px 7px rgb(7 131 223 / 21%); }
 .payment-method-card input { display: none; }
 .radio-custom { width: 16px; height: 16px; border: 2px solid #cbd5e1; border-radius: 50%; position: relative; flex-shrink: 0; }
-.payment-method-card.active .radio-custom { border: 2px solid #0284c7; }
-.payment-method-card.active .radio-custom::after { content: ''; position: absolute; top: 2px; left: 2px; width: 8px; height: 8px; background: #0284c7; border-radius: 50%; }
+.payment-method-card.active .radio-custom { border: 2px solid #cbd5e1; }
+.payment-method-card.active .radio-custom::after { content: ''; position: absolute; top: 1px; left: 1px; width: 11px; height: 11px; background: #0284c7; border-radius: 50%; }
 .payment-method-header { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; }
 .payment-name { font-size: 13.5px; font-weight: 600; color: #0f172a; }
 
