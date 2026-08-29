@@ -42,7 +42,7 @@
                     Details</a>
                   <a href="javascript:void(0)" onclick="openRequestModal('Request Sample', '{{ addslashes(htmlspecialchars($report->title ?? '', ENT_QUOTES, 'UTF-8')) }}')" class="secondary-button outlined"
                     style="padding: 10px 24px; min-height: auto; line-height: 1.2;">Request Sample</a>
-                  <a href="/contact-us" class="primary-button small"
+                  <a href="{{ url('/checkout/' . $report->id) }}" class="primary-button small"
                     style="padding: 10px 24px; min-height: auto; line-height: 1.2;">Buy Now</a>
                 </div>
               </div>
@@ -137,7 +137,7 @@
                     style="font-size: 14px; font-weight: 500; color: #4b5563; margin: 0; line-height: 1.5;"
                     title="{{ $item->report_detail->title ?? '' }}">{{ $item->report_detail->title ?? '' }}</p>
                 </a>
-                <a href="{{ url('/report/' . (!empty($item->report_detail->slug_url) && $item->report_detail->slug_url !== '#' ? $item->report_detail->slug_url : $item->id)) }}"
+                <a href="{{ url('/checkout/' . $item->id) }}"
                   class="buy-now-link hover-primary-title"
                   style="font-size: 13px; font-weight: 600; color: #0783df; display: inline-flex; align-items: center; gap: 4px; text-decoration: none;">
                   Buy Now
@@ -176,6 +176,17 @@
   </div>
 
   <style>
+    .report-list-card {
+        display: flex;
+        background: #fafafa;
+        border-radius: 18px;
+        padding: 10px;
+        gap: 28px;
+        box-shadow: 0 4px 20px #0f172a05;
+        border: 1px solid #eef2f7;
+        align-items: center;
+    }
+
     .hover-primary-title {
       transition: color 0.2s ease-in-out;
     }

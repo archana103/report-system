@@ -210,7 +210,7 @@
 
           <div class="waterfall-step step-right">
             <div class="step-icon-wrapper">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                 <path d="M9 12l2 2 4-4"></path>
               </svg>
@@ -224,11 +224,7 @@
 
           <div class="waterfall-step step-left">
             <div class="step-icon-wrapper">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="18 20 18 10 12 14 6 10 6 20"></polyline>
-                <polyline points="2 22 22 22"></polyline>
-                <polyline points="12 4 12 14"></polyline>
-              </svg>
+             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="icon" aria-hidden="true"><path d="M3 3v18h18" stroke-linecap="round" stroke-linejoin="round"></path><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
             </div>
             <div class="step-copy">
               <h4>Forecasting & Insights</h4>

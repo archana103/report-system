@@ -31,6 +31,4 @@ Route::get('storage/{path}', function ($path) {
     return redirect()->away(Storage::disk('s3')->url($path));
 })->where('path', '.*');
 
-Route::get('/admin/{any?}', function () {
-    return view('welcome', ['seo' => ['title' => 'Admin Panel | Epignosis Insights']]);
-})->where('any', '.*');
+

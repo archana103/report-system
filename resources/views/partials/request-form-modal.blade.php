@@ -387,6 +387,15 @@
   }
 
   window.openRequestModal = function(subject, reportName = '') {
+    // Reset Form first so we don't wipe our selections
+    const formEl = document.getElementById('modal-request-form');
+    if(formEl) formEl.reset();
+
+    // Handle generic phrases matching the explicit dropdown options
+    if (subject.toLowerCase() === 'download sample') {
+        subject = 'Download Free Sample';
+    }
+
     // Set Subject Dropdown
     const subjectEl = document.getElementById('rfm_subject');
     if (subjectEl) {
@@ -444,8 +453,6 @@
     document.getElementById('modal-request-form').style.display = 'flex';
     document.getElementById('modal-success-alert').style.display = 'none';
 
-    // Reset Form
-    document.getElementById('modal-request-form').reset();
     if (modalItiInstance) {
         modalItiInstance.setNumber('');
         document.getElementById('rfm_full_phone').value = '';

@@ -14,15 +14,15 @@ class TopSellingReportController extends Controller
      */
     public function index(Request $request)
     {
-        if (!$request->expectsJson()) {
-            return view('welcome');
-        }
-
         $reports = TopSellingReport::with('reportDetail:id,title')
             ->orderBy('created_at', 'desc')
             ->paginate(20);
 
-        return response()->json($reports);
+        $availableReports = ReportDetail::whereNotIn('id', TopSellingReport::pluck('report_detail_id'))
+            ->orderBy('title')
+            ->get(['id', 'title']);
+
+        return view('admin.top_selling_reports.index', compact('reports', 'availableReports'));
     }
 
     /**
@@ -34,14 +34,11 @@ class TopSellingReportController extends Controller
             'report_detail_id' => 'required|exists:report_details,id|unique:top_selling_reports,report_detail_id',
         ]);
 
-        $topSelling = TopSellingReport::create([
+        TopSellingReport::create([
             'report_detail_id' => $request->report_detail_id,
         ]);
 
-        return response()->json([
-            'message' => 'Report added to top selling list successfully!',
-            'data' => $topSelling->load('reportDetail:id,title'),
-        ]);
+        return redirect()->route('admin.top_selling_reports.index')->with('success', 'Report added to top selling list successfully!');
     }
 
     /**
@@ -68,8 +65,6 @@ class TopSellingReportController extends Controller
         $topSelling = TopSellingReport::findOrFail($id);
         $topSelling->delete();
 
-        return response()->json([
-            'message' => 'Report removed from top selling list successfully!',
-        ]);
+        return redirect()->back()->with('success', 'Report removed from top selling list successfully!');
     }
 }

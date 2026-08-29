@@ -11,7 +11,7 @@ class PricingController extends Controller
     public function index(Request $request)
     {
         $pricings = Pricing::orderBy('cost', 'desc')->get();
-        return response()->json($pricings);
+        return view('admin.pricing.index', compact('pricings'));
     }
 
     public function getActivePricings(Request $request)
@@ -23,9 +23,7 @@ class PricingController extends Controller
     public function store(Request $request)
     {
         if (Pricing::count() >= 3) {
-            return response()->json([
-                'message' => 'Maximum of 3 pricing options are allowed.'
-            ], 422);
+            return redirect()->back()->with('error', 'Maximum of 3 pricing options are allowed.');
         }
 
         $request->validate([
@@ -36,12 +34,9 @@ class PricingController extends Controller
             'status' => 'required|in:Active,Inactive',
         ]);
 
-        $pricing = Pricing::create($request->all());
+        Pricing::create($request->all());
 
-        return response()->json([
-            'message' => 'Pricing option created successfully!',
-            'data' => $pricing
-        ], 201);
+        return redirect()->route('admin.pricing.index')->with('success', 'Pricing option created successfully!');
     }
 
     public function update(Request $request, $id)
@@ -58,10 +53,7 @@ class PricingController extends Controller
 
         $pricing->update($request->all());
 
-        return response()->json([
-            'message' => 'Pricing option updated successfully!',
-            'data' => $pricing
-        ]);
+        return redirect()->route('admin.pricing.index')->with('success', 'Pricing option updated successfully!');
     }
 
     public function destroy($id)
@@ -69,8 +61,6 @@ class PricingController extends Controller
         $pricing = Pricing::findOrFail($id);
         $pricing->delete();
 
-        return response()->json([
-            'message' => 'Pricing option deleted successfully!'
-        ]);
+        return redirect()->route('admin.pricing.index')->with('success', 'Pricing option deleted successfully!');
     }
 }

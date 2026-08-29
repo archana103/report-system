@@ -37,9 +37,35 @@ class ReportDetailController extends Controller
         }
 
         $limit = $request->get('limit', 20);
-        $details = $query->paginate($limit);
+        $details = $query->paginate($limit)->withQueryString();
 
-        return response()->json($details);
+        $reportLists = \App\Models\ReportList::where('status', 'Active')->orderBy('name')->get();
+
+        return view('admin.report_details.index', compact('details', 'reportLists'));
+    }
+
+    public function create()
+    {
+        $reportLists = \App\Models\ReportList::where('status', 'Active')
+            ->doesntHave('reportDetail')
+            ->orderBy('name')
+            ->get();
+        return view('admin.report_details.create', compact('reportLists'));
+    }
+
+    public function edit($id)
+    {
+        $detail = ReportDetail::findOrFail($id);
+        
+        $reportLists = \App\Models\ReportList::where('status', 'Active')
+            ->where(function($q) use ($detail) {
+                $q->doesntHave('reportDetail')
+                  ->orWhere('id', $detail->report_list_id);
+            })
+            ->orderBy('name')
+            ->get();
+            
+        return view('admin.report_details.edit', compact('detail', 'reportLists'));
     }
 
     /**
@@ -91,12 +117,7 @@ class ReportDetailController extends Controller
 
         $detail = ReportDetail::create($data);
 
-        $detail->load('reportList:id,name');
-
-        return response()->json([
-            'message' => 'Report Detail saved successfully!',
-            'data'    => $detail,
-        ], 201);
+        return redirect()->route('admin.report_details.index')->with('success', 'Report Detail created successfully!');
     }
 
     /**
@@ -153,12 +174,7 @@ class ReportDetailController extends Controller
 
         $detail->update($data);
 
-        $detail->load('reportList:id,name');
-
-        return response()->json([
-            'message' => 'Report Detail updated successfully!',
-            'data'    => $detail,
-        ]);
+        return redirect()->route('admin.report_details.index')->with('success', 'Report Detail updated successfully!');
     }
 
     /**
@@ -174,9 +190,7 @@ class ReportDetailController extends Controller
 
         $detail->delete();
 
-        return response()->json([
-            'message' => 'Report Detail deleted successfully!',
-        ]);
+        return redirect()->route('admin.report_details.index')->with('success', 'Report Detail deleted successfully!');
     }
 
     /**

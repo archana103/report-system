@@ -10,13 +10,10 @@ use App\Http\Controllers\Admin\PageSeoController;
 
 
 // Dashboard & Profile
-Route::get('/admin/dashboard-stats', [DashboardController::class, 'stats']);
-Route::post('/admin/update-username', [DashboardController::class, 'updateUsername']);
-
-// Sessions Management
-Route::get('/admin/sessions', [DashboardController::class, 'getSessions']);
-Route::delete('/admin/sessions/{id}', [DashboardController::class, 'logoutSession']);
-Route::delete('/admin/sessions', [DashboardController::class, 'logoutOtherSessions']);
+Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+Route::post('/admin/dashboard/update-profile', [DashboardController::class, 'updateUsername'])->name('admin.dashboard.update_profile');
+Route::delete('/admin/dashboard/sessions/{id}', [DashboardController::class, 'logoutSession'])->name('admin.dashboard.logout_session');
+Route::delete('/admin/dashboard/sessions', [DashboardController::class, 'logoutOtherSessions'])->name('admin.dashboard.logout_other_sessions');
 
 // Global Pricing
 Route::get('/admin/pricings', [PricingController::class, 'index']);
@@ -28,31 +25,33 @@ Route::delete('/admin/pricings/{id}', [PricingController::class, 'destroy']);
 Route::get('/admin/report-methodology-data', [ReportMethodologyController::class, 'index']);
 Route::post('/admin/report-methodology-data', [ReportMethodologyController::class, 'store']);
 
-// Report Categories
-Route::get('/admin/report-categories', [ReportCategoryController::class, 'index']);
-Route::post('/admin/report-categories', [ReportCategoryController::class, 'store']);
-Route::put('/admin/report-categories/{id}', [ReportCategoryController::class, 'update']);
-Route::delete('/admin/report-categories/{id}', [ReportCategoryController::class, 'destroy']);
-
-// Report Lists
-Route::get('/admin/report-categories-dropdown', [ReportListController::class, 'categories']);
-Route::get('/admin/report-lists-dropdown', [ReportListController::class, 'dropdown']);
-Route::get('/admin/report-lists', [ReportListController::class, 'index']);
-Route::post('/admin/report-lists', [ReportListController::class, 'store']);
-Route::put('/admin/report-lists/{id}', [ReportListController::class, 'update']);
-Route::delete('/admin/report-lists/{id}', [ReportListController::class, 'destroy']);
+// Category / Report
+Route::get('/admin/category-report', [ReportCategoryController::class, 'index'])->name('admin.categories.index');
+Route::get('/admin/category-report/create', [ReportCategoryController::class, 'create'])->name('admin.categories.create');
+Route::post('/admin/category-report', [ReportCategoryController::class, 'store'])->name('admin.categories.store');
+Route::get('/admin/category-report/{id}/edit', [ReportCategoryController::class, 'edit'])->name('admin.categories.edit');
+Route::put('/admin/category-report/{id}', [ReportCategoryController::class, 'update'])->name('admin.categories.update');
+Route::delete('/admin/category-report/{id}', [ReportCategoryController::class, 'destroy'])->name('admin.categories.destroy');
+Route::get('/admin/category-list', [ReportListController::class, 'index'])->name('admin.reports.index');
+Route::get('/admin/category-list/create', [ReportListController::class, 'create'])->name('admin.reports.create');
+Route::post('/admin/category-list', [ReportListController::class, 'store'])->name('admin.reports.store');
+Route::get('/admin/category-list/{id}/edit', [ReportListController::class, 'edit'])->name('admin.reports.edit');
+Route::put('/admin/category-list/{id}', [ReportListController::class, 'update'])->name('admin.reports.update');
+Route::delete('/admin/category-list/{id}', [ReportListController::class, 'destroy'])->name('admin.reports.destroy');
 
 // Report Details
-Route::get('/admin/report-details', [App\Http\Controllers\Admin\ReportDetailController::class, 'index']);
-Route::post('/admin/report-details', [App\Http\Controllers\Admin\ReportDetailController::class, 'store']);
-Route::put('/admin/report-details/{id}', [App\Http\Controllers\Admin\ReportDetailController::class, 'update']);
-Route::delete('/admin/report-details/{id}', [App\Http\Controllers\Admin\ReportDetailController::class, 'destroy']);
+Route::get('/admin/category-details', [App\Http\Controllers\Admin\ReportDetailController::class, 'index'])->name('admin.report_details.index');
+Route::get('/admin/category-details/create', [App\Http\Controllers\Admin\ReportDetailController::class, 'create'])->name('admin.report_details.create');
+Route::post('/admin/category-details', [App\Http\Controllers\Admin\ReportDetailController::class, 'store'])->name('admin.report_details.store');
+Route::get('/admin/category-details/{id}/edit', [App\Http\Controllers\Admin\ReportDetailController::class, 'edit'])->name('admin.report_details.edit');
+Route::put('/admin/category-details/{id}', [App\Http\Controllers\Admin\ReportDetailController::class, 'update'])->name('admin.report_details.update');
+Route::delete('/admin/category-details/{id}', [App\Http\Controllers\Admin\ReportDetailController::class, 'destroy'])->name('admin.report_details.destroy');
+Route::post('/admin/category-details/upload-image', [App\Http\Controllers\Admin\ReportDetailController::class, 'uploadEditorImage'])->name('admin.report_details.upload_image');
 Route::post('/admin/editor/upload-image', [App\Http\Controllers\Admin\ReportDetailController::class, 'uploadEditorImage']);
 // Top Selling Reports
-Route::get('/admin/top-selling-reports-data/search', [App\Http\Controllers\Admin\TopSellingReportController::class, 'search']);
-Route::get('/admin/top-selling-reports-data', [App\Http\Controllers\Admin\TopSellingReportController::class, 'index']);
-Route::post('/admin/top-selling-reports-data', [App\Http\Controllers\Admin\TopSellingReportController::class, 'store']);
-Route::delete('/admin/top-selling-reports-data/{id}', [App\Http\Controllers\Admin\TopSellingReportController::class, 'destroy']);
+Route::get('/admin/top-selling-reports', [App\Http\Controllers\Admin\TopSellingReportController::class, 'index'])->name('admin.top_selling_reports.index');
+Route::post('/admin/top-selling-reports', [App\Http\Controllers\Admin\TopSellingReportController::class, 'store'])->name('admin.top_selling_reports.store');
+Route::delete('/admin/top-selling-reports/{id}', [App\Http\Controllers\Admin\TopSellingReportController::class, 'destroy'])->name('admin.top_selling_reports.destroy');
 // Blogs
 Route::get('/admin/blogs-data', [App\Http\Controllers\Admin\BlogController::class, 'index']);
 Route::post('/admin/blogs-data', [App\Http\Controllers\Admin\BlogController::class, 'store']);
@@ -106,3 +105,13 @@ Route::delete('/admin/page-seos-data/{id}', [PageSeoController::class, 'destroy'
 // Purchases
 Route::get('/admin/purchases-data', [\App\Http\Controllers\Admin\PurchaseController::class, 'index']);
 Route::delete('/admin/purchases-data/{id}', [\App\Http\Controllers\Admin\PurchaseController::class, 'destroy']);
+
+// Pricing Setup
+Route::get('/admin/pricing-setup', [App\Http\Controllers\Admin\PricingController::class, 'index'])->name('admin.pricing.index');
+Route::post('/admin/pricing-setup', [App\Http\Controllers\Admin\PricingController::class, 'store'])->name('admin.pricing.store');
+Route::put('/admin/pricing-setup/{id}', [App\Http\Controllers\Admin\PricingController::class, 'update'])->name('admin.pricing.update');
+Route::delete('/admin/pricing-setup/{id}', [App\Http\Controllers\Admin\PricingController::class, 'destroy'])->name('admin.pricing.destroy');
+
+// Report Methodology
+Route::get('/admin/report-methodology', [App\Http\Controllers\Admin\ReportMethodologyController::class, 'index'])->name('admin.methodology.index');
+Route::post('/admin/report-methodology', [App\Http\Controllers\Admin\ReportMethodologyController::class, 'store'])->name('admin.methodology.store');

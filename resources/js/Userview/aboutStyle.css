@@ -1178,7 +1178,7 @@
 
 /* Professional layout refinements */
 .about-main .section-shell {
-  width: min(1180px, calc(100% - 48px));
+  width: min(1241px, calc(100% - 48px));
 }
 
 .about-hero {

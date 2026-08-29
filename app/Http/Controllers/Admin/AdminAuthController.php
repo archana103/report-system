@@ -8,6 +8,14 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminAuthController extends Controller
 {
+    public function showLoginForm()
+    {
+        if (\Illuminate\Support\Facades\Auth::check()) {
+            return redirect('/admin/dashboard');
+        }
+        return view('admin.login');
+    }
+
     public function login(Request $request)
     {
         $request->validate([
@@ -15,29 +23,28 @@ class AdminAuthController extends Controller
             'password' => 'required',
         ]);
 
-        // check user
         $user = User::where('email', $request->email)->first();
 
-        if (! $user) {
-            return response()->json([
-                'message' => 'User not found',
-            ], 401);
-        }
-        // check password
-        if (! Hash::check($request->password, $user->password)) {
-            return response()->json([
-                'message' => 'Invalid credentials',
-            ], 401);
+        if (! $user || ! Hash::check($request->password, $user->password)) {
+            return back()->withInput($request->only('email'))->withErrors([
+                'email' => 'Invalid credentials.',
+            ]);
         }
 
         // Log the user into the server session securely
         \Illuminate\Support\Facades\Auth::login($user);
         $request->session()->regenerate();
 
-        return response()->json([
-            'message' => 'Login successful',
-            'user'    => $user,
-        ]);
+        return redirect()->intended('/admin/dashboard');
+    }
+
+    public function logout(Request $request)
+    {
+        \Illuminate\Support\Facades\Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/admin/login');
     }
 
     public function changePassword(Request $request)

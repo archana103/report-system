@@ -144,7 +144,7 @@
       <div class="sidebar-get-report-card">
         <h3>Get This Report</h3>
         <div style="display: flex; flex-direction: column; gap: 16px;">
-          <a href="/contact-us" class="contact-btn-white buy-now-btn">
+          <a href="/checkout/{{ $report->id ?? optional($report->reportList)->id }}" class="contact-btn-white buy-now-btn">
             Buy Now
             <span class="btn-circle-arrow">
               <svg class="chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
