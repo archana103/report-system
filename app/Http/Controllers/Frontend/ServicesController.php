@@ -28,4 +28,12 @@ class ServicesController extends FrontendController
             'latestInsights' => $latestInsights
         ]);
     }
+
+    public function qualitative(Request $request)
+    {
+        $seo = $this->seoService->getBaseSeo($request);
+        return view('pages.qualitative-services', [
+            'seo' => $seo
+        ]);
+    }
 }

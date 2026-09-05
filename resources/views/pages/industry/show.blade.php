@@ -86,7 +86,7 @@
                         onclick="openRequestModal('Download Sample', '{{ addslashes(htmlspecialchars($report->title ?? '', ENT_QUOTES, 'UTF-8')) }}')"
                         class="secondary-button outlined"
                         style="padding: 10px 24px; min-height: auto; line-height: 1.2;">Download Sample</a>
-                      <a href="{{ url('/checkout/' . $report->id) }}" class="primary-button small"
+                      <a href="{{ url('/checkout/' . (!empty($report->slug) && $report->slug !== '#' ? $report->slug : $report->id)) }}" class="primary-button small"
                         style="padding: 10px 24px; min-height: auto; line-height: 1.2;">Buy Now</a>
                     </div>
                   </div>

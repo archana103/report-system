@@ -2,6 +2,7 @@
 
 @section('content')
   @include('partials.home.hero')
+  @include('partials.home.client-logos')
   @include('partials.home.trending-reports')
   @include('partials.home.press-releases')
   @include('partials.home.insights')

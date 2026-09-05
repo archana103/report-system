@@ -23,19 +23,14 @@ class PressReleaseController extends Controller
             });
         }
 
-        $sortBy = $request->get('sort_by', 'created_at');
-        $sortDir = $request->get('sort_dir', 'desc');
+        $pressReleases = $query->orderBy('created_at', 'desc')->paginate(20);
 
-        $query->orderBy($sortBy, $sortDir);
+        return view('admin.press_releases.index', compact('pressReleases'));
+    }
 
-        if ($request->has('export') && $request->export == 'true') {
-            return response()->json($query->get());
-        }
-
-        $limit = $request->get('limit', 20);
-        $data = $query->paginate($limit);
-
-        return response()->json($data);
+    public function create()
+    {
+        return view('admin.press_releases.create');
     }
 
     public function store(Request $request)
@@ -60,8 +55,18 @@ class PressReleaseController extends Controller
         }
 
         $pressRelease = PressRelease::create($data);
+        
+        \App\Models\PressReleaseDetail::create([
+            'press_release_id' => $pressRelease->id
+        ]);
 
-        return response()->json(['message' => 'Press release created successfully', 'data' => $pressRelease], 201);
+        return redirect()->route('admin.press_releases.index')->with('success', 'Press release created successfully');
+    }
+
+    public function edit($id)
+    {
+        $pressRelease = PressRelease::findOrFail($id);
+        return view('admin.press_releases.edit', compact('pressRelease'));
     }
 
     public function update(Request $request, $id)
@@ -95,7 +100,7 @@ class PressReleaseController extends Controller
 
         $pressRelease->update($data);
 
-        return response()->json(['message' => 'Press release updated successfully', 'data' => $pressRelease]);
+        return redirect()->route('admin.press_releases.index')->with('success', 'Press release updated successfully');
     }
 
     public function destroy($id)
@@ -111,6 +116,6 @@ class PressReleaseController extends Controller
 
         $pressRelease->delete();
 
-        return response()->json(['message' => 'Press release deleted successfully']);
+        return redirect()->back()->with('success', 'Press release deleted successfully');
     }
 }

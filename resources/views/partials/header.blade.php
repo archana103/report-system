@@ -17,7 +17,8 @@
         @endforeach
       </div>
     </div>
-    <a href="/press-releases" class="{{ request()->routeIs('press-releases.*') ? 'active' : '' }}">Press Release</a>
+    <a href="/qualitative-services" class="{{ request()->routeIs('qualitative.services') ? 'active' : '' }}">Qualitative Services</a>
+    <a href="/press-releases" class="{{ request()->routeIs('press-releases.*') ? 'active' : '' }}">PR</a>
     <a href="/blogs" class="{{ request()->routeIs('blogs.*') ? 'active' : '' }}">Blog</a>
   </nav>
 

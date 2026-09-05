@@ -14,12 +14,26 @@
     </div>
 
     <div class="footer-contact">
-      <p><span><img src="{{ env('AWS_URL') }}/assets/images/footer_icons/icon_mail.png" alt="Location"
-            class="footer-icon-img" /></span>703 Kumar Corporate Building, Pune-411028, India</p>
-      <p><span><img src="{{ env('AWS_URL') }}/assets/images/footer_icons/Icon.png" alt="Email"
-            class="footer-icon-img" /></span>sales@epignosisinsights.com</p>
-      <p><span><img src="{{ env('AWS_URL') }}/assets/images/footer_icons/icon_phone.png" alt="Phone"
-            class="footer-icon-img" /></span>+91 9370865430</p>
+      <div class="contact-info">
+        <p><span><img src="{{ env('AWS_URL') }}/assets/images/footer_icons/icon_mail.png" alt="Location"
+              class="footer-icon-img" /></span>703 Kumar Corporate Building, Pune-411028, India</p>
+        <p><span><img src="{{ env('AWS_URL') }}/assets/images/footer_icons/Icon.png" alt="Email"
+              class="footer-icon-img" /></span>sales@epignosisinsights.com</p>
+        <p><span><img src="{{ env('AWS_URL') }}/assets/images/footer_icons/icon_phone.png" alt="Phone"
+              class="footer-icon-img" /></span>+91 9370865430</p>
+      </div>
+
+      <div class="payment-partners">
+        <h4>Payment Partner</h4>
+        <div class="payment-logos">
+          <img src="{{ env('AWS_URL') }}/assets/images/bank_images/visa.png" alt="Visa" />
+          <img src="{{ env('AWS_URL') }}/assets/images/bank_images/paypal.png" alt="PayPal" />
+          <img src="{{ env('AWS_URL') }}/assets/images/bank_images/mastercard.png" alt="Mastercard" />
+          <img src="{{ env('AWS_URL') }}/assets/images/bank_images/discover.png" alt="Discover" />
+          <img src="{{ env('AWS_URL') }}/assets/images/bank_images/wire_transfer.png" alt="Wire Transfer" />
+          <img src="{{ env('AWS_URL') }}/assets/images/bank_images/american.png" alt="American Express" />
+        </div>
+      </div>
     </div>
   </div>
 
@@ -29,7 +43,8 @@
       <a href="/about-us">About Us</a>
       <a href="/reports">Reports</a>
       <a href="/blogs">Blogs</a>
-      <a href="/press-releases">Press Release</a>
+      <a href="/qualitative-services">Qualitative Services</a>
+      <a href="/press-releases">PR</a>
       <a href="/contact-us">Contact</a>
     </nav>
     <div class="social-links">
@@ -68,3 +83,33 @@
 </button>
 
 @vite(['resources/css/app.css', 'resources/js/public.js'])
+<style>
+.footer-contact {
+  display: flex;
+  flex-direction: column;
+}
+.payment-partners {
+  margin-top: auto;
+}
+.payment-partners h4 {
+  font-size: 23px;
+  font-weight: 400;
+  margin-bottom: 1rem;
+  color: #ffffff;
+}
+.payment-logos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  max-width: 340px;
+}
+.payment-logos img {
+  width: 100%;
+  height: 48px;
+  background-color: #ffffff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  object-fit: contain;
+  box-sizing: border-box;
+}
+</style>

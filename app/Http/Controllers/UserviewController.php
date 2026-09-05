@@ -22,8 +22,8 @@ class UserviewController extends Controller
     {
         $version = Cache::get('userview_cache_version', 1);
         $key = 'categories_with_reports_v' . $version;
-        
-        $categories = Cache::remember($key, 60*60*24, function () {
+
+        $categories = Cache::remember($key, 60 * 60 * 24, function () {
             $cats = ReportCategory::where('status', 'Active')
                 ->orderBy('created_at', 'desc')
                 ->take(8)
@@ -75,7 +75,7 @@ class UserviewController extends Controller
         $categoryName = $request->query('category', 'All');
         $page = $request->query('page', 1);
         $sort = $request->query('sort', '');
-        
+
         $version = Cache::get('userview_cache_version', 1);
         $key = sprintf(
             'reports:v%s:p%s:s%s:c%s:o%s',
@@ -86,7 +86,7 @@ class UserviewController extends Controller
             $sort
         );
 
-        $paginator = Cache::remember($key, 60*60*24, function () use ($search, $categoryName) {
+        $paginator = Cache::remember($key, 60 * 60 * 24, function () use ($search, $categoryName) {
             $query = ReportList::with(['reportCategory', 'reportDetail'])
                 ->has('reportDetail')
                 ->where('status', 'Active');
@@ -100,15 +100,15 @@ class UserviewController extends Controller
             if ($search) {
                 $query->where(function ($q) use ($search) {
                     $q->where('name', 'like', '%' . $search . '%')
-                      ->orWhereHas('reportDetail', function ($q2) use ($search) {
-                          $q2->where('title', 'like', '%' . $search . '%')
-                             ->orWhere('description', 'like', '%' . $search . '%');
-                      });
+                        ->orWhereHas('reportDetail', function ($q2) use ($search) {
+                            $q2->where('title', 'like', '%' . $search . '%')
+                                ->orWhere('description', 'like', '%' . $search . '%');
+                        });
                 });
             }
 
             $paginatorData = $query->orderBy('created_at', 'desc')->paginate(10);
-            
+
             $paginatorData->getCollection()->transform(function ($report) {
                 $rawDesc = ($report->reportDetail && !empty($report->reportDetail->detail_description)) ? $report->reportDetail->detail_description : 'No description available.';
                 $description = \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($rawDesc)), 250);
@@ -125,7 +125,7 @@ class UserviewController extends Controller
                     'slug' => ($report->reportDetail && $report->reportDetail->slug_url) ? $report->reportDetail->slug_url : '#'
                 ];
             });
-            
+
             return $paginatorData;
         });
 
@@ -138,7 +138,7 @@ class UserviewController extends Controller
     public function predictiveSearch(Request $request)
     {
         $search = $request->query('query');
-        
+
         if (!$search || strlen(trim($search)) < 2) {
             return response()->json([]);
         }
@@ -150,10 +150,10 @@ class UserviewController extends Controller
         // Search on title / name using B-Tree index / LIKE matching
         $query->where(function ($q) use ($search) {
             $q->whereHas('reportDetail', function ($q2) use ($search) {
-                  $q2->whereRaw("MATCH(title) AGAINST(? IN BOOLEAN MODE)", [$search . '*'])
-                     ->orWhere('title', 'like', '%' . $search . '%');
-              })
-              ->orWhere('name', 'like', '%' . $search . '%');
+                $q2->whereRaw("MATCH(title) AGAINST(? IN BOOLEAN MODE)", [$search . '*'])
+                    ->orWhere('title', 'like', '%' . $search . '%');
+            })
+                ->orWhere('name', 'like', '%' . $search . '%');
         });
 
         // The user specifically requested a limit of 6
@@ -170,19 +170,19 @@ class UserviewController extends Controller
 
         return response()->json($reports);
     }
-    
+
     public function publicTopSellingReports()
     {
         $version = Cache::get('userview_cache_version', 1);
         $key = 'top_selling_reports_v' . $version;
-        
-        $reports = Cache::remember($key, 60*60*24, function () {
+
+        $reports = Cache::remember($key, 60 * 60 * 24, function () {
             return TopSellingReport::with('reportDetail:id,title,slug_url')
                 ->orderBy('created_at', 'desc')
                 ->take(5)
                 ->get();
         });
-            
+
         return response()->json($reports);
     }
 
@@ -191,206 +191,208 @@ class UserviewController extends Controller
     /**
      * Get all blogs paginated for the public blogs page.
      */
-  
+
     /**
      * Get a single report by slug.
      */
- public function getReportDetail($slug)
-{
-    $query = \App\Models\ReportDetail::with(['reportList.reportCategory']);
+    public function getReportDetail($slug)
+    {
+        $query = \App\Models\ReportDetail::with(['reportList.reportCategory']);
 
-    if (is_numeric($slug)) {
-        $query->where(function ($q) use ($slug) {
-            $q->where('id', $slug)
-              ->orWhere('report_list_id', $slug);
-        });
-    } else {
-        $query->where('slug_url', $slug);
-    }
+        if (is_numeric($slug)) {
+            $query->where(function ($q) use ($slug) {
+                $q->where('id', $slug)
+                    ->orWhere('report_list_id', $slug);
+            });
+        } else {
+            $query->where('slug_url', $slug);
+        }
 
-    $reportDetail = $query->first();
+        $reportDetail = $query->first();
 
-    if (!$reportDetail) {
-        return response()->json([
-            'message' => 'Report not found'
-        ], 404);
-    }
+        if (!$reportDetail) {
+            return response()->json([
+                'message' => 'Report not found'
+            ], 404);
+        }
 
-    $geographies = [
-        'Global',
-        'North America',
-        'Latin America',
-        'Europe',
-        'Asia Pacific',
-        'APAC',
-        'Middle East',
-        'Africa',
-        'MEA',
-          'China',
-        'Japan',
-        'Germany',
-        'France',
-        'UK',
-        'United States',
-        'U.S.A',
-        'Canada',
-        'Brazil',
-        'India'
-    ];
+        $geographies = [
+            'Global',
+            'North America',
+            'Latin America',
+            'Europe',
+            'Asia Pacific',
+            'APAC',
+            'Middle East',
+            'Africa',
+            'MEA',
+            'China',
+            'Japan',
+            'Germany',
+            'France',
+            'UK',
+            'United States',
+            'U.S.A',
+            'Canada',
+            'Brazil',
+            'India'
+        ];
 
-    $baseTitle = $reportDetail->title ?: optional($reportDetail->reportList)->name;
+        $baseTitle = $reportDetail->title ?: optional($reportDetail->reportList)->name;
 
-    // Use regex with word boundaries to avoid accidentally removing substrings (e.g., 'UK' from 'Ukraine')
-    $geoRegex = '/\b(' . implode('|', array_map(function($g) { return preg_quote($g, '/'); }, $geographies)) . ')\b/i';
-    
-    $baseTitleClean = trim(preg_replace('/\s+/', ' ', preg_replace($geoRegex, '', $baseTitle)));
-    $searchPrefix = substr($baseTitleClean, 0, 15); // Extract first 15 chars for DB filtering
+        // Use regex with word boundaries to avoid accidentally removing substrings (e.g., 'UK' from 'Ukraine')
+        $geoRegex = '/\b(' . implode('|', array_map(function ($g) {
+            return preg_quote($g, '/'); }, $geographies)) . ')\b/i';
 
-    $geographyReportsQuery = \App\Models\ReportDetail::with('reportList:id,name')
-        ->select('id', 'title', 'slug_url', 'report_list_id')
-        ->where('id', '!=', $reportDetail->id);
+        $baseTitleClean = trim(preg_replace('/\s+/', ' ', preg_replace($geoRegex, '', $baseTitle)));
+        $searchPrefix = substr($baseTitleClean, 0, 15); // Extract first 15 chars for DB filtering
 
-    // Add a LIKE filter to the DB query so we don't load the entire table into memory
-    if (strlen($searchPrefix) > 5) {
-        $geographyReportsQuery->where(function($q) use ($searchPrefix) {
-            $q->where('title', 'LIKE', '%' . $searchPrefix . '%')
-              ->orWhereHas('reportList', function($q2) use ($searchPrefix) {
-                  $q2->where('name', 'LIKE', '%' . $searchPrefix . '%');
-              });
-        });
-    }
+        $geographyReportsQuery = \App\Models\ReportDetail::with('reportList:id,name')
+            ->select('id', 'title', 'slug_url', 'report_list_id')
+            ->where('id', '!=', $reportDetail->id);
 
-    $geographyReports = $geographyReportsQuery
-        ->get()
-        ->filter(function ($item) use ($geoRegex, $baseTitleClean) {
-            $itemTitle = $item->title ?: optional($item->reportList)->name;
-            if (!$itemTitle) return false;
+        // Add a LIKE filter to the DB query so we don't load the entire table into memory
+        if (strlen($searchPrefix) > 5) {
+            $geographyReportsQuery->where(function ($q) use ($searchPrefix) {
+                $q->where('title', 'LIKE', '%' . $searchPrefix . '%')
+                    ->orWhereHas('reportList', function ($q2) use ($searchPrefix) {
+                        $q2->where('name', 'LIKE', '%' . $searchPrefix . '%');
+                    });
+            });
+        }
 
-            $titleClean = trim(preg_replace('/\s+/', ' ', preg_replace($geoRegex, '', $itemTitle)));
-            
-            // Relaxed matching: Match if first 12 characters are the same
-            return strncasecmp($titleClean, $baseTitleClean, 12) === 0;
-        })
-        ->values()
-        ->map(function ($item) use ($geographies) {
-            $itemTitle = $item->title ?: optional($item->reportList)->name;
-           
-            return [
-                'id'       => $item->id,
-                'title'    => $itemTitle,
-                'geo_name' => $itemTitle,
-                'slug_url' => $item->slug_url
-            ];
-        });
-  $relatedReports = [];
+        $geographyReports = $geographyReportsQuery
+            ->get()
+            ->filter(function ($item) use ($geoRegex, $baseTitleClean) {
+                $itemTitle = $item->title ?: optional($item->reportList)->name;
+                if (!$itemTitle)
+                    return false;
 
-    if ($reportDetail->reportList && $reportDetail->reportList->reportCategory) {
+                $titleClean = trim(preg_replace('/\s+/', ' ', preg_replace($geoRegex, '', $itemTitle)));
 
-        $catId = $reportDetail->reportList->report_category_id;
+                // Relaxed matching: Match if first 12 characters are the same
+                return strncasecmp($titleClean, $baseTitleClean, 12) === 0;
+            })
+            ->values()
+            ->map(function ($item) use ($geographies) {
+                $itemTitle = $item->title ?: optional($item->reportList)->name;
 
-        $relatedReports = \App\Models\ReportList::with([
+                return [
+                    'id' => $item->id,
+                    'title' => $itemTitle,
+                    'geo_name' => $itemTitle,
+                    'slug_url' => $item->slug_url
+                ];
+            });
+        $relatedReports = [];
+
+        if ($reportDetail->reportList && $reportDetail->reportList->reportCategory) {
+
+            $catId = $reportDetail->reportList->report_category_id;
+
+            $relatedReports = \App\Models\ReportList::with([
                 'reportCategory',
                 'reportDetail'
             ])
-            ->where('report_category_id', $catId)
-            ->where('id', '!=', $reportDetail->report_list_id)
-            ->where('status', 'Active')
+                ->where('report_category_id', $catId)
+                ->where('id', '!=', $reportDetail->report_list_id)
+                ->where('status', 'Active')
+                ->orderBy('created_at', 'desc')
+                ->take(5)
+                ->get()
+                ->map(function ($r) {
+                    return [
+                        'id' => $r->id,
+                        'title' => optional($r->reportDetail)->title ?: $r->name,
+                        'slug' => optional($r->reportDetail)->slug_url ?: '#'
+                    ];
+                });
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Related Industries
+        |--------------------------------------------------------------------------
+        */
+
+        $relatedCategories = \App\Models\ReportCategory::where('status', 'Active')
             ->orderBy('created_at', 'desc')
-            ->take(5)
-            ->get()
-            ->map(function ($r) {
-                return [
-                    'id' => $r->id,
-                    'title' => optional($r->reportDetail)->title ?: $r->name,
-                    'slug' => optional($r->reportDetail)->slug_url ?: '#'
-                ];
-            });
+            ->take(8)
+            ->pluck('name');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Response
+        |--------------------------------------------------------------------------
+        */
+
+        return response()->json([
+
+            'id' => $reportDetail->id,
+
+            'title' => $reportDetail->title ?: optional($reportDetail->reportList)->name,
+
+            'description' => $reportDetail->description,
+
+            'detail_description' => !empty($reportDetail->detail_description) ? $reportDetail->detail_description : 'No description available.',
+
+            'table_of_contents' => $reportDetail->table_of_contents,
+
+            'single_user_license_cost' => $reportDetail->single_user_license_cost ?: '',
+
+            'team_user_license_cost' => $reportDetail->team_user_license_cost ?: '',
+
+            'enterprise_user_license_cost' => $reportDetail->enterprise_user_license_cost ?: '',
+
+            'download_text' => $reportDetail->download_text,
+
+            'image' => '/assets/images/default-report.png',
+
+            'slug_url' => $reportDetail->slug_url,
+
+            'breadcrumb_title' => $reportDetail->breadcrumb_title ?: optional($reportDetail->reportList)->name,
+
+            'page_main_title' => $reportDetail->page_main_title ?: $reportDetail->title,
+
+            'report_sku' => $reportDetail->report_sku ?: ('REP-' . str_pad($reportDetail->id, 5, '0', STR_PAD_LEFT)),
+
+            'faqs' => $reportDetail->faqs ?: [],
+
+            'category' => optional(optional($reportDetail->reportList)->reportCategory)->name ?: 'Unknown',
+
+            'date' => $reportDetail->created_at
+                ? $reportDetail->created_at->format('F Y')
+                : date('F Y'),
+
+            'pages' => 120,
+
+            'format' => 'PDF, Excel',
+
+            'related_reports' => $relatedReports,
+
+            'related_industries' => $relatedCategories,
+
+            // Global Methodology
+            'report_methodology' => optional(\App\Models\ReportMethodology::first())->content ?: '',
+
+            // Geography dropdown
+            'geography_reports' => $geographyReports,
+
+            // SEO
+            'meta_title' => $reportDetail->meta_title,
+            'meta_description' => $reportDetail->meta_description,
+            'meta_keywords' => $reportDetail->meta_keywords,
+            'canonical_tag' => $reportDetail->canonical_tag,
+            'meta_robots' => $reportDetail->meta_robots,
+            'hreflang_tags' => $reportDetail->hreflang_tags ?: [],
+            'open_graph_tags' => $reportDetail->open_graph_tags ?: [],
+            'twitter_card_tags' => $reportDetail->twitter_card_tags ?: [],
+            'schema_tag' => $reportDetail->schema_tag,
+            'schema_tag_2' => $reportDetail->schema_tag_2,
+            'custom_schema_tags' => $reportDetail->custom_schema_tags ?: [],
+
+        ]);
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Related Industries
-    |--------------------------------------------------------------------------
-    */
-
-    $relatedCategories = \App\Models\ReportCategory::where('status', 'Active')
-        ->orderBy('created_at', 'desc')
-        ->take(8)
-        ->pluck('name');
-
-    /*
-    |--------------------------------------------------------------------------
-    | Response
-    |--------------------------------------------------------------------------
-    */
-
-    return response()->json([
-
-        'id' => $reportDetail->id,
-
-        'title' => $reportDetail->title ?: optional($reportDetail->reportList)->name,
-
-        'description' => $reportDetail->description,
-        
-        'detail_description' => !empty($reportDetail->detail_description) ? $reportDetail->detail_description : 'No description available.',
-
-        'table_of_contents' => $reportDetail->table_of_contents,
-
-        'single_user_license_cost' => $reportDetail->single_user_license_cost ?: '',
-
-        'team_user_license_cost' => $reportDetail->team_user_license_cost ?: '',
-
-        'enterprise_user_license_cost' => $reportDetail->enterprise_user_license_cost ?: '',
-
-        'download_text' => $reportDetail->download_text,
-
-        'image' => '/assets/images/default-report.png',
-
-        'slug_url' => $reportDetail->slug_url,
-
-        'breadcrumb_title' => $reportDetail->breadcrumb_title ?: optional($reportDetail->reportList)->name,
-
-        'page_main_title' => $reportDetail->page_main_title ?: $reportDetail->title,
-
-        'report_sku' => $reportDetail->report_sku ?: ('REP-' . str_pad($reportDetail->id, 5, '0', STR_PAD_LEFT)),
-
-        'faqs' => $reportDetail->faqs ?: [],
-
-        'category' => optional(optional($reportDetail->reportList)->reportCategory)->name ?: 'Unknown',
-
-        'date' => $reportDetail->created_at
-            ? $reportDetail->created_at->format('F Y')
-            : date('F Y'),
-
-        'pages' => 120,
-
-        'format' => 'PDF, Excel',
-
-        'related_reports' => $relatedReports,
-
-        'related_industries' => $relatedCategories,
-
-        // Global Methodology
-        'report_methodology' => optional(\App\Models\ReportMethodology::first())->content ?: '',
-
-        // Geography dropdown
-        'geography_reports' => $geographyReports,
-
-        // SEO
-        'meta_title' => $reportDetail->meta_title,
-        'meta_description' => $reportDetail->meta_description,
-        'meta_keywords' => $reportDetail->meta_keywords,
-        'canonical_tag' => $reportDetail->canonical_tag,
-        'meta_robots' => $reportDetail->meta_robots,
-        'hreflang_tags' => $reportDetail->hreflang_tags ?: [],
-        'open_graph_tags' => $reportDetail->open_graph_tags ?: [],
-        'twitter_card_tags' => $reportDetail->twitter_card_tags ?: [],
-        'schema_tag' => $reportDetail->schema_tag,
-        'schema_tag_2' => $reportDetail->schema_tag_2,
-        'custom_schema_tags' => $reportDetail->custom_schema_tags ?: [],
-
-    ]);
-}
 
     /**
      * Get a single category by name.
@@ -422,7 +424,7 @@ class UserviewController extends Controller
         ]);
     }
 
-    
+
 
     /**
      * Get all active press releases paginated with search filter.
@@ -435,7 +437,7 @@ class UserviewController extends Controller
         if ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('title', 'like', '%' . $search . '%')
-                  ->orWhere('description', 'like', '%' . $search . '%');
+                    ->orWhere('description', 'like', '%' . $search . '%');
             });
         }
 
@@ -505,20 +507,20 @@ class UserviewController extends Controller
 
         try {
             $data = [
-                'siteName'     => 'Markspark Solutions',
-                'siteUrl'      => url('/'),
-                'inquiryType'  => 'New Inquiry Received on Markspark Solutions',
-                'name'         => $validated['full_name'],
-                'email'        => $validated['email'],
-                'phone'        => $validated['phone'],
-                'companyName'  => $validated['company_name'],
-                'country'      => $validated['country'],
-                'messageText'  => $validated['specific_research_requirement'],
-                'reportName'   => '',
-                'jobTitle'     => '',
+                'siteName' => 'Epignosisinsights',
+                'siteUrl' => url('/'),
+                'inquiryType' => 'New Inquiry Received on Epignosisinsights',
+                'name' => $validated['full_name'],
+                'email' => $validated['email'],
+                'phone' => $validated['phone'],
+                'companyName' => $validated['company_name'],
+                'country' => $validated['country'],
+                'messageText' => $validated['specific_research_requirement'],
+                'reportName' => '',
+                'jobTitle' => '',
             ];
 
-            \App\Jobs\SendInquiryEmailJob::dispatch($data, 'New Inquiry Received on Markspark Solutions');
+            \App\Jobs\SendInquiryEmailJob::dispatch($data, 'New Inquiry Received on Epignosisinsights');
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Log::error('Mail sending failed in storeContactForm: ' . $e->getMessage());
         }
@@ -529,7 +531,7 @@ class UserviewController extends Controller
                 'data' => $contact
             ], 201);
         }
-        
+
         return redirect()->to('/thank-you');
     }
 
@@ -577,21 +579,21 @@ class UserviewController extends Controller
         try {
             $subjectVal = $validated['subject'] ?: 'Request Sample';
             $reportNameVal = $validated['report_name'] ?: '';
-            
+
             $inquiryTypeLabel = $subjectVal;
             if ($reportNameVal) {
                 $inquiryTypeLabel .= ' - ' . $reportNameVal;
             }
 
             $data = [
-                'siteName'     => 'Markspark Solutions',
-                'siteUrl'      => url('/'),
-                'inquiryType'  => $inquiryTypeLabel,
-                'name'         => $validated['name'],
-                'email'        => $validated['email'],
-                'phone'        => $validated['phone'],
-                'messageText'  => $validated['specific_research_requirement'],
-                'reportName'   => $reportNameVal,
+                'siteName' => 'Epignosisinsights',
+                'siteUrl' => url('/'),
+                'inquiryType' => $inquiryTypeLabel,
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'phone' => $validated['phone'],
+                'messageText' => $validated['specific_research_requirement'],
+                'reportName' => $reportNameVal,
             ];
 
             $mailSubject = $subjectVal;
@@ -649,24 +651,24 @@ class UserviewController extends Controller
             'url' => $blog->url,
             'breadcrumb_title' => $blog->blogDetail?->breadcrumb_title ?: $blog->title,
             'detail' => $blog->blogDetail ? [
-                'title'       => $blog->blogDetail->title,
+                'title' => $blog->blogDetail->title,
                 'description' => $blog->blogDetail->description,
-                'faqs'        => $blog->blogDetail->faqs ?: [],
+                'faqs' => $blog->blogDetail->faqs ?: [],
             ] : null,
             'related_articles' => $relatedArticles,
 
             // ── SEO / Meta fields (from blogDetail) ──────────────────────────
-            'meta_title'         => $blog->blogDetail?->meta_title,
-            'meta_description'   => $blog->blogDetail?->meta_description,
-            'meta_keywords'      => $blog->blogDetail?->meta_keywords,
-            'canonical_tag'      => $blog->blogDetail?->canonical_tag,
-            'meta_robots'        => $blog->blogDetail?->meta_robots,
-            'hreflang_tags'      => $blog->blogDetail?->hreflang_tags      ?: [],
-            'open_graph_tags'    => $blog->blogDetail?->open_graph_tags    ?: [],
-            'twitter_card_tags'  => $blog->blogDetail?->twitter_card_tags  ?: [],
-            'schema_tag'         => $blog->blogDetail?->schema_tag,
-            'schema_tag_2'       => $blog->blogDetail?->schema_tag_2,
-            'schema_tag_3'       => $blog->blogDetail?->schema_tag_3,
+            'meta_title' => $blog->blogDetail?->meta_title,
+            'meta_description' => $blog->blogDetail?->meta_description,
+            'meta_keywords' => $blog->blogDetail?->meta_keywords,
+            'canonical_tag' => $blog->blogDetail?->canonical_tag,
+            'meta_robots' => $blog->blogDetail?->meta_robots,
+            'hreflang_tags' => $blog->blogDetail?->hreflang_tags ?: [],
+            'open_graph_tags' => $blog->blogDetail?->open_graph_tags ?: [],
+            'twitter_card_tags' => $blog->blogDetail?->twitter_card_tags ?: [],
+            'schema_tag' => $blog->blogDetail?->schema_tag,
+            'schema_tag_2' => $blog->blogDetail?->schema_tag_2,
+            'schema_tag_3' => $blog->blogDetail?->schema_tag_3,
         ]);
     }
 
@@ -694,17 +696,17 @@ class UserviewController extends Controller
             $blogTitle = $blog ? $blog->title : 'Blog ID ' . $validated['blog_id'];
 
             $data = [
-                'siteName'     => 'Markspark Solutions',
-                'siteUrl'      => url('/'),
-                'inquiryType'  => 'Blog Request - ' . $blogTitle,
-                'name'         => $validated['full_name'],
-                'email'        => $validated['email'],
-                'phone'        => $validated['phone'],
-                'companyName'  => $validated['company_name'],
-                'country'      => $validated['country'],
-                'messageText'  => 'Requested blog/sample for blog ID: ' . $validated['blog_id'],
-                'reportName'   => $blogTitle,
-                'jobTitle'     => '',
+                'siteName' => 'Epignosisinsights',
+                'siteUrl' => url('/'),
+                'inquiryType' => 'Blog Request - ' . $blogTitle,
+                'name' => $validated['full_name'],
+                'email' => $validated['email'],
+                'phone' => $validated['phone'],
+                'companyName' => $validated['company_name'],
+                'country' => $validated['country'],
+                'messageText' => 'Requested blog/sample for blog ID: ' . $validated['blog_id'],
+                'reportName' => $blogTitle,
+                'jobTitle' => '',
             ];
 
             \App\Jobs\SendInquiryEmailJob::dispatch($data, 'New Inquiry Received: Blog Request - ' . $blogTitle);
@@ -762,21 +764,21 @@ class UserviewController extends Controller
             'related_reports' => $relatedReports,
 
             // ── SEO / Meta fields (from pressReleaseDetail) ──────────────────
-            'meta_title'         => $pr->pressReleaseDetail?->meta_title,
-            'meta_description'   => $pr->pressReleaseDetail?->meta_description,
-            'meta_keywords'      => $pr->pressReleaseDetail?->meta_keywords,
-            'canonical_tag'      => $pr->pressReleaseDetail?->canonical_tag,
-            'meta_robots'        => $pr->pressReleaseDetail?->meta_robots,
-            'hreflang_tags'      => $pr->pressReleaseDetail?->hreflang_tags      ?: [],
-            'open_graph_tags'    => $pr->pressReleaseDetail?->open_graph_tags    ?: [],
-            'twitter_card_tags'  => $pr->pressReleaseDetail?->twitter_card_tags  ?: [],
-            'schema_tag'         => $pr->pressReleaseDetail?->schema_tag,
-            'schema_tag_2'       => $pr->pressReleaseDetail?->schema_tag_2,
+            'meta_title' => $pr->pressReleaseDetail?->meta_title,
+            'meta_description' => $pr->pressReleaseDetail?->meta_description,
+            'meta_keywords' => $pr->pressReleaseDetail?->meta_keywords,
+            'canonical_tag' => $pr->pressReleaseDetail?->canonical_tag,
+            'meta_robots' => $pr->pressReleaseDetail?->meta_robots,
+            'hreflang_tags' => $pr->pressReleaseDetail?->hreflang_tags ?: [],
+            'open_graph_tags' => $pr->pressReleaseDetail?->open_graph_tags ?: [],
+            'twitter_card_tags' => $pr->pressReleaseDetail?->twitter_card_tags ?: [],
+            'schema_tag' => $pr->pressReleaseDetail?->schema_tag,
+            'schema_tag_2' => $pr->pressReleaseDetail?->schema_tag_2,
         ]);
     }
 
     /**
      * Store a new newsletter subscription.
      */
-  
+
 }

@@ -53,58 +53,60 @@ Route::get('/admin/top-selling-reports', [App\Http\Controllers\Admin\TopSellingR
 Route::post('/admin/top-selling-reports', [App\Http\Controllers\Admin\TopSellingReportController::class, 'store'])->name('admin.top_selling_reports.store');
 Route::delete('/admin/top-selling-reports/{id}', [App\Http\Controllers\Admin\TopSellingReportController::class, 'destroy'])->name('admin.top_selling_reports.destroy');
 // Blogs
-Route::get('/admin/blogs-data', [App\Http\Controllers\Admin\BlogController::class, 'index']);
-Route::post('/admin/blogs-data', [App\Http\Controllers\Admin\BlogController::class, 'store']);
-Route::put('/admin/blogs-data/{id}', [App\Http\Controllers\Admin\BlogController::class, 'update']);
-Route::delete('/admin/blogs-data/{id}', [App\Http\Controllers\Admin\BlogController::class, 'destroy']);
+Route::get('/admin/blogs', [App\Http\Controllers\Admin\BlogController::class, 'index'])->name('admin.blogs.index');
+Route::get('/admin/blogs/create', [App\Http\Controllers\Admin\BlogController::class, 'create'])->name('admin.blogs.create');
+Route::post('/admin/blogs', [App\Http\Controllers\Admin\BlogController::class, 'store'])->name('admin.blogs.store');
+Route::get('/admin/blogs/{id}/edit', [App\Http\Controllers\Admin\BlogController::class, 'edit'])->name('admin.blogs.edit');
+Route::put('/admin/blogs/{id}', [App\Http\Controllers\Admin\BlogController::class, 'update'])->name('admin.blogs.update');
+Route::delete('/admin/blogs/{id}', [App\Http\Controllers\Admin\BlogController::class, 'destroy'])->name('admin.blogs.destroy');
 
 // Blog Details
-Route::get('/admin/blog-details/blogs-list', [App\Http\Controllers\Admin\BlogDetailController::class, 'getBlogsList']);
-Route::get('/admin/blog-details-data', [App\Http\Controllers\Admin\BlogDetailController::class, 'index']);
-Route::post('/admin/blog-details-data', [App\Http\Controllers\Admin\BlogDetailController::class, 'store']);
-Route::put('/admin/blog-details-data/{id}', [App\Http\Controllers\Admin\BlogDetailController::class, 'update']);
-Route::delete('/admin/blog-details-data/{id}', [App\Http\Controllers\Admin\BlogDetailController::class, 'destroy']);
+Route::get('/admin/blog-details', [App\Http\Controllers\Admin\BlogDetailController::class, 'index'])->name('admin.blog_details.index');
+Route::get('/admin/blog-details/{id}/edit', [App\Http\Controllers\Admin\BlogDetailController::class, 'edit'])->name('admin.blog_details.edit');
+Route::put('/admin/blog-details/{id}', [App\Http\Controllers\Admin\BlogDetailController::class, 'update'])->name('admin.blog_details.update');
+Route::delete('/admin/blog-details/{id}', [App\Http\Controllers\Admin\BlogDetailController::class, 'destroy'])->name('admin.blog_details.destroy');
 
 // Contact Us
-Route::get('/admin/contact-us-data', [App\Http\Controllers\Admin\ContactUsController::class, 'index']);
+Route::get('/admin/contact-us', [App\Http\Controllers\Admin\ContactUsController::class, 'index'])->name('admin.contact_us.index');
 
 // Newsletters
-Route::get('/admin/newsletters-data', [App\Http\Controllers\Admin\NewsletterController::class, 'index']);
-Route::delete('/admin/newsletters-data/{id}', [App\Http\Controllers\Admin\NewsletterController::class, 'destroy']);
+Route::get('/admin/newsletters', [App\Http\Controllers\Admin\NewsletterController::class, 'index'])->name('admin.newsletters.index');
+Route::delete('/admin/newsletters/{id}', [App\Http\Controllers\Admin\NewsletterController::class, 'destroy'])->name('admin.newsletters.destroy');
 
 // Request Forms
-Route::get('/admin/request-forms', [App\Http\Controllers\Admin\RequestFormController::class, 'index']);
-Route::delete('/admin/request-forms/{id}', [App\Http\Controllers\Admin\RequestFormController::class, 'destroy']);
+Route::get('/admin/request-form', [App\Http\Controllers\Admin\RequestFormController::class, 'index'])->name('admin.request_forms.index');
+Route::delete('/admin/request-form/{id}', [App\Http\Controllers\Admin\RequestFormController::class, 'destroy'])->name('admin.request_forms.destroy');
 
 // Blog Requests
-Route::get('/admin/blog-requests-data', [App\Http\Controllers\Admin\BlogRequestController::class, 'index']);
-Route::delete('/admin/blog-requests-data/{id}', [App\Http\Controllers\Admin\BlogRequestController::class, 'destroy']);
+Route::get('/admin/blog-requests', [App\Http\Controllers\Admin\BlogRequestController::class, 'index'])->name('admin.blog_requests.index');
+Route::delete('/admin/blog-requests/{id}', [App\Http\Controllers\Admin\BlogRequestController::class, 'destroy'])->name('admin.blog_requests.destroy');
 
 // Press Release
-Route::get('/admin/press-releases', [App\Http\Controllers\Admin\PressReleaseController::class, 'index']);
-Route::post('/admin/press-releases', [App\Http\Controllers\Admin\PressReleaseController::class, 'store']);
-Route::post('/admin/press-releases/{id}', [App\Http\Controllers\Admin\PressReleaseController::class, 'update']); // using POST to handle form data with file uploads
-Route::delete('/admin/press-releases/{id}', [App\Http\Controllers\Admin\PressReleaseController::class, 'destroy']);
+Route::get('/admin/press-release', [App\Http\Controllers\Admin\PressReleaseController::class, 'index'])->name('admin.press_releases.index');
+Route::get('/admin/press-release/create', [App\Http\Controllers\Admin\PressReleaseController::class, 'create'])->name('admin.press_releases.create');
+Route::post('/admin/press-release', [App\Http\Controllers\Admin\PressReleaseController::class, 'store'])->name('admin.press_releases.store');
+Route::get('/admin/press-release/{id}/edit', [App\Http\Controllers\Admin\PressReleaseController::class, 'edit'])->name('admin.press_releases.edit');
+Route::put('/admin/press-release/{id}', [App\Http\Controllers\Admin\PressReleaseController::class, 'update'])->name('admin.press_releases.update');
+Route::delete('/admin/press-release/{id}', [App\Http\Controllers\Admin\PressReleaseController::class, 'destroy'])->name('admin.press_releases.destroy');
 
 // Press Release Details
-Route::get('/admin/press-release-details-data', [App\Http\Controllers\Admin\PressReleaseDetailController::class, 'index']);
-Route::post('/admin/press-release-details-data', [App\Http\Controllers\Admin\PressReleaseDetailController::class, 'store']);
-Route::put('/admin/press-release-details-data/{id}', [App\Http\Controllers\Admin\PressReleaseDetailController::class, 'update']);
-Route::delete('/admin/press-release-details-data/{id}', [App\Http\Controllers\Admin\PressReleaseDetailController::class, 'destroy']);
-Route::get('/admin/press-releases-dropdown', [App\Http\Controllers\Admin\PressReleaseDetailController::class, 'getPressReleasesList']);
+Route::get('/admin/press-release-details', [App\Http\Controllers\Admin\PressReleaseDetailController::class, 'index'])->name('admin.press_release_details.index');
+Route::get('/admin/press-release-details/{id}/edit', [App\Http\Controllers\Admin\PressReleaseDetailController::class, 'edit'])->name('admin.press_release_details.edit');
+Route::put('/admin/press-release-details/{id}', [App\Http\Controllers\Admin\PressReleaseDetailController::class, 'update'])->name('admin.press_release_details.update');
+Route::delete('/admin/press-release-details/{id}', [App\Http\Controllers\Admin\PressReleaseDetailController::class, 'destroy'])->name('admin.press_release_details.destroy');
 
 // Change password
 Route::post('/admin/change-password', [AdminAuthController::class, 'changePassword']);
 
 // Page SEO
-Route::get('/admin/page-seos-data', [PageSeoController::class, 'index']);
-Route::post('/admin/page-seos-data', [PageSeoController::class, 'store']);
-Route::put('/admin/page-seos-data/{id}', [PageSeoController::class, 'update']);
-Route::delete('/admin/page-seos-data/{id}', [PageSeoController::class, 'destroy']);
+Route::get('/admin/page-seo', [PageSeoController::class, 'index'])->name('admin.page_seo.index');
+Route::post('/admin/page-seo', [PageSeoController::class, 'store'])->name('admin.page_seo.store');
+Route::put('/admin/page-seo/{id}', [PageSeoController::class, 'update'])->name('admin.page_seo.update');
+Route::delete('/admin/page-seo/{id}', [PageSeoController::class, 'destroy'])->name('admin.page_seo.destroy');
 
 // Purchases
-Route::get('/admin/purchases-data', [\App\Http\Controllers\Admin\PurchaseController::class, 'index']);
-Route::delete('/admin/purchases-data/{id}', [\App\Http\Controllers\Admin\PurchaseController::class, 'destroy']);
+Route::get('/admin/purchases', [\App\Http\Controllers\Admin\PurchaseController::class, 'index'])->name('admin.purchases.index');
+Route::delete('/admin/purchases/{id}', [\App\Http\Controllers\Admin\PurchaseController::class, 'destroy'])->name('admin.purchases.destroy');
 
 // Pricing Setup
 Route::get('/admin/pricing-setup', [App\Http\Controllers\Admin\PricingController::class, 'index'])->name('admin.pricing.index');

@@ -360,12 +360,22 @@
     // BUT since it's global, we should check if window.intlTelInput is available when opening.
   });
 
+  // Load reCAPTCHA script if not already present
+  if (!document.getElementById('recaptcha-script')) {
+    const script = document.createElement('script');
+    script.id = 'recaptcha-script';
+    script.src = 'https://www.google.com/recaptcha/api.js';
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
+  }
+
   function initModalRecaptcha() {
     if (window.grecaptcha && window.grecaptcha.render && document.getElementById('modal-recaptcha-container')) {
       if (modalRecaptchaWidgetId === null) {
         try {
           modalRecaptchaWidgetId = window.grecaptcha.render('modal-recaptcha-container', {
-            sitekey: window.RECAPTCHA_SITE_KEY || '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI', // Fallback local test key
+            sitekey: '{{ env("RECAPTCHA_SITE_KEY", "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI") }}',
             callback: (token) => {
               modalRecaptchaToken = token;
               document.getElementById('modal-recaptcha-error').style.display = 'none';

@@ -14,10 +14,6 @@ class BlogController extends Controller
      */
     public function index(Request $request)
     {
-        if (!$request->expectsJson()) {
-            return view('welcome');
-        }
-
         $query = Blog::query();
 
         if ($request->has('search') && $request->search != '') {
@@ -25,9 +21,17 @@ class BlogController extends Controller
                   ->orWhere('author_name', 'like', '%' . $request->search . '%');
         }
 
-        $blogs = $query->orderBy('created_at', 'desc')->paginate(20);
+        $blogs = $query->orderBy('created_at', 'desc')->paginate(10);
 
-        return response()->json($blogs);
+        return view('admin.blogs.index', compact('blogs'));
+    }
+
+    /**
+     * Show the form for creating a new blog.
+     */
+    public function create()
+    {
+        return view('admin.blogs.create');
     }
 
     /**
@@ -52,10 +56,22 @@ class BlogController extends Controller
 
         $blog = Blog::create($data);
 
-        return response()->json([
-            'message' => 'Blog added successfully!',
-            'data'    => $blog,
-        ], 201);
+        // Auto-create associated blog detail
+        \App\Models\BlogDetail::create([
+            'blog_id' => $blog->id,
+            'title' => $blog->title,
+        ]);
+
+        return redirect()->route('admin.blogs.index')->with('success', 'Blog added successfully!');
+    }
+
+    /**
+     * Show the form for editing the specified blog.
+     */
+    public function edit($id)
+    {
+        $blog = Blog::findOrFail($id);
+        return view('admin.blogs.edit', compact('blog'));
     }
 
     /**
@@ -85,10 +101,7 @@ class BlogController extends Controller
 
         $blog->update($data);
 
-        return response()->json([
-            'message' => 'Blog updated successfully!',
-            'data'    => $blog,
-        ]);
+        return redirect()->route('admin.blogs.index')->with('success', 'Blog updated successfully!');
     }
 
     /**
@@ -104,8 +117,6 @@ class BlogController extends Controller
 
         $blog->delete();
 
-        return response()->json([
-            'message' => 'Blog deleted successfully!',
-        ]);
+        return redirect()->back()->with('success', 'Blog deleted successfully!');
     }
 }

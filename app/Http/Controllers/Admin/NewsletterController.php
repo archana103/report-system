@@ -11,10 +11,16 @@ class NewsletterController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $newsletters = Newsletter::latest()->get();
-        return response()->json($newsletters);
+        $query = Newsletter::query();
+
+        if ($request->has('search') && $request->search != '') {
+            $query->where('email', 'like', '%' . $request->search . '%');
+        }
+
+        $newsletters = $query->latest()->paginate(20);
+        return view('admin.newsletters.index', compact('newsletters'));
     }
 
     /**
@@ -25,16 +31,9 @@ class NewsletterController extends Controller
         try {
             $newsletter = Newsletter::findOrFail($id);
             $newsletter->delete();
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Subscriber removed successfully'
-            ]);
+            return redirect()->back()->with('success', 'Subscriber removed successfully');
         } catch (\Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Unable to remove subscriber'
-            ], 500);
+            return redirect()->back()->with('error', 'Unable to remove subscriber');
         }
     }
 }

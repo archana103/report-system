@@ -1145,6 +1145,7 @@ input {
   margin: 0;
   max-width: none;
   color: white;
+  margin-bottom: 20px;
 }
 
 .footer-contact span {

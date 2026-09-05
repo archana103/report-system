@@ -13,9 +13,15 @@ class PurchaseController extends Controller
      */
     public function index(Request $request)
     {
-        $query = ReportPurchase::with(['reportDetail', 'pricing'])->latest();
-        $purchases = $query->paginate(15);
-        return response()->json($purchases);
+        $query = ReportPurchase::with(['reportDetail:id,title', 'pricing:id,title,cost'])->latest();
+
+        if ($request->has('search') && $request->search != '') {
+            $query->where('customer_name', 'like', '%' . $request->search . '%')
+                  ->orWhere('email', 'like', '%' . $request->search . '%');
+        }
+
+        $purchases = $query->paginate(20);
+        return view('admin.purchases.index', compact('purchases'));
     }
 
     /**
@@ -25,6 +31,6 @@ class PurchaseController extends Controller
     {
         $purchase = ReportPurchase::findOrFail($id);
         $purchase->delete();
-        return response()->json(['message' => 'Purchase record deleted successfully.']);
+        return redirect()->back()->with('success', 'Purchase record deleted successfully.');
     }
 }

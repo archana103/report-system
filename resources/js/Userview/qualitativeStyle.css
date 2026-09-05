@@ -1,0 +1,543 @@
+/* Scoped styles specifically for Qualitative Services */
+.qual-hero {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 100px 20px 80px;
+    text-align: center;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+}
+
+.qual-hero-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.qual-title {
+    font-size: 48px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 24px;
+}
+
+.qual-title .highlight-blue {
+    color: #0783df;
+}
+
+.qual-subtitle {
+    font-size: 18px;
+    color: #0783df;
+    font-weight: 600;
+    max-width: 580px;
+    margin: 0 auto 16px auto;
+    line-height: 1.4;
+}
+
+.qual-desc {
+    font-size: 15px;
+    color: #4b5563;
+    max-width: 750px;
+    margin: 0 auto 40px auto;
+    line-height: 1.6;
+}
+
+.qual-hero-cta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.qual-outline-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    border: 1px solid #cce4f7;
+    border-radius: 9999px;
+    background: #ffffff;
+    color: #0783df;
+    font-size: 13.5px;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    cursor: default;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.qual-outline-btn:hover {
+    border-color: #0783df;
+    box-shadow: 0 4px 12px rgba(7, 131, 223, 0.15);
+}
+
+/* What is qualitative research section */
+.qual-about-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    padding: 80px 20px;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.qual-text-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.qual-text-content h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 24px;
+    line-height: 1.3;
+}
+
+.qual-text-content p {
+    font-size: 15px;
+    color: #4b5563;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    text-align: justify;
+}
+
+.qual-image-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.qual-image {
+    width: 80%;
+    max-width: 600px;
+    border-radius: 20px;
+    border: 1px solid #0783df;
+    box-shadow: 0 10px 30px rgba(7, 131, 223, 0.1);
+    object-fit: cover;
+}
+
+/* Methodologies Section */
+.qual-methodology-section {
+    padding: 80px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.methodology-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.methodology-header h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 16px;
+    line-height: 1.3;
+}
+
+.methodology-header p {
+    font-size: 16px;
+    color: #4b5563;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.methodology-grid {
+    display: grid;
+    grid-template-columns: 45% 55%;
+    gap: 40px;
+    align-items: stretch;
+}
+
+.methodology-image-container {
+    width: 100%;
+    border-radius: 20px;
+    border: 1px solid #cce4f7;
+    overflow: hidden;
+    background-color: #eff6ff; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.qual-method-gif {
+    width: 85%;
+    height: 85%;
+    object-fit: cover;
+    display: block;
+}
+
+.methodology-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.method-card {
+    border: 1px solid #0783df;
+    border-radius: 16px;
+    padding: 15px 28px;
+    background: #f4f9ff;
+    box-shadow: 0 4px 12px rgba(7, 131, 223, 0.05);
+}
+
+.method-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.method-card-header h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0;
+}
+
+.method-number {
+    font-size: 56px;
+    font-weight: 800;
+    color: #0783df;
+    line-height: 1;
+}
+
+.method-card-body p {
+    font-size: 15px;
+    color: #4b5563;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.method-card-body p:last-child {
+    margin-bottom: 0;
+}
+
+.method-card-body strong {
+    color: #374151;
+    font-weight: 700;
+}
+
+/* Process Section */
+.qual-process-section {
+    padding: 0 20px 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.process-header {
+    margin-bottom: 50px;
+    text-align: left;
+}
+
+.process-header h2 {
+    font-size: 36px;
+    font-weight: 800;
+    color: #111827;
+    margin-bottom: 16px;
+}
+
+.process-header p {
+    font-size: 16px;
+    color: #4b5563;
+    line-height: 1.6;
+    max-width: 800px;
+}
+
+.process-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+}
+
+.process-card {
+    border: 1px solid #7cbbed;
+    border-radius: 16px;
+    padding: 32px 40px;
+    background: #ffffff;
+}
+
+.process-number {
+    position: relative;
+    display: inline-flex;
+    margin-bottom: 24px;
+}
+
+.num-text {
+    font-size: 48px;
+    font-weight: 800;
+    color: #0783df;
+    line-height: 1;
+    z-index: 2;
+    position: relative;
+    margin-left: 8px;
+}
+
+.num-circle {
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    background: #e6f2fd;
+    border-radius: 50%;
+    z-index: 1;
+    top: 8px;
+    left: 10px;
+}
+
+.process-card h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 12px 0;
+}
+
+.process-card p {
+    font-size: 15px;
+    color: #64748b;
+    line-height: 1.7;
+    margin: 0;
+}
+
+/* Decisions Section */
+.qual-decisions-section {
+    padding: 0 20px 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.decisions-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.decisions-header h2 {
+    font-size: 36px;
+    font-weight: 800;
+    color: #111827;
+    margin-bottom: 16px;
+}
+
+.decisions-header p {
+    font-size: 16px;
+    color: #4b5563;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.decisions-video-container {
+    width: 100%;
+    margin: 0 auto;
+    border-radius: 20px;
+    border: 1px solid #7cbbed;
+    overflow: hidden;
+    background-color: #eff6ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.qual-decision-video {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+/* Why Choose Us Section */
+.qual-why-choose {
+    padding: 40px 20px 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.why-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+.why-header h2 {
+    font-size: 36px;
+    font-weight: 800;
+    color: #111827;
+    line-height: 1.4;
+}
+.why-choose-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+}
+.why-col {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+.why-card {
+    position: relative;
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid #7cbbed;
+    border-radius: 16px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+.why-blob {
+    position: absolute;
+    background: #62a5f5;
+    z-index: 0;
+}
+.blob-top-right {
+    top: -30px;
+    right: -30px;
+    width: 180px;
+    height: 110px;
+    border-radius: 50% 30% 60% 40% / 40% 50% 60% 70%;
+}
+.blob-top-right-2 {
+    top: -20px;
+    right: -40px;
+    width: 160px;
+    height: 160px;
+    border-radius: 40% 70% 30% 60% / 50% 40% 70% 50%;
+}
+.blob-bottom-right {
+    bottom: -40px;
+    right: -20px;
+    width: 150px;
+    height: 150px;
+    border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%;
+}
+.blob-bottom-left {
+    bottom: -40px;
+    left: -40px;
+    width: 200px;
+    height: 150px;
+    border-radius: 30% 70% 40% 60% / 40% 50% 60% 50%;
+}
+.blob-tall-right {
+    bottom: -50px;
+    right: -30px;
+    width: 280px;
+    height: 350px;
+    border-radius: 60% 40% 70% 30% / 50% 30% 70% 40%;
+}
+.why-icon {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 40px;
+}
+.why-icon svg {
+    width: 52px;
+    height: 52px;
+    color: #1a73e8;
+}
+.why-icon-large {
+    margin-bottom: 24px;
+}
+.why-icon-large svg {
+    width: 64px;
+    height: 64px;
+}
+.why-card p {
+    position: relative;
+    z-index: 1;
+    font-size: 15px;
+    color: #1f2937;
+    line-height: 1.6;
+    margin: 0;
+    font-weight: 500;
+}
+.why-card-tall {
+    justify-content: flex-start;
+}
+.why-card-tall p {
+    margin-top: auto; 
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+/* Get Started Section */
+.qual-get-started {
+    padding: 20px 20px ;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.get-started-box {
+    border: 1px solid #007bff;
+    border-radius: 48px;
+    padding: 80px 40px;
+    text-align: center;
+    background-color: #ffffff;
+}
+
+.get-started-box h2 {
+    font-size: 56px;
+    font-weight: 800;
+    color: #111827;
+    margin-bottom: 24px;
+}
+
+.get-started-box p {
+    font-size: 16px;
+    color: #4b5563;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto 40px auto;
+}
+
+.get-started-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #0076ff;
+    color: #ffffff;
+    padding: 16px 32px;
+    border-radius: 9999px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.get-started-btn:hover {
+    background-color: #005fcc;
+    color: #ffffff;
+}
+
+.get-started-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+@media (max-width: 900px) {
+    .qual-about-section {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .methodology-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .process-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .why-choose-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .qual-title {
+        font-size: 36px;
+    }
+}

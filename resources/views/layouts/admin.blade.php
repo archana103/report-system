@@ -82,7 +82,7 @@
 
                 {{-- Master Accordion --}}
                 @php
-                    $isMasterActive = request()->is('admin/category-report') || request()->is('admin/category-list') || request()->is('admin/category-details') || request()->is('admin/top-selling-reports') || request()->is('admin/pricing-setup') || request()->is('admin/report-methodology');
+                    $isMasterActive = request()->is('admin/category-report') || request()->is('admin/category-list') || request()->is('admin/category-details');
                 @endphp
                 <div>
                     <button
@@ -91,7 +91,7 @@
                     >
                         <div class="flex items-center gap-3">
                             <svg class="w-5 h-5 text-indigo-300 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-                            <span class="font-medium text-white transition-colors">Master</span>
+                            <span class="font-medium text-white transition-colors">Reports</span>
                         </div>
                         <svg id="masterIcon" class="w-4 h-4 text-gray-300 group-hover:text-white transition-transform duration-300 transform {{ $isMasterActive ? 'rotate-180' : '' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
@@ -106,8 +106,33 @@
                         <a href="{{ url('/admin/category-report') }}" class="relative flex items-center px-12 py-2.5 rounded-lg text-sm transition-all duration-200 {{ request()->is('admin/category-report') ? 'text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 font-medium !text-indigo-400 router-active-item' : 'text-white hover:text-white hover:bg-white/5' }}">Report Category</a>
                         <a href="{{ url('/admin/category-list') }}" class="relative flex items-center px-12 py-2.5 rounded-lg text-sm transition-all duration-200 {{ request()->is('admin/category-list') ? 'text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 font-medium !text-indigo-400 router-active-item' : 'text-white hover:text-white hover:bg-white/5' }}">Report List</a>
                         <a href="{{ url('/admin/category-details') }}" class="relative flex items-center px-12 py-2.5 rounded-lg text-sm transition-all duration-200 {{ request()->is('admin/category-details') ? 'text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 font-medium !text-indigo-400 router-active-item' : 'text-white hover:text-white hover:bg-white/5' }}">Report Details</a>
+                    </div>
+                </div>
+
+                {{-- Report Management Accordion --}}
+                @php
+                    $isReportMgmtActive = request()->is('admin/top-selling-reports') || request()->is('admin/report-methodology');
+                @endphp
+                <div>
+                    <button
+                        onclick="toggleMenu('reportMgmtMenu', 'reportMgmtIcon')"
+                        class="w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-200 hover:bg-white/5 border group {{ $isReportMgmtActive ? 'bg-white/5 border-gray-700' : 'border-transparent hover:border-gray-700' }}"
+                    >
+                        <div class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-indigo-300 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                            <span class="font-medium text-white transition-colors">USP</span>
+                        </div>
+                        <svg id="reportMgmtIcon" class="w-4 h-4 text-gray-300 group-hover:text-white transition-transform duration-300 transform {{ $isReportMgmtActive ? 'rotate-180' : '' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+
+                    <div
+                        id="reportMgmtMenu"
+                        class="mt-3 space-y-1 overflow-hidden relative"
+                        style="display: {{ $isReportMgmtActive ? 'block' : 'none' }};"
+                    >
+                        <div class="absolute left-6 top-0 bottom-0 w-px bg-gray-700"></div>
+
                         <a href="{{ url('/admin/top-selling-reports') }}" class="relative flex items-center px-12 py-2.5 rounded-lg text-sm transition-all duration-200 {{ request()->is('admin/top-selling-reports') ? 'text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 font-medium !text-indigo-400 router-active-item' : 'text-white hover:text-white hover:bg-white/5' }}">Top Selling Reports</a>
-                        <a href="{{ url('/admin/pricing-setup') }}" class="relative flex items-center px-12 py-2.5 rounded-lg text-sm transition-all duration-200 {{ request()->is('admin/pricing-setup') ? 'text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 font-medium !text-indigo-400 router-active-item' : 'text-white hover:text-white hover:bg-white/5' }}">Global Pricing</a>
                         <a href="{{ url('/admin/report-methodology') }}" class="relative flex items-center px-12 py-2.5 rounded-lg text-sm transition-all duration-200 {{ request()->is('admin/report-methodology') ? 'text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 font-medium !text-indigo-400 router-active-item' : 'text-white hover:text-white hover:bg-white/5' }}">Report Methodology</a>
                     </div>
                 </div>
@@ -143,7 +168,7 @@
 
                 {{-- Contact Accordion --}}
                 @php
-                    $isContactActive = request()->is('admin/contact-us') || request()->is('admin/request-form');
+                    $isContactActive = request()->is('admin/contact-us') || request()->is('admin/request-form') || request()->is('admin/newsletters');
                 @endphp
                 <div>
                     <button
@@ -166,58 +191,94 @@
 
                         <a href="{{ url('/admin/contact-us') }}" class="relative flex items-center px-12 py-2.5 rounded-lg text-sm transition-all duration-200 {{ request()->is('admin/contact-us') ? 'text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 font-medium !text-indigo-400 router-active-item' : 'text-white hover:text-white hover:bg-white/5' }}">Contact Us Data</a>
                         <a href="{{ url('/admin/request-form') }}" class="relative flex items-center px-12 py-2.5 rounded-lg text-sm transition-all duration-200 {{ request()->is('admin/request-form') ? 'text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 font-medium !text-indigo-400 router-active-item' : 'text-white hover:text-white hover:bg-white/5' }}">Request Form Data</a>
+                        <a href="{{ url('/admin/newsletters') }}" class="relative flex items-center px-12 py-2.5 rounded-lg text-sm transition-all duration-200 {{ request()->is('admin/newsletters') ? 'text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 font-medium !text-indigo-400 router-active-item' : 'text-white hover:text-white hover:bg-white/5' }}">Newsletter Data</a>
                     </div>
                 </div>
 
-                {{-- Press Release --}}
-                <a
-                    href="{{ url('/admin/press-release') }}"
-                    class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 hover:bg-white/5 border relative overflow-hidden group {{ request()->is('admin/press-release') ? 'bg-gradient-to-r from-indigo-600 to-purple-600 shadow-lg border-transparent text-white ring-1 ring-white/20' : 'border-transparent hover:border-gray-700 text-gray-200' }}"
-                >
-                    <div class="absolute inset-0 bg-gradient-to-r from-white/0 via-white/5 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
-                    <svg class="w-5 h-5 {{ request()->is('admin/press-release') ? 'text-white' : 'text-indigo-300' }} relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>
-                    <span class="font-medium relative z-10 text-white">Press Release</span>
-                </a>
+                {{-- Lead Data Accordion --}}
+                @php
+                    $isLeadDataActive = request()->is('admin/pricing-setup') || request()->is('admin/purchases');
+                @endphp
+                <div>
+                    <button
+                        onclick="toggleMenu('leadDataMenu', 'leadDataIcon')"
+                        class="w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-200 hover:bg-white/5 border group {{ $isLeadDataActive ? 'bg-white/5 border-gray-700' : 'border-transparent hover:border-gray-700' }}"
+                    >
+                        <div class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-indigo-300 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                            <span class="font-medium text-white transition-colors">Lead Data</span>
+                        </div>
+                        <svg id="leadDataIcon" class="w-4 h-4 text-gray-300 group-hover:text-white transition-transform duration-300 transform {{ $isLeadDataActive ? 'rotate-180' : '' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
 
-                {{-- Press Release Details --}}
-                <a
-                    href="{{ url('/admin/press-release-details') }}"
-                    class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 hover:bg-white/5 border relative overflow-hidden group {{ request()->is('admin/press-release-details') ? 'bg-gradient-to-r from-indigo-600 to-purple-600 shadow-lg border-transparent text-white ring-1 ring-white/20' : 'border-transparent hover:border-gray-700 text-gray-200' }}"
-                >
-                    <div class="absolute inset-0 bg-gradient-to-r from-white/0 via-white/5 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
-                    <svg class="w-5 h-5 {{ request()->is('admin/press-release-details') ? 'text-white' : 'text-indigo-300' }} relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                    <span class="font-medium relative z-10 text-white">Press Release Details</span>
-                </a>
+                    <div
+                        id="leadDataMenu"
+                        class="mt-3 space-y-1 overflow-hidden relative"
+                        style="display: {{ $isLeadDataActive ? 'block' : 'none' }};"
+                    >
+                        <div class="absolute left-6 top-0 bottom-0 w-px bg-gray-700"></div>
 
-                {{-- Newsletter --}}
-                <a
-                    href="{{ url('/admin/newsletters') }}"
-                    class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 hover:bg-white/5 border relative overflow-hidden group {{ request()->is('admin/newsletters') ? 'bg-gradient-to-r from-indigo-600 to-purple-600 shadow-lg border-transparent text-white ring-1 ring-white/20' : 'border-transparent hover:border-gray-700 text-gray-200' }}"
-                >
-                    <div class="absolute inset-0 bg-gradient-to-r from-white/0 via-white/5 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
-                    <svg class="w-5 h-5 {{ request()->is('admin/newsletters') ? 'text-white' : 'text-indigo-300' }} relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                    <span class="font-medium relative z-10 text-white">Newsletter</span>
-                </a>
+                        <a href="{{ url('/admin/pricing-setup') }}" class="relative flex items-center px-12 py-2.5 rounded-lg text-sm transition-all duration-200 {{ request()->is('admin/pricing-setup') ? 'text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 font-medium !text-indigo-400 router-active-item' : 'text-white hover:text-white hover:bg-white/5' }}">Global Pricing</a>
+                        <a href="{{ url('/admin/purchases') }}" class="relative flex items-center px-12 py-2.5 rounded-lg text-sm transition-all duration-200 {{ request()->is('admin/purchases') ? 'text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 font-medium !text-indigo-400 router-active-item' : 'text-white hover:text-white hover:bg-white/5' }}">Purchases</a>
+                    </div>
+                </div>
 
-                {{-- Page SEO --}}
-                <a
-                    href="{{ url('/admin/page-seo') }}"
-                    class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 hover:bg-white/5 border relative overflow-hidden group {{ request()->is('admin/page-seo') ? 'bg-gradient-to-r from-indigo-600 to-purple-600 shadow-lg border-transparent text-white ring-1 ring-white/20' : 'border-transparent hover:border-gray-700 text-gray-200' }}"
-                >
-                    <div class="absolute inset-0 bg-gradient-to-r from-white/0 via-white/5 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
-                    <svg class="w-5 h-5 {{ request()->is('admin/page-seo') ? 'text-white' : 'text-indigo-300' }} relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
-                    <span class="font-medium relative z-10 text-white">Page SEO</span>
-                </a>
+                {{-- Press Release Accordion --}}
+                @php
+                    $isPressReleaseActive = request()->is('admin/press-release') || request()->is('admin/press-release-details');
+                @endphp
+                <div>
+                    <button
+                        onclick="toggleMenu('pressReleaseMenu', 'pressReleaseIcon')"
+                        class="w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-200 hover:bg-white/5 border group {{ $isPressReleaseActive ? 'bg-white/5 border-gray-700' : 'border-transparent hover:border-gray-700' }}"
+                    >
+                        <div class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-indigo-300 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>
+                            <span class="font-medium text-white transition-colors">Press Release</span>
+                        </div>
+                        <svg id="pressReleaseIcon" class="w-4 h-4 text-gray-300 group-hover:text-white transition-transform duration-300 transform {{ $isPressReleaseActive ? 'rotate-180' : '' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
 
-                {{-- Purchases --}}
-                <a
-                    href="{{ url('/admin/purchases') }}"
-                    class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 hover:bg-white/5 border relative overflow-hidden group {{ request()->is('admin/purchases') ? 'bg-gradient-to-r from-indigo-600 to-purple-600 shadow-lg border-transparent text-white ring-1 ring-white/20' : 'border-transparent hover:border-gray-700 text-gray-200' }}"
-                >
-                    <div class="absolute inset-0 bg-gradient-to-r from-white/0 via-white/5 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
-                    <svg class="w-5 h-5 {{ request()->is('admin/purchases') ? 'text-white' : 'text-indigo-300' }} relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                    <span class="font-medium relative z-10 text-white">Purchases</span>
-                </a>
+                    <div
+                        id="pressReleaseMenu"
+                        class="mt-3 space-y-1 overflow-hidden relative"
+                        style="display: {{ $isPressReleaseActive ? 'block' : 'none' }};"
+                    >
+                        <div class="absolute left-6 top-0 bottom-0 w-px bg-gray-700"></div>
+
+                        <a href="{{ url('/admin/press-release') }}" class="relative flex items-center px-12 py-2.5 rounded-lg text-sm transition-all duration-200 {{ request()->is('admin/press-release') ? 'text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 font-medium !text-indigo-400 router-active-item' : 'text-white hover:text-white hover:bg-white/5' }}">Press Release List</a>
+                        <a href="{{ url('/admin/press-release-details') }}" class="relative flex items-center px-12 py-2.5 rounded-lg text-sm transition-all duration-200 {{ request()->is('admin/press-release-details') ? 'text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 font-medium !text-indigo-400 router-active-item' : 'text-white hover:text-white hover:bg-white/5' }}">Press Release Details</a>
+                    </div>
+                </div>
+
+
+
+                {{-- SEO Accordion --}}
+                @php
+                    $isSeoActive = request()->is('admin/page-seo');
+                @endphp
+                <div>
+                    <button
+                        onclick="toggleMenu('seoMenu', 'seoIcon')"
+                        class="w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-200 hover:bg-white/5 border group {{ $isSeoActive ? 'bg-white/5 border-gray-700' : 'border-transparent hover:border-gray-700' }}"
+                    >
+                        <div class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-indigo-300 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+                            <span class="font-medium text-white transition-colors">SEO</span>
+                        </div>
+                        <svg id="seoIcon" class="w-4 h-4 text-gray-300 group-hover:text-white transition-transform duration-300 transform {{ $isSeoActive ? 'rotate-180' : '' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+
+                    <div
+                        id="seoMenu"
+                        class="mt-3 space-y-1 overflow-hidden relative"
+                        style="display: {{ $isSeoActive ? 'block' : 'none' }};"
+                    >
+                        <div class="absolute left-6 top-0 bottom-0 w-px bg-gray-700"></div>
+
+                        <a href="{{ url('/admin/page-seo') }}" class="relative flex items-center px-12 py-2.5 rounded-lg text-sm transition-all duration-200 {{ request()->is('admin/page-seo') ? 'text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 font-medium !text-indigo-400 router-active-item' : 'text-white hover:text-white hover:bg-white/5' }}">Page SEO</a>
+                    </div>
+                </div>
             </nav>
 
             <div class="p-4 border-t border-gray-700 bg-gray-900/50 mt-auto">
@@ -313,12 +374,33 @@
         function toggleMenu(menuId, iconId) {
             const menu = document.getElementById(menuId);
             const icon = document.getElementById(iconId);
-            if (menu.style.display === 'none' || menu.style.display === '') {
+            
+            const isOpen = menu.style.display === 'block';
+
+            // Close all
+            const allMenus = [
+                { id: 'masterMenu', icon: 'masterIcon' },
+                { id: 'reportMgmtMenu', icon: 'reportMgmtIcon' },
+                { id: 'blogsMenu', icon: 'blogsIcon' },
+                { id: 'contactMenu', icon: 'contactIcon' },
+                { id: 'leadDataMenu', icon: 'leadDataIcon' },
+                { id: 'pressReleaseMenu', icon: 'pressReleaseIcon' },
+                { id: 'seoMenu', icon: 'seoIcon' }
+            ];
+
+            allMenus.forEach(item => {
+                const m = document.getElementById(item.id);
+                const i = document.getElementById(item.icon);
+                if (m && i) {
+                    m.style.display = 'none';
+                    i.classList.remove('rotate-180');
+                }
+            });
+
+            // If it wasn't open, open it now
+            if (!isOpen) {
                 menu.style.display = 'block';
                 icon.classList.add('rotate-180');
-            } else {
-                menu.style.display = 'none';
-                icon.classList.remove('rotate-180');
             }
         }
 

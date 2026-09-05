@@ -19,12 +19,12 @@
                 </div>
 
                 <!-- Report Details Summary Block -->
-                <div class="checkout-report-summary" style="background: #f8fafc; border-radius: 12px; padding: 24px; margin-bottom: 40px; border: 1px solid #e2e8f0; text-align: center;">
+                <div class="checkout-report-summary" style="border-radius: 12px; padding: 24px; margin-bottom: 40px; border: 1px solid #e2e8f0; text-align: center;">
                     <div class="summary-details">
                         <h2 style="font-size: 20px; font-weight: 600; color: #1e293b; margin: 0 0 16px 0;">{{ $report->title }}</h2>
                         <div class="summary-meta" style="display: flex; gap: 24px; justify-content: center; font-size: 14px; color: #475569;">
                             <span>Report ID: <strong>{{ $report->report_sku ?? $report->id }}</strong></span>
-                            <span>Format: <strong>{{ collect(explode(',', $report->format))->first() ?? 'PDF' }}</strong></span>
+                            <span>Format: <strong>PDF, Excel</strong></span>
                             <span>Publish Date: <strong>{{ \Carbon\Carbon::parse($report->date)->format('M Y') }}</strong></span>
                         </div>
                     </div>
