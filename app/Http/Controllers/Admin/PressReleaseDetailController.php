@@ -12,10 +12,6 @@ class PressReleaseDetailController extends Controller
 {
     public function index(Request $request)
     {
-        if (!$request->expectsJson()) {
-            return view('welcome');
-        }
-
         $query = PressReleaseDetail::with('pressRelease:id,title');
 
         if ($request->has('search') && $request->search != '') {
@@ -26,25 +22,13 @@ class PressReleaseDetailController extends Controller
 
         $details = $query->orderBy('created_at', 'desc')->paginate(20);
 
-        return response()->json($details);
+        return view('admin.press_release_details.index', compact('details'));
     }
 
-    public function store(Request $request)
+    public function edit($id)
     {
-        $request->validate([
-            'press_release_id' => 'required|exists:press_releases,id',
-            'content' => 'nullable|string',
-            'meta_title' => 'nullable|string',
-            'meta_description' => 'nullable|string',
-            'meta_keywords' => 'nullable|string',
-        ]);
-
-        $detail = PressReleaseDetail::create($request->all());
-
-        return response()->json([
-            'message' => 'Press release detail saved successfully!',
-            'data'    => $detail->load('pressRelease:id,title'),
-        ], 201);
+        $detail = PressReleaseDetail::findOrFail($id);
+        return view('admin.press_release_details.edit', compact('detail'));
     }
 
     public function update(Request $request, $id)
@@ -57,14 +41,21 @@ class PressReleaseDetailController extends Controller
             'meta_title' => 'nullable|string',
             'meta_description' => 'nullable|string',
             'meta_keywords' => 'nullable|string',
+            'canonical_tag' => 'nullable|string',
+            'meta_robots' => 'nullable|string',
+            'hreflang_tags' => 'nullable|array',
+            'open_graph_tags' => 'nullable|array',
+            'twitter_card_tags' => 'nullable|array',
+            'schema_tag' => 'nullable|string',
+            'schema_tag_2' => 'nullable|string',
+            'slug_url' => 'nullable|string',
+            'page_main_title' => 'nullable|string',
+            'breadcrumb_title' => 'nullable|string',
         ]);
 
         $detail->update($request->all());
 
-        return response()->json([
-            'message' => 'Press release detail updated successfully!',
-            'data'    => $detail->load('pressRelease:id,title'),
-        ]);
+        return redirect()->route('admin.press_release_details.index')->with('success', 'Press release detail updated successfully!');
     }
 
     public function destroy($id)
@@ -72,14 +63,6 @@ class PressReleaseDetailController extends Controller
         $detail = PressReleaseDetail::findOrFail($id);
         $detail->delete();
 
-        return response()->json([
-            'message' => 'Press release detail deleted successfully!',
-        ]);
-    }
-
-    public function getPressReleasesList()
-    {
-        $pressReleases = PressRelease::select('id', 'title')->orderBy('title', 'asc')->get();
-        return response()->json($pressReleases);
+        return redirect()->back()->with('success', 'Press release detail deleted successfully!');
     }
 }

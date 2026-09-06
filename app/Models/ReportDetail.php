@@ -52,7 +52,9 @@ class ReportDetail extends Model
 
     public function getImageAttribute($value)
     {
-        return $value ? \Illuminate\Support\Facades\Storage::disk('s3')->url($value) : null;
+        if (!$value) return null;
+        if (str_starts_with($value, 'http')) return $value;
+        return rtrim(env('AWS_URL'), '/') . '/' . ltrim($value, '/');
     }
 
     protected static function booted()

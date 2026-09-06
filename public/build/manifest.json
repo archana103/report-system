@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "node_modules/canvg/lib/index.es.js": {
     "file": "assets/index.es-DWU6XXRN.js",
     "name": "index.es",
@@ -30,14 +31,29 @@
   },
   "resources/css/app.css": {
     "file": "assets/app-BSLd8J_D.css",
+=======
+  "resources/css/app.css": {
+    "file": "assets/app-DKccx_1T.css",
+>>>>>>> formatting-and-search-fixes
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/js/app.js": {
+<<<<<<< HEAD
     "file": "assets/app-CmYbUXed.js",
+=======
+    "file": "assets/app-CNJtE3UX.js",
+>>>>>>> formatting-and-search-fixes
     "name": "app",
     "src": "resources/js/app.js",
+    "isEntry": true
+  },
+  "resources/js/public.js": {
+    "file": "assets/public-Co83WBUB.js",
+    "name": "public",
+    "src": "resources/js/public.js",
     "isEntry": true,
+<<<<<<< HEAD
     "dynamicImports": [
       "node_modules/html2canvas/dist/html2canvas.esm.js",
       "node_modules/dompurify/dist/purify.es.mjs",
@@ -49,6 +65,10 @@
     "assets": [
       "assets/flags-DjVgN9ag.webp",
       "assets/flags@2x-QBzdwbZ8.webp"
+=======
+    "imports": [
+      "resources/js/app.js"
+>>>>>>> formatting-and-search-fixes
     ]
   }
 }

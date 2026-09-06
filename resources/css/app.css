@@ -1,4 +1,15 @@
 @import 'tailwindcss';
+@import '../js/Userview/style.css';
+@import '../js/Userview/reportsStyle.css';
+@import '../js/Userview/reportDetailStyle.css';
+@import '../js/Userview/aboutStyle.css';
+@import '../js/Userview/blogDetailStyle.css';
+@import '../js/Userview/blogsStyle.css';
+@import '../js/Userview/contactStyle.css';
+@import '../js/Userview/pressDetailStyle.css';
+@import '../js/Userview/pressStyle.css';
+@import '../js/Userview/servicesStyle.css';
+@import '../js/Userview/thankYouStyle.css';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -206,7 +217,7 @@
 }
 
 .iti__country {
-  padding: 8px 12px !important;
+  padding: 8px 24px !important;
   font-size: 13.5px !important;
   transition: background 0.15s ease !important;
 }

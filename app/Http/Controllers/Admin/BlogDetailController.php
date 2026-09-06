@@ -14,10 +14,6 @@ class BlogDetailController extends Controller
      */
     public function index(Request $request)
     {
-        if (!$request->expectsJson()) {
-            return view('welcome');
-        }
-
         $query = BlogDetail::with('blog:id,title');
 
         if ($request->has('search') && $request->search != '') {
@@ -27,32 +23,20 @@ class BlogDetailController extends Controller
                   });
         }
 
-        $details = $query->orderBy('created_at', 'desc')->paginate(20);
+        $details = $query->orderBy('created_at', 'desc')->paginate(10);
 
-        return response()->json($details);
+        return view('admin.blog_details.index', compact('details'));
     }
 
+
     /**
-     * Store a newly created blog detail.
+     * Show the form for editing the specified blog detail.
      */
-    public function store(Request $request)
+    public function edit($id)
     {
-        $request->validate([
-            'blog_id' => 'required|exists:blogs,id',
-            'title' => 'required|string',
-            'breadcrumb_title' => 'nullable|string',
-            'description' => 'nullable|string',
-            'meta_title' => 'nullable|string',
-            'meta_description' => 'nullable|string',
-            'meta_keywords' => 'nullable|string',
-        ]);
-
-        $detail = BlogDetail::create($request->all());
-
-        return response()->json([
-            'message' => 'Blog detail saved successfully!',
-            'data'    => $detail->load('blog:id,title'),
-        ], 201);
+        $detail = BlogDetail::findOrFail($id);
+        $blogs = Blog::select('id', 'title')->orderBy('title', 'asc')->get();
+        return view('admin.blog_details.edit', compact('detail', 'blogs'));
     }
 
     /**
@@ -74,10 +58,7 @@ class BlogDetailController extends Controller
 
         $detail->update($request->all());
 
-        return response()->json([
-            'message' => 'Blog detail updated successfully!',
-            'data'    => $detail->load('blog:id,title'),
-        ]);
+        return redirect()->route('admin.blog_details.index')->with('success', 'Blog detail updated successfully!');
     }
 
     /**
@@ -88,17 +69,6 @@ class BlogDetailController extends Controller
         $detail = BlogDetail::findOrFail($id);
         $detail->delete();
 
-        return response()->json([
-            'message' => 'Blog detail deleted successfully!',
-        ]);
-    }
-
-    /**
-     * Get a simple list of blogs for dropdown.
-     */
-    public function getBlogsList()
-    {
-        $blogs = Blog::select('id', 'title')->orderBy('title', 'asc')->get();
-        return response()->json($blogs);
+        return redirect()->back()->with('success', 'Blog detail deleted successfully!');
     }
 }

@@ -76,9 +76,24 @@ class ReportListController extends Controller
         }
 
         $limit = $request->get('limit', 20);
-        $lists = $query->paginate($limit);
+        $lists = $query->paginate($limit)->withQueryString();
 
-        return response()->json($lists);
+        $categories = ReportCategory::where('status', 'Active')->orderBy('name')->get();
+
+        return view('admin.reports.index', compact('lists', 'categories'));
+    }
+
+    public function create()
+    {
+        $categories = ReportCategory::where('status', 'Active')->orderBy('name')->get();
+        return view('admin.reports.create', compact('categories'));
+    }
+
+    public function edit($id)
+    {
+        $reportList = ReportList::findOrFail($id);
+        $categories = ReportCategory::where('status', 'Active')->orderBy('name')->get();
+        return view('admin.reports.edit', compact('reportList', 'categories'));
     }
 
     /**
@@ -93,12 +108,8 @@ class ReportListController extends Controller
         ]);
 
         $reportList = ReportList::create($request->only('report_category_id', 'name', 'status'));
-        $reportList->load('reportCategory:id,name');
 
-        return response()->json([
-            'message' => 'Report saved successfully!',
-            'data'    => $reportList,
-        ], 201);
+        return redirect()->route('admin.reports.index')->with('success', 'Report list created successfully!');
     }
 
     /**
@@ -115,12 +126,8 @@ class ReportListController extends Controller
         ]);
 
         $reportList->update($request->only('report_category_id', 'name', 'status'));
-        $reportList->load('reportCategory:id,name');
 
-        return response()->json([
-            'message' => 'Report updated successfully!',
-            'data'    => $reportList,
-        ]);
+        return redirect()->route('admin.reports.index')->with('success', 'Report list updated successfully!');
     }
 
     /**
@@ -131,8 +138,6 @@ class ReportListController extends Controller
         $reportList = ReportList::findOrFail($id);
         $reportList->delete();
 
-        return response()->json([
-            'message' => 'Report deleted successfully!',
-        ]);
+        return redirect()->route('admin.reports.index')->with('success', 'Report list deleted successfully!');
     }
 }

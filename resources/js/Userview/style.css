@@ -341,8 +341,6 @@ input {
   min-height: 735px;
   overflow: hidden;
   padding: 170px 24px 90px;
-  background: url('/assets/images/hero-bg-screenshot.png') no-repeat center center;
-  background-size: cover;
 }
 
 /* CSS hero ring replaced by background image */
@@ -546,7 +544,7 @@ input {
 }
 
 .reports-section {
-  padding: 84px 0 142px;
+  padding: 70px 0 142px;
   background:
     radial-gradient(circle at left 28%, rgba(220, 241, 255, 0.78), transparent 23%),
     linear-gradient(180deg, #ffffff 0%, #f8fcff 100%);
@@ -662,7 +660,7 @@ input {
 }
 
 .content-row-section {
-  width: min(1060px, calc(100% - 48px));
+  width: min(1282px, calc(100% - 48px));
   margin: 0 auto;
   padding: 72px 0 110px;
 }
@@ -1147,6 +1145,7 @@ input {
   margin: 10px;
   max-width: none;
   color: white;
+  margin-bottom: 20px;
 }
 
 .footer-contact span {

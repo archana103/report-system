@@ -8,10 +8,16 @@ use Illuminate\Http\Request;
 
 class PageSeoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $pageSeos = PageSeo::orderBy('created_at', 'desc')->get();
-        return response()->json($pageSeos, 200);
+        $query = PageSeo::query();
+
+        if ($request->has('search') && $request->search != '') {
+            $query->where('url_path', 'like', '%' . $request->search . '%');
+        }
+
+        $pageSeos = $query->orderBy('created_at', 'desc')->paginate(20);
+        return view('admin.page_seo.index', compact('pageSeos'));
     }
 
     public function store(Request $request)
@@ -25,10 +31,7 @@ class PageSeoController extends Controller
             'url_path', 'schema_tag', 'raw_tags'
         ]));
 
-        return response()->json([
-            'message' => 'Page SEO created successfully',
-            'data' => $pageSeo
-        ], 201);
+        return redirect()->back()->with('success', 'Page SEO created successfully');
     }
 
     public function update(Request $request, $id)
@@ -44,10 +47,7 @@ class PageSeoController extends Controller
             'url_path', 'schema_tag', 'raw_tags'
         ]));
 
-        return response()->json([
-            'message' => 'Page SEO updated successfully',
-            'data' => $pageSeo
-        ], 200);
+        return redirect()->back()->with('success', 'Page SEO updated successfully');
     }
 
     public function destroy($id)
@@ -55,8 +55,6 @@ class PageSeoController extends Controller
         $pageSeo = PageSeo::findOrFail($id);
         $pageSeo->delete();
 
-        return response()->json([
-            'message' => 'Page SEO deleted successfully'
-        ], 200);
+        return redirect()->back()->with('success', 'Page SEO deleted successfully');
     }
 }

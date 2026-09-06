@@ -10,10 +10,6 @@ class BlogRequestController extends Controller
 {
     public function index(Request $request)
     {
-        if (!$request->expectsJson()) {
-            return view('welcome');
-        }
-
         $query = BlogRequest::with('blog');
 
         if ($request->has('search') && $request->search != '') {
@@ -30,26 +26,9 @@ class BlogRequestController extends Controller
             });
         }
 
-        $sortBy = $request->get('sort_by', 'created_at');
-        $sortDir = $request->get('sort_dir', 'desc');
+        $requests = $query->orderBy('created_at', 'desc')->paginate(20);
 
-        // Check if sorting by blog title
-        if ($sortBy === 'blog') {
-            $query->join('blogs', 'blog_requests.blog_id', '=', 'blogs.id')
-                  ->select('blog_requests.*')
-                  ->orderBy('blogs.title', $sortDir);
-        } else {
-            $query->orderBy('blog_requests.' . $sortBy, $sortDir);
-        }
-
-        if ($request->has('export') && $request->export == 'true') {
-            return response()->json($query->get());
-        }
-
-        $limit = $request->get('limit', 20);
-        $data = $query->paginate($limit);
-
-        return response()->json($data);
+        return view('admin.blog_requests.index', compact('requests'));
     }
 
     public function destroy($id)
@@ -57,6 +36,6 @@ class BlogRequestController extends Controller
         $blogRequest = BlogRequest::findOrFail($id);
         $blogRequest->delete();
 
-        return response()->json(['message' => 'Record deleted successfully!']);
+        return redirect()->back()->with('success', 'Blog Request deleted successfully!');
     }
 }

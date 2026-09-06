@@ -24,18 +24,8 @@ class ContactUsController extends Controller
             });
         }
 
-        $sortBy = $request->get('sort_by', 'created_at');
-        $sortDir = $request->get('sort_dir', 'desc');
+        $contacts = $query->orderBy('created_at', 'desc')->paginate(20);
 
-        $query->orderBy($sortBy, $sortDir);
-
-        if ($request->has('export') && $request->export == 'true') {
-            return response()->json($query->get());
-        }
-
-        $limit = $request->get('limit', 20);
-        $data = $query->paginate($limit);
-
-        return response()->json($data);
+        return view('admin.contact_us.index', compact('contacts'));
     }
 }

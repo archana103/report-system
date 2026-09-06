@@ -23,19 +23,9 @@ class RequestFormController extends Controller
             });
         }
 
-        $sortBy = $request->get('sort_by', 'created_at');
-        $sortDir = $request->get('sort_dir', 'desc');
+        $requests = $query->orderBy('created_at', 'desc')->paginate(20);
 
-        $query->orderBy($sortBy, $sortDir);
-
-        if ($request->has('export') && $request->export == 'true') {
-            return response()->json($query->get());
-        }
-
-        $limit = $request->get('limit', 20);
-        $data = $query->paginate($limit);
-
-        return response()->json($data);
+        return view('admin.request_forms.index', compact('requests'));
     }
 
     public function destroy($id)
@@ -43,6 +33,6 @@ class RequestFormController extends Controller
         $requestForm = RequestForm::findOrFail($id);
         $requestForm->delete();
 
-        return response()->json(['message' => 'Record deleted successfully!']);
+        return redirect()->back()->with('success', 'Request Form submission deleted successfully!');
     }
 }

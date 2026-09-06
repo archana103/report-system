@@ -11,7 +11,7 @@ class ReportMethodologyController extends Controller
     public function index()
     {
         $methodology = ReportMethodology::first();
-        return response()->json($methodology);
+        return view('admin.report_methodology.index', compact('methodology'));
     }
 
     public function store(Request $request)
@@ -27,9 +27,6 @@ class ReportMethodologyController extends Controller
             $methodology = ReportMethodology::create($validatedData);
         }
 
-        return response()->json([
-            'message' => 'Report Methodology saved successfully.',
-            'data' => $methodology
-        ], 200);
+        return redirect()->route('admin.methodology.index')->with('success', 'Report Methodology saved successfully.');
     }
 }

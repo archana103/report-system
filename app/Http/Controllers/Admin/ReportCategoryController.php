@@ -26,15 +26,21 @@ class ReportCategoryController extends Controller
         $sortDir = $request->get('sort_dir', 'desc');
         $query->orderBy($sortBy, $sortDir);
 
-        if ($request->has('export') && $request->export == 'true') {
-            return response()->json($query->get());
-        }
-
-        // Default pagination 20 per page
         $limit = $request->get('limit', 20);
-        $categories = $query->paginate($limit);
+        $categories = $query->paginate($limit)->withQueryString();
 
-        return response()->json($categories);
+        return view('admin.categories.index', compact('categories'));
+    }
+
+    public function create()
+    {
+        return view('admin.categories.create');
+    }
+
+    public function edit($id)
+    {
+        $category = ReportCategory::findOrFail($id);
+        return view('admin.categories.edit', compact('category'));
     }
 
     /**
@@ -44,7 +50,7 @@ class ReportCategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'slug_url' => 'nullable|string|unique:report_categories,slug_url',
+            'slug_url' => 'required|string|unique:report_categories,slug_url',
             'status' => 'required|string|in:Active,Inactive',
             'main_heading' => 'nullable|string|max:255',
             'main_subheading' => 'nullable|string',
@@ -66,10 +72,7 @@ class ReportCategoryController extends Controller
 
         $category = ReportCategory::create($data);
 
-        return response()->json([
-            'message' => 'Report Category saved successfully!',
-            'data' => $category,
-        ], 201);
+        return redirect()->route('admin.categories.index')->with('success', 'Report Category created successfully!');
     }
 
     /**
@@ -81,7 +84,7 @@ class ReportCategoryController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
-            'slug_url' => 'nullable|string|unique:report_categories,slug_url,' . $id,
+            'slug_url' => 'required|string|unique:report_categories,slug_url,' . $id,
             'status' => 'required|string|in:Active,Inactive',
             'main_heading' => 'nullable|string|max:255',
             'main_subheading' => 'nullable|string',
@@ -109,10 +112,7 @@ class ReportCategoryController extends Controller
 
         $category->update($data);
 
-        return response()->json([
-            'message' => 'Report Category updated successfully!',
-            'data' => $category,
-        ]);
+        return redirect()->route('admin.categories.index')->with('success', 'Report Category updated successfully!');
     }
 
     /**
@@ -132,8 +132,6 @@ class ReportCategoryController extends Controller
 
         $category->delete();
 
-        return response()->json([
-            'message' => 'Report Category deleted successfully!',
-        ]);
+        return redirect()->route('admin.categories.index')->with('success', 'Report Category deleted successfully!');
     }
 }

@@ -14,26 +14,37 @@ use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
-    public function stats()
+    public function index()
     {
-        if (!Auth::check()) {
-            return response()->json(['error' => 'Unauthenticated. Please log out and log back in to activate your session.'], 401);
-        }
-
-        return response()->json([
+        $stats = [
             'categories' => ReportCategory::count(),
             'reports' => ReportList::count(),
             'blogs' => Blog::count(),
             'pressReleases' => PressRelease::count()
-        ]);
+        ];
+
+        $sessionsData = DB::table('sessions')
+            ->where('user_id', Auth::id())
+            ->orderBy('last_activity', 'desc')
+            ->get();
+
+        $sessions = $sessionsData->map(function ($session) {
+            $agent = $this->parseUserAgent($session->user_agent);
+            return (object) [
+                'id' => $session->id,
+                'ip_address' => $session->ip_address,
+                'is_current_device' => $session->id === request()->session()->getId(),
+                'last_active' => Carbon::createFromTimestamp($session->last_activity)->format('d M Y \a\t H:i'),
+                'browser' => $agent['browser'],
+                'os' => $agent['os'],
+            ];
+        });
+
+        return view('admin.dashboard.index', compact('stats', 'sessions'));
     }
 
     public function updateUsername(Request $request)
     {
-        if (!Auth::check()) {
-            return response()->json(['error' => 'Unauthenticated. Please log out and log back in to activate your session.'], 401);
-        }
-
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . Auth::id()
@@ -44,64 +55,30 @@ class DashboardController extends Controller
             $user->name = $request->name;
             $user->email = $request->email;
             $user->save();
-            return response()->json(['message' => 'Profile updated successfully', 'user' => $user]);
+            return redirect()->back()->with('success', 'Profile updated successfully.');
         }
 
-        return response()->json(['message' => 'Unauthorized'], 401);
-    }
-
-    public function getSessions(Request $request)
-    {
-        if (!Auth::check()) {
-            return response()->json(['error' => 'Unauthenticated. Please log out and log back in to activate your session.'], 401);
-        }
-
-        $sessions = DB::table('sessions')
-            ->where('user_id', Auth::id())
-            ->orderBy('last_activity', 'desc')
-            ->get();
-
-        $formattedSessions = $sessions->map(function ($session) {
-            $agent = $this->parseUserAgent($session->user_agent);
-            return [
-                'id' => $session->id,
-                'ip_address' => $session->ip_address,
-                'is_current_device' => $session->id === request()->session()->getId(),
-                'last_active' => Carbon::createFromTimestamp($session->last_activity)->format('d M Y \a\t H:i'),
-                'browser' => $agent['browser'],
-                'os' => $agent['os'],
-            ];
-        });
-
-        return response()->json(['sessions' => $formattedSessions]);
+        return redirect()->back()->with('error', 'Unauthorized');
     }
 
     public function logoutSession(Request $request, $id)
     {
-        if (!Auth::check()) {
-            return response()->json(['error' => 'Unauthenticated. Please log out and log back in to activate your session.'], 401);
-        }
-
         DB::table('sessions')
             ->where('id', $id)
             ->where('user_id', Auth::id())
             ->delete();
 
-        return response()->json(['message' => 'Session logged out successfully']);
+        return redirect()->back()->with('success', 'Session logged out successfully.');
     }
 
     public function logoutOtherSessions(Request $request)
     {
-        if (!Auth::check()) {
-            return response()->json(['error' => 'Unauthenticated. Please log out and log back in to activate your session.'], 401);
-        }
-
         DB::table('sessions')
             ->where('user_id', Auth::id())
             ->where('id', '!=', request()->session()->getId())
             ->delete();
 
-        return response()->json(['message' => 'Other sessions logged out successfully']);
+        return redirect()->back()->with('success', 'Other sessions logged out successfully.');
     }
 
     private function parseUserAgent($userAgent)
