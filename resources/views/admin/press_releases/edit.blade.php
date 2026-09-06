@@ -9,7 +9,7 @@
             <h2 class="text-2xl font-bold text-white tracking-tight">Edit Press Release</h2>
             <p class="text-gray-400 text-sm mt-1">Update general information and media.</p>
         </div>
-        <a href="{{ route('admin.press_releases.index') }}" class="text-gray-400 hover:text-white transition-colors flex items-center gap-2">
+        <a href="{{ route('admin.press_releases.index') }}" class="inline-flex items-center justify-center px-4 py-2.5 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded-xl text-sm font-medium text-gray-300 hover:text-white shadow-sm transition-all focus:ring-2 focus:ring-gray-600 focus:outline-none">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
             Back to List
         </a>

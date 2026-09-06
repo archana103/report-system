@@ -16,8 +16,8 @@ class PurchaseController extends Controller
         $query = ReportPurchase::with(['reportDetail:id,title', 'pricing:id,title,cost'])->latest();
 
         if ($request->has('search') && $request->search != '') {
-            $query->where('customer_name', 'like', '%' . $request->search . '%')
-                  ->orWhere('email', 'like', '%' . $request->search . '%');
+            $query->where('full_name', 'like', '%' . $request->search . '%')
+                  ->orWhere('business_email', 'like', '%' . $request->search . '%');
         }
 
         $purchases = $query->paginate(20);

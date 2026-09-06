@@ -6,7 +6,7 @@
 <div class="h-full bg-gray-800/40 rounded-3xl p-8 shadow-2xl border border-gray-700/50 backdrop-blur-sm relative overflow-y-auto w-full  mx-auto">
     <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-medium text-white tracking-tight">Add Report Category</h2>
-        <a href="{{ route('admin.categories.index') }}" class="text-gray-400 hover:text-white transition-colors">
+        <a href="{{ route('admin.categories.index') }}" class="inline-flex items-center justify-center px-4 py-2.5 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded-xl text-sm font-medium text-gray-300 hover:text-white shadow-sm transition-all focus:ring-2 focus:ring-gray-600 focus:outline-none">
             &larr; Back to List
         </a>
     </div>
@@ -31,8 +31,8 @@
                 <input name="name" type="text" value="{{ old('name') }}" required class="w-full bg-gray-800/80 border border-gray-700 rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-500/50 focus:border-teal-500/50 transition-all" />
             </div>
             <div>
-                <label class="block text-sm font-medium text-gray-400 mb-1.5 ml-1">Slug URL</label>
-                <input name="slug_url" type="text" value="{{ old('slug_url') }}" class="w-full bg-gray-800/80 border border-gray-700 rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-500/50 focus:border-teal-500/50 transition-all" />
+                <label class="block text-sm font-medium text-gray-400 mb-1.5 ml-1">Slug URL <span class="text-rose-500">*</span></label>
+                <input name="slug_url" type="text" value="{{ old('slug_url') }}" required class="w-full bg-gray-800/80 border border-gray-700 rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-500/50 focus:border-teal-500/50 transition-all" />
             </div>
 
             <!-- Row 2 -->

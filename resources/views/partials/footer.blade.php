@@ -82,7 +82,24 @@
   </svg>
 </button>
 
-@vite(['resources/css/app.css', 'resources/js/public.js'])
+<script src="{{ asset('js/public.js') }}"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var upscrollBtn = document.getElementById("scrollToTopBtn");
+    if (upscrollBtn) {
+        window.addEventListener("scroll", function() {
+            if (window.scrollY > 300) {
+                upscrollBtn.style.display = "flex";
+            } else {
+                upscrollBtn.style.display = "none";
+            }
+        });
+        upscrollBtn.addEventListener("click", function() {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    }
+});
+</script>
 <style>
 .footer-contact {
   display: flex;
@@ -111,5 +128,38 @@
   border-radius: 8px;
   object-fit: contain;
   box-sizing: border-box;
+}
+
+.upscroll-button {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 50%;
+  background-color: #0783df;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  z-index: 9999;
+  transition: transform 0.2s ease, background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.upscroll-button:hover {
+  background-color: #0566b0;
+  transform: translateY(-3px);
+}
+
+@media (max-width: 560px) {
+  .upscroll-button {
+    bottom: 20px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
+  }
 }
 </style>

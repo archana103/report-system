@@ -10,7 +10,7 @@
       <a href="/reports" style="color: #0783df; text-decoration: none; font-weight: 500;">Reports</a>
       <span style="color: #9ca3af;">/</span>
       @if(optional($report->reportList)->reportCategory)
-        <a href="/industry/{{ optional(optional($report->reportList)->reportCategory)->slug_url ?: optional(optional($report->reportList)->reportCategory)->name }}"
+        <a href="/industry/{{ optional(optional($report->reportList)->reportCategory)->slug_url ?: \Str::slug(optional(optional($report->reportList)->reportCategory)->name) }}"
           style="color: #0783df; text-decoration: none; font-weight: 500;">{{ optional(optional($report->reportList)->reportCategory)->name }}</a>
         <span style="color: #9ca3af;">/</span>
       @endif
@@ -49,7 +49,7 @@
           <a href="javascript:void(0)" onclick="openRequestModal('Request Sample', '{{ addslashes(htmlspecialchars($report->title ?: optional($report->reportList)->name, ENT_QUOTES, 'UTF-8')) }}')" class="secondary-button outlined">Request Sample</a>
           <a href="javascript:void(0)" onclick="openRequestModal('Ask for discount', '{{ addslashes(htmlspecialchars($report->title ?: optional($report->reportList)->name, ENT_QUOTES, 'UTF-8')) }}')" class="secondary-button outlined">Ask for Discount</a>
           <a href="javascript:void(0)" onclick="openRequestModal('Request customized report', '{{ addslashes(htmlspecialchars($report->title ?: optional($report->reportList)->name, ENT_QUOTES, 'UTF-8')) }}')" class="secondary-button outlined">Request Customized Report</a>
-          <a href="/checkout/{{ $report->slug_url ?? $report->id ?? optional($report->reportList)->id }}" class="primary-button">Buy Now</a>
+          <a href="/checkout/{{ (!empty($report->slug_url) && $report->slug_url !== '#') ? $report->slug_url : ($report->id ?? optional($report->reportList)->id) }}" class="primary-button">Buy Now</a>
         </div>
       </div>
     </div>
@@ -144,7 +144,7 @@
       <div class="sidebar-get-report-card">
         <h3>Get This Report</h3>
         <div style="display: flex; flex-direction: column; gap: 16px;">
-          <a href="/checkout/{{ $report->slug_url ?? $report->id ?? optional($report->reportList)->id }}" class="contact-btn-white buy-now-btn">
+          <a href="/checkout/{{ (!empty($report->slug_url) && $report->slug_url !== '#') ? $report->slug_url : ($report->id ?? optional($report->reportList)->id) }}" class="contact-btn-white buy-now-btn">
             Buy Now
             <span class="btn-circle-arrow">
               <svg class="chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">

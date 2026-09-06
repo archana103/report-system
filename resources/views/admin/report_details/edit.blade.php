@@ -6,7 +6,7 @@
 <div class="h-full bg-gray-800/40 rounded-3xl p-8 shadow-2xl border border-gray-700/50 backdrop-blur-sm relative overflow-y-auto w-full mx-auto">
     <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-medium text-white tracking-tight">Edit Report Details</h2>
-        <a href="{{ route('admin.report_details.index') }}" class="text-gray-400 hover:text-white transition-colors">
+        <a href="{{ route('admin.report_details.index') }}" class="inline-flex items-center justify-center px-4 py-2.5 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded-xl text-sm font-medium text-gray-300 hover:text-white shadow-sm transition-all focus:ring-2 focus:ring-gray-600 focus:outline-none">
             &larr; Back to List
         </a>
     </div>

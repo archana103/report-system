@@ -11,12 +11,7 @@
         </div>
     </div>
 
-    @if(session('success'))
-        <div class="mb-6 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 p-4 rounded-xl flex items-center gap-3">
-            <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-            <span class="font-medium">{{ session('success') }}</span>
-        </div>
-    @endif
+
 
     <!-- Search Form -->
     <div class="mb-6 flex justify-end">
@@ -47,8 +42,8 @@
                 <tr class="border-b border-gray-700/50 last:border-0 hover:bg-[#1B2230]/50 transition-colors bg-[#151B26]">
                     <td class="px-5 py-4 text-gray-300 font-medium whitespace-nowrap">{{ $purchases->firstItem() + $index }}</td>
                     <td class="px-5 py-4">
-                        <div class="font-medium text-gray-200">{{ $purchase->customer_name }}</div>
-                        <div class="text-[11px] text-purple-400 mt-0.5">{{ $purchase->email }}</div>
+                        <div class="font-medium text-gray-200">{{ $purchase->full_name }}</div>
+                        <div class="text-[11px] text-purple-400 mt-0.5">{{ $purchase->business_email }}</div>
                     </td>
                     <td class="px-5 py-4 text-gray-300">
                         {{ $purchase->reportDetail->title ?? 'Unknown Report' }}
@@ -75,7 +70,7 @@
                     </td>
                     <td class="px-5 py-4 text-center">
                         <div class="flex items-center justify-center gap-2">
-                            <button type="button" class="flex items-center justify-center w-8 h-8 rounded bg-[#4c1d1a]/50 hover:bg-[#4c1d1a] text-rose-400 transition-colors border border-rose-900/30 shadow-sm" title="Delete" onclick="openDeleteModal('{{ $purchase->id }}', '{{ htmlspecialchars($purchase->customer_name, ENT_QUOTES) }}')">
+                            <button type="button" class="flex items-center justify-center w-8 h-8 rounded bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 hover:text-rose-300 transition-colors border border-rose-500/20 shadow-sm" title="Delete" onclick="openDeleteModal('{{ $purchase->id }}', '{{ htmlspecialchars($purchase->full_name, ENT_QUOTES) }}')">
                                 <svg class="w-4 h-4 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                             </button>
                         </div>

@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>{{ $seo['title'] ?? 'Admin Panel | Epignosis Insights' }}</title>
     
     <!-- Using Tailwind CSS as per original layout -->
@@ -355,12 +358,12 @@
 
             <div class="flex-1 p-5 relative z-10 w-full max-w-full mx-auto">
                 @if (session('success'))
-                    <div class="mb-4 bg-emerald-500/10 border border-emerald-500/50 text-emerald-500 px-4 py-3 rounded-lg text-sm font-medium">
+                    <div class="admin-alert mb-4 bg-emerald-500/10 border border-emerald-500/50 text-emerald-500 px-4 py-3 rounded-lg text-sm font-medium transition-opacity duration-500">
                         {{ session('success') }}
                     </div>
                 @endif
                 @if (session('error'))
-                    <div class="mb-4 bg-rose-500/10 border border-rose-500/50 text-rose-500 px-4 py-3 rounded-lg text-sm font-medium">
+                    <div class="admin-alert mb-4 bg-rose-500/10 border border-rose-500/50 text-rose-500 px-4 py-3 rounded-lg text-sm font-medium transition-opacity duration-500">
                         {{ session('error') }}
                     </div>
                 @endif
@@ -422,6 +425,19 @@
                 if (!targetElement.closest('.relative')) {
                     dropdown.style.display = 'none';
                 }
+            }
+        });
+
+        // Auto-dismiss alerts after 10 seconds
+        document.addEventListener('DOMContentLoaded', function() {
+            const alerts = document.querySelectorAll('.admin-alert');
+            if(alerts.length > 0) {
+                setTimeout(() => {
+                    alerts.forEach(alert => {
+                        alert.style.opacity = '0';
+                        setTimeout(() => alert.style.display = 'none', 200);
+                    });
+                }, 10000);
             }
         });
     </script>

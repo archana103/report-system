@@ -9,7 +9,7 @@
             <h2 class="text-2xl font-bold text-white tracking-tight">Edit Blog Detail</h2>
             <p class="text-gray-400 text-sm mt-1">Select a blog and add detailed rich content for it.</p>
         </div>
-        <a href="{{ route('admin.blog_details.index') }}" class="text-gray-400 hover:text-white transition-colors">
+        <a href="{{ route('admin.blog_details.index') }}" class="inline-flex items-center justify-center px-4 py-2.5 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded-xl text-sm font-medium text-gray-300 hover:text-white shadow-sm transition-all focus:ring-2 focus:ring-gray-600 focus:outline-none">
             &larr; Back to List
         </a>
     </div>

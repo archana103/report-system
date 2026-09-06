@@ -410,6 +410,14 @@ class UserviewController extends Controller
         }
 
         if (!$category) {
+            $category = \App\Models\ReportCategory::where('status', 'Active')
+                ->get()
+                ->first(function ($cat) use ($name) {
+                    return \Illuminate\Support\Str::slug($cat->name) === $name;
+                });
+        }
+
+        if (!$category) {
             return response()->json(['message' => 'Category not found'], 404);
         }
 
