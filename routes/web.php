@@ -26,13 +26,6 @@ include 'Admin/login.php';//admin page login
 Route::middleware(['auth'])->group(function () {
     include 'Admin/index.php';
 });
-// SEO Fallbacks for malformed database links and legacy Vue patterns
-Route::get('/reports/{slug}', function (Illuminate\Http\Request $request, $slug) {
-    return redirect('/report/' . $slug . ($request->getQueryString() ? '?' . $request->getQueryString() : ''), 301);
-});
-Route::get('/report/report/{slug}', function (Illuminate\Http\Request $request, $slug) {
-    return redirect('/report/' . $slug . ($request->getQueryString() ? '?' . $request->getQueryString() : ''), 301);
-});
 
 Route::get('storage/{path}', function ($path) {
     return redirect()->away(Storage::disk('s3')->url($path));

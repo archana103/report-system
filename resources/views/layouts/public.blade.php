@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <!-- Google tag (gtag.js) -->
@@ -15,6 +15,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="alternate" hreflang="en" href="{{ request()->url() }}" />
 
     <title>{{ $seo['title'] ?? 'Research Report System' }}</title>
 
