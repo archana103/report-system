@@ -95,7 +95,7 @@
         const link = document.createElement('link');
         link.id = 'modal-iti-css';
         link.rel = 'stylesheet';
-        link.href = 'https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.4/build/css/intlTelInput.css';
+        link.href = 'https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.4/build/css/intlTelInput.min.css';
         document.head.appendChild(link);
     }
 

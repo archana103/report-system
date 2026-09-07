@@ -453,7 +453,7 @@
   </div>
 
   <!-- intl-tel-input styles -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.4/build/css/intlTelInput.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.4/build/css/intlTelInput.min.css" />
   <style>
     /* intl-tel-input overrides to match form design */
     .iti {

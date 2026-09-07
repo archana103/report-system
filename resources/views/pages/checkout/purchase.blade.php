@@ -190,7 +190,7 @@
     </div>
 
     <!-- Add intl-tel-input -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.4/build/css/intlTelInput.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.4/build/css/intlTelInput.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.4/build/js/intlTelInput.min.js"></script>
     <!-- PayPal SDK integration using the Sandbox ID for testing. You should use config() for production -->
     <script src="https://www.paypal.com/sdk/js?client-id={{ env('PAYPAL_CLIENT_ID', 'test') }}&currency=USD"></script>
