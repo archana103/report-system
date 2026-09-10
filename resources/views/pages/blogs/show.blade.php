@@ -31,7 +31,7 @@
               </div>
 
               <!-- FAQs Section -->
-              @if(!empty($blog->detail) && !empty($blog->detail->faqs) && count($blog->detail->faqs) > 0)
+              @if(!empty($blog->detail) && !empty($blog->detail->faqs) && count((array)$blog->detail->faqs) > 0)
               <section class="blog-faqs">
                 <h2 class="faq-title">Frequently Asked Questions</h2>
                 <div class="faq-accordion">
@@ -61,7 +61,7 @@
               </div>
 
               <!-- Related Articles Widget -->
-              @if(!empty($blog->related_articles) && count($blog->related_articles) > 0)
+              @if(!empty($blog->related_articles) && count((array)$blog->related_articles) > 0)
               <div class="sidebar-widget widget-related">
                 <h3>Related Articles</h3>
                 <div class="related-articles-list">

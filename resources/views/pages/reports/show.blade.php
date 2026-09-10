@@ -107,7 +107,7 @@
       </div>
 
       <!-- FAQ Section -->
-      @if(!empty($reportData->faqs) && count($reportData->faqs) > 0)
+      @if(!empty($reportData->faqs) && count((array)$reportData->faqs) > 0)
         <div class="faq-section" style="margin-top: 40px; margin-bottom: 40px;">
           <h1 class="section-title"
             style="color: #0783df; font-size: 30px; font-weight: 800; margin-top: 32px; margin-bottom: 16px; line-height: 1.3;">
@@ -127,7 +127,7 @@
     <!-- Right Sidebar Column -->
     <aside class="sidebar-content-column">
       <!-- Geography Dropdown -->
-      @if(!empty($reportData->geography_reports) && count($reportData->geography_reports) > 0)
+      @if(!empty($reportData->geography_reports) && count((array)$reportData->geography_reports) > 0)
         <div class="geography-dropdown-wrapper" style="margin-bottom: 24px;">
           <p>Select another geography:</p>@foreach($reportData->geography_reports as $geo)<a class="industry-tag-pill"
           href="{{ url('/report/' . ($geo->slug_url ?: ($geo->slug ?? $geo->id))) }}">{{ $geo->geo_name ?? ($geo->title ?? '') }}</a>@endforeach
@@ -169,7 +169,7 @@
       </div>
 
       <!-- Related Industries -->
-      @if(!empty($reportData->related_industries) && count($reportData->related_industries) > 0)
+      @if(!empty($reportData->related_industries) && count((array)$reportData->related_industries) > 0)
         <div class="sidebar-white-info-card">
           <h4>Related Industries</h4>
           <div class="industry-tags-list">
@@ -182,7 +182,7 @@
       @endif
 
       <!-- Related Reports -->
-      @if(!empty($reportData->related_reports) && count($reportData->related_reports) > 0)
+      @if(!empty($reportData->related_reports) && count((array)$reportData->related_reports) > 0)
         <div class="sidebar-white-info-card">
           <h4>Related Reports</h4>
           <div class="related-reports-list">

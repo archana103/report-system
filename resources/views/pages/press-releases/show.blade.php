@@ -44,7 +44,7 @@
               </div>
 
               <!-- Related Reports Widget -->
-              @if(!empty($pressRelease->related_reports) && count($pressRelease->related_reports) > 0)
+              @if(!empty($pressRelease->related_reports) && count((array)$pressRelease->related_reports) > 0)
               <div class="sidebar-widget widget-related">
                 <h3>Related Reports</h3>
                 <div class="related-reports-list">
