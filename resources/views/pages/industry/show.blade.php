@@ -55,14 +55,14 @@
                 <article class="report-list-card">
                   <!-- Premium Pure CSS 3D Mockup Book Cover -->
                   <div class="report-image-wrap">
-                    <a href="{{ url('/report/' . (!empty($report->slug) && $report->slug !== '#' ? $report->slug : $report->id)) }}"
+                    <a href="{{ url('/reports/' . (!empty($report->slug) && $report->slug !== '#' ? $report->slug : $report->id)) }}"
                       class="cover-link">
                       <img src="{{ env('AWS_URL') }}/assets/images/default-report.png" alt="{{ $report->title ?? '' }}" />
                     </a>
                   </div>
 
                   <div class="report-details">
-                    <a href="{{ url('/report/' . (!empty($report->slug) && $report->slug !== '#' ? $report->slug : $report->id)) }}"
+                    <a href="{{ url('/reports/' . (!empty($report->slug) && $report->slug !== '#' ? $report->slug : $report->id)) }}"
                       class="report-title-link">
                       <h3 class="hover-primary-title">{{ $report->title ?? '' }}</h3>
                     </a>

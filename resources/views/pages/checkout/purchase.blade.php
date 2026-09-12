@@ -33,7 +33,7 @@
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <polyline points="9 18 15 12 9 6"></polyline>
                         </svg></span>
-                    <a href="/report/{{ $report->slug_url ?? request()->route('slug') }}" class="breadcrumb-link truncate-title"
+                    <a href="/reports/{{ $report->slug_url ?? request()->route('slug') }}" class="breadcrumb-link truncate-title"
                         title="{{ $report->title }}">
                         {{ $report->breadcrumb_title ?? $report->title }}
                     </a>

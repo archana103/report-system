@@ -51,7 +51,7 @@
                   @foreach($pressRelease->related_reports as $item)
                   <div class="related-report-item">
                     <h4>{{ is_array($item) ? $item['title'] : $item->title }}</h4>
-                    <a href="{{ url('/report/' . ($item->slug ?? (is_array($item) ? $item['slug'] : ''))) }}" class="related-report-link" style="text-decoration: none;">
+                    <a href="{{ url('/reports/' . ($item->slug ?? (is_array($item) ? $item['slug'] : ''))) }}" class="related-report-link" style="text-decoration: none;">
                       View Report
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" class="small-icon"><polyline points="9 18 15 12 9 6"/></svg>
                     </a>

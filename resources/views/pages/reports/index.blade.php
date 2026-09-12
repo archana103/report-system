@@ -18,13 +18,13 @@
             <article class="report-list-card">
               <div class="report-image-wrap">
                 <a
-                  href="{{ url('/report/' . (!empty($report->slug) && $report->slug !== '#' ? $report->slug : $report->id)) }}">
+                  href="{{ url('/reports/' . (!empty($report->slug) && $report->slug !== '#' ? $report->slug : $report->id)) }}">
                   <img src="{{ !empty($report->image) ? $report->image : env('AWS_URL') . '/assets/images/default-report.png' }}"
                     alt="{{ $report->title ?? '' }}" />
                 </a>
               </div>
               <div class="report-details">
-                <a href="{{ url('/report/' . (!empty($report->slug) && $report->slug !== '#' ? $report->slug : $report->id)) }}"
+                <a href="{{ url('/reports/' . (!empty($report->slug) && $report->slug !== '#' ? $report->slug : $report->id)) }}"
                   style="color: inherit; text-decoration: none;">
                   <h3 class="hover-primary-title">{{ $report->title ?? '' }}</h3>
                 </a>
@@ -37,7 +37,7 @@
                   <span>Publish Date: <strong>{{ $report->date ?? now()->format('M-Y') }}</strong></span>
                 </div>
                 <div class="report-actions">
-                  <a href="{{ url('/report/' . (!empty($report->slug) && $report->slug !== '#' ? $report->slug : $report->id) . '?tab=overview') }}"
+                  <a href="{{ url('/reports/' . (!empty($report->slug) && $report->slug !== '#' ? $report->slug : $report->id) . '?tab=overview') }}"
                     class="secondary-button outlined" style="padding: 10px 24px; min-height: auto; line-height: 1.2;">View
                     Details</a>
                   <a href="javascript:void(0)" onclick="openRequestModal('Request Sample', '{{ addslashes(htmlspecialchars($report->title ?? '', ENT_QUOTES, 'UTF-8')) }}')" class="secondary-button outlined"
@@ -131,7 +131,7 @@
           <div class="widget-reports-list" style="display: flex; flex-direction: column; gap: 24px;">
             @foreach($initialTopSellers as $item)
               <div class="widget-report-item" style="display: flex; flex-direction: column; gap: 8px;">
-                <a href="{{ url('/report/' . (!empty($item->report_detail->slug_url) && $item->report_detail->slug_url !== '#' ? $item->report_detail->slug_url : $item->id)) }}"
+                <a href="{{ url('/reports/' . (!empty($item->report_detail->slug_url) && $item->report_detail->slug_url !== '#' ? $item->report_detail->slug_url : $item->id)) }}"
                   style="text-decoration: none; color: inherit;">
                   <p class="report-title"
                     style="font-size: 14px; font-weight: 500; color: #4b5563; margin: 0; line-height: 1.5;"

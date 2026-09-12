@@ -2,7 +2,7 @@
   @php $report = (object) $report; @endphp
   <article class="report-list-card simple-card">
     <div class="report-details">
-      <a href="{{ url('/report/' . (!empty($report->slug) && $report->slug !== '#' ? $report->slug : $report->id)) }}"
+      <a href="{{ url('/reports/' . (!empty($report->slug) && $report->slug !== '#' ? $report->slug : $report->id)) }}"
         style="color: inherit; text-decoration: none;">
         <h3 class="hover-primary-title">{{ $report->title ?? '' }}</h3>
       </a>
@@ -10,7 +10,7 @@
       <div class="report-metadata-simple">
         <span class="meta-item">Category: <strong>{{ $report->category ?? 'All' }}</strong></span>
         <span class="meta-item">Publish Date: <strong>{{ $report->date ?? now()->format('F Y') }}</strong></span>
-        <a href="{{ url('/report/' . (!empty($report->slug) && $report->slug !== '#' ? $report->slug : $report->id)) }}" class="view-report-link hover-primary-title">View Report ></a>
+        <a href="{{ url('/reports/' . (!empty($report->slug) && $report->slug !== '#' ? $report->slug : $report->id)) }}" class="view-report-link hover-primary-title">View Report ></a>
       </div>
     </div>
   </article>

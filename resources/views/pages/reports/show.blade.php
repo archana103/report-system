@@ -130,7 +130,7 @@
       @if(!empty($reportData->geography_reports) && count((array)$reportData->geography_reports) > 0)
         <div class="geography-dropdown-wrapper" style="margin-bottom: 24px;">
           <p>Select another geography:</p>@foreach($reportData->geography_reports as $geo)<a class="industry-tag-pill"
-          href="{{ url('/report/' . ($geo->slug_url ?: ($geo->slug ?? $geo->id))) }}">{{ $geo->geo_name ?? ($geo->title ?? '') }}</a>@endforeach
+          href="{{ url('/reports/' . ($geo->slug_url ?: ($geo->slug ?? $geo->id))) }}">{{ $geo->geo_name ?? ($geo->title ?? '') }}</a>@endforeach
         </div>
       @endif
 
@@ -189,7 +189,7 @@
             @foreach($reportData->related_reports as $rel)
               <div class="related-report-item">
                 <h5>{{ $rel->title ?? '' }}</h5>
-                <a href="/report/{{ (!empty($rel->slug) && $rel->slug !== '#') ? $rel->slug : $rel->id }}"
+                <a href="/reports/{{ (!empty($rel->slug) && $rel->slug !== '#') ? $rel->slug : $rel->id }}"
                   class="view-link">
                   View Report
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="icon"
