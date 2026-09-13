@@ -18,8 +18,17 @@
       </div>
     </div>
     <a href="/qualitative-services" class="{{ request()->routeIs('qualitative.services') ? 'active' : '' }}">Qualitative Services</a>
-    <a href="/press-releases" class="{{ request()->routeIs('press-releases.*') ? 'active' : '' }}">PR</a>
-    <a href="/blogs" class="{{ request()->routeIs('blogs.*') ? 'active' : '' }}">Blog</a>
+    <div class="dropdown-menu-container">
+      <a href="javascript:void(0)" class="dropdown-trigger {{ request()->routeIs('press-releases.*') || request()->routeIs('blogs.*') || request()->is('case-studies*') ? 'active' : '' }}">
+        Insights
+        <svg class="chevron-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+      </a>
+      <div class="dropdown-menu dropdown-left-align">
+        <a href="/blogs" class="{{ request()->routeIs('blogs.*') ? 'active' : '' }}">Blog</a>
+        <a href="/press-releases" class="{{ request()->routeIs('press-releases.*') ? 'active' : '' }}">Press Release</a>
+        <a href="/case-studies" class="{{ request()->is('case-studies*') ? 'active' : '' }}">Case Studies</a>
+      </div>
+    </div>
   </nav>
 
   <div class="header-actions">

@@ -12,6 +12,7 @@
         gtag('config', 'G-2V5TKH8CZ4');
     </script>
     <meta name="google-site-verification" content="JKuXuLnNmtSufvAAso17wJtjoscQvNJB8sMU3G8JkE4" />
+    <meta name="msvalidate.01" content="5367A690C29CDD5F20BB2DF133554081" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">

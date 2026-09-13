@@ -13,6 +13,8 @@ include 'User/thankyou.php';//thank you page url for /thank-you
 include 'User/report.php';//report page url for /report
 include 'User/blog.php';//report page url for /blog
 include 'User/pressrelease.php';//report page url for /pressrelease
+include 'User/casestudy.php';//case study page urls
+include 'User/faq.php';//faq page URL
 include 'User/industry.php';//industry page url for /industry
 include 'User/checkout.php';//checkout and purchase page urls
 include 'Paypal/index.php';

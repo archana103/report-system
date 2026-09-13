@@ -73,7 +73,7 @@ input {
 .main-nav {
   display: flex;
   justify-content: center;
-  gap: 56px;
+  gap: 40px;
   color: #252525;
   font-size: 15px;
 }

@@ -786,7 +786,87 @@ class UserviewController extends Controller
     }
 
     /**
-     * Store a new newsletter subscription.
+     * Get all active case studies paginated with search filter.
      */
+    public function getAllCaseStudies(Request $request)
+    {
+        $search = $request->query('search');
+        $query = \App\Models\CaseStudy::where('status', 'Active')->orderBy('created_at', 'desc');
 
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', '%' . $search . '%')
+                    ->orWhere('description', 'like', '%' . $search . '%');
+            });
+        }
+
+        $caseStudies = $query->paginate(12);
+
+        $caseStudies->getCollection()->transform(function ($cs) {
+            return [
+                'id' => $cs->id,
+                'title' => $cs->title,
+                'description' => \Illuminate\Support\Str::limit(strip_tags(html_entity_decode($cs->description)), 150),
+                'date' => $cs->created_at->format('F d, Y'),
+                'image' => $cs->thumbnail_image ?: ($cs->main_image ?: '/assets/images/default-report.png'),
+                'url' => $cs->url,
+            ];
+        });
+
+        return response()->json($caseStudies);
+    }
+
+    /**
+     * Get a single case study by slug (url).
+     */
+    public function getCaseStudyDetail($slug)
+    {
+        $cs = \App\Models\CaseStudy::with('caseStudyDetail')
+            ->where('url', $slug)
+            ->first();
+
+        if (!$cs) {
+            return response()->json(['message' => 'Case study not found'], 404);
+        }
+
+        // Fetch related reports
+        $relatedReports = \App\Models\ReportList::with(['reportCategory', 'reportDetail'])
+            ->has('reportDetail')
+            ->where('status', 'Active')
+            ->orderBy('created_at', 'desc')
+            ->take(6)
+            ->get()
+            ->map(function ($r) {
+                return [
+                    'id' => $r->id,
+                    'title' => ($r->reportDetail && $r->reportDetail->title) ? $r->reportDetail->title : $r->name,
+                    'slug' => ($r->reportDetail && $r->reportDetail->slug_url) ? $r->reportDetail->slug_url : '#'
+                ];
+            });
+
+        return response()->json([
+            'id' => $cs->id,
+            'title' => $cs->title,
+            'image' => $cs->thumbnail_image ?: ($cs->main_image ?: '/assets/images/default-report.png'),
+            'date' => $cs->created_at->format('F d, Y'),
+            'url' => $cs->url,
+            'breadcrumb_title' => $cs->caseStudyDetail?->breadcrumb_title ?: $cs->title,
+            'detail' => $cs->caseStudyDetail ? [
+                'content' => $cs->caseStudyDetail->content,
+            ] : null,
+            'related_reports' => $relatedReports,
+
+            // SEO Meta fields
+            'meta_title' => $cs->caseStudyDetail?->meta_title,
+            'meta_description' => $cs->caseStudyDetail?->meta_description,
+            'meta_keywords' => $cs->caseStudyDetail?->meta_keywords,
+            'canonical_tag' => $cs->caseStudyDetail?->canonical_tag,
+            'meta_robots' => $cs->caseStudyDetail?->meta_robots,
+            'hreflang_tags' => $cs->caseStudyDetail?->hreflang_tags ?: [],
+            'open_graph_tags' => $cs->caseStudyDetail?->open_graph_tags ?: [],
+            'twitter_card_tags' => $cs->caseStudyDetail?->twitter_card_tags ?: [],
+            'schema_tag' => $cs->caseStudyDetail?->schema_tag,
+            'schema_tag_2' => $cs->caseStudyDetail?->schema_tag_2,
+        ]);
+    }
 }

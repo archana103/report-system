@@ -470,10 +470,30 @@
     
     // Init ReCAPTCHA
     initModalRecaptcha();
+    
+    // Update URL for sharing
+    if (window.history.pushState) {
+        let formVal = '';
+        if (subject === 'Request Sample') formVal = 'request-sample';
+        else if (subject === 'Ask for discount') formVal = 'ask-for-discount';
+        else if (subject === 'Request customized report') formVal = 'request-customized-report';
+        else if (subject === 'Download Free Sample') formVal = 'download-free-sample';
+        
+        if (formVal) {
+            const newUrl = new URL(window.location);
+            newUrl.searchParams.set('form', formVal);
+            window.history.pushState({path: newUrl.href}, '', newUrl.href);
+        }
+    }
   };
 
   window.closeRequestModal = function() {
     document.getElementById('request-form-modal').style.display = 'none';
+    if (window.history.pushState) {
+        const newUrl = new URL(window.location);
+        newUrl.searchParams.delete('form');
+        window.history.pushState({path: newUrl.href}, '', newUrl.href);
+    }
   };
 
   window.submitRequestForm = function(event) {

@@ -364,4 +364,25 @@ document.addEventListener('DOMContentLoaded', function() {
     headings.forEach(heading => observer.observe(heading));
 });
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const formParam = urlParams.get('form');
+    if (formParam) {
+        let subject = 'Request Sample';
+        if (formParam === 'request-sample') subject = 'Request Sample';
+        else if (formParam === 'ask-for-discount') subject = 'Ask for discount';
+        else if (formParam === 'request-customized-report') subject = 'Request customized report';
+        else if (formParam === 'download-free-sample') subject = 'Download Free Sample';
+        
+        // Wait a small moment to ensure modal DOM and dependencies are ready
+        setTimeout(function() {
+            if (typeof window.openRequestModal === 'function') {
+                window.openRequestModal(subject, '{!! addslashes(htmlspecialchars($report->title ?: optional($report->reportList)->name, ENT_QUOTES, "UTF-8")) !!}');
+            }
+        }, 500);
+    }
+});
+</script>
 @endsection

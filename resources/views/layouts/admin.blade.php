@@ -254,6 +254,35 @@
                     </div>
                 </div>
 
+                {{-- Case Studies Accordion --}}
+                @php
+                    $isCaseStudiesActive = request()->is('admin/case-studies') || request()->is('admin/case-study-details');
+                @endphp
+                <div>
+                    <button
+                        onclick="toggleMenu('caseStudiesMenu', 'caseStudiesIcon')"
+                        class="w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-200 hover:bg-white/5 border group {{ $isCaseStudiesActive ? 'bg-white/5 border-gray-700' : 'border-transparent hover:border-gray-700' }}"
+                    >
+                        <div class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-indigo-300 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>
+                            <span class="font-medium text-white transition-colors">Case Studies</span>
+                        </div>
+                        <svg id="caseStudiesIcon" class="w-4 h-4 text-gray-300 group-hover:text-white transition-transform duration-300 transform {{ $isCaseStudiesActive ? 'rotate-180' : '' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+
+                    <div
+                        id="caseStudiesMenu"
+                        class="mt-3 space-y-1 overflow-hidden relative"
+                        style="display: {{ $isCaseStudiesActive ? 'block' : 'none' }};"
+                    >
+                        <div class="absolute left-6 top-0 bottom-0 w-px bg-gray-700"></div>
+
+                        <a href="{{ url('/admin/case-studies') }}" class="relative flex items-center px-12 py-2.5 rounded-lg text-sm transition-all duration-200 {{ request()->is('admin/case-studies') ? 'text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 font-medium !text-indigo-400 router-active-item' : 'text-white hover:text-white hover:bg-white/5' }}">Case Study List</a>
+                        <a href="{{ url('/admin/case-study-details') }}" class="relative flex items-center px-12 py-2.5 rounded-lg text-sm transition-all duration-200 {{ request()->is('admin/case-study-details') ? 'text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 font-medium !text-indigo-400 router-active-item' : 'text-white hover:text-white hover:bg-white/5' }}">Case Study Details</a>
+                    </div>
+                </div>
+
+
 
 
                 {{-- SEO Accordion --}}
@@ -388,6 +417,7 @@
                 { id: 'contactMenu', icon: 'contactIcon' },
                 { id: 'leadDataMenu', icon: 'leadDataIcon' },
                 { id: 'pressReleaseMenu', icon: 'pressReleaseIcon' },
+                { id: 'caseStudiesMenu', icon: 'caseStudiesIcon' },
                 { id: 'seoMenu', icon: 'seoIcon' }
             ];
 

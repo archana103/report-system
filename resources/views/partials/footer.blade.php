@@ -45,6 +45,7 @@
       <a href="/blogs">Blogs</a>
       <a href="/qualitative-services">Qualitative Services</a>
       <a href="/press-releases">PR</a>
+      <a href="/faq">FAQ</a>
       <a href="/contact-us">Contact</a>
     </nav>
     <div class="social-links">

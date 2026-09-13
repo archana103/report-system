@@ -405,50 +405,6 @@
         </div>
       </section>
 
-      @php
-      $faqs = [
-          [
-              'question' => 'How can I request a customized market research report?',
-              'answer' => 'Contact our research team with your requirements, including industry, geography, segmentation, and objectives. We will prepare a tailored proposal based on your business needs.'
-          ],
-          [
-              'question' => 'Do you offer custom research and consulting services?',
-              'answer' => 'Yes. We provide custom market research, competitive intelligence, primary research, market sizing, forecasting, pricing analysis, feasibility studies, and strategic consulting across multiple industries.'
-          ],
-          [
-              'question' => 'How quickly will I receive a response after submitting an inquiry?',
-              'answer' => 'Our team typically responds within 24 business hours to discuss your requirements, provide additional information, or share a quotation.'
-          ],
-          [
-              'question' => 'Can I request a sample report before purchasing?',
-              'answer' => 'Yes. We can provide a sample report or table of contents to help you evaluate the report structure, methodology, and level of analysis.'
-          ],
-          [
-              'question' => 'Do you provide analyst support after report purchase?',
-              'answer' => 'Yes. Complimentary analyst support is available for a specified period after purchase to help clarify report findings, assumptions, and methodologies.'
-          ]
-      ];
-      @endphp
-
-      <!-- FAQ Section Accordion -->
-      <section class="contact-faqs section-shell">
-        <h2 class="faq-section-title">Frequently Asked Questions</h2>
-        <div class="faq-accordion">
-          @foreach($faqs as $idx => $faq)
-          <div class="faq-item" id="faq-item-{{ $idx }}">
-            <button class="faq-header" type="button" onclick="toggleFaq({{ $idx }})">
-              <span>{{ $faq['question'] }}</span>
-              <span class="faq-toggle-icon" id="faq-icon-{{ $idx }}">+</span>
-            </button>
-            <div class="faq-body" id="faq-body-{{ $idx }}" style="max-height: 0px;">
-              <div class="faq-content">
-                {{ $faq['answer'] }}
-              </div>
-            </div>
-          </div>
-          @endforeach
-        </div>
-      </section>
     </main>
   </div>
 
