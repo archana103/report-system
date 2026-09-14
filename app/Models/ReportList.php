@@ -11,6 +11,7 @@ class ReportList extends Model
 
     protected $fillable = [
         'report_category_id',
+        'report_type',
         'name',
         'status',
     ];

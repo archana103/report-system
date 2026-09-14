@@ -83,17 +83,27 @@ class ReportListController extends Controller
         return view('admin.reports.index', compact('lists', 'categories'));
     }
 
+    protected $reportTypes = [
+        'B2B Reports',
+        'Brand Tracking Reports',
+        'Pricing Tracker',
+        'Product and Innovation Research',
+        'CX Reports',
+    ];
+
     public function create()
     {
         $categories = ReportCategory::where('status', 'Active')->orderBy('name')->get();
-        return view('admin.reports.create', compact('categories'));
+        $reportTypes = $this->reportTypes;
+        return view('admin.reports.create', compact('categories', 'reportTypes'));
     }
 
     public function edit($id)
     {
         $reportList = ReportList::findOrFail($id);
         $categories = ReportCategory::where('status', 'Active')->orderBy('name')->get();
-        return view('admin.reports.edit', compact('reportList', 'categories'));
+        $reportTypes = $this->reportTypes;
+        return view('admin.reports.edit', compact('reportList', 'categories', 'reportTypes'));
     }
 
     /**
@@ -103,11 +113,12 @@ class ReportListController extends Controller
     {
         $request->validate([
             'report_category_id' => 'required|exists:report_categories,id',
+            'report_type'        => 'required|string|in:' . implode(',', $this->reportTypes),
             'name'               => 'required|string',
             'status'             => 'required|string|in:Active,Inactive',
         ]);
 
-        $reportList = ReportList::create($request->only('report_category_id', 'name', 'status'));
+        $reportList = ReportList::create($request->only('report_category_id', 'report_type', 'name', 'status'));
 
         return redirect()->route('admin.reports.index')->with('success', 'Report list created successfully!');
     }
@@ -121,11 +132,12 @@ class ReportListController extends Controller
 
         $request->validate([
             'report_category_id' => 'required|exists:report_categories,id',
+            'report_type'        => 'required|string|in:' . implode(',', $this->reportTypes),
             'name'               => 'required|string',
             'status'             => 'required|string|in:Active,Inactive',
         ]);
 
-        $reportList->update($request->only('report_category_id', 'name', 'status'));
+        $reportList->update($request->only('report_category_id', 'report_type', 'name', 'status'));
 
         return redirect()->route('admin.reports.index')->with('success', 'Report list updated successfully!');
     }

@@ -52,6 +52,31 @@
                 </div>
             </div>
 
+            <!-- Select Report Type -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-300 mb-1.5 ml-1">
+                    Select Report Type <span class="text-rose-500">*</span>
+                </label>
+                <div class="relative">
+                    <select
+                        name="report_type"
+                        required
+                        class="w-full bg-gray-800/80 border border-gray-700 rounded-xl pl-4 pr-10 py-2.5 text-sm text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all appearance-none cursor-pointer"
+                    >
+                        @foreach($reportTypes as $type)
+                            <option value="{{ $type }}" {{ old('report_type', 'B2B Reports') == $type ? 'selected' : '' }}>
+                                {{ $type }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-400">
+                        <svg class="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
             <!-- New Report Name -->
             <div>
                 <label class="block text-sm font-semibold text-gray-300 mb-1.5 ml-1">

@@ -73,20 +73,22 @@ class UserviewController extends Controller
     {
         $search = $request->query('search', '');
         $categoryName = $request->query('category', 'All');
+        $type = $request->query('type', $request->query('report_type', 'All'));
         $page = $request->query('page', 1);
         $sort = $request->query('sort', '');
 
         $version = Cache::get('userview_cache_version', 1);
         $key = sprintf(
-            'reports:v%s:p%s:s%s:c%s:o%s',
+            'reports:v%s:p%s:s%s:c%s:t%s:o%s',
             $version,
             $page,
             md5($search),
             md5($categoryName),
+            md5($type),
             $sort
         );
 
-        $paginator = Cache::remember($key, 60 * 60 * 24, function () use ($search, $categoryName) {
+        $paginator = Cache::remember($key, 60 * 60 * 24, function () use ($search, $categoryName, $type) {
             $query = ReportList::with(['reportCategory', 'reportDetail'])
                 ->has('reportDetail')
                 ->where('status', 'Active');
@@ -95,6 +97,10 @@ class UserviewController extends Controller
                 $query->whereHas('reportCategory', function ($q) use ($categoryName) {
                     $q->where('slug_url', $categoryName)->orWhere('name', $categoryName);
                 });
+            }
+
+            if ($type && $type !== 'All') {
+                $query->where('report_type', $type);
             }
 
             if ($search) {
@@ -118,6 +124,7 @@ class UserviewController extends Controller
                     'title' => ($report->reportDetail && $report->reportDetail->title) ? $report->reportDetail->title : $report->name,
                     'description' => $description,
                     'category' => $report->reportCategory ? $report->reportCategory->name : 'Unknown',
+                    'report_type' => $report->report_type ?? 'B2B Reports',
                     'date' => $report->created_at->format('M-Y'),
                     'image' => '/assets/images/default-report.png',
                     'pages' => 120, // Placeholder

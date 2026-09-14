@@ -12,6 +12,20 @@
 
     <section class="reports-content section-shell reports-two-column-layout">
       <div class="reports-main-column">
+        @php
+          $activeType = request('type', request('report_type'));
+        @endphp
+        @if($activeType && $activeType !== 'All')
+          <div class="active-type-banner" style="margin-bottom: 20px; background: #e0f2fe; border: 1px solid #bae6fd; border-radius: 12px; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-size: 14px; font-weight: 600; color: #0369a1;">
+              Showing Reports for Type: <strong>{{ $activeType }}</strong>
+            </span>
+            <a href="{{ url('/reports') }}{{ request('category') && request('category') !== 'All' ? '?category=' . urlencode(request('category')) : '' }}" style="font-size: 13px; color: #0284c7; font-weight: 700; text-decoration: none;">
+              Clear Filter &times;
+            </a>
+          </div>
+        @endif
+
         <div class="report-list-vertical">
           @foreach($initialReports as $report)
             @php $report = (object) $report; @endphp
@@ -30,6 +44,8 @@
                 </a>
                 <p>{!! $report->description ?? '' !!}</p>
                 <div class="report-metadata">
+                  <span>Type: <strong style="color: #0284c7;">{{ !empty($report->report_type) ? $report->report_type : 'B2B Reports' }}</strong></span>
+                  <span class="divider">|</span>
                   <span>Pages: <strong>{{ !empty($report->pages) ? $report->pages : 120 }}</strong></span>
                   <span class="divider">|</span>
                   <span>Format: <strong>{{ !empty($report->format) ? $report->format : 'PDF, Excel' }}</strong></span>
@@ -58,9 +74,15 @@
 
         <!-- Pagination -->
         @if($initialTotalPages > 1)
+          @php
+            $typeParam = request()->query('type', request()->query('report_type'));
+            $queryString = (request()->query('q') ? '&q=' . urlencode(request()->query('q')) : '') .
+                           (request()->query('category') && request()->query('category') !== 'All' ? '&category=' . urlencode(request()->query('category')) : '') .
+                           ($typeParam && $typeParam !== 'All' ? '&type=' . urlencode($typeParam) : '');
+          @endphp
           <div class="pagination-wrapper" style="display: flex;">
             @if(request()->query('page', 1) > 1)
-              <a href="?page={{ request()->query('page', 1) - 1 }}{{ request()->query('q') ? '&q=' . request()->query('q') : '' }}{{ request()->query('category', 'All') !== 'All' ? '&category=' . request()->query('category', 'All') : '' }}"
+              <a href="?page={{ request()->query('page', 1) - 1 }}{{ $queryString }}"
                 class="nav-btn prev-btn" style="text-decoration: none;">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                   stroke-linejoin="round" class="nav-icon">
@@ -77,13 +99,13 @@
                 $start = max(1, $end - 4);
               @endphp
               @for ($i = $start; $i <= $end; $i++)
-                <a href="?page={{ $i }}{{ request()->query('q') ? '&q=' . request()->query('q') : '' }}{{ request()->query('category', 'All') !== 'All' ? '&category=' . request()->query('category', 'All') : '' }}"
+                <a href="?page={{ $i }}{{ $queryString }}"
                   class="num-btn {{ $i == $currentPage ? 'active' : '' }}"
                   style="text-decoration: none; display: flex; align-items: center; justify-content: center;">{{ $i }}</a>
               @endfor
             </div>
             @if(request()->query('page', 1) < $initialTotalPages)
-              <a href="?page={{ request()->query('page', 1) + 1 }}{{ request()->query('q') ? '&q=' . request()->query('q') : '' }}{{ request()->query('category', 'All') !== 'All' ? '&category=' . request()->query('category', 'All') : '' }}"
+              <a href="?page={{ request()->query('page', 1) + 1 }}{{ $queryString }}"
                 class="nav-btn next-btn" style="text-decoration: none;">
                 Next
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -99,6 +121,9 @@
       <aside class="reports-sidebar-column">
         <!-- Filter Bar -->
         <form method="GET" action="{{ url('/reports') }}" class="filter-bar sidebar-search-widget">
+          @if(request('type'))
+            <input type="hidden" name="type" value="{{ request('type') }}" />
+          @endif
           <div class="search-input-group">
             <input type="text" name="q" value="{{ request('q') }}" placeholder="Search Report by Title or Keyword" />
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="icon input-icon"
@@ -110,7 +135,7 @@
 
           <div class="category-select-group">
             <select name="category">
-              <option value="All" {{ request('category', 'All') === 'All' ? 'selected' : '' }}>All</option>
+              <option value="All" {{ request('category', 'All') === 'All' ? 'selected' : '' }}>All Categories</option>
               @foreach($initialCategories as $cat)
                 <option value="{{ $cat->name }}" {{ request('category') === $cat->name ? 'selected' : '' }}>{{ $cat->name }}
                 </option>

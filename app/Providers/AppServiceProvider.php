@@ -27,6 +27,14 @@ class AppServiceProvider extends ServiceProvider
                 ->where('status', 'Active')
                 ->orderBy('name')
                 ->get());
+
+            $view->with('headerReportTypes', [
+                'B2B Reports',
+                'Brand Tracking Reports',
+                'Pricing Tracker',
+                'Product and Innovation Research',
+                'CX Reports'
+            ]);
         });
     }
 }

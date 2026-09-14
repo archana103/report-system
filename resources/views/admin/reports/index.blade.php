@@ -38,6 +38,7 @@
                 <tr>
                     <th scope="col" class="px-6 py-4 font-medium w-16">SR</th>
                     <th scope="col" class="px-6 py-4 font-medium">Category</th>
+                    <th scope="col" class="px-6 py-4 font-medium">Report Type</th>
                     <th scope="col" class="px-6 py-4 font-medium">Report Name</th>
                     <th scope="col" class="px-6 py-4 font-medium">Status</th>
                     <th scope="col" class="px-6 py-4 font-medium">Created At</th>
@@ -52,6 +53,9 @@
                     </td>
                     <td class="px-6 py-4 text-blue-400 font-medium whitespace-nowrap">
                         {{ $report->reportCategory->name ?? '—' }}
+                    </td>
+                    <td class="px-6 py-4 text-teal-400 font-medium whitespace-nowrap">
+                        {{ $report->report_type ?? 'B2B Reports' }}
                     </td>
                     <td class="px-6 py-4 font-medium text-gray-200">{{ $report->name }}</td>
                     <td class="px-6 py-4">
@@ -81,7 +85,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="6" class="px-6 py-8 text-center text-gray-500">No reports found.</td>
+                    <td colspan="7" class="px-6 py-8 text-center text-gray-500">No reports found.</td>
                 </tr>
                 @endforelse
             </tbody>

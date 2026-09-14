@@ -5,7 +5,19 @@
 
   <nav class="main-nav" aria-label="Main navigation">
     <a href="/" class="{{ request()->is('/') ? 'active' : '' }}">Home</a>
-    <a href="/reports" class="{{ request()->routeIs('reports.*') ? 'active' : '' }}">Reports</a>
+    <div class="dropdown-menu-container">
+      <a href="/reports" class="dropdown-trigger {{ request()->routeIs('reports.*') || request()->has('type') || request()->has('report_type') ? 'active' : '' }}">
+        Reports
+        <svg class="chevron-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+      </a>
+      <div class="dropdown-menu dropdown-left-align">
+        @if(isset($headerReportTypes))
+          @foreach($headerReportTypes as $typeItem)
+            <a href="{{ url('/reports?type=' . urlencode($typeItem)) }}" class="{{ (request('type') === $typeItem || request('report_type') === $typeItem) ? 'active' : '' }}">{{ $typeItem }}</a>
+          @endforeach
+        @endif
+      </div>
+    </div>
     <div class="dropdown-menu-container">
       <a href="/reports" class="dropdown-trigger">
         Industry
