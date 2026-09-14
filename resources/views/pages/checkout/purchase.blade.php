@@ -192,8 +192,14 @@
     <!-- Add intl-tel-input -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.4/build/css/intlTelInput.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.4/build/js/intlTelInput.min.js"></script>
-    <!-- PayPal SDK integration using the Sandbox ID for testing. You should use config() for production -->
-    <script src="https://www.paypal.com/sdk/js?client-id={{ env('PAYPAL_CLIENT_ID', 'test') }}&currency=USD"></script>
+    <!-- PayPal SDK integration (uses Sandbox client ID when mode is sandbox) -->
+    @php
+        $paypalMode = config('paypal.mode', 'sandbox');
+        $paypalClientId = $paypalMode === 'sandbox' 
+            ? (config('paypal.sandbox.client_id') ?: env('PAYPAL_SANDBOX_CLIENT_ID'))
+            : (config('paypal.live.client_id') ?: env('PAYPAL_LIVE_CLIENT_ID'));
+    @endphp
+    <script src="https://www.paypal.com/sdk/js?client-id={{ $paypalClientId }}&currency={{ config('paypal.currency', 'USD') }}"></script>
 
     <style>
         /* Hero Banner */

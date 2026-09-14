@@ -29,7 +29,7 @@ class PaypalController extends Controller
                 "purchase_units" => [
                     [
                         "amount" => [
-                            "currency_code" => "USD",
+                            "currency_code" => config('paypal.currency', 'USD'),
                             "value" => $formatted_cost
                         ]
                     ]
