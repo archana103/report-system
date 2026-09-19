@@ -129,8 +129,15 @@
       <!-- Geography Dropdown -->
       @if(!empty($reportData->geography_reports) && count((array)$reportData->geography_reports) > 0)
         <div class="geography-dropdown-wrapper" style="margin-bottom: 24px;">
-          <p>Select another geography:</p>@foreach($reportData->geography_reports as $geo)<a class="industry-tag-pill"
-          href="{{ url('/reports/' . ($geo->slug_url ?: ($geo->slug ?? $geo->id))) }}">{{ $geo->geo_name ?? ($geo->title ?? '') }}</a>@endforeach
+          <label style="display: block; font-size: 14px; font-weight: 600; color: #111827; margin-bottom: 8px;">Select another geography:</label>
+          <select class="geography-select" onchange="if (this.value) window.location.href = this.value;">
+            <option value="" disabled selected>Select another geography...</option>
+            @foreach($reportData->geography_reports as $geo)
+              <option value="{{ url('/reports/' . ($geo->slug_url ?: ($geo->slug ?? $geo->id))) }}">
+                {{ $geo->geo_name ?? ($geo->title ?? '') }}
+              </option>
+            @endforeach
+          </select>
         </div>
       @endif
 
@@ -258,30 +265,37 @@
 
   .geography-select {
     width: 100%;
-    padding: 12px 20px;
+    padding: 12px 36px 12px 18px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    border: 1px solid #e5e7eb;
-    border-radius: 25px;
-    background-color: white;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    background-color: #ffffff;
     font-size: 14px;
-    color: #4b5563;
+    font-weight: 500;
+    color: #1f2937;
     outline: none;
     cursor: pointer;
     appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
     background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2212%22%20height%3D%228%22%20viewBox%3D%220%200%2012%208%22%20fill%3D%22none%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cpath%20d%3D%22M1%201.5L6%206.5L11%201.5%22%20stroke%3D%22%236B7280%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E');
     background-repeat: no-repeat;
     background-position: right 16px center;
     background-size: 12px;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    transition: border-color 0.2s;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
+    transition: all 0.2s ease-in-out;
+  }
+
+  .geography-select:hover {
+    border-color: #0783df;
   }
 
   .geography-select:focus {
     border-color: #0783df;
+    box-shadow: 0 0 0 3px rgba(7, 131, 223, 0.15);
   }
-</style>
 </style>
 
 <script>

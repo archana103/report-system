@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Services\Base64ImageService;
 
 class BlogDetail extends Model
 {
@@ -38,5 +39,15 @@ class BlogDetail extends Model
     public function blog()
     {
         return $this->belongsTo(Blog::class);
+    }
+
+    protected static function booted()
+    {
+        static::saving(function ($detail) {
+            $prefix = $detail->title ?: 'Blog_Image';
+            if ($detail->description && str_contains($detail->description, 'data:image')) {
+                $detail->description = Base64ImageService::processHtmlBase64Images($detail->description, $prefix);
+            }
+        });
     }
 }

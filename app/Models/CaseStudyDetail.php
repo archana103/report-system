@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Services\Base64ImageService;
 
 class CaseStudyDetail extends Model
 {
@@ -33,5 +34,15 @@ class CaseStudyDetail extends Model
     public function caseStudy()
     {
         return $this->belongsTo(CaseStudy::class, 'case_study_id');
+    }
+
+    protected static function booted()
+    {
+        static::saving(function ($detail) {
+            $prefix = $detail->slug_url ?: ($detail->page_main_title ?: 'Case_Study_Image');
+            if ($detail->content && str_contains($detail->content, 'data:image')) {
+                $detail->content = Base64ImageService::processHtmlBase64Images($detail->content, $prefix);
+            }
+        });
     }
 }

@@ -12,25 +12,32 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/category-details/upload-image', [ReportDetailController::class, 'uploadEditorImage'])->name('report_details.upload_image');
     Route::post('/editor/upload-image', [ReportDetailController::class, 'uploadEditorImage']);
     Route::get('/category-details/fix-base64-images', function () {
-        $reports = \App\Models\ReportDetail::all();
+        $models = [
+            \App\Models\ReportDetail::class,
+            \App\Models\CaseStudyDetail::class,
+            \App\Models\BlogDetail::class,
+            \App\Models\PressReleaseDetail::class,
+            \App\Models\ReportMethodology::class,
+        ];
         $processed = [];
-        foreach ($reports as $report) {
-            $hasB64 = str_contains($report->description ?? '', 'data:image') ||
-                      str_contains($report->detail_description ?? '', 'data:image') ||
-                      str_contains($report->table_of_contents ?? '', 'data:image');
-            if ($hasB64) {
-                $report->save();
-                $processed[] = [
-                    'id' => $report->id,
-                    'title' => $report->title,
-                    'slug' => $report->slug_url,
-                ];
+        foreach ($models as $modelClass) {
+            $records = $modelClass::all();
+            foreach ($records as $record) {
+                $contentStr = json_encode($record->toArray());
+                if (str_contains($contentStr, 'data:image')) {
+                    $record->save();
+                    $processed[] = [
+                        'type' => class_basename($modelClass),
+                        'id' => $record->id,
+                        'title' => $record->title ?? ($record->page_main_title ?? 'ID ' . $record->id),
+                    ];
+                }
             }
         }
         return response()->json([
             'status' => 'success',
-            'message' => 'Processed ' . count($processed) . ' reports with base64 images.',
-            'processed_reports' => $processed,
+            'message' => 'Processed ' . count($processed) . ' records with base64 images.',
+            'processed_records' => $processed,
         ]);
     })->name('report_details.fix_base64');
 });

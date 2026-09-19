@@ -8,19 +8,29 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 Artisan::command('reports:fix-base64', function () {
-    $this->info('Scanning report details for base64 images...');
-    $reports = \App\Models\ReportDetail::all();
+    $this->info('Scanning all detail models for base64 images...');
+    
     $count = 0;
-    foreach ($reports as $report) {
-        $hasB64 = str_contains($report->description ?? '', 'data:image') ||
-                  str_contains($report->detail_description ?? '', 'data:image') ||
-                  str_contains($report->table_of_contents ?? '', 'data:image');
-        if ($hasB64) {
-            $this->info("Processing report ID {$report->id}: {$report->title}");
-            $report->save();
-            $count++;
+    $models = [
+        \App\Models\ReportDetail::class,
+        \App\Models\CaseStudyDetail::class,
+        \App\Models\BlogDetail::class,
+        \App\Models\PressReleaseDetail::class,
+        \App\Models\ReportMethodology::class,
+    ];
+
+    foreach ($models as $modelClass) {
+        $records = $modelClass::all();
+        foreach ($records as $record) {
+            $contentStr = json_encode($record->toArray());
+            if (str_contains($contentStr, 'data:image')) {
+                $this->info("Processing " . class_basename($modelClass) . " ID {$record->id}");
+                $record->save();
+                $count++;
+            }
         }
     }
-    $this->info("Done! Processed {$count} reports.");
-})->purpose('Find all base64 images in report details and upload them to S3');
+    
+    $this->info("Done! Processed {$count} records.");
+})->purpose('Find all base64 images in all detail models and upload them to S3');
 

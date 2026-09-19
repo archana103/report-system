@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Services\Base64ImageService;
 
 class PressReleaseDetail extends Model
 {
@@ -33,5 +34,15 @@ class PressReleaseDetail extends Model
     public function pressRelease()
     {
         return $this->belongsTo(PressRelease::class, 'press_release_id');
+    }
+
+    protected static function booted()
+    {
+        static::saving(function ($detail) {
+            $prefix = $detail->slug_url ?: ($detail->page_main_title ?: 'Press_Release_Image');
+            if ($detail->content && str_contains($detail->content, 'data:image')) {
+                $detail->content = Base64ImageService::processHtmlBase64Images($detail->content, $prefix);
+            }
+        });
     }
 }
