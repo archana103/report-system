@@ -353,7 +353,7 @@ class UserviewController extends Controller
 
             'download_text' => $reportDetail->download_text,
 
-            'image' => '/assets/images/default-report.png',
+            'image' => $reportDetail->image ?: '/assets/images/default-report.png',
 
             'slug_url' => $reportDetail->slug_url,
 

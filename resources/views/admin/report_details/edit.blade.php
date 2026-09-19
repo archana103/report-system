@@ -326,7 +326,42 @@
                 promotion: false,
                 branding: false,
                 images_upload_url: "{{ route('admin.report_details.upload_image') }}",
+                automatic_uploads: true,
                 images_upload_credentials: true,
+                images_upload_handler: function (blobInfo, progress) {
+                    return new Promise(function (resolve, reject) {
+                        var xhr = new XMLHttpRequest();
+                        xhr.withCredentials = true;
+                        xhr.open('POST', "{{ route('admin.report_details.upload_image') }}");
+                        var csrfToken = document.querySelector('meta[name="csrf-token"]') ? document.querySelector('meta[name="csrf-token"]').getAttribute('content') : '{{ csrf_token() }}';
+                        xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+
+                        xhr.upload.onprogress = function (e) {
+                            progress(e.loaded / e.total * 100);
+                        };
+
+                        xhr.onload = function () {
+                            if (xhr.status < 200 || xhr.status >= 300) {
+                                reject('HTTP Error: ' + xhr.status);
+                                return;
+                            }
+                            var json = JSON.parse(xhr.responseText);
+                            if (!json || typeof json.location !== 'string') {
+                                reject('Invalid JSON response from server: ' + xhr.responseText);
+                                return;
+                            }
+                            resolve(json.location);
+                        };
+
+                        xhr.onerror = function () {
+                            reject('Image upload failed due to XHR transport error.');
+                        };
+
+                        var formData = new FormData();
+                        formData.append('file', blobInfo.blob(), blobInfo.filename());
+                        xhr.send(formData);
+                    });
+                },
                 relative_urls: false,
                 remove_script_host: false,
                 convert_urls: true

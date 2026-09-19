@@ -63,11 +63,27 @@
             </div>
         </div>
 
+        <!-- Section 1: About This Report (Main Description) -->
+        <div class="space-y-4">
+            <div>
+                <label class="block text-sm font-semibold text-gray-300 mb-1.5 ml-1">
+                    Section 1. About This Report (Main Description)
+                </label>
+                <textarea id="editor-description" name="description" class="hidden">{{ old('description') }}</textarea>
+            </div>
+            <div>
+                <label class="block text-sm font-semibold text-gray-300 mb-1.5 ml-1">
+                    Manage Table of Contents
+                </label>
+                <textarea id="editor-toc" name="table_of_contents" class="hidden">{{ old('table_of_contents') }}</textarea>
+            </div>
+        </div>
+
         <!-- Row 2: Description & Category List Download -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
                 <label class="block text-sm font-semibold text-gray-300 mb-1.5 ml-1">
-                    Report Details Description
+                    Report Details Summary Description
                 </label>
                 <textarea
                     name="detail_description"
@@ -140,7 +156,6 @@
             </div>
         </div>
 
-
         <!-- Actions -->
         <div class="pt-6 border-t border-gray-700/50 mt-6 md:col-span-2">
             <div class="flex items-center">
@@ -157,4 +172,73 @@
         </div>
     </form>
 </div>
+
+<!-- TinyMCE Initialization -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const initMCE = (selector) => {
+            tinymce.init({
+                selector: selector,
+                menubar: 'file edit view insert format tools table help',
+                plugins: [
+                    'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+                    'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                    'insertdatetime', 'media', 'table', 'help', 'wordcount'
+                ],
+                toolbar: 'undo redo | blocks fontfamily fontsize | ' +
+                    'bold italic underline strikethrough | forecolor backcolor | ' +
+                    'link image media table | alignleft aligncenter alignright alignjustify | ' +
+                    'bullist numlist outdent indent | removeformat | code fullscreen help',
+                skin: 'oxide-dark',
+                content_css: 'dark',
+                height: 400,
+                promotion: false,
+                branding: false,
+                images_upload_url: "{{ route('admin.report_details.upload_image') }}",
+                automatic_uploads: true,
+                images_upload_credentials: true,
+                images_upload_handler: function (blobInfo, progress) {
+                    return new Promise(function (resolve, reject) {
+                        var xhr = new XMLHttpRequest();
+                        xhr.withCredentials = true;
+                        xhr.open('POST', "{{ route('admin.report_details.upload_image') }}");
+                        var csrfToken = document.querySelector('meta[name="csrf-token"]') ? document.querySelector('meta[name="csrf-token"]').getAttribute('content') : '{{ csrf_token() }}';
+                        xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+
+                        xhr.upload.onprogress = function (e) {
+                            progress(e.loaded / e.total * 100);
+                        };
+
+                        xhr.onload = function () {
+                            if (xhr.status < 200 || xhr.status >= 300) {
+                                reject('HTTP Error: ' + xhr.status);
+                                return;
+                            }
+                            var json = JSON.parse(xhr.responseText);
+                            if (!json || typeof json.location !== 'string') {
+                                reject('Invalid JSON response from server: ' + xhr.responseText);
+                                return;
+                            }
+                            resolve(json.location);
+                        };
+
+                        xhr.onerror = function () {
+                            reject('Image upload failed due to XHR transport error.');
+                        };
+
+                        var formData = new FormData();
+                        formData.append('file', blobInfo.blob(), blobInfo.filename());
+                        xhr.send(formData);
+                    });
+                },
+                relative_urls: false,
+                remove_script_host: false,
+                convert_urls: true
+            });
+        };
+
+        if(document.getElementById('editor-description')) initMCE('#editor-description');
+        if(document.getElementById('editor-toc')) initMCE('#editor-toc');
+    });
+</script>
 @endsection

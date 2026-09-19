@@ -22,7 +22,7 @@
     <div class="detail-hero-shell">
       <div class="book-cover-container">
         <div class="report-book-cover-image-wrapper">
-          <img src="{{ env('AWS_URL') }}/assets/images/default-report.png"
+          <img src="{{ $report->image ?: (rtrim(env('AWS_URL'), '/') . '/assets/images/default-report.png') }}"
             alt="{{ $report->title ?: optional($report->reportList)->name }}" class="report-book-cover-img" />
         </div>
       </div>

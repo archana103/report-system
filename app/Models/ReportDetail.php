@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use App\Services\Base64ImageService;
+
 class ReportDetail extends Model
 {
     use HasFactory;
@@ -58,16 +60,31 @@ class ReportDetail extends Model
     }
 
     protected static function booted()
-{
-    $bumpVersion = function () {
-        if (!Cache::has('userview_cache_version')) {
-            Cache::forever('userview_cache_version', 1);
-        }
+    {
+        static::saving(function ($reportDetail) {
+            $prefix = $reportDetail->slug_url ?: ($reportDetail->title ?: 'Report_Image');
+            
+            if ($reportDetail->description && str_contains($reportDetail->description, 'data:image')) {
+                $reportDetail->description = Base64ImageService::processHtmlBase64Images($reportDetail->description, $prefix);
+            }
+            if ($reportDetail->detail_description && str_contains($reportDetail->detail_description, 'data:image')) {
+                $reportDetail->detail_description = Base64ImageService::processHtmlBase64Images($reportDetail->detail_description, $prefix);
+            }
+            if ($reportDetail->table_of_contents && str_contains($reportDetail->table_of_contents, 'data:image')) {
+                $reportDetail->table_of_contents = Base64ImageService::processHtmlBase64Images($reportDetail->table_of_contents, $prefix);
+            }
+        });
 
-        Cache::increment('userview_cache_version');
-    };
+        $bumpVersion = function () {
+            if (!Cache::has('userview_cache_version')) {
+                Cache::forever('userview_cache_version', 1);
+            }
 
-    static::saved($bumpVersion);
-    static::deleted($bumpVersion);
+            Cache::increment('userview_cache_version');
+        };
+
+        static::saved($bumpVersion);
+        static::deleted($bumpVersion);
+    }
 }
-}
+
