@@ -30,6 +30,7 @@
                 <tr>
                     <th scope="col" class="px-6 py-4 font-medium">Name</th>
                     <th scope="col" class="px-6 py-4 font-medium">Email</th>
+                    <th scope="col" class="px-6 py-4 font-medium">Usage</th>
                     <th scope="col" class="px-6 py-4 font-medium">Phone</th>
                     <th scope="col" class="px-6 py-4 font-medium">Report</th>
                     <th scope="col" class="px-6 py-4 font-medium">Subject / Message</th>
@@ -42,6 +43,11 @@
                 <tr class="border-b border-gray-800 last:border-0 hover:bg-gray-800/20 transition-colors">
                     <td class="px-6 py-4 font-medium text-gray-200 whitespace-nowrap">{{ $req->name ?? '—' }}</td>
                     <td class="px-6 py-4">{{ $req->email ?? '—' }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2.5 py-1 text-xs font-semibold rounded-full {{ strtolower($req->usage ?? '') === 'business' ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' : (strtolower($req->usage ?? '') === 'personal' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'text-gray-400') }}">
+                            {{ $req->usage ?? '—' }}
+                        </span>
+                    </td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ $req->phone ?? '—' }}</td>
                     <td class="px-6 py-4">
                         <div class="max-w-xs truncate text-purple-200" title="{{ $req->report_name }}">
@@ -135,6 +141,10 @@
                     </p>
                 </div>
                 <div>
+                    <p class="text-[10px] text-gray-500 uppercase font-bold tracking-wider mb-1">Usage</p>
+                    <p class="text-gray-200 font-medium" id="v-usage">—</p>
+                </div>
+                <div>
                     <p class="text-[10px] text-gray-500 uppercase font-bold tracking-wider mb-1">Phone</p>
                     <p class="text-gray-200 font-medium">
                         <a href="#" id="v-phone-link" class="text-purple-400 hover:underline">
@@ -212,6 +222,8 @@
             emailLink.href = '#';
         }
         
+        document.getElementById('v-usage').innerText = req.usage || '—';
+
         let phoneEl = document.getElementById('v-phone');
         let phoneLink = document.getElementById('v-phone-link');
         phoneEl.innerText = req.phone || '—';

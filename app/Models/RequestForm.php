@@ -9,6 +9,7 @@ class RequestForm extends Model
     protected $fillable = [
         'name',
         'email',
+        'usage',
         'phone',
         'subject',
         'specific_research_requirement',

@@ -94,6 +94,12 @@
                     <td class="label">Email:</td>
                     <td class="value">{{ $email }}</td>
                 </tr>
+                @if(!empty($usage))
+                <tr>
+                    <td class="label">Usage:</td>
+                    <td class="value">{{ $usage }}</td>
+                </tr>
+                @endif
                 <tr>
                     <td class="label">Phone:</td>
                     <td class="value">{{ $phone }}</td>

@@ -79,11 +79,11 @@
 
                     <div class="report-actions">
                       <a href="javascript:void(0)"
-                        onclick="openRequestModal('Request Sample', '{{ addslashes(htmlspecialchars($report->title ?? '', ENT_QUOTES, 'UTF-8')) }}')"
+                        onclick="openRequestModal('Request Sample', '{{ addslashes(htmlspecialchars(preg_replace('/\s+/', ' ', trim($report->title ?? '')), ENT_QUOTES, 'UTF-8')) }}')"
                         class="secondary-button outlined"
                         style="padding: 10px 24px; min-height: auto; line-height: 1.2;">Request Sample</a>
                       <a href="javascript:void(0)"
-                        onclick="openRequestModal('Download Sample', '{{ addslashes(htmlspecialchars($report->title ?? '', ENT_QUOTES, 'UTF-8')) }}')"
+                        onclick="openRequestModal('Download Sample', '{{ addslashes(htmlspecialchars(preg_replace('/\s+/', ' ', trim($report->title ?? '')), ENT_QUOTES, 'UTF-8')) }}')"
                         class="secondary-button outlined"
                         style="padding: 10px 24px; min-height: auto; line-height: 1.2;">Download Sample</a>
                       <a href="{{ url('/checkout/' . (!empty($report->slug) && $report->slug !== '#' ? $report->slug : $report->id)) }}" class="primary-button small"

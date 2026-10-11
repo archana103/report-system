@@ -45,10 +45,11 @@
           <span>Pages: <strong>120</strong></span>
         </div>
 
+        @php($reportTitleSafe = addslashes(htmlspecialchars(preg_replace('/\s+/', ' ', trim($report->title ?: optional($report->reportList)->name ?? '')), ENT_QUOTES, 'UTF-8')))
         <div class="hero-actions-row" style="flex-wrap: wrap; gap: 12px;">
-          <a href="javascript:void(0)" onclick="openRequestModal('Request Sample', '{{ addslashes(htmlspecialchars($report->title ?: optional($report->reportList)->name, ENT_QUOTES, 'UTF-8')) }}')" class="secondary-button outlined">Request Sample</a>
-          <a href="javascript:void(0)" onclick="openRequestModal('Ask for discount', '{{ addslashes(htmlspecialchars($report->title ?: optional($report->reportList)->name, ENT_QUOTES, 'UTF-8')) }}')" class="secondary-button outlined">Ask for Discount</a>
-          <a href="javascript:void(0)" onclick="openRequestModal('Request customized report', '{{ addslashes(htmlspecialchars($report->title ?: optional($report->reportList)->name, ENT_QUOTES, 'UTF-8')) }}')" class="secondary-button outlined">Request Customized Report</a>
+          <a href="javascript:void(0)" onclick="openRequestModal('Request Sample', '{{ $reportTitleSafe }}')" class="secondary-button outlined">Request Sample</a>
+          <a href="javascript:void(0)" onclick="openRequestModal('Ask for discount', '{{ $reportTitleSafe }}')" class="secondary-button outlined">Ask for Discount</a>
+          <a href="javascript:void(0)" onclick="openRequestModal('Request customized report', '{{ $reportTitleSafe }}')" class="secondary-button outlined">Request Customized Report</a>
           <a href="/checkout/{{ (!empty($report->slug_url) && $report->slug_url !== '#') ? $report->slug_url : ($report->id ?? optional($report->reportList)->id) }}" class="primary-button">Buy Now</a>
         </div>
       </div>
@@ -68,7 +69,7 @@
             Methodology</a>
         </div>
         <div class="tabs-right-action">
-          <a href="javascript:void(0)" onclick="openRequestModal('Download Free Sample', '{{ addslashes(htmlspecialchars($report->title ?: optional($report->reportList)->name, ENT_QUOTES, 'UTF-8')) }}')" class="download-sample-btn">
+          <a href="javascript:void(0)" onclick="openRequestModal('Download Free Sample', '{{ $reportTitleSafe }}')" class="download-sample-btn">
             <svg viewBox="0 0 24 24" fill="none" class="icon" style="width:16px; height:16px;" stroke="currentColor"
               stroke-width="1.8" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round">
               <path d="M4 21v-7"></path>
@@ -160,7 +161,7 @@
             </span>
           </a>
 
-          <a href="javascript:void(0)" onclick="openRequestModal('Request Sample', '{{ addslashes(htmlspecialchars($report->title ?: optional($report->reportList)->name, ENT_QUOTES, 'UTF-8')) }}')" class="contact-btn-white request-sample-btn">
+          <a href="javascript:void(0)" onclick="openRequestModal('Request Sample', '{{ $reportTitleSafe }}')" class="contact-btn-white request-sample-btn">
             Request Sample
             <span class="btn-circle-arrow">
               <svg class="chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
@@ -393,7 +394,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Wait a small moment to ensure modal DOM and dependencies are ready
         setTimeout(function() {
             if (typeof window.openRequestModal === 'function') {
-                window.openRequestModal(subject, '{!! addslashes(htmlspecialchars($report->title ?: optional($report->reportList)->name, ENT_QUOTES, "UTF-8")) !!}');
+                window.openRequestModal(subject, '{!! $reportTitleSafe !!}');
             }
         }, 500);
     }

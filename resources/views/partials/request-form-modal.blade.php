@@ -30,31 +30,46 @@
           <input type="text" id="rfm_fullName" name="name" placeholder="Enter Your Full Name" required />
         </div>
 
-        <!-- Business Email -->
+        <!-- Email -->
         <div class="form-group">
-          <label for="rfm_businessEmail">Business Email <span class="required">*</span></label>
-          <input type="email" id="rfm_businessEmail" name="email" placeholder="Enter Your Business Email" required />
+          <label for="rfm_businessEmail">Email <span class="required">*</span></label>
+          <input type="email" id="rfm_businessEmail" name="email" placeholder="Enter Your Email" required />
         </div>
       </div>
 
       <div class="form-row-2">
+        <!-- Usage -->
+        <div class="form-group">
+          <label>Usage <span class="required">*</span></label>
+          <div class="radio-options-row">
+            <label class="radio-card">
+              <input type="radio" name="usage" value="Personal" required>
+              <span class="radio-text">Personal</span>
+            </label>
+            <label class="radio-card">
+              <input type="radio" name="usage" value="Business" checked required>
+              <span class="radio-text">Business</span>
+            </label>
+          </div>
+        </div>
+
         <!-- Phone Number with intl-tel-input -->
         <div class="form-group">
           <label for="rfm_phone">Phone Number <span class="required">*</span></label>
           <input type="tel" id="rfm_phone" placeholder="Enter Phone Number" required />
           <input type="hidden" id="rfm_full_phone" name="phone">
         </div>
+      </div>
 
-        <!-- Select Subject -->
-        <div class="form-group">
-          <label for="rfm_subject">Select Subject <span class="required">*</span></label>
-          <select id="rfm_subject" name="subject" required>
-            <option value="Request Sample">Request Sample</option>
-            <option value="Ask for discount">Ask for discount</option>
-            <option value="Request customized report">Request customized report</option>
-            <option value="Download Free Sample">Download Free Sample</option>
-          </select>
-        </div>
+      <!-- Select Subject -->
+      <div class="form-group">
+        <label for="rfm_subject">Select Subject <span class="required">*</span></label>
+        <select id="rfm_subject" name="subject" required>
+          <option value="Request Sample">Request Sample</option>
+          <option value="Ask for discount">Ask for discount</option>
+          <option value="Request customized report">Request customized report</option>
+          <option value="Download Free Sample">Download Free Sample</option>
+        </select>
       </div>
 
       <!-- Specific Research Requirement -->
@@ -206,7 +221,7 @@
 }
 
 /* Inputs styling */
-.form-group input,
+.form-group input:not([type="radio"]):not([type="checkbox"]),
 .form-group select,
 .form-group textarea {
   width: 100%;
@@ -220,7 +235,7 @@
   transition: all 0.2s ease-in-out;
 }
 
-.form-group input:focus,
+.form-group input:not([type="radio"]):not([type="checkbox"]):focus,
 .form-group select:focus,
 .form-group textarea:focus {
   border-color: #0783df;
@@ -230,6 +245,73 @@
 
 .form-group textarea {
   resize: vertical;
+}
+
+/* Radio buttons styling */
+.radio-options-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 46px;
+}
+
+.radio-card {
+  flex: 1;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  padding: 0 14px !important;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  background: #fcfdfe;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  user-select: none;
+  height: 100% !important;
+  box-sizing: border-box !important;
+  white-space: nowrap !important;
+}
+
+.radio-card:hover {
+  border-color: #0783df;
+  background: #f8fafc;
+}
+
+.radio-card:has(input[type="radio"]:checked) {
+  border-color: #0783df;
+  background: #f0f7ff;
+}
+
+.radio-card input[type="radio"] {
+  width: 17px !important;
+  min-width: 17px !important;
+  max-width: 17px !important;
+  height: 17px !important;
+  padding: 0 !important;
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  accent-color: #0783df;
+  margin: 0 !important;
+  cursor: pointer;
+  flex-shrink: 0 !important;
+  box-shadow: none !important;
+}
+
+.radio-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: #4b5563;
+  transition: color 0.2s ease;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.radio-card input[type="radio"]:checked + .radio-text {
+  color: #0783df;
+  font-weight: 700;
 }
 
 /* intl-tel-input overrides for the modal context */

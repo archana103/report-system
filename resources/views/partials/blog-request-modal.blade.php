@@ -30,26 +30,41 @@
           <input type="text" id="b_fullName" name="full_name" placeholder="Enter Your Full Name" required />
         </div>
 
-        <!-- Business Email -->
+        <!-- Email -->
         <div class="form-group">
-          <label for="b_businessEmail">Business Email <span class="required">*</span></label>
-          <input type="email" id="b_businessEmail" name="email" placeholder="Enter Business Email" required />
+          <label for="b_businessEmail">Email <span class="required">*</span></label>
+          <input type="email" id="b_businessEmail" name="email" placeholder="Enter Your Email" required />
         </div>
       </div>
 
       <div class="form-row-2">
+        <!-- Usage -->
+        <div class="form-group">
+          <label>Usage <span class="required">*</span></label>
+          <div class="radio-options-row">
+            <label class="radio-card">
+              <input type="radio" name="usage" value="Personal" required>
+              <span class="radio-text">Personal</span>
+            </label>
+            <label class="radio-card">
+              <input type="radio" name="usage" value="Business" checked required>
+              <span class="radio-text">Business</span>
+            </label>
+          </div>
+        </div>
+
         <!-- Company Name -->
         <div class="form-group">
           <label for="b_companyName">Company Name <span class="required">*</span></label>
           <input type="text" id="b_companyName" name="company_name" placeholder="Enter Company Name" required />
         </div>
+      </div>
 
-        <!-- Phone Number with intl-tel-input -->
-        <div class="form-group">
-          <label for="b_phone">Phone Number <span class="required">*</span></label>
-          <input type="tel" id="b_phone" placeholder="Enter Phone Number" required />
-          <input type="hidden" id="b_full_phone" name="phone">
-        </div>
+      <!-- Phone Number with intl-tel-input -->
+      <div class="form-group">
+        <label for="b_phone">Phone Number <span class="required">*</span></label>
+        <input type="tel" id="b_phone" placeholder="Enter Phone Number" required />
+        <input type="hidden" id="b_full_phone" name="phone">
       </div>
 
       <!-- Select Country -->
