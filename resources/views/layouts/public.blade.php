@@ -65,6 +65,8 @@
     @include('partials.footer')
 
     @include('partials.request-form-modal')
+
+    @include('partials.christmas-offer-popup')
 </body>
 
 </html>
